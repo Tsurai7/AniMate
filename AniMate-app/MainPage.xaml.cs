@@ -12,19 +12,6 @@
             mediaElement.MediaFailed += MediaElement_MediaFailed;
             mediaElement.MediaEnded += MediaElement_MediaEnded;
         }
-
-        private void OnCounterClicked(object sender, EventArgs e)
-        {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
-        }
-
         private void MediaElement_MediaOpened(object sender, EventArgs e)
         {
             // Handle media opened event
