@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-
+using CommunityToolkit.Maui;
 namespace AniMate_app
 {
     public static class MauiProgram
@@ -13,8 +13,8 @@ namespace AniMate_app
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
-
+                })
+                .UseMauiCommunityToolkit();
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
