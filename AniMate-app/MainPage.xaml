@@ -14,6 +14,13 @@
             Padding="30,0"
             VerticalOptions="Center">
 
+            <toolkit:MediaElement
+                x:Name="mediaElement"
+                Source="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                ShouldShowPlaybackControls="True"
+                ShouldAutoPlay="True" />
+
+
             <Image
                 Source="dotnet_bot.png"
                 SemanticProperties.Description="Cute dot net bot waving hi to you!"
