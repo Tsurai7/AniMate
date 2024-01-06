@@ -9,7 +9,7 @@
 
         <Grid.RowDefinitions>
             <!-- Верхняя строка для фиксированной картинки -->
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="50" />
             <!-- Остальные строки для ScrollView и других элементов -->
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
