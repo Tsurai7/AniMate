@@ -1,4 +1,4 @@
-﻿namespace AniMate_app
+﻿namespace AniMate_app.View
 {
     public partial class MainPage : ContentPage
     {
@@ -7,7 +7,7 @@
             InitializeComponent();
 
             // Create an instance of MainViewModel and set it as the BindingContext
-            
+
             BindingContext = new ViewModel.MainViewModel();
         }
     }

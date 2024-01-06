@@ -1,53 +1,67 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AniMate_app.ViewModel"
              xmlns:model="clr-namespace:AniMate_app.Model"
-             x:Class="AniMate_app.MainPage"
+             x:Class="AniMate_app.View.MainPage"
              x:DataType="local:MainViewModel">
-    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+    <ScrollView>
+        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
-        <Grid.RowDefinitions>
-            <!-- Верхняя строка для фиксированной картинки -->
-            <RowDefinition Height="50" />
-            <!-- Остальные строки для ScrollView и других элементов -->
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <Image 
-           Source="logo.svg"
-           MaximumHeightRequest="50"
-           MaximumWidthRequest="100"
-           HorizontalOptions="Start"
-           VerticalOptions="Start"
-           Margin="20, 20, 0, 0">
-        </Image>
+            <Image Source="logo.svg"
+                   MaximumHeightRequest="50"
+                   MaximumWidthRequest="100"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Start"
+                   Margin="20, 20, 0, 0">
+            </Image>
 
-        <ScrollView Grid.Row="1">
-            <CollectionView ItemsSource="{Binding Titles}">
+            <CollectionView ItemsSource="{Binding Genres}" Margin="10,10,0,0" Grid.Row="1">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Horizontal">
+                            <Border StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="LightGray">
+                                <Label Text="{Binding .}" Margin="5" BackgroundColor="LightGray" />
+                            </Border>
+                            <Label Text=" " />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <CollectionView ItemsSource="{Binding Titles}" Grid.Row="2">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Title">
                         <StackLayout Margin="5"
-                             VerticalOptions="FillAndExpand"
-                             HorizontalOptions="FillAndExpand">
+                                     VerticalOptions="FillAndExpand"
+                                     HorizontalOptions="FillAndExpand">
                             <Grid VerticalOptions="FillAndExpand"
-                          HorizontalOptions="FillAndExpand"
-                          HeightRequest="200">
+                                  HorizontalOptions="FillAndExpand"
+                                  HeightRequest="200">
                                 <Border StrokeShape="RoundRectangle 10,10,10,10">
                                     <Image Source="{Binding Image}" Aspect="Fill"/>
                                 </Border>
                             </Grid>
                             <Grid VerticalOptions="Start"
-                          HorizontalOptions="FillAndExpand">
+                                  HorizontalOptions="FillAndExpand">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <StackLayout>
                                     <Label Text="{Binding Name}"
-                                   TextColor="Black"
-                                   VerticalOptions="Start"
-                                   HorizontalOptions="Start"/>
+                               TextColor="Black"
+                               VerticalOptions="Start"
+                               HorizontalOptions="Start"/>
                                     <StackLayout BindableLayout.ItemsSource="{Binding Genre}" Orientation="Horizontal">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
@@ -60,11 +74,11 @@
                                     </StackLayout>
                                 </StackLayout>
                                 <Button Grid.Column="1"
-                                VerticalOptions="Start"
-                                HorizontalOptions="End"
-                                HeightRequest="20" WidthRequest="20"
-                                BackgroundColor="White"
-                                Margin="10,10,0,0">
+                                        VerticalOptions="Start"
+                                        HorizontalOptions="End"
+                                        HeightRequest="20" WidthRequest="20"
+                                        BackgroundColor="White"
+                                        Margin="10,10,0,0">
                                     <Button.ImageSource>
                                         <FileImageSource File="dots.svg" />
                                     </Button.ImageSource>
@@ -74,6 +88,9 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </ScrollView>
-    </Grid>
+        </Grid>
+    </ScrollView>
+    <ContentPage.Title>
+        <x:Null />
+    </ContentPage.Title>
 </ContentPage>
