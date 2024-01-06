@@ -5,35 +5,64 @@
              xmlns:model="clr-namespace:AniMate_app.Model"
              x:Class="AniMate_app.MainPage"
              x:DataType="local:MainViewModel">
-            
+
     <StackLayout>
-
         <Image Source="logo.svg"
-               MaximumHeightRequest="50"
-               MaximumWidthRequest="100"
-               HorizontalOptions="Start"
-               VerticalOptions="Start"
-               Margin="20, 20, 0, 0"/>
+           MaximumHeightRequest="50"
+           MaximumWidthRequest="100"
+           HorizontalOptions="Start"
+           VerticalOptions="Start"
+           Margin="20, 20, 0, 0"/>
 
-        <CollectionView ItemsSource="{Binding Titles}" ItemsLayout="HorizontalList">
+        <CollectionView ItemsSource="{Binding Titles}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Title">
-                    <Frame
-                    BackgroundColor="Green">
-                        <StackLayout>
-                            <Label Text="{Binding Name}" />
-                            <Label Text="{Binding Image}" />
-                            <Label Text="{Binding Description}" />
-                        </StackLayout>
-                    </Frame>
+                    <StackLayout Margin="5"
+                             VerticalOptions="FillAndExpand"
+                             HorizontalOptions="FillAndExpand">
+                        <Grid VerticalOptions="FillAndExpand"
+                          HorizontalOptions="FillAndExpand"
+                          HeightRequest="200">
+                            <Border StrokeShape="RoundRectangle 10,10,10,10">
+                                <Image Source="{Binding Image}" Aspect="Fill"/>
+                            </Border>
+                        </Grid>
+                        <Grid VerticalOptions="Start"
+                          HorizontalOptions="FillAndExpand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackLayout>
+                                <Label Text="{Binding Name}"
+                                   TextColor="Black"
+                                   VerticalOptions="Start"
+                                   HorizontalOptions="Start"/>
+                                <StackLayout BindableLayout.ItemsSource="{Binding Genre}" Orientation="Horizontal">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label TextType="Html" Text="{Binding}" />
+                                                <Label Text=" " />
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </StackLayout>
+                            <Button Grid.Column="1"
+                                VerticalOptions="Start"
+                                HorizontalOptions="End"
+                                HeightRequest="20" WidthRequest="20"
+                                BackgroundColor="White"
+                                Margin="10,10,0,0">
+                                <Button.ImageSource>
+                                    <FileImageSource File="dots.svg" />
+                                </Button.ImageSource>
+                            </Button>
+                        </Grid>
+                    </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-
-
     </StackLayout>
-
-
-
 </ContentPage>
