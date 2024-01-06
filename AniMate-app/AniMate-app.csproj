@@ -48,6 +48,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\dots.svg" />
 	  <None Remove="Resources\AppIcon\animateicon.svg" />
 	  <None Remove="Resources\Images\logo.svg" />
 	</ItemGroup>

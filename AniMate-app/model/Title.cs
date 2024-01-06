@@ -15,6 +15,7 @@ namespace AniMate_app.Model
         public string description;
         [ObservableProperty]
         public string image;
-
+        [ObservableProperty]
+        public List<string> genre;
     }
 }
