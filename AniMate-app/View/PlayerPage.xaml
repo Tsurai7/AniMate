@@ -145,8 +145,10 @@
                            ShowCustomControls="True"
                            Source="https://cache.libria.fun/videos/media/ts/9284/3/720/4cc228b26307888f9cb0091ff233a6e3.m3u8"
                            IsVisible="True"
-                           HeightRequest="300"
-                           WidthRequest="700"/>
+                           MaximumHeightRequest="450"
+                           MaximumWidthRequest="450"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="Fill"/>
         </StackLayout>
     </ScrollView>
 </ContentPage>
