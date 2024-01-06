@@ -50,7 +50,11 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\dots.svg" />
+	  <None Remove="Resources\Images\home.svg" />
 	  <None Remove="Resources\Images\logo.svg" />
+	  <None Remove="Resources\Images\ring.svg" />
+	  <None Remove="Resources\Images\search.svg" />
+	  <None Remove="Resources\Images\user.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -71,6 +75,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\ProfilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\SearchPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
