@@ -1,17 +1,20 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniMate_app.model
+namespace AniMate_app.Model
 {
-    class Title : BindableObject
+    partial class Title : ObservableObject
     {
-       
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Image { get; set; }
+        [ObservableProperty]
+        public string name;
+        [ObservableProperty]
+        public string description;
+        [ObservableProperty]
+        public string image;
 
     }
 }

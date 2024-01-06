@@ -1,4 +1,4 @@
-﻿using AniMate_app.model;
+﻿using AniMate_app.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,17 +11,17 @@ namespace AniMate_app.ViewModel
     
     class MainViewModel : BindableObject
     {
-        public ObservableCollection<Title> _yourItemsSource;
+        public ObservableCollection<Title> _titles;
 
-        public ObservableCollection<Title> YourItemsSource
+        public ObservableCollection<Title> Titles
         {
-            get => _yourItemsSource;
+            get => _titles;
             set
             {
-                if (_yourItemsSource != value)
+                if (_titles != value)
                 {
-                    _yourItemsSource = value;
-                    OnPropertyChanged(nameof(YourItemsSource));
+                    _titles = value;
+                    OnPropertyChanged(nameof(Titles));
                 }
             }
         }
@@ -29,7 +29,7 @@ namespace AniMate_app.ViewModel
         public MainViewModel()
         {
             // Initialize the collection and add some sample data
-            YourItemsSource = new ObservableCollection<Title>
+            Titles = new ObservableCollection<Title>
             {
                 new Title { Name = "Title1", Description = "Description1", Image = "image1.png" },
                 new Title { Name = "Title2", Description = "Description2", Image = "image2.png" },
