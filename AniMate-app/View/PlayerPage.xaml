@@ -1,14 +1,152 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:MediaControls.Controls;assembly=MediaControls"
-             x:Class="AniMate_app.View.PlayerPage"
-             Title="PlayerPage">
-    
-    <controls:MediaControl
-        x:Name="mediaControl"
-        ShouldAutoPlay="False"
-        ShouldKeepScreenOn="True"
-        ShowCustomControls="True"
-        Source="https://cache.libria.fun/videos/media/ts/9284/3/720/4cc228b26307888f9cb0091ff233a6e3.m3u8" />
+             x:Class="AniMate_app.View.PlayerPage">
+
+    <ScrollView>
+        <StackLayout Orientation="Vertical">
+            <Label Text="Магическая битва"
+               FontSize="Large"
+               FontAttributes="Bold"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="StartAndExpand"/>
+
+            <Image Source="https://m.media-amazon.com/images/I/71pvdUkQRnL._AC_UF894,1000_QL80_.jpg"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Тип:"
+                   FontSize="Medium"
+                   VerticalTextAlignment="Center"
+                   HorizontalOptions="Start" />
+
+                <Label Text="ТВ-Сериал"
+                   FontSize="Medium"
+                   VerticalTextAlignment="Center"
+                   HorizontalOptions="Start"
+                   Grid.Column="1" />
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Количество серий:"
+                   FontSize="Medium"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="Start" />
+
+                <Label Text="24"
+                   FontSize="Medium"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="Start"
+                   Grid.Column="1" />
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Статус:"
+                   FontSize="Medium"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="Start" />
+
+                <Label Text="Завершен"
+                   FontSize="Medium"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="Start"
+                   Grid.Column="1" />
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Жанр:"
+                   FontSize="Medium"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="Start" />
+
+                <Label Text="Демоны, Сенен"
+                   FontSize="Medium"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="Start"
+                   Grid.Column="1" />
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Сезоны:"
+                   FontSize="Medium"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="Start" />
+
+                <Label Text="2"
+                   FontSize="Medium"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="Start"
+                   Grid.Column="1" />
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Год выпуска:"
+                   FontSize="Medium"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="Start" />
+
+                <Label Text="2022"
+                   FontSize="Medium"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="Start"
+                   Grid.Column="1" />
+            </Grid>
+
+
+            <Label Text="В мире, где человек перестал быть самым опасным хищником, правят демоны. И пусть большинство смертных и не подозревают об их существовании - даже легенды о великом Рёмэне Сукуне, что в давние времена был побеждён с величайшим трудом, помнят немногие. Остатки демона были разбросаны по всему свету, и если найдётся демон, что сможет найти и поглотить все из них - он обретёт мощь, способную стереть человечество с лица земли.\r\n\r\nЭта история повествует о Юдзи Итадори, ученике старшей школы, отличающимся выдающейся физической силой. Каждый уважающий себя глава спортивного клуба пытается заполучить в свои ряды такого участника, но для Юдзи на первом месте стоят учёба и уход за больным дедушкой. Устав от постоянных приглашений, он предпочитает вступить в клуб окультных наук, что бы избавиться от назойливого внимания. Но в один прекрасный день главе клуба попадается в руки древний проклятный артефакт. И лучше бы им было к нему даже не прикасаться. Ибо кто знает, что именно там запечатано..."
+               FontSize="Small"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Margin="0,5,0,0"/>
+
+            <Label Text="1 сезон"
+               FontSize="Medium"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Margin="0,10,0,0"/>
+
+            <Button Text="Смотреть"
+                    Clicked="OnWatchButtonClicked"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start"/>
+
+            <controls:MediaControl x:Name="mediaControl"
+                           ShouldAutoPlay="False"
+                           ShouldKeepScreenOn="False"
+                           ShowCustomControls="True"
+                           Source="https://cache.libria.fun/videos/media/ts/9284/3/720/4cc228b26307888f9cb0091ff233a6e3.m3u8"
+                           IsVisible="True"
+                           HeightRequest="300"
+                           WidthRequest="700"/>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

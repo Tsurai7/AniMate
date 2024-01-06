@@ -2,8 +2,13 @@ namespace AniMate_app.View;
 
 public partial class PlayerPage : ContentPage
 {
-	public PlayerPage()
+    public PlayerPage()
 	{
-		InitializeComponent();
+        InitializeComponent();
 	}
+
+    private void OnWatchButtonClicked(object sender, EventArgs e)
+    {
+        mediaControl.IsVisible = true;
+    }
 }

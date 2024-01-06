@@ -48,7 +48,11 @@
                                   HorizontalOptions="FillAndExpand"
                                   HeightRequest="200">
                                 <Border StrokeShape="RoundRectangle 10,10,10,10">
-                                    <Image Source="{Binding Image}" Aspect="Fill"/>
+                                    <Image Source="{Binding Image}" Aspect="Fill">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnImageTapped" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
                                 </Border>
                             </Grid>
                             <Grid VerticalOptions="Start"
