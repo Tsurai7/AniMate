@@ -2,14 +2,13 @@
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
         public MainPage()
         {
             InitializeComponent();
 
+            // Create an instance of MainViewModel and set it as the BindingContext
             
+            BindingContext = new ViewModel.MainViewModel();
         }
-        
     }
 }

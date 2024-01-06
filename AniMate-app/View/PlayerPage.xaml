@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MediaControls.Controls;assembly=MediaControls"
+             x:Class="AniMate_app.View.PlayerPage"
+             Title="PlayerPage">
+    
+    <controls:MediaControl
+        x:Name="mediaControl"
+        ShouldAutoPlay="False"
+        ShouldKeepScreenOn="True"
+        ShowCustomControls="True"
+        Source="https://cache.libria.fun/videos/media/ts/9284/3/720/4cc228b26307888f9cb0091ff233a6e3.m3u8" />
+</ContentPage>
