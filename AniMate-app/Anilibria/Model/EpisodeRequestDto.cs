@@ -11,7 +11,7 @@ namespace AniMate_app.Anilibria
         public string Name { get; set; }
 
         [JsonProperty("episode")]
-        public int Ordinal { get; set; }
+        public string Ordinal { get; set; }
 
         [JsonProperty("hls")]
         public Hls HlsUrls { get; set; }
