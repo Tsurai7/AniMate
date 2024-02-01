@@ -15,7 +15,6 @@ namespace AniMate_backend.Controllers
 
         private readonly HttpClient _httpClient = new();
 
-
         [HttpGet("GetTitle")]
         public async Task<ActionResult<TitleRequestDto>> GetTitle(string titleName)
         {
@@ -24,7 +23,7 @@ namespace AniMate_backend.Controllers
 
             string jsonInfo = await response.Content.ReadAsStringAsync();
 
-            TitleRequestDto title = JsonConvert.DeserializeObject<TitleRequestDto>(jsonInfo);
+            TitleRequestDto? title = JsonConvert.DeserializeObject<TitleRequestDto>(jsonInfo);
 
             return Ok(title);
         }
@@ -39,7 +38,7 @@ namespace AniMate_backend.Controllers
 
             JObject jsonInfo = JObject.Parse(jsonString);
 
-            JToken episodeObject = jsonInfo["player"]["list"][episodeOrdinal];
+            JToken? episodeObject = jsonInfo["player"]["list"][episodeOrdinal];
 
             EpisodeDto episode = new()
             {

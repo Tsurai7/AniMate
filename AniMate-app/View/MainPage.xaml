@@ -4,14 +4,15 @@
              xmlns:local="clr-namespace:AniMate_app.ViewModel"
              xmlns:model="clr-namespace:AniMate_app.Model"
              x:Class="AniMate_app.View.MainPage"
-             x:DataType="local:MainViewModel">
+             x:DataType="local:MainViewModel"
+             Loaded="LoadContent">
     <ScrollView>
         <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="300" />
             </Grid.RowDefinitions>
 
             <Image Source="logo.svg"
@@ -22,7 +23,7 @@
                    Margin="20, 20, 0, 0">
             </Image>
 
-            <CollectionView ItemsSource="{Binding Genres}" Margin="10,10,0,0" Grid.Row="1">
+            <CollectionView x:Name="GenreSortList" ItemsSource="{Binding Genres}" Margin="10,10,0,0" Grid.Row="1">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal" />
                 </CollectionView.ItemsLayout>
@@ -38,7 +39,10 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <CollectionView ItemsSource="{Binding Titles}" Grid.Row="2">
+            <CollectionView x:Name="GenreTilesList" ItemsSource="{Binding Titles}" Grid.Row="2">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" />
+                </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Title">
                         <StackLayout Margin="5"
