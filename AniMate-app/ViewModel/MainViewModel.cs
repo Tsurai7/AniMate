@@ -23,6 +23,8 @@ namespace AniMate_app.ViewModel
             OnPropertyChanged(nameof(Genres));
 
             await LoadTitlesByGenre();
+
+            OnPropertyChanged(nameof(Genres));
         }
 
         private async Task LoadTitlesByGenre()
