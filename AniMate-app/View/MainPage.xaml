@@ -12,8 +12,8 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
                 <RowDefinition Height="*" />
+                <!--<RowDefinition Height="*" />-->
             </Grid.RowDefinitions>
 
             <Image Source="logo.svg"
@@ -24,7 +24,7 @@
                    Margin="20, 20, 0, 0">
             </Image>
             <!--  CollectionView to view genres-->
-            <CollectionView x:Name="GenreSortList" ItemsSource="{Binding Genres}" Margin="10,10,0,0" Grid.Row="1">
+            <!--<CollectionView x:Name="GenreSortList" ItemsSource="{Binding Genres}" Margin="10,10,0,0" Grid.Row="1">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal" />
                 </CollectionView.ItemsLayout>
@@ -42,9 +42,9 @@
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView>
+            </CollectionView>-->
             <!-- CollectionView to view genres and titles -->
-            <CollectionView x:Name="GenreList" Margin="10,10,0,0" ItemsSource="{Binding TitlesByGenre}" Grid.Row="2">
+            <CollectionView x:Name="GenreList" Margin="10,10,0,0" ItemsSource="{Binding TitlesByGenre}" Grid.Row="1">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:GenreCollection">
                         <StackLayout>
@@ -76,7 +76,7 @@
                                                   HorizontalOptions="FillAndExpand">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="150" />
-                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="150" />
                                                 </Grid.ColumnDefinitions>
                                                 <StackLayout>
                                                     <!-- a place where you can add language variation -->

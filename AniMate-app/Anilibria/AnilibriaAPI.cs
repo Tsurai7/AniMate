@@ -1,7 +1,6 @@
 ﻿using AniMate_app.Dto;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Collections.ObjectModel;
 
 namespace AniMate_app.Anilibria
 {
@@ -23,13 +22,13 @@ namespace AniMate_app.Anilibria
             return title;
         }
         
-        public static async Task<ObservableCollection<string>> GetGenres()
+        public static async Task<List<string>> GetGenres()
         {
             using HttpResponseMessage response = await _httpClient.GetAsync($"{BaseQueryAddress}genres");
 
             string jsonInfo = await response.Content.ReadAsStringAsync();
 
-            ObservableCollection<string> genres = JsonConvert.DeserializeObject<ObservableCollection<string>>(jsonInfo);
+            List<string> genres = JsonConvert.DeserializeObject<List<string>>(jsonInfo);
 
             return genres;
         }
