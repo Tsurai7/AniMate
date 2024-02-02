@@ -32,7 +32,11 @@
                     <DataTemplate>
                         <StackLayout Orientation="Horizontal">
                             <Border StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="LightGray">
-                                <Label Text="{Binding .}" Margin="5" BackgroundColor="LightGray" />
+                                <Label Text="{Binding .}" Margin="5" BackgroundColor="LightGray">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="ScrollToGenre" />
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Border>
                             <Label Text=" " />
                         </StackLayout>
@@ -44,7 +48,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:GenreCollection">
                         <StackLayout>
-                            <Label Text="{Binding GenreName}" FontSize="Title" />
+                            <Label Text="{Binding GenreName}" FontSize="Title" Margin="0,10,0,10"/>
 
                             <CollectionView ItemsSource="{Binding Titles}" HorizontalOptions="StartAndExpand">
                                 <CollectionView.ItemsLayout>
@@ -58,9 +62,10 @@
                                                      HorizontalOptions="FillAndExpand">
                                             <Grid VerticalOptions="FillAndExpand"
                                                   HorizontalOptions="FillAndExpand"
-                                                  HeightRequest="200">
+                                                  HeightRequest="200"
+                                                  >
                                                 <Border StrokeShape="RoundRectangle 10,10,10,10">
-                                                    <Image Source="{Binding }" Aspect="Fill">
+                                                    <Image Source="{Binding Posters.Original.Url}" Aspect="Fill">
                                                         <Image.GestureRecognizers>
                                                             <TapGestureRecognizer Tapped="OnImageTapped" />
                                                         </Image.GestureRecognizers>
@@ -70,7 +75,7 @@
                                             <Grid VerticalOptions="Start"
                                                   HorizontalOptions="FillAndExpand">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="150" />
                                                     <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
                                                 <StackLayout>
@@ -78,8 +83,9 @@
                                                     <Label Text="{Binding Names.Ru}"
                                                            TextColor="Black"
                                                            VerticalOptions="Start"
-                                                           HorizontalOptions="Start"/>
-                                                    <StackLayout BindableLayout.ItemsSource="{Binding Genres}" Orientation="Horizontal">
+                                                           HorizontalOptions="Start"
+                                                           Margin="10,10,0,0"/>
+                                                    <!--<StackLayout BindableLayout.ItemsSource="{Binding Genres}" Orientation="Horizontal">
                                                         <BindableLayout.ItemTemplate>
                                                             <DataTemplate>
                                                                 <StackLayout Orientation="Horizontal">
@@ -88,7 +94,7 @@
                                                                 </StackLayout>
                                                             </DataTemplate>
                                                         </BindableLayout.ItemTemplate>
-                                                    </StackLayout>
+                                                    </StackLayout>-->
                                                 </StackLayout>
                                                 <Button Grid.Column="1"
                                                         VerticalOptions="Start"

@@ -12,8 +12,6 @@ namespace AniMate_app.ViewModel
 
         #endregion
 
-
-
         public ObservableCollection<string> Genres { get; private set; }
 
         public async Task LoadContent()
@@ -29,9 +27,14 @@ namespace AniMate_app.ViewModel
 
         private async Task LoadTitlesByGenre()
         {
-            foreach (string genre in Genres)
+            //foreach (string genre in Genres)
+            //{
+            //    TitlesByGenre.Add(new(genre, await AnilibriaAPI.GetTilesByGenre(genre)));
+            //}  
+            
+            for(int i = 0; i < 5; i++)
             {
-                TitlesByGenre.Add(new(genre, await AnilibriaAPI.GetTilesByGenre(genre)));
+                TitlesByGenre.Add(new(Genres[i], await AnilibriaAPI.GetTilesByGenre(Genres[i])));
             }
         }
     }

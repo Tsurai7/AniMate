@@ -22,5 +22,14 @@ namespace AniMate_app.View
 
             await context.LoadContent();
         }
+
+        private void ScrollToGenre(object sender, TappedEventArgs e)
+        {
+            //string genre = (sender as Label).Text;
+
+            //var genreId = (BindingContext as MainViewModel).Genres.IndexOf(genre);
+
+            GenreList.ScrollTo(5);
+        }
     }
 }
