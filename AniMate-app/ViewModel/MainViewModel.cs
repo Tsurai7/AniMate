@@ -31,6 +31,8 @@ namespace AniMate_app.ViewModel
             //{
             //    TitlesByGenre.Add(new(genre, await AnilibriaAPI.GetTilesByGenre(genre)));
             //}  
+
+            TitlesByGenre.Clear();
             
             for(int i = 0; i < 5; i++)
             {
