@@ -1,4 +1,5 @@
 ﻿using AniMate_app.Anilibria;
+using AniMate_app.Model;
 using AniMate_app.ViewModel;
 
 namespace AniMate_app.View
@@ -6,6 +7,8 @@ namespace AniMate_app.View
     public partial class MainPage : ContentPage
     {
         private readonly MainViewModel viewModel;
+
+        private bool isOpeningPlayer = false;
 
         public MainPage()
         {
@@ -29,14 +32,22 @@ namespace AniMate_app.View
 
         private async void TitleSelected(object sender, SelectionChangedEventArgs e)
         {
-            if(e.CurrentSelection.Count.Equals(0))
+            if (isOpeningPlayer)
+            {
+                (sender as CollectionView).SelectedItem = null;
+
                 return;
+            }   
+
+            isOpeningPlayer = true;
 
             var collectionView = sender as CollectionView;
 
             await Navigation.PushAsync(new PlayerPage(collectionView.SelectedItem as TitleRequestDto));
 
             collectionView.SelectedItem = null;
+
+            isOpeningPlayer = false;
         }
     }
 }
