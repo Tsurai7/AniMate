@@ -1,9 +1,10 @@
 ﻿using AniMate_app.Anilibria;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 
 namespace AniMate_app.Model
 {
-    public class GenreCollection
+    public class GenreCollection : ObservableObject
     {
         public string GenreName { get; private set; }
 

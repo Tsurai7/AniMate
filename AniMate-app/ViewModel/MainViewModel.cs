@@ -10,26 +10,44 @@ namespace AniMate_app.ViewModel
 
         public List<string> Genres { get; private set; }
 
+        public int GenresLoaded { get; private set; } = 0;
+
+        public bool AllGenresLoaded => GenresLoaded.Equals(Genres.Count);
+
+        public bool IsLoaded { get; private set; } = true;
+
         public async Task LoadContent()
         {
             Genres = await AnilibriaAPI.GetGenres();
 
-            await LoadTitlesByGenre();
+            TitlesByGenre.Clear();
+
+            await LoadTitlesByGenre(5);
         }
 
-        private async Task LoadTitlesByGenre()
-        {
-            //foreach (string genre in Genres)
-            //{
-            //    TitlesByGenre.Add(new(genre, await AnilibriaAPI.GetTilesByGenre(genre)));
-            //}  
+        public ObservableCollection<string> TestString { get; private set; } = new ObservableCollection<string>() { "test", "test" , "test", "test", "test", "test" };
 
-            TitlesByGenre.Clear();
-            
-            for(int i = 0; i < 5; i++)
-            {
+        public void LoadMoreTest()
+        {
+            TestString.Add("bob");
+
+            OnPropertyChanged(nameof(TestString));
+        }
+
+        public async Task LoadTitlesByGenre(int count)
+        {
+            if(!IsLoaded) return;
+
+            IsLoaded = false;
+
+            count = GenresLoaded + count < Genres.Count ? GenresLoaded + count : Genres.Count;
+
+            for (int i = GenresLoaded; i < count; i++)
                 TitlesByGenre.Add(new(Genres[i], await AnilibriaAPI.GetTilesByGenre(Genres[i])));
-            }
+
+            GenresLoaded = count;
+
+            IsLoaded = true;
         }
     }
 }

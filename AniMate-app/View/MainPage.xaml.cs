@@ -4,11 +4,13 @@ namespace AniMate_app.View
 {
     public partial class MainPage : ContentPage
     {
+        private readonly MainViewModel viewModel;
+
         public MainPage()
         {
             InitializeComponent();
 
-            BindingContext = new MainViewModel();
+            BindingContext = viewModel = new MainViewModel();
         }
 
         private void OnImageTapped(object sender, EventArgs e)
@@ -18,18 +20,15 @@ namespace AniMate_app.View
 
         private async void LoadContent(object sender, EventArgs e)
         {
-            var context = BindingContext as MainViewModel;
-
-            await context.LoadContent();
+            await viewModel.LoadContent();
         }
 
-        private void ScrollToGenre(object sender, TappedEventArgs e)
+        private async void LoadMoreGenres(object sender, EventArgs e)
         {
-            //string genre = (sender as Label).Text;
+            if (viewModel.AllGenresLoaded)
+                return;
 
-            //var genreId = (BindingContext as MainViewModel).Genres.IndexOf(genre);
-
-            GenreList.ScrollTo(5);
+            await viewModel.LoadTitlesByGenre(1);
         }
     }
 }
