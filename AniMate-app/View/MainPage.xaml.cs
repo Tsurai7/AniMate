@@ -1,4 +1,5 @@
-﻿using AniMate_app.ViewModel;
+﻿using AniMate_app.Anilibria;
+using AniMate_app.ViewModel;
 
 namespace AniMate_app.View
 {
@@ -13,11 +14,6 @@ namespace AniMate_app.View
             BindingContext = viewModel = new MainViewModel();
         }
 
-        private void OnImageTapped(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new PlayerPage());            
-        }
-
         private async void LoadContent(object sender, EventArgs e)
         {
              await viewModel.LoadContent();
@@ -29,6 +25,18 @@ namespace AniMate_app.View
                 return;
 
             await viewModel.LoadTitlesByGenre(1);
+        }
+
+        private async void TitleSelected(object sender, SelectionChangedEventArgs e)
+        {
+            if(e.CurrentSelection.Count.Equals(0))
+                return;
+
+            var collectionView = sender as CollectionView;
+
+            await Navigation.PushAsync(new PlayerPage(collectionView.SelectedItem as TitleRequestDto));
+
+            collectionView.SelectedItem = null;
         }
     }
 }

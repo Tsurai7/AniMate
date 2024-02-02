@@ -1,17 +1,20 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:MediaControls.Controls;assembly=MediaControls"
+             xmlns:local="clr-namespace:AniMate_app.ViewModel"
+             xmlns:DTO="clr-namespace:AniMate_app.Anilibria"
+             x:DataType="local:PlayerViewModel"
              x:Class="AniMate_app.View.PlayerPage">
 
     <ScrollView>
         <StackLayout Orientation="Vertical">
-            <Label Text="Магическая битва"
+            <Label Text="{Binding Title.Names.Ru}"
                FontSize="Large"
                FontAttributes="Bold"
                HorizontalOptions="CenterAndExpand"
                VerticalOptions="StartAndExpand"/>
 
-            <Image Source="https://m.media-amazon.com/images/I/71pvdUkQRnL._AC_UF894,1000_QL80_.jpg"/>
+            <Image Source="{Binding Title.Posters.Small.Url}"/>
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -24,7 +27,7 @@
                    VerticalTextAlignment="Center"
                    HorizontalOptions="Start" />
 
-                <Label Text="ТВ-Сериал"
+                <Label Text="Не работает пока что"
                    FontSize="Medium"
                    VerticalTextAlignment="Center"
                    HorizontalOptions="Start"
@@ -42,7 +45,7 @@
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="Start" />
 
-                <Label Text="24"
+                <Label Text="{Binding Title.Player.Episodes.Count}"
                    FontSize="Medium"
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="Start"
@@ -60,7 +63,7 @@
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="Start" />
 
-                <Label Text="Завершен"
+                <Label Text="Не работает пока что"
                    FontSize="Medium"
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="Start"
@@ -78,7 +81,7 @@
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="Start" />
 
-                <Label Text="Демоны, Сенен"
+                <Label Text="{Binding Genres}"
                    FontSize="Medium"
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="Start"
@@ -96,7 +99,7 @@
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="Start" />
 
-                <Label Text="2"
+                <Label Text="Не работает пока что"
                    FontSize="Medium"
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="Start"
@@ -114,7 +117,7 @@
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="Start" />
 
-                <Label Text="2022"
+                <Label Text="Не работает пока что"
                    FontSize="Medium"
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="Start"
@@ -122,7 +125,7 @@
             </Grid>
 
 
-            <Label Text="В мире, где человек перестал быть самым опасным хищником, правят демоны. И пусть большинство смертных и не подозревают об их существовании - даже легенды о великом Рёмэне Сукуне, что в давние времена был побеждён с величайшим трудом, помнят немногие. Остатки демона были разбросаны по всему свету, и если найдётся демон, что сможет найти и поглотить все из них - он обретёт мощь, способную стереть человечество с лица земли.\r\n\r\nЭта история повествует о Юдзи Итадори, ученике старшей школы, отличающимся выдающейся физической силой. Каждый уважающий себя глава спортивного клуба пытается заполучить в свои ряды такого участника, но для Юдзи на первом месте стоят учёба и уход за больным дедушкой. Устав от постоянных приглашений, он предпочитает вступить в клуб окультных наук, что бы избавиться от назойливого внимания. Но в один прекрасный день главе клуба попадается в руки древний проклятный артефакт. И лучше бы им было к нему даже не прикасаться. Ибо кто знает, что именно там запечатано..."
+            <Label Text="Не работает пока что"
                FontSize="Small"
                HorizontalOptions="Center"
                VerticalOptions="Center"

@@ -21,11 +21,11 @@
                         HeightRequest="200">  
                         <Border StrokeShape="RoundRectangle 10,10,10,10">
                             <Image Aspect="AspectFill">
-                                <Image.GestureRecognizers>
+                                <!--<Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnImageTapped" />
-                                </Image.GestureRecognizers>
+                                </Image.GestureRecognizers>-->
                                 <Image.Source>
-                                    <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}"  CachingEnabled="True" />
+                                    <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}" CachingEnabled="True" />
                                 </Image.Source>
                             </Image>
                         </Border>
@@ -80,7 +80,7 @@
 
         <CollectionView ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" Margin="10,10,0,10" Grid.Row="1" 
                         ItemsSource="{Binding TitlesByGenre}" VerticalOptions="FillAndExpand" 
-                        RemainingItemsThresholdReached="LoadMoreGenres" RemainingItemsThreshold="1">
+                        RemainingItemsThresholdReached="LoadMoreGenres" RemainingItemsThreshold="1" SelectionChanged="TitleSelected">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" SnapPointsType="None"/>
             </CollectionView.ItemsLayout>
@@ -88,7 +88,8 @@
                 <DataTemplate x:DataType="model:GenreCollection">
                     <StackLayout Orientation="Vertical">
                         <Label Text="{Binding GenreName}" FontSize="Title" Margin="0,0,0,7"/>
-                        <CollectionView ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource Key=mainTemplateSelector}" HorizontalOptions="Start">
+                        <CollectionView SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource Key=mainTemplateSelector}" HorizontalOptions="Start"
+                                        SelectionChanged="TitleSelected">
                             <CollectionView.ItemsLayout>
                                 <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
                             </CollectionView.ItemsLayout>

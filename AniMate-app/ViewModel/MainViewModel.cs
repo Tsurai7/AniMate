@@ -10,6 +10,8 @@ namespace AniMate_app.ViewModel
 
         public List<string> Genres { get; private set; }
 
+        public string Test {  get; private set; }
+
         public int GenresLoaded { get; private set; } = 0;
 
         public bool AllGenresLoaded => GenresLoaded.Equals(Genres.Count);
@@ -21,6 +23,8 @@ namespace AniMate_app.ViewModel
             Genres = await AnilibriaAPI.GetGenres();
 
             TitlesByGenre.Clear();
+
+            GenresLoaded = 0;
 
             await LoadTitlesByGenre(5);
         }
