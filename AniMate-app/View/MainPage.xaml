@@ -6,7 +6,62 @@
              xmlns:DTO="clr-namespace:AniMate_app.Anilibria"
              x:Class="AniMate_app.View.MainPage"
              x:DataType="local:MainViewModel"
+             xmlns:templateSelector="clr-namespace:AniMate_app.View.TemplateSelectors"
              Loaded="LoadContent">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            
+            <DataTemplate x:Key="TitleTile" x:DataType="DTO:TitleRequestDto">
+                <StackLayout Margin="5"
+                     VerticalOptions="FillAndExpand"
+                     HorizontalOptions="FillAndExpand">
+                    <Grid VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        HeightRequest="200">  
+                        <Border StrokeShape="RoundRectangle 10,10,10,10">
+                            <Image Aspect="AspectFill">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnImageTapped" />
+                                </Image.GestureRecognizers>
+                                <Image.Source>
+                                    <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}"  CachingEnabled="True" />
+                                </Image.Source>
+                            </Image>
+                        </Border>
+                    </Grid>
+                    <Grid VerticalOptions="Start"
+                        HorizontalOptions="FillAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="10" />
+                        </Grid.ColumnDefinitions>
+                        <StackLayout>
+                            <Label Text="{Binding Names.Ru, Mode=OneTime}"
+                                   TextColor="Black"
+                                   VerticalOptions="Start"
+                                   HorizontalOptions="Start"
+                                   Margin="10,10,0,0"/>
+                        </StackLayout>
+                        <Button Grid.Column="1"
+                                VerticalOptions="Start"
+                                HorizontalOptions="End"
+                                HeightRequest="20" WidthRequest="20"
+                                BackgroundColor="White"
+                                Margin="10,10,0,0">
+                            <Button.ImageSource>
+                                <FileImageSource File="dots.svg" />
+                            </Button.ImageSource>
+                        </Button>
+                    </Grid>
+                </StackLayout>
+            </DataTemplate>
+
+            <templateSelector:MainpageTemplateSelector x:Key="mainTemplateSelector"
+                TitleTileTemplate ="{StaticResource TitleTile}"/>
+            
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
@@ -16,69 +71,25 @@
         </Grid.RowDefinitions>
 
         <Image Source="logo.svg"
-                   MaximumHeightRequest="50"
-                   MaximumWidthRequest="100"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Start"
-                   Margin="20, 20, 0, 0">
+            MaximumHeightRequest="50"
+            MaximumWidthRequest="100"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            Margin="20, 20, 0, 0">
         </Image>
 
-        <CollectionView x:Name="GenreList" Margin="10,10,0,10" Grid.Row="1" ItemsSource="{Binding TitlesByGenre}" VerticalOptions="FillAndExpand" RemainingItemsThresholdReached="LoadMoreGenres" RemainingItemsThreshold="2">
+        <CollectionView ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" Margin="10,10,0,10" Grid.Row="1" ItemsSource="{Binding TitlesByGenre}" VerticalOptions="FillAndExpand" RemainingItemsThresholdReached="LoadMoreGenres" RemainingItemsThreshold="0">
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" SnapPointsType="None"/>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:GenreCollection">
                     <StackLayout Orientation="Vertical">
                         <Label Text="{Binding GenreName}" FontSize="Title" Margin="0,0,0,7"/>
-                        <CollectionView ItemsSource="{Binding Titles}" HorizontalOptions="StartAndExpand">
+                        <CollectionView ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource Key=mainTemplateSelector}" HorizontalOptions="StartAndExpand">
                             <CollectionView.ItemsLayout>
-                                <LinearItemsLayout Orientation="Horizontal" />
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
                             </CollectionView.ItemsLayout>
-
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="DTO:TitleRequestDto">
-                                    <StackLayout Margin="5"
-                                                     VerticalOptions="FillAndExpand"
-                                                     HorizontalOptions="FillAndExpand">
-                                        <Grid VerticalOptions="FillAndExpand"
-                                                  HorizontalOptions="FillAndExpand"
-                                                  HeightRequest="200">
-                                            <Border StrokeShape="RoundRectangle 10,10,10,10">
-                                                <Image Source="{Binding Posters.Original.Url}" Aspect="Fill">
-                                                    <Image.GestureRecognizers>
-                                                        <TapGestureRecognizer Tapped="OnImageTapped" />
-                                                    </Image.GestureRecognizers>
-                                                </Image>
-                                            </Border>
-                                        </Grid>
-                                        <Grid VerticalOptions="Start"
-                                                  HorizontalOptions="FillAndExpand">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="150" />
-                                                <ColumnDefinition Width="10" />
-                                            </Grid.ColumnDefinitions>
-                                            <StackLayout>
-                                                <Label Text="{Binding Names.Ru}"
-                                                           TextColor="Black"
-                                                           VerticalOptions="Start"
-                                                           HorizontalOptions="Start"
-                                                           Margin="10,10,0,0"/>
-                                            </StackLayout>
-                                            <Button Grid.Column="1"
-                                                        VerticalOptions="Start"
-                                                        HorizontalOptions="End"
-                                                        HeightRequest="20" WidthRequest="20"
-                                                        BackgroundColor="White"
-                                                        Margin="10,10,0,0">
-                                                <Button.ImageSource>
-                                                    <FileImageSource File="dots.svg" />
-                                                </Button.ImageSource>
-                                            </Button>
-                                        </Grid>
-                                    </StackLayout>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
                         </CollectionView>
                     </StackLayout>
                 </DataTemplate>

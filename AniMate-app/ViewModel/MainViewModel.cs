@@ -25,15 +25,6 @@ namespace AniMate_app.ViewModel
             await LoadTitlesByGenre(5);
         }
 
-        public ObservableCollection<string> TestString { get; private set; } = new ObservableCollection<string>() { "test", "test" , "test", "test", "test", "test" };
-
-        public void LoadMoreTest()
-        {
-            TestString.Add("bob");
-
-            OnPropertyChanged(nameof(TestString));
-        }
-
         public async Task LoadTitlesByGenre(int count)
         {
             if(!IsLoaded) return;

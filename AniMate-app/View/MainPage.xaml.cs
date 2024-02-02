@@ -20,12 +20,12 @@ namespace AniMate_app.View
 
         private async void LoadContent(object sender, EventArgs e)
         {
-            await viewModel.LoadContent();
+             await viewModel.LoadContent();
         }
 
         private async void LoadMoreGenres(object sender, EventArgs e)
         {
-            if (viewModel.AllGenresLoaded)
+            if (viewModel.AllGenresLoaded || !viewModel.IsLoaded)
                 return;
 
             await viewModel.LoadTitlesByGenre(1);
