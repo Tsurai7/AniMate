@@ -12,7 +12,7 @@ namespace AniMate_app.ViewModel
 
         #endregion
 
-        public ObservableCollection<Title> Titles { get; private set; }
+
 
         public ObservableCollection<string> Genres { get; private set; }
 
