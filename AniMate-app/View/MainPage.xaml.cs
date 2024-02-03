@@ -9,6 +9,8 @@ namespace AniMate_app.View
 
         private bool isOpeningPlayer = false;
 
+        private bool isFirstLoad = true;
+
         public MainPage()
         {
             InitializeComponent();
@@ -18,7 +20,8 @@ namespace AniMate_app.View
 
         private async void LoadContent(object sender, EventArgs e)
         {
-             await viewModel.LoadContent();
+            if(isFirstLoad)
+                await viewModel.LoadContent();
         }
 
         private void LoadMoreGenres(object sender, EventArgs e)
@@ -47,6 +50,11 @@ namespace AniMate_app.View
             collectionView.SelectedItem = null;
 
             isOpeningPlayer = false;
+        }
+
+        private void ContentPage_Unloaded(object sender, EventArgs e)
+        {
+            isFirstLoad = false;
         }
     }
 }

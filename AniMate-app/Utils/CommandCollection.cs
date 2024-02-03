@@ -39,16 +39,18 @@
                     while (!command.CanExecute()) 
                     {
                         if (_cts.Token.IsCancellationRequested)
+                        {
                             return;
+                        }
                     }
 
                     if (_cts.Token.IsCancellationRequested)
+                    {
                         return;
+                    }
 
                     command.Execute();
                 }
-
-                _cts.Dispose();
             });
         }
 
@@ -56,21 +58,20 @@
         {
             _commands.Enqueue(command);
 
-            if(_task == null || _task.IsCompleted)
+            if(_task is null || _task.IsCompleted)
             {
                 _cts = new CancellationTokenSource();
 
                 Start();
-            }
-                
+            }       
         }
 
         public void Clear()
         {
             _commands.Clear();
 
-            if(_task != null || !_task.IsCompleted)
-                _cts.Cancel();
+            if(_task is not null)
+                _cts?.Cancel();
         }
     }
 }

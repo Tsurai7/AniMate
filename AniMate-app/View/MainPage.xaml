@@ -7,7 +7,8 @@
              x:Class="AniMate_app.View.MainPage"
              x:DataType="local:MainViewModel"
              xmlns:templateSelector="clr-namespace:AniMate_app.View.TemplateSelectors"
-             Loaded="LoadContent">
+             Loaded="LoadContent"
+             Unloaded="ContentPage_Unloaded">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -21,9 +22,6 @@
                         HeightRequest="200">  
                         <Border StrokeShape="RoundRectangle 10,10,10,10">
                             <Image Aspect="AspectFill">
-                                <!--<Image.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnImageTapped" />
-                                </Image.GestureRecognizers>-->
                                 <Image.Source>
                                     <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}" CachingEnabled="True" />
                                 </Image.Source>
@@ -89,7 +87,7 @@
                     <StackLayout Orientation="Vertical">
                         <Label Text="{Binding GenreName}" FontSize="Title" Margin="0,0,0,7"/>
                         <CollectionView SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource Key=mainTemplateSelector}" HorizontalOptions="Start"
-                                        SelectionChanged="TitleSelected">
+                                        SelectionChanged="TitleSelected" EmptyView="Loading Data">
                             <CollectionView.ItemsLayout>
                                 <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
                             </CollectionView.ItemsLayout>

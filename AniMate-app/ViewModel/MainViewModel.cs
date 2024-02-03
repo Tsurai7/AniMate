@@ -11,8 +11,6 @@ namespace AniMate_app.ViewModel
 
         public List<string> Genres { get; private set; }
 
-        public string Test {  get; private set; }
-
         public int GenresLoaded { get; private set; } = 0;
 
         public int ReaminingItemsThereshold { get; private set; } = 1;
@@ -31,7 +29,7 @@ namespace AniMate_app.ViewModel
 
             TitlesByGenre.Clear();
 
-            //_loadCommandsQueue.Clear();
+            _loadCommandsQueue.Clear();
 
             GenresLoaded = 0;
 
