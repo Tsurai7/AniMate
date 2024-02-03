@@ -13,15 +13,21 @@ namespace AniMate_app.ViewModel
 
         public int GenresLoaded { get; private set; } = 0;
 
-        public int ReaminingItemsThereshold { get; private set; } = 1;
+        public int RemainingItems { get; private set; } = 1;
 
         public bool AllGenresLoaded => GenresLoaded.Equals(Genres.Count);
 
-        public bool IsLoaded { get; private set; } = true;
+        public bool IsTitlesLoaded { get; private set; } = true;
 
-        private CommandCollection<int> _loadCommandsQueue = new();
+        public bool IsGenresLoaded { get; private set; } = true;
 
-        private Utils.Command<int> LoadMoreTitlesCommand => new(5, LoadTitlesByGenre, CanLoadMore);
+        private CommandCollection<int> _loadGenreCommandsQueue = new();
+
+        private CommandCollection<GenreCollection> _loadMoreTitlesCommandsQueue = new();
+
+        private Utils.Command<int> LoadNewGenreTitles => new(5, LoadTitlesByGenreAction, CanLoadMoreGenres);
+
+        private int _loadMoreTitlesCount = 5;
 
         public async Task LoadContent()
         {
@@ -29,26 +35,50 @@ namespace AniMate_app.ViewModel
 
             TitlesByGenre.Clear();
 
-            _loadCommandsQueue.Clear();
+            _loadGenreCommandsQueue.Clear();
 
             GenresLoaded = 0;
 
             LoadGenres();
 
-            _loadCommandsQueue.Add(LoadMoreTitlesCommand);
+            _loadGenreCommandsQueue.Add(LoadNewGenreTitles);
         }
 
-        public void LoadMoreGenres()
+
+        public void LoadMoreTitlesForGenre(GenreCollection genreCollection)
         {
-            if(!AllGenresLoaded)
-                _loadCommandsQueue.Add(LoadMoreTitlesCommand);
-            else
-                _loadCommandsQueue.Clear();
+            if (genreCollection.TargetTitleCount.Equals(genreCollection.TitleCount))
+                _loadMoreTitlesCommandsQueue.Add(new(genreCollection, LoadMoreTitlesForGenreAction, CanLoadMoreTitlesForeGenre));
+
+            else if (_loadMoreTitlesCommandsQueue.CommandCount > 0)
+                _loadMoreTitlesCommandsQueue.Clear();
         }
 
-        private bool CanLoadMore(int count)
+        private bool CanLoadMoreTitlesForeGenre(GenreCollection genreCollection)
         {
-            return IsLoaded && !AllGenresLoaded;
+            return genreCollection.TargetTitleCount.Equals(genreCollection.TitleCount) && IsTitlesLoaded;
+        }
+
+        private async void LoadMoreTitlesForGenreAction(GenreCollection genreCollection)
+        {
+            if (!IsTitlesLoaded)
+                return;
+
+            IsTitlesLoaded = false;
+
+            if (genreCollection.TargetTitleCount > genreCollection.TitleCount)
+                return;
+
+            genreCollection.TargetTitleCount += _loadMoreTitlesCount;
+
+            genreCollection.AddTitleList(await AnilibriaAPI.GetTilesByGenre(genreCollection.GenreName, genreCollection.TitleCount, _loadMoreTitlesCount));
+
+            IsTitlesLoaded = true;
+        }
+
+        private bool CanLoadMoreGenres(int count)
+        {
+            return IsGenresLoaded && !AllGenresLoaded;
         }
 
         private void LoadGenres()
@@ -57,24 +87,38 @@ namespace AniMate_app.ViewModel
                 TitlesByGenre.Add(new(genre));
         }
 
-        public async void LoadTitlesByGenre(int count)
+        public void LoadMoreGenres()
         {
-            if(!IsLoaded) return;
+            if (!AllGenresLoaded)
+                _loadGenreCommandsQueue.Add(LoadNewGenreTitles);
+            else if (_loadGenreCommandsQueue.CommandCount > 0)
+                _loadGenreCommandsQueue.Clear();
+        }
 
-            IsLoaded = false;
+        private async void LoadTitlesByGenreAction(int count)
+        {
+            if(!IsGenresLoaded) return;
 
-            count = GenresLoaded + count < Genres.Count ? GenresLoaded + count : Genres.Count;
+            IsGenresLoaded = false;
 
-            for (int i = GenresLoaded; i < count; i++)
-                TitlesByGenre[i].AddTitleList(await AnilibriaAPI.GetTilesByGenre(Genres[i]));
+            int newCount = GenresLoaded + count < Genres.Count ? GenresLoaded + count : Genres.Count;
 
-            GenresLoaded = count;
+            for (int i = GenresLoaded; i < newCount; i++)
+            {
+                var genreTitles = TitlesByGenre[i];
 
-            IsLoaded = true;
+                genreTitles.AddTitleList(await AnilibriaAPI.GetTilesByGenre(Genres[i], 0, 5));
 
-            ReaminingItemsThereshold = Genres.Count - GenresLoaded;
+                genreTitles.TargetTitleCount = count;
+            }
 
-            OnPropertyChanged(nameof(ReaminingItemsThereshold));
+            GenresLoaded = newCount;
+
+            IsGenresLoaded = true;
+
+            RemainingItems = Genres.Count - GenresLoaded;
+
+            OnPropertyChanged(nameof(RemainingItems));
         }
     }
 }

@@ -24,11 +24,13 @@
     {
         private Queue<Command<T>> _commands = new();
 
+        public int CommandCount => _commands.Count;
+
         private Task _task;
 
         private CancellationTokenSource _cts = null;
 
-        private void Start()
+        private void StartExecuting()
         {
             _task = Task.Factory.StartNew(() =>
             {
@@ -39,15 +41,11 @@
                     while (!command.CanExecute()) 
                     {
                         if (_cts.Token.IsCancellationRequested)
-                        {
                             return;
-                        }
                     }
 
                     if (_cts.Token.IsCancellationRequested)
-                    {
                         return;
-                    }
 
                     command.Execute();
                 }
@@ -60,9 +58,16 @@
 
             if(_task is null || _task.IsCompleted)
             {
-                _cts = new CancellationTokenSource();
+                if (_cts is not null && !_cts.IsCancellationRequested)
+                    _cts.TryReset();
+                else
+                {
+                    _cts?.Dispose();
 
-                Start();
+                    _cts = new CancellationTokenSource();
+                }
+
+                StartExecuting();
             }       
         }
 

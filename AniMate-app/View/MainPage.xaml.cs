@@ -1,5 +1,7 @@
 ﻿using AniMate_app.Anilibria;
+using AniMate_app.Model;
 using AniMate_app.ViewModel;
+using System.Collections.ObjectModel;
 
 namespace AniMate_app.View
 {
@@ -26,10 +28,15 @@ namespace AniMate_app.View
 
         private void LoadMoreGenres(object sender, EventArgs e)
         {
-            if (viewModel.AllGenresLoaded || !viewModel.IsLoaded)
+            if (viewModel.AllGenresLoaded || !viewModel.IsGenresLoaded)
                 return;
 
             viewModel.LoadMoreGenres();
+        }
+
+        private void LoadMoreTitles(object sender, EventArgs e)
+        {
+            viewModel.LoadMoreTitlesForGenre((sender as CollectionView).BindingContext as GenreCollection);
         }
 
         private async void TitleSelected(object sender, SelectionChangedEventArgs e)

@@ -10,6 +10,8 @@ namespace AniMate_app.Model
 
         public ObservableCollection<TitleRequestDto> Titles { get; private set; } 
 
+        public int TargetTitleCount { get; set; }
+
         public int TitleCount => Titles.Count;
 
         public GenreCollection(string name)

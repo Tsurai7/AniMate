@@ -33,9 +33,10 @@ namespace AniMate_app.Anilibria
             return genres;
         }
 
-        public static async Task<List<TitleRequestDto>> GetTilesByGenre(string genre)
+        public static async Task<List<TitleRequestDto>> GetTilesByGenre(string genre, int skip = 0, int count = 1)
         {
-            using HttpResponseMessage response = await _httpClient.GetAsync($"{BaseQueryAddress}title/search?genres={genre}");
+            string t = $"""{BaseQueryAddress}title/search?genres={genre}{(skip > 0 ? $"&after={skip}" : "")}&limit={skip+count}""";
+            using HttpResponseMessage response = await _httpClient.GetAsync(t);
 
             string jsonInfo = await response.Content.ReadAsStringAsync();
 
