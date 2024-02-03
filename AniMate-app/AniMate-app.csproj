@@ -48,15 +48,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <AndroidResource Remove="Новая папка\**" />
-	  <Compile Remove="Новая папка\**" />
-	  <EmbeddedResource Remove="Новая папка\**" />
-	  <MauiCss Remove="Новая папка\**" />
-	  <MauiXaml Remove="Новая папка\**" />
-	  <None Remove="Новая папка\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <None Remove="Resources\Images\dots.svg" />
 	  <None Remove="Resources\Images\home.svg" />
 	  <None Remove="Resources\AppIcon\animateicon.svg" />

@@ -12,10 +12,21 @@ namespace AniMate_app.Model
 
         public int TitleCount => Titles.Count;
 
-        public GenreCollection(string name, List<TitleRequestDto> titles)
+        public GenreCollection(string name)
         {
             GenreName = name;
-            Titles = new ObservableCollection<TitleRequestDto>(titles);
+            Titles = new();
+        }
+
+        public void AddTitle(TitleRequestDto title)
+        {
+            Titles.Add(title);
+        }
+
+        public void AddTitleList(IEnumerable<TitleRequestDto> titles)
+        {
+            foreach (var title in titles)
+                AddTitle(title);
         }
     }
 }

@@ -78,9 +78,9 @@
             Margin="20, 20, 0, 0">
         </Image>
 
-        <CollectionView ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" Margin="10,10,0,10" Grid.Row="1" 
+        <CollectionView ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" Margin="10,10,0,10" Grid.Row="1"
                         ItemsSource="{Binding TitlesByGenre}" VerticalOptions="FillAndExpand" 
-                        RemainingItemsThresholdReached="LoadMoreGenres" RemainingItemsThreshold="1" SelectionChanged="TitleSelected">
+                        RemainingItemsThresholdReached="LoadMoreGenres" RemainingItemsThreshold="{Binding ReaminingItemsThereshold}" SelectionChanged="TitleSelected">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" SnapPointsType="None"/>
             </CollectionView.ItemsLayout>

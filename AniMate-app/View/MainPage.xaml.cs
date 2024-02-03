@@ -1,5 +1,4 @@
 ﻿using AniMate_app.Anilibria;
-using AniMate_app.Model;
 using AniMate_app.ViewModel;
 
 namespace AniMate_app.View
@@ -22,12 +21,12 @@ namespace AniMate_app.View
              await viewModel.LoadContent();
         }
 
-        private async void LoadMoreGenres(object sender, EventArgs e)
+        private void LoadMoreGenres(object sender, EventArgs e)
         {
             if (viewModel.AllGenresLoaded || !viewModel.IsLoaded)
                 return;
 
-            await viewModel.LoadTitlesByGenre(1);
+            viewModel.LoadMoreGenres();
         }
 
         private async void TitleSelected(object sender, SelectionChangedEventArgs e)
