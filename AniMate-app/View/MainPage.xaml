@@ -72,34 +72,36 @@
         <Image Source="logo.svg"
             MaximumHeightRequest="50"
             MaximumWidthRequest="100"
-            HorizontalOptions="Center"
+            HorizontalOptions="Start"
             VerticalOptions="Start"
             Margin="10, 20, 0, 0">
         </Image>
 
-        <CollectionView ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" Margin="10,10,0,0" Grid.Row="1"
-                        ItemsSource="{Binding TitlesByGenre}" VerticalOptions="FillAndExpand" 
-                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreGenresCommand}" 
-                        RemainingItemsThreshold="{Binding RemainingItems}">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" SnapPointsType="None"/>
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:GenreCollection">
-                    <StackLayout Orientation="Vertical">
-                        <Label Text="{Binding GenreName}" FontSize="Title" Margin="0,0,0,7"/>
-                        <CollectionView SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource Key=mainTemplateSelector}" HorizontalOptions="Start"
-                                        SelectionChanged="TitleSelected" EmptyView="Loading Data" RemainingItemsThreshold="0" 
-                                        RemainingItemsThresholdReachedCommand="{Binding Source={RelativeSource AncestorType={x:Type local:MainViewModel}}, Path=LoadMoreTitlesForGenreCommand}"
-                                        RemainingItemsThresholdReachedCommandParameter="{Binding .}">
-                            <CollectionView.ItemsLayout>
-                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="4"/>
-                            </CollectionView.ItemsLayout>
-                        </CollectionView>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <RefreshView Margin="10,10,0,0" Grid.Row="1" Command="{Binding LoadContentCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
+            <CollectionView ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" 
+                            ItemsSource="{Binding TitlesByGenre}" VerticalOptions="FillAndExpand" 
+                            RemainingItemsThresholdReachedCommand="{Binding LoadMoreGenresCommand}" 
+                            RemainingItemsThreshold="{Binding RemainingItems}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" SnapPointsType="None"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:GenreCollection">
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="{Binding GenreName}" FontSize="Title" Margin="0,0,0,7"/>
+                            <CollectionView SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource Key=mainTemplateSelector}" HorizontalOptions="Start"
+                                            SelectionChanged="TitleSelected" EmptyView="Loading Data" RemainingItemsThreshold="0" 
+                                            RemainingItemsThresholdReachedCommand="{Binding Source={RelativeSource AncestorType={x:Type local:MainViewModel}}, Path=LoadMoreTitlesForGenreCommand}"
+                                            RemainingItemsThresholdReachedCommandParameter="{Binding .}">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="4"/>
+                                </CollectionView.ItemsLayout>
+                            </CollectionView>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
     </Grid>
     <ContentPage.Title>
         <x:Null />

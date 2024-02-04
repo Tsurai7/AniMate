@@ -31,19 +31,37 @@ namespace AniMate_app.ViewModel
 
         private readonly int _loadMoreTitlesCount = 5;
 
+        private bool _isBusy = false;
+
+        [ObservableProperty]
+        private bool _isRefreshing;
+
+        [RelayCommand]
         public async Task LoadContent()
         {
+            if(_isBusy) return;
+
+            _isBusy = true;
+
+            IsRefreshing = true;
+
+            _loadGenreCommandsQueue.Clear();
+            
+            _loadMoreTitlesCommandsQueue.Clear();
+
             Genres = await AnilibriaAPI.GetGenres();
 
             TitlesByGenre.Clear();
-
-            _loadGenreCommandsQueue.Clear();
 
             GenresLoaded = 0;
 
             LoadGenres();
 
             _loadGenreCommandsQueue.Add(LoadNewGenreTitlesCommand);
+
+            _isBusy = false;
+
+            IsRefreshing = false;
         }
 
         private void LoadGenres()
