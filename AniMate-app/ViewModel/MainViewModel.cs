@@ -137,7 +137,7 @@ namespace AniMate_app.ViewModel
 
             IsGenresLoaded = true;
 
-            RemainingItems = Genres.Count - GenresLoaded;
+            RemainingItems = Genres.Count - GenresLoaded - 1;
 
             OnPropertyChanged(nameof(RemainingItems));
         }
