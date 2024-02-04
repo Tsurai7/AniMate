@@ -6,7 +6,9 @@ namespace AniMate_backend.Interfaces
     {
         Task<Title> GetTitleByCode(string code);
 
-        Task<List<Title>> GetTitlesByGenre(string genre);
+        Task<List<Title>> GetAllTitlesByName(string name);
+
+        //Task<List<Title>> GetTitlesByGenre(string genre);
 
         Task<List<string>> GetAllGenres();
     }

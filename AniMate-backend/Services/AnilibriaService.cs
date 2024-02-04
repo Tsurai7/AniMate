@@ -27,6 +27,18 @@ namespace AniMate_backend.Services
             return title;
         }
 
+        public async Task<List<Title>> GetAllTitlesByName(string name)
+        {
+            using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}title/search?search={name}");
+
+            string jsonInfo = await response.Content.ReadAsStringAsync();
+
+            List<Title> titles = JsonConvert.DeserializeObject<List<Title>>(jsonInfo);
+
+            return titles;
+        }
+
+
         public async Task<List<string>> GetAllGenres()
         {
             using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}genres");
@@ -38,17 +50,17 @@ namespace AniMate_backend.Services
             return genres;
         }
 
-        public async Task<List<Title>> GetTitlesByGenre(string genre)
-        {
-            using HttpResponseMessage response = 
-                await _httpClient.GetAsync($"{_url}title/search?genres={genre}");
+        //public async Task<List<Title>> GetTitlesByGenre(string genre)
+        //{
+        //    using HttpResponseMessage response = 
+        //        await _httpClient.GetAsync($"{_url}title/search?genres={genre}");
 
-            string jsonInfo = await response.Content.ReadAsStringAsync();
+        //    string jsonInfo = await response.Content.ReadAsStringAsync();
 
-            List<Title> titles = JsonConvert.DeserializeObject<Title>(jsonInfo);
+        //    List<Title> titles = JsonConvert.DeserializeObject<Title>(jsonInfo);
 
-            return titles;
-        }
+        //    return titles;
+        //}
 
         //public async Task<List<Title>> GetTitlesByGenre(string genre, int skip = 0, int count = 1)
         //{
