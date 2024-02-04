@@ -8,6 +8,6 @@ namespace AniMate_backend.Interfaces
 
         Task<List<Title>> GetTitlesByGenre(string genre);
 
-        Task<List<string>> GetGenres();
+        Task<List<string>> GetAllGenres();
     }
 }

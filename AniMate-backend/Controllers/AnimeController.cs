@@ -15,16 +15,16 @@ namespace AniMate_backend.Controllers
             _anilibriaService = anilibriaService;
         }
 
-        [HttpGet("GetTitle")]
-        public async Task<ActionResult<Title>> GetTitle(string titleName)
+        [HttpGet("GetTitleByCode")]
+        public async Task<ActionResult<Title>> GetTitleByCode(string titleName)
         {
             var title = await _anilibriaService.GetTitleByCode(titleName);
 
             return Ok(title);
         }
 
-        [HttpGet("GetTitle")]
-        public async Task<ActionResult<List<string>>> GetGenres()
+        [HttpGet("GetAllGenres")]
+        public async Task<ActionResult<List<string>>> GetAllGenres()
         {
             var genres = await _anilibriaService.GetGenres();
 

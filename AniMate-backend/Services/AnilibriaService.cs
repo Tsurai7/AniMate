@@ -27,7 +27,7 @@ namespace AniMate_backend.Services
             return title;
         }
 
-        public async Task<List<string>> GetGenres()
+        public async Task<List<string>> GetAllGenres()
         {
             using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}genres");
 
@@ -38,9 +38,16 @@ namespace AniMate_backend.Services
             return genres;
         }
 
-        public Task<List<Title>> GetTitlesByGenre(string genre)
+        public async Task<List<Title>> GetTitlesByGenre(string genre)
         {
-            throw new NotImplementedException();
+            using HttpResponseMessage response = 
+                await _httpClient.GetAsync($"{_url}title/search?genres={genre}");
+
+            string jsonInfo = await response.Content.ReadAsStringAsync();
+
+            List<Title> titles = JsonConvert.DeserializeObject<Title>(jsonInfo);
+
+            return titles;
         }
 
         //public async Task<List<Title>> GetTitlesByGenre(string genre, int skip = 0, int count = 1)
