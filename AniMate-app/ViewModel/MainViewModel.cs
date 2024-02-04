@@ -23,13 +23,13 @@ namespace AniMate_app.ViewModel
 
         public bool IsGenresLoaded { get; private set; } = true;
 
-        private CommandCollection<int> _loadGenreCommandsQueue = new();
+        private readonly CommandCollection<int> _loadGenreCommandsQueue = new();
 
-        private CommandCollection<GenreCollection> _loadMoreTitlesCommandsQueue = new();
+        private readonly CommandCollection<GenreCollection> _loadMoreTitlesCommandsQueue = new();
 
-        private Utils.Command<int> LoadNewGenreTitles => new(5, LoadTitlesByGenreAction, CanLoadMoreGenres);
+        private Utils.Command<int> LoadNewGenreTitlesCommand => new(5, LoadTitlesByGenreAction, CanLoadMoreGenres);
 
-        private int _loadMoreTitlesCount = 5;
+        private readonly int _loadMoreTitlesCount = 5;
 
         public async Task LoadContent()
         {
@@ -43,20 +43,35 @@ namespace AniMate_app.ViewModel
 
             LoadGenres();
 
-            _loadGenreCommandsQueue.Add(LoadNewGenreTitles);
+            _loadGenreCommandsQueue.Add(LoadNewGenreTitlesCommand);
+        }
+
+        private void LoadGenres()
+        {
+            foreach (var genre in Genres)
+                TitlesByGenre.Add(new(genre));
+        }
+
+        [RelayCommand]
+        public void LoadMoreGenres()
+        {
+            if (!AllGenresLoaded)
+                _loadGenreCommandsQueue.Add(LoadNewGenreTitlesCommand);
+            else if (_loadGenreCommandsQueue.CommandCount > 0)
+                _loadGenreCommandsQueue.Clear();
         }
 
         [RelayCommand]
         public void LoadMoreTitlesForGenre(GenreCollection genreCollection)
         {
             if (genreCollection.TargetTitleCount.Equals(genreCollection.TitleCount))
-                _loadMoreTitlesCommandsQueue.Add(new(genreCollection, LoadMoreTitlesForGenreAction, CanLoadMoreTitlesForeGenre));
+                _loadMoreTitlesCommandsQueue.Add(new(genreCollection, LoadMoreTitlesForGenreAction, CanLoadMoreTitlesForGenre));
 
             else if (_loadMoreTitlesCommandsQueue.CommandCount > 0)
                 _loadMoreTitlesCommandsQueue.Clear();
         }
 
-        private bool CanLoadMoreTitlesForeGenre(GenreCollection genreCollection)
+        private bool CanLoadMoreTitlesForGenre(GenreCollection genreCollection)
         {
             return genreCollection.TargetTitleCount.Equals(genreCollection.TitleCount) && IsTitlesLoaded;
         }
@@ -81,21 +96,6 @@ namespace AniMate_app.ViewModel
         private bool CanLoadMoreGenres(int count)
         {
             return IsGenresLoaded && !AllGenresLoaded;
-        }
-
-        private void LoadGenres()
-        {
-            foreach (var genre in Genres)
-                TitlesByGenre.Add(new(genre));
-        }
-
-        [RelayCommand]
-        public void LoadMoreGenres()
-        {
-            if (!AllGenresLoaded)
-                _loadGenreCommandsQueue.Add(LoadNewGenreTitles);
-            else if (_loadGenreCommandsQueue.CommandCount > 0)
-                _loadGenreCommandsQueue.Clear();
         }
 
         private async void LoadTitlesByGenreAction(int count)
