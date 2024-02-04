@@ -4,21 +4,15 @@ using System.Collections.ObjectModel;
 
 namespace AniMate_app.Model
 {
-    public class GenreCollection : ObservableObject
+    public class GenreCollection(string name) : ObservableObject
     {
-        public string GenreName { get; private set; }
+        public string GenreName { get; private set; } = name;
 
-        public ObservableCollection<TitleRequestDto> Titles { get; private set; } 
+        public ObservableCollection<TitleRequestDto> Titles { get; private set; } = new();
 
         public int TargetTitleCount { get; set; }
 
         public int TitleCount => Titles.Count;
-
-        public GenreCollection(string name)
-        {
-            GenreName = name;
-            Titles = new();
-        }
 
         public void AddTitle(TitleRequestDto title)
         {

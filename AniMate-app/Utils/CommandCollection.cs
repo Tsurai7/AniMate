@@ -1,23 +1,16 @@
 ﻿namespace AniMate_app.Utils
 {
-    public class Command<T>
+    public class Command<T>(T paremeter, Action<T> action, Func<T, bool> checkFunc)
     {
-        private T Paremeter { get; }
+        private T Paremeter { get; } = paremeter;
 
-        private readonly Action<T> _action;
+        private readonly Action<T> _action = action;
 
-        private readonly Func<T, bool> _checkFunc;
+        private readonly Func<T, bool> _checkFunc = checkFunc;
 
         public bool CanExecute() => _checkFunc.Invoke(Paremeter);
 
         public void Execute() => _action.Invoke(Paremeter);
-
-        public Command(T paremeter, Action<T> action, Func<T, bool> checkFunc)
-        {
-            Paremeter = paremeter;
-            _action = action;
-            _checkFunc = checkFunc;
-        }
     }
 
     class CommandCollection<T>
