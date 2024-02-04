@@ -1,11 +1,13 @@
 ﻿using AniMate_app.Anilibria;
 using AniMate_app.Model;
 using AniMate_app.Utils;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 
 namespace AniMate_app.ViewModel
 {
-    class MainViewModel : BindableObject
+    public partial class MainViewModel : ObservableObject
     {
         public ObservableCollection<GenreCollection> TitlesByGenre { get; private set; } = new();
 
@@ -44,7 +46,7 @@ namespace AniMate_app.ViewModel
             _loadGenreCommandsQueue.Add(LoadNewGenreTitles);
         }
 
-
+        [RelayCommand]
         public void LoadMoreTitlesForGenre(GenreCollection genreCollection)
         {
             if (genreCollection.TargetTitleCount.Equals(genreCollection.TitleCount))
@@ -87,6 +89,7 @@ namespace AniMate_app.ViewModel
                 TitlesByGenre.Add(new(genre));
         }
 
+        [RelayCommand]
         public void LoadMoreGenres()
         {
             if (!AllGenresLoaded)

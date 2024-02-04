@@ -79,7 +79,8 @@
 
         <CollectionView ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" Margin="10,10,0,0" Grid.Row="1"
                         ItemsSource="{Binding TitlesByGenre}" VerticalOptions="FillAndExpand" 
-                        RemainingItemsThresholdReached="LoadMoreGenres" RemainingItemsThreshold="{Binding RemainingItems}">
+                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreGenresCommand}" 
+                        RemainingItemsThreshold="{Binding RemainingItems}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" SnapPointsType="None"/>
             </CollectionView.ItemsLayout>
@@ -88,7 +89,9 @@
                     <StackLayout Orientation="Vertical">
                         <Label Text="{Binding GenreName}" FontSize="Title" Margin="0,0,0,7"/>
                         <CollectionView SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource Key=mainTemplateSelector}" HorizontalOptions="Start"
-                                        SelectionChanged="TitleSelected" EmptyView="Loading Data" RemainingItemsThreshold="0" RemainingItemsThresholdReached="LoadMoreTitles">
+                                        SelectionChanged="TitleSelected" EmptyView="Loading Data" RemainingItemsThreshold="0" 
+                                        RemainingItemsThresholdReachedCommand="{Binding Source={RelativeSource AncestorType={x:Type local:MainViewModel}}, Path=LoadMoreTitlesForGenreCommand}"
+                                        RemainingItemsThresholdReachedCommandParameter="{Binding .}">
                             <CollectionView.ItemsLayout>
                                 <LinearItemsLayout Orientation="Horizontal" ItemSpacing="4"/>
                             </CollectionView.ItemsLayout>
