@@ -2,7 +2,7 @@
 
 namespace AniMate_app.Anilibria
 {
-    public record TitleRequestDto
+    public class TitleRequestDto
     {
         [JsonProperty("id")]
         public long Id { get; set; }
@@ -21,18 +21,18 @@ namespace AniMate_app.Anilibria
 
         [JsonProperty("posters")]
         public Posters Posters { get; set; }
-
     }
 
     public class Posters
     {
-        [JsonProperty("original")]
-        public PosterSize Original { get; set; }
+        [JsonProperty("small")]
+        public PosterSize Small { get; set; }
     }
 
     public class PosterSize
     {
         private const string BaseAdress = "https://www.anilibria.tv";
+
         [JsonProperty("url")]
         public string Url { get; set; }
         
