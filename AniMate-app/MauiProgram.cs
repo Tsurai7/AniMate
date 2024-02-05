@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
 using CommunityToolkit.Maui;
 using MediaControls;
+using AniMate_app.Services.AnilibriaService;
+using AniMate_app.Interfaces;
 
 namespace AniMate_app
 {
@@ -20,10 +21,7 @@ namespace AniMate_app
             .UseMauiCommunityToolkitMediaElement()
             .UseMediaControls();
 
-            //builder.Services.AddScoped<IAnilibriaService, AnilibriaService>();
-
-            //builder.Services.AddHttpClient<AnilibriaService>();
-
+            //builder.Services.AddSingleton<IAnilibriaService, AnilibriaService>();
 
 #if DEBUG
             builder.Logging.AddDebug();

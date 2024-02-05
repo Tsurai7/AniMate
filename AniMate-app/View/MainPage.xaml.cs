@@ -1,4 +1,5 @@
 ﻿using AniMate_app.Anilibria;
+using AniMate_app.Services.AnilibriaService.Models;
 using AniMate_app.ViewModel;
 
 namespace AniMate_app.View
@@ -37,7 +38,7 @@ namespace AniMate_app.View
 
             var collectionView = sender as CollectionView;
 
-            await Navigation.PushAsync(new PlayerPage(collectionView.SelectedItem as TitleRequestDto));
+            await Navigation.PushAsync(new PlayerPage(collectionView.SelectedItem as Title));
 
             collectionView.SelectedItem = null;
 
