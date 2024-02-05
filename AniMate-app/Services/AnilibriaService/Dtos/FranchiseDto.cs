@@ -5,13 +5,13 @@ namespace AniMate_app.Services.AnilibriaService.Dtos
     public class FranchiseDto
     {
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [JsonProperty("releases")]
-        public List<ReleaseDto> Releases { get; set; }
+        public List<ReleaseDto>? Releases { get; set; }
     }
 
     public class ReleaseDto

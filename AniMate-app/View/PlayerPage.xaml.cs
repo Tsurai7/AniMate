@@ -9,9 +9,9 @@ public partial class PlayerPage : ContentPage
 
     public PlayerPage(Title title)
     {
-        BindingContext = viewModel = new PlayerViewModel(title);
-
         InitializeComponent();
+
+        BindingContext = viewModel = new PlayerViewModel(title);
     }
 
     private void OnWatchButtonClicked(object sender, EventArgs e)

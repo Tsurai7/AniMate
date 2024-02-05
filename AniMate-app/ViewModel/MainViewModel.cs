@@ -4,6 +4,7 @@ using AniMate_app.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace AniMate_app.ViewModel
 {
@@ -15,7 +16,7 @@ namespace AniMate_app.ViewModel
 
         public int GenresLoaded { get; private set; } = 0;
 
-        public int RemainingItems { get; private set; } = 1;
+        public int RemainingItems { get; private set; }
 
         public bool AllGenresLoaded => GenresLoaded.Equals(Genres.Count);
 
@@ -43,32 +44,47 @@ namespace AniMate_app.ViewModel
             _anilibriaService = anilibriaService;
         }
 
-        [RelayCommand]
         public async Task LoadContent()
         {
-            if(_isBusy) return;
+            _loadGenreCommandsQueue.Clear();
+            
+            _loadMoreTitlesCommandsQueue.Clear();
+
+            Genres = await _anilibriaService.GetAllGenres();
+
+            RemainingItems = Genres.Count - GenresLoaded - 1;
+
+            LoadGenres();
+
+            _loadGenreCommandsQueue.Add(LoadNewGenreTitlesCommand);
+        }
+
+        [RelayCommand]
+        public void Refresh()
+        {
+            if (_isBusy) return;
 
             _isBusy = true;
 
             IsRefreshing = true;
 
             _loadGenreCommandsQueue.Clear();
-            
+
             _loadMoreTitlesCommandsQueue.Clear();
 
             TitlesByGenre.Clear();
-                
-            Genres = await _anilibriaService.GetAllGenres();
 
             LoadGenres();
 
             GenresLoaded = 0;
 
+            IsGenresLoaded = true;
+
             _loadGenreCommandsQueue.Add(LoadNewGenreTitlesCommand);
 
-            _isBusy = false;
+            IsRefreshing = false; 
 
-            IsRefreshing = false;
+            _isBusy = false;
         }
 
         private void LoadGenres()

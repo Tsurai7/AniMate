@@ -23,8 +23,12 @@ namespace AniMate_app
             .UseMauiCommunityToolkitMediaElement()
             .UseMediaControls();
 
-            builder.Services.AddTransient<AnilibriaService>().AddTransient<MainPage>().AddTransient<MainViewModel>();
-            builder.Services.AddTransient<AnilibriaService>().AddTransient<SearchPage>().AddTransient<SearchViewModel>();
+            builder.Services.AddTransient<AnilibriaService>();
+            builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<MainViewModel>();
+            builder.Services.AddTransient<SearchPage>();
+            builder.Services.AddTransient<SearchViewModel>();
+          
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

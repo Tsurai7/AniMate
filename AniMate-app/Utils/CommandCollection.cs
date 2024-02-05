@@ -51,11 +51,10 @@
 
             if(_task is null || _task.IsCompleted)
             {
-                if (_cts is not null && !_cts.IsCancellationRequested)
-                    _cts.TryReset();
-                    
-                else
-                    _cts = new CancellationTokenSource();
+                if(_cts is not null)
+                    _cts.Dispose();
+
+                _cts = new CancellationTokenSource();
 
                 StartExecuting();
             }       
@@ -63,10 +62,10 @@
 
         public void Clear()
         {
-            _commands.Clear();
-
-            if(_task is not null)
+            if (_task is not null)
                 _cts?.Cancel();
+
+            _commands.Clear();  
         }
     }
 }
