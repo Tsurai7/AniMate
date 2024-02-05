@@ -55,8 +55,10 @@ namespace AniMate_backend.Services
 
         public async Task<List<Title>> GetAllTitlesByGenre(string genre)
         {
+            int skip = 0;
+            int count = 5;
             using HttpResponseMessage response =
-                await _httpClient.GetAsync($"{_url}title/search?genres={genre}");
+                await _httpClient.GetAsync($"""{_url}title/search?genres={genre}&order_by=in_favorites&sort_direction=1&{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
 
             string jsonInfo = await response.Content.ReadAsStringAsync();
 

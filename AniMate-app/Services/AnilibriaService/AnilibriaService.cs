@@ -44,7 +44,6 @@ namespace AniMate_app.Services.AnilibriaService
             return genres;
         }
 
-
         public async Task<List<Title>> GetAllTitlesByGenre(string genre, int skip = 0, int count = 1)
         {
             using HttpResponseMessage response =

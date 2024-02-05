@@ -36,7 +36,7 @@
             </Button>
         </StackLayout>
 
-        <CollectionView ItemsSource="{Binding Titles}" Grid.Row="1">
+        <CollectionView ItemsSource="{Binding Titles}" Grid.Row="1" SelectionMode="Single" SelectionChanged= "TitleSelected">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
                              Span="2" />

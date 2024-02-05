@@ -17,15 +17,15 @@ namespace AniMate_app.Services.AnilibriaService.Dtos
     public class ReleaseDto
     {
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         [JsonProperty("code")]
-        public string Code { get; set; }
+        public string? Code { get; set; }
 
         [JsonProperty("ordinal")]
-        public string Ordinal { get; set; }
+        public string? Ordinal { get; set; }
 
         [JsonProperty("names")]
-        public NamesDto Names { get; set; }
+        public NamesDto? Names { get; set; }
     }
 }

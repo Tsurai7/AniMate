@@ -15,7 +15,7 @@ namespace AniMate_app.Services.AnilibriaService.Models
         public NamesDto Names { get; set; }
 
         [JsonProperty("franchises")]
-        public List<FranchiseDto> Franchises { get; set; }
+        public List<FranchiseDto>? Franchises { get; set; }
 
         [JsonProperty("status")]
         public StatusDto Status { get; set; }
@@ -24,7 +24,7 @@ namespace AniMate_app.Services.AnilibriaService.Models
         public PostersDto Posters { get; set; }
 
         [JsonProperty("type")]
-        public TypeDto Type { get; set; }
+        public TypeDto? Type { get; set; }
         
         [JsonProperty("genres")]
         public List<string> Genres { get; set; }
