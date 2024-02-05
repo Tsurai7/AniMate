@@ -145,7 +145,7 @@
                            ShouldAutoPlay="False"
                            ShouldKeepScreenOn="False"
                            ShowCustomControls="True"
-                           Source="{Binding Title.Player.Episodes[0].HlsUrls.Sd}"
+                           Source=""
                            IsVisible="True"
                            MaximumHeightRequest="450"
                            MaximumWidthRequest="450"
