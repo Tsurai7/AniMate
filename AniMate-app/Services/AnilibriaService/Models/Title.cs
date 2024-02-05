@@ -12,33 +12,33 @@ namespace AniMate_app.Services.AnilibriaService.Models
         public string Code { get; set; }
 
         [JsonProperty("names")]
-        public NamesDto? Names { get; set; }
+        public NamesDto Names { get; set; }
 
         [JsonProperty("franchises")]
-        public List<FranchiseDto>? Franchises { get; set; }
+        public List<FranchiseDto> Franchises { get; set; }
 
         [JsonProperty("status")]
-        public StatusDto? Status { get; set; }
+        public StatusDto Status { get; set; }
 
         [JsonProperty("posters")]
         public PostersDto Posters { get; set; }
 
         [JsonProperty("type")]
-        public TypeDto? Type { get; set; }
+        public TypeDto Type { get; set; }
         
         [JsonProperty("genres")]
         public List<string> Genres { get; set; }
 
         [JsonProperty("season")]
-        public SeasonDto? Season { get; set; }
+        public SeasonDto Season { get; set; }
 
         [JsonProperty("description")]
-        public string? RuDescription { get; set; }
+        public string RuDescription { get; set; }
 
         [JsonProperty("in_favorites")]
         public long InFavorites { get; set; }
 
         [JsonProperty("player")]
-        public PlayerDto? Player { get; set; }
+        public PlayerDto Player { get; set; }
     }
 }
