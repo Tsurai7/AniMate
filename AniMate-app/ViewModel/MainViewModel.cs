@@ -50,13 +50,13 @@ namespace AniMate_app.ViewModel
             
             _loadMoreTitlesCommandsQueue.Clear();
 
-            Genres = await AnilibriaService.GetAllGenres();
-
             TitlesByGenre.Clear();
 
-            GenresLoaded = 0;
+            Genres = await AnilibriaAPI.GetGenres();
 
             LoadGenres();
+
+            GenresLoaded = 0;
 
             _loadGenreCommandsQueue.Add(LoadNewGenreTitlesCommand);
 
