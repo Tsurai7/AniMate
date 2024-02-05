@@ -52,7 +52,7 @@ namespace AniMate_app.ViewModel
 
             TitlesByGenre.Clear();
 
-            Genres = await AnilibriaAPI.GetGenres();
+            Genres = await AnilibriaService.GetAllGenres();
 
             LoadGenres();
 
