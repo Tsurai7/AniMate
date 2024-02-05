@@ -18,9 +18,12 @@ namespace AniMate_app.ViewModel
 
         public async void FindTitles(string name)
         {
-            var titlesList = await _anilibriaService.GetAllTitlesByName(name);
+            Titles.Clear();
 
-            foreach (var title in titlesList)
+            if (string.IsNullOrEmpty(name)) 
+                return;
+
+            foreach (var title in await _anilibriaService.GetAllTitlesByName(name))
             {
                 Titles.Add(title);
             }
