@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
 using MediaControls;
+using AniMate_app.Services.AnilibriaService;
+using AniMate_app.Interfaces;
 
 namespace AniMate_app
 {
@@ -9,11 +11,18 @@ namespace AniMate_app
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
             builder.UseMauiApp<App>().ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            }).UseMauiCommunityToolkit().UseMauiCommunityToolkitMediaElement().UseMediaControls();
+            })
+            .UseMauiCommunityToolkit()
+            .UseMauiCommunityToolkitMediaElement()
+            .UseMediaControls();
+
+            //builder.Services.AddSingleton<IAnilibriaService, AnilibriaService>();
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

@@ -22,7 +22,7 @@
                         HeightRequest="250">  
                         <Border StrokeShape="RoundRectangle 10,10,10,10">
                             <Image Aspect="AspectFill">
-                                <Image.Source>
+                                <Image.Source> 
                                     <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}" CachingEnabled="False" />
                                 </Image.Source>
                             </Image>
@@ -35,23 +35,13 @@
                             <ColumnDefinition Width="20" />
                         </Grid.ColumnDefinitions>
                         <StackLayout Grid.Column="0">
-                            <Label Text="{Binding Names.Ru, Mode=OneTime}"
-                                   TextColor="Black"
+                            <Label Text="{Binding Names.Ru, Mode=OneTime} "
+                                   TextColor="White"                         
                                    VerticalOptions="Start" 
                                    HorizontalOptions="Start"
                                    LineBreakMode="WordWrap"
                                    Margin="10,10,0,0"/>
                         </StackLayout>
-                        <Button Grid.Column="1"
-                                VerticalOptions="Start"
-                                HorizontalOptions="End"
-                                HeightRequest="20"
-                                BackgroundColor="White"
-                                Margin="10,10,0,0">
-                            <Button.ImageSource>
-                                <FileImageSource File="dots.svg" />
-                            </Button.ImageSource>
-                        </Button>
                     </Grid>
                 </StackLayout>
             </DataTemplate>
@@ -88,7 +78,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:GenreCollection">
                         <StackLayout Orientation="Vertical">
-                            <Label Text="{Binding GenreName}" FontSize="Title" Margin="0,0,0,7"/>
+                            <Label Text="{Binding GenreName}" FontSize="Title" Margin="0,0,0,7" TextColor="White"/>
                             <CollectionView SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource Key=mainTemplateSelector}" HorizontalOptions="Start"
                                             SelectionChanged="TitleSelected" EmptyView="Loading Data" RemainingItemsThreshold="0" 
                                             RemainingItemsThresholdReachedCommand="{Binding Source={RelativeSource AncestorType={x:Type local:MainViewModel}}, Path=LoadMoreTitlesForGenreCommand}"

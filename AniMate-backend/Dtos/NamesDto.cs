@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace AniMate_backend.Models.TitleInfo
+namespace AniMate_backend.Dtos
 {
     public record NamesDto
     {
