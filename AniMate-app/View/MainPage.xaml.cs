@@ -1,4 +1,4 @@
-﻿using AniMate_app.Anilibria;
+﻿using AniMate_app.Services.AnilibriaService.Models;
 using AniMate_app.ViewModel;
 
 namespace AniMate_app.View
@@ -11,11 +11,11 @@ namespace AniMate_app.View
 
         private bool isFirstLoad = true;
 
-        public MainPage()
+        public MainPage(MainViewModel mainViewModel)
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new MainViewModel();
+            BindingContext = viewModel = mainViewModel;
         }
 
         private async void LoadContent(object sender, EventArgs e)
@@ -37,7 +37,7 @@ namespace AniMate_app.View
 
             var collectionView = sender as CollectionView;
 
-            await Navigation.PushAsync(new PlayerPage(collectionView.SelectedItem as TitleRequestDto));
+            await Navigation.PushAsync(new PlayerPage(collectionView.SelectedItem as Title));
 
             collectionView.SelectedItem = null;
 

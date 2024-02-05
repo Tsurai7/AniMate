@@ -1,14 +1,15 @@
 ﻿using AniMate_app.Anilibria;
+using AniMate_app.Services.AnilibriaService.Models;
 
 namespace AniMate_app.ViewModel
 {
     public class PlayerViewModel : BindableObject
     {
-        public TitleRequestDto Title {  get; private set; }
+        public Title Title {  get; private set; }
 
         public string Genres { get; private set; }
 
-        public PlayerViewModel(TitleRequestDto currentTitle)
+        public PlayerViewModel(Title currentTitle)
         {
             Title = currentTitle;
 

@@ -53,12 +53,9 @@
             {
                 if (_cts is not null && !_cts.IsCancellationRequested)
                     _cts.TryReset();
+                    
                 else
-                {
-                    _cts?.Dispose();
-
                     _cts = new CancellationTokenSource();
-                }
 
                 StartExecuting();
             }       
