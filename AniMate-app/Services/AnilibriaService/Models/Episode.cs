@@ -10,6 +10,16 @@ namespace AniMate_app.Services.AnilibriaService.Models
 
     public record Hls
     {
+        private const string BaseAdress = "https://cache.libria.fun";
+
+        [JsonConstructor]
+        public Hls(string fhd, string hd, string sd)
+        {
+            Fhd = $"{BaseAdress}{fhd}";
+            Hd = $"{BaseAdress}{hd}"; ;
+            Sd = $"{BaseAdress}{sd}"; ;
+        }
+
         [JsonProperty("fhd")]
         public string? Fhd { get; set; }
 
