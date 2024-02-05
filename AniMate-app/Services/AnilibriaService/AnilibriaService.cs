@@ -27,7 +27,7 @@ namespace AniMate_app.Services.AnilibriaService
 
             string jsonInfo = await response.Content.ReadAsStringAsync();
 
-            List<Title> titles = JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles; ;
+            List<Title> titles = JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
 
             return titles;
         }

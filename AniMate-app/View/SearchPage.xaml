@@ -25,12 +25,11 @@
                    Placeholder = "Search in AniMate"
                    HorizontalOptions="FillAndExpand"
                    FontSize="18"
-                   ClearButtonVisibility="WhileEditing"
                    IsTextPredictionEnabled="True"
                    Completed="OnEntryCompleted">
             </Entry>
             
-            <Button >
+            <Button>
                 <Button.ImageSource>
                     <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
                 </Button.ImageSource>

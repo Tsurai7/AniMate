@@ -3,13 +3,14 @@ using AniMate_app.ViewModel;
 public partial class SearchPage : ContentPage
 {
     private readonly SearchViewModel viewModel;
+
     public SearchPage(SearchViewModel searchViewModel)
 	{
+        InitializeComponent();
 
-    InitializeComponent();
-
-    BindingContext = viewModel = searchViewModel;
+        BindingContext = viewModel = searchViewModel;
     }
+
     void OnEntryCompleted(object sender, EventArgs e)
     {
         viewModel.FindTitles(entry.Text);

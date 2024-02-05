@@ -1,10 +1,7 @@
-﻿using AniMate_app.Model;
-using AniMate_app.Services.AnilibriaService;
-using AniMate_app.Utils;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
+﻿using AniMate_app.Services.AnilibriaService;
 using AniMate_app.Services.AnilibriaService.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace AniMate_app.ViewModel
 {
@@ -22,8 +19,11 @@ namespace AniMate_app.ViewModel
         public async void FindTitles(string name)
         {
             var titlesList = await _anilibriaService.GetAllTitlesByName(name);
-            Titles = new ObservableCollection<Title>(titlesList);
 
+            foreach (var title in titlesList)
+            {
+                Titles.Add(title);
+            }
         }
     }
 }
