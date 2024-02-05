@@ -6,9 +6,7 @@
     xmlns:local="clr-namespace:AniMate_app.View">
     <TabBar>
         <ShellContent Title="Home"
-          Icon="home.svg">
-            <local:MainPage />
-        </ShellContent>
+          Icon="home.svg" Route="MainPage" ContentTemplate="{DataTemplate local:MainPage}"/>
         <ShellContent Title="Search"
           Icon="search.svg">
             <local:SearchPage />
