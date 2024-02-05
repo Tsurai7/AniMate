@@ -35,13 +35,22 @@
                             <ColumnDefinition Width="20" />
                         </Grid.ColumnDefinitions>
                         <StackLayout Grid.Column="0">
-                            <Label Text="{Binding Names.Ru, Mode=OneTime} "
-                                   TextColor="White"                         
+                            <Label Text="{Binding Names.Ru, Mode=OneTime}"
                                    VerticalOptions="Start" 
                                    HorizontalOptions="Start"
                                    LineBreakMode="WordWrap"
                                    Margin="10,10,0,0"/>
                         </StackLayout>
+                        <Button 
+                                Grid.Column="1"
+                                VerticalOptions="Start"
+                                HorizontalOptions="End"
+                                HeightRequest="20"
+                                Margin="10,10,0,0">
+                            <Button.ImageSource>
+                                <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
+                            </Button.ImageSource>
+                        </Button>
                     </Grid>
                 </StackLayout>
             </DataTemplate>
@@ -59,7 +68,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Image Source="logo.svg"
+        <Image Source="{AppThemeBinding Light= logo.svg, Dark= logowhite.svg}"
             MaximumHeightRequest="50"
             MaximumWidthRequest="100"
             HorizontalOptions="Start"
