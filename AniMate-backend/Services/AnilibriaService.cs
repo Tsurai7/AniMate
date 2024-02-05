@@ -9,7 +9,7 @@ namespace AniMate_backend.Services
     {
         private readonly HttpClient _httpClient;
 
-        private readonly string _url = "https://api.anilibria.tv/v3/";
+        private const string _url = "https://api.anilibria.tv/v3/";
 
         public AnilibriaService(IHttpClientFactory httpClientFactory)
         {
