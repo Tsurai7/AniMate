@@ -1,9 +1,8 @@
-﻿using AniMate_app.Services.AnilibriaService;
-using AniMate_app.View;
-using AniMate_app.ViewModel;
+﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
 using MediaControls;
-using Microsoft.Extensions.Logging;
+using AniMate_app.Services.AnilibriaService;
+using AniMate_app.View;
 
 
 namespace AniMate_app
@@ -23,7 +22,9 @@ namespace AniMate_app
             .UseMauiCommunityToolkitMediaElement()
             .UseMediaControls();
 
-            builder.Services.AddTransient<AnilibriaService>().AddTransient<MainPage>().AddTransient<MainViewModel>();
+            builder.Services.AddSingleton<AnilibriaService>();
+            builder.Services.AddSingleton<ViewModel.MainViewModel>();
+            builder.Services.AddSingleton<MainPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();
