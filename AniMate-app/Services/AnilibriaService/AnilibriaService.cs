@@ -1,5 +1,4 @@
-﻿using AniMate_app.Interfaces;
-using AniMate_app.Services.AnilibriaService.Models;
+﻿using AniMate_app.Services.AnilibriaService.Models;
 using Newtonsoft.Json;
 
 namespace AniMate_app.Services.AnilibriaService
@@ -9,7 +8,6 @@ namespace AniMate_app.Services.AnilibriaService
         private static readonly HttpClient _httpClient = new();
 
         private const string _url = "https://api.anilibria.tv/v3/";
-
 
         public async Task<Title> GetTitleByCode(string code)
         {
@@ -23,7 +21,7 @@ namespace AniMate_app.Services.AnilibriaService
         }
 
 
-        public static async Task<List<Title>> GetAllTitlesByName(string name)
+        public async Task<List<Title>> GetAllTitlesByName(string name)
         {
             using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}title/search?search={name}");
 
@@ -35,7 +33,7 @@ namespace AniMate_app.Services.AnilibriaService
         }
 
 
-        public static async Task<List<string>> GetAllGenres()
+        public async Task<List<string>> GetAllGenres()
         {
             using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}genres");
 
@@ -47,7 +45,7 @@ namespace AniMate_app.Services.AnilibriaService
         }
 
 
-        public static async Task<List<Title>> GetAllTitlesByGenre(string genre, int skip = 0, int count = 1)
+        public async Task<List<Title>> GetAllTitlesByGenre(string genre, int skip = 0, int count = 1)
         {
             using HttpResponseMessage response =
                 await _httpClient.GetAsync($"""{_url}title/search?genres={genre}&order_by=in_favorites&sort_direction=1&{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");

@@ -1,5 +1,4 @@
-﻿using AniMate_app.Anilibria;
-using AniMate_app.Model;
+﻿using AniMate_app.Model;
 using AniMate_app.Services.AnilibriaService;
 using AniMate_app.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -37,6 +36,13 @@ namespace AniMate_app.ViewModel
         [ObservableProperty]
         private bool _isRefreshing;
 
+        private readonly AnilibriaService _anilibriaService;
+
+        public MainViewModel(AnilibriaService anilibriaService)
+        {
+            _anilibriaService = anilibriaService;
+        }
+
         [RelayCommand]
         public async Task LoadContent()
         {
@@ -51,8 +57,8 @@ namespace AniMate_app.ViewModel
             _loadMoreTitlesCommandsQueue.Clear();
 
             TitlesByGenre.Clear();
-
-            Genres = await AnilibriaService.GetAllGenres();
+                
+            Genres = await _anilibriaService.GetAllGenres();
 
             LoadGenres();
 
@@ -107,7 +113,7 @@ namespace AniMate_app.ViewModel
 
             genreCollection.TargetTitleCount += _loadMoreTitlesCount;
 
-            genreCollection.AddTitleList(await AnilibriaService.GetAllTitlesByGenre(genreCollection.GenreName, genreCollection.TitleCount, _loadMoreTitlesCount));
+            genreCollection.AddTitleList(await _anilibriaService.GetAllTitlesByGenre(genreCollection.GenreName, genreCollection.TitleCount, _loadMoreTitlesCount));
 
             IsTitlesLoaded = true;
         }
@@ -129,7 +135,7 @@ namespace AniMate_app.ViewModel
             {
                 var genreTitles = TitlesByGenre[i];
 
-                genreTitles.AddTitleList(await AnilibriaService.GetAllTitlesByGenre(Genres[i], 0, 5));
+                genreTitles.AddTitleList(await _anilibriaService.GetAllTitlesByGenre(Genres[i], 0, 5));
 
                 genreTitles.TargetTitleCount = count;
             }

@@ -2,7 +2,8 @@
 using CommunityToolkit.Maui;
 using MediaControls;
 using AniMate_app.Services.AnilibriaService;
-using AniMate_app.Interfaces;
+using AniMate_app.View;
+
 
 namespace AniMate_app
 {
@@ -21,7 +22,9 @@ namespace AniMate_app
             .UseMauiCommunityToolkitMediaElement()
             .UseMediaControls();
 
-            //builder.Services.AddSingleton<IAnilibriaService, AnilibriaService>();
+            builder.Services.AddSingleton<AnilibriaService>();
+            builder.Services.AddSingleton<ViewModel.MainViewModel>();
+            builder.Services.AddSingleton<MainPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();

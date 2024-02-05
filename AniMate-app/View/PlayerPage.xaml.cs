@@ -1,4 +1,3 @@
-using AniMate_app.Anilibria;
 using AniMate_app.Services.AnilibriaService.Models;
 using AniMate_app.ViewModel;
 
