@@ -16,6 +16,7 @@ namespace AniMate_backend.Services
             _httpClient = httpClientFactory.CreateClient();
         }
 
+
         public async Task<Title> GetTitleByCode(string code)
         {
             using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}title?code={code}");
@@ -27,13 +28,14 @@ namespace AniMate_backend.Services
             return title;
         }
 
+
         public async Task<List<Title>> GetAllTitlesByName(string name)
         {
             using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}title/search?search={name}");
 
             string jsonInfo = await response.Content.ReadAsStringAsync();
 
-            List<Title> titles = JsonConvert.DeserializeObject<List<Title>>(jsonInfo);
+            List<Title> titles = JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles; ;
 
             return titles;
         }
@@ -50,60 +52,17 @@ namespace AniMate_backend.Services
             return genres;
         }
 
-        //public async Task<List<Title>> GetTitlesByGenre(string genre)
-        //{
-        //    using HttpResponseMessage response = 
-        //        await _httpClient.GetAsync($"{_url}title/search?genres={genre}");
 
-        //    string jsonInfo = await response.Content.ReadAsStringAsync();
+        public async Task<List<Title>> GetAllTitlesByGenre(string genre)
+        {
+            using HttpResponseMessage response =
+                await _httpClient.GetAsync($"{_url}title/search?genres={genre}");
 
-        //    List<Title> titles = JsonConvert.DeserializeObject<Title>(jsonInfo);
+            string jsonInfo = await response.Content.ReadAsStringAsync();
 
-        //    return titles;
-        //}
+            List<Title> titles = JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
 
-        //public async Task<List<Title>> GetTitlesByGenre(string genre, int skip = 0, int count = 1)
-        //{
-        //    using HttpResponseMessage response = await _httpClient.GetAsync($"""{_url}title/search?genres={genre}{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
-
-        //    string jsonInfo = await response.Content.ReadAsStringAsync();
-
-        //    List<Title> titles = JsonConvert.DeserializeObject<SearchDto>(jsonInfo).Titles;
-
-        //    return titles;
-        //}
-
-        //public async Task<Episode> GetEpisode(string titleName, int episodeOrdinal)
-        //{
-        //    using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}title?code={titleName}&filter=player.list[{episodeOrdinal}]");
-
-        //    string jsonString = await response.Content.ReadAsStringAsync();
-
-        //    JObject jsonInfo = JObject.Parse(jsonString);
-
-        //    JToken episodeObject = jsonInfo["player"]["list"][episodeOrdinal];
-
-        //    Episode episode = new()
-        //    {
-        //        Ordinal = (int)episodeObject["episode"],
-        //        Uuid = (string)episodeObject["uuid"],
-        //        Fhd = (string)episodeObject["hls"]["fhd"],
-        //        Hd = (string)episodeObject["hls"]["hd"],
-        //        Sd = (string)episodeObject["hls"]["sd"]
-        //    };
-
-        //    return episode;
-        //}
-
-        //public async Task<List<Title>> Search(string titleName)
-        //{
-        //    using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}title/search?search={titleName}");
-
-        //    string jsonInfo = await response.Content.ReadAsStringAsync();
-
-        //    List<Title> titles = JsonConvert.DeserializeObject<SearchDto>(jsonInfo).Titles;
-
-        //    return titles;
-        //}
+            return titles;
+        }
     }
 }

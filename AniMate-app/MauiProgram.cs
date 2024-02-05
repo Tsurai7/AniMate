@@ -9,11 +9,19 @@ namespace AniMate_app
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
             builder.UseMauiApp<App>().ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            }).UseMauiCommunityToolkit().UseMauiCommunityToolkitMediaElement().UseMediaControls();
+            })
+            .UseMauiCommunityToolkit()
+            .UseMauiCommunityToolkitMediaElement()
+            .UseMediaControls();
+
+
+
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

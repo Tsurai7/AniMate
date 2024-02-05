@@ -34,7 +34,15 @@ namespace AniMate_backend.Controllers
         [HttpGet("GetAllTitlesByName")]
         public async Task<ActionResult<List<Title>>> GetAllTitlesByName(string name)
         {
-            var title = await _anilibriaService.GetTitleByCode(name);
+            var title = await _anilibriaService.GetAllTitlesByName(name);
+
+            return Ok(title);
+        }
+
+        [HttpGet("GetAllTitlesByGenre")]
+        public async Task<ActionResult<List<Title>>> GetAllTitlesByGenre(string genre)
+        {
+            var title = await _anilibriaService.GetAllTitlesByGenre(genre);
 
             return Ok(title);
         }
