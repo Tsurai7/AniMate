@@ -11,7 +11,7 @@ namespace AniMate_app.Services.AnilibriaService
         private const string _url = "https://api.anilibria.tv/v3/";
 
 
-        public static async Task<Title> GetTitleByCode(string code)
+        public async Task<Title> GetTitleByCode(string code)
         {
             using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}title?code={code}");
 
@@ -50,7 +50,7 @@ namespace AniMate_app.Services.AnilibriaService
         public static async Task<List<Title>> GetAllTitlesByGenre(string genre, int skip = 0, int count = 1)
         {
             using HttpResponseMessage response =
-                await _httpClient.GetAsync($"""{_url}title/search?genres={genre}{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
+                await _httpClient.GetAsync($"""{_url}title/search?genres={genre}&order_by=in_favorites&sort_direction=1&{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
 
             string jsonInfo = await response.Content.ReadAsStringAsync();
 
