@@ -26,7 +26,9 @@ namespace AniMate_app
             builder.Services.AddTransient<AnilibriaService>();
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<MainViewModel>();
-
+            builder.Services.AddTransient<SearchPage>();
+            builder.Services.AddTransient<SearchViewModel>();
+          
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
