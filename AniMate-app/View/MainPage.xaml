@@ -76,7 +76,7 @@
             Margin="10, 20, 0, 0">
         </Image>
 
-        <RefreshView Margin="10,10,0,0" Grid.Row="1" Command="{Binding LoadContentCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
+        <RefreshView Margin="10,10,0,0" Grid.Row="1" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
             <CollectionView ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" 
                             ItemsSource="{Binding TitlesByGenre}" VerticalOptions="FillAndExpand" 
                             RemainingItemsThresholdReachedCommand="{Binding LoadMoreGenresCommand}" 
