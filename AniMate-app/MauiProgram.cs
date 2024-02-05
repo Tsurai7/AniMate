@@ -24,7 +24,7 @@ namespace AniMate_app
             .UseMediaControls();
 
             builder.Services.AddTransient<AnilibriaService>().AddTransient<MainPage>().AddTransient<MainViewModel>();
-
+            builder.Services.AddTransient<AnilibriaService>().AddTransient<SearchPage>().AddTransient<SearchViewModel>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
