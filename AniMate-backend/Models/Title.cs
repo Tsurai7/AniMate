@@ -14,6 +14,9 @@ namespace AniMate_backend.Models
         [JsonProperty("names")]
         public NamesDto? Names { get; set; }
 
+        [JsonProperty("franchises")]
+        public List<FranchiseDto>? Franchises { get; set; }
+
         [JsonProperty("status")]
         public StatusDto? Status { get; set; }
 
