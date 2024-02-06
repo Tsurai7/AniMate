@@ -5,7 +5,7 @@ namespace AniMate_app.Services.AnilibriaService
 {
     public class AnilibriaService
     {
-        private static readonly HttpClient _httpClient = new();
+        private readonly HttpClient _httpClient = new();
 
         private const string _url = "https://api.anilibria.tv/v3/";
 
