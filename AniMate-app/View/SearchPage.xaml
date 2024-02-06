@@ -26,7 +26,8 @@
                    HorizontalOptions="FillAndExpand"
                    FontSize="18"
                    IsTextPredictionEnabled="True"
-                   Completed="OnEntryCompleted">
+                   Completed="OnEntryCompleted"
+                   TextChanged="OnEntryChanged">
             </Entry>
             
             <Button>

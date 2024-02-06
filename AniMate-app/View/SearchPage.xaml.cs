@@ -2,11 +2,12 @@ namespace AniMate_app.View;
 
 using AniMate_app.Services.AnilibriaService.Models;
 using AniMate_app.ViewModel;
-using System.Threading.Tasks;
 
 public partial class SearchPage : ContentPage
 {
     private readonly SearchViewModel viewModel;
+
+    private string _searchText = string.Empty; 
 
     public SearchPage(SearchViewModel searchViewModel)
 	{
@@ -15,9 +16,18 @@ public partial class SearchPage : ContentPage
         BindingContext = viewModel = searchViewModel;
     }
 
-    void OnEntryCompleted(object sender, EventArgs e)
+    private void OnEntryCompleted(object sender, EventArgs e)
     {
-        viewModel.FindTitles(entry.Text);
+        string currentText = entry.Text;
+
+        if(currentText != _searchText)
+        {
+            viewModel.Titles.Clear();
+
+            viewModel.FindTitles(entry.Text);
+
+            entry.Unfocus();
+        }
     }
 
     private async void TitleSelected(object sender, SelectionChangedEventArgs e)
@@ -30,7 +40,19 @@ public partial class SearchPage : ContentPage
 
             collectionView.SelectedItem = null;
 
-            Navigation.PushAsync(new PlayerPage(selectedTitle));
+            await Navigation.PushAsync(new PlayerPage(selectedTitle));
         }
+    }
+
+    private void OnEntryChanged(object sender, TextChangedEventArgs e)
+    {
+        _searchText = entry.Text;
+
+        viewModel.Titles.Clear();
+
+        viewModel.FindTitles(entry.Text);
+
+        entry.Unfocus();
+        
     }
 }
