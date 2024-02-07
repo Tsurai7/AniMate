@@ -16,20 +16,6 @@ public partial class SearchPage : ContentPage
         BindingContext = viewModel = searchViewModel;
     }
 
-    private void OnEntryCompleted(object sender, EventArgs e)
-    {
-        string currentText = entry.Text;
-
-        if(currentText != _searchText)
-        {
-            viewModel.Titles.Clear();
-
-            viewModel.FindTitles(entry.Text);
-
-            entry.Unfocus();
-        }
-    }
-
     private async void TitleSelected(object sender, SelectionChangedEventArgs e)
     {
         var collectionView = sender as CollectionView;
@@ -44,14 +30,10 @@ public partial class SearchPage : ContentPage
         }
     }
 
-    private void OnEntryChanged(object sender, TextChangedEventArgs e)
+    private async void OnEntryChanged(object sender, TextChangedEventArgs e)
     {
-        _searchText = entry.Text;
+        _searchText = e.NewTextValue;
 
-        viewModel.Titles.Clear();
-
-        viewModel.FindTitles(entry.Text);
-
-        entry.Unfocus();
+        await viewModel.FindTitles(_searchText);
     }
 }
