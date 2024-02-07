@@ -53,6 +53,5 @@ public partial class SearchPage : ContentPage
         viewModel.FindTitles(entry.Text);
 
         entry.Unfocus();
-        
     }
 }
