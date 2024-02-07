@@ -1,6 +1,5 @@
 ﻿using AniMate_app.Services.AnilibriaService.Models;
 using Newtonsoft.Json;
-using System.Diagnostics;
 
 namespace AniMate_app.Services.AnilibriaService
 {
