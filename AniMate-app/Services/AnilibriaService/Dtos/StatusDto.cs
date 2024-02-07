@@ -5,9 +5,9 @@ namespace AniMate_app.Services.AnilibriaService.Dtos
     public class StatusDto
     {
         [JsonProperty("string")]
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         [JsonProperty("code")]
-        public string Code { get; set; }
+        public string? Code { get; set; }
     }
 }

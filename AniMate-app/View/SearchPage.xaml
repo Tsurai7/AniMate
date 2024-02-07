@@ -26,7 +26,8 @@
                    HorizontalOptions="FillAndExpand"
                    FontSize="18"
                    IsTextPredictionEnabled="True"
-                   Completed="OnEntryCompleted">
+                   Completed="OnEntryCompleted"
+                   TextChanged="OnEntryChanged">
             </Entry>
             
             <Button>
@@ -37,6 +38,7 @@
         </StackLayout>
 
         <CollectionView ItemsSource="{Binding TitlesCollection.Titles}" Grid.Row="1" RemainingItemsThresholdReachedCommand="{Binding LoadMoreResultsCommand}" RemainingItemsThreshold="0">
+      
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
                              Span="2" />
