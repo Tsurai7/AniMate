@@ -6,14 +6,11 @@
              xmlns:local="clr-namespace:AniMate_app.ViewModels"
              x:DataType="local:PlayerViewModel"
              Title="PlayerPage">
-    <VerticalStackLayout>
+    <Grid BackgroundColor="Black">
         <controls:MediaControl x:Name="mediaControl"
-                           ShouldAutoPlay="False"
+                           ShouldAutoPlay="True"
                            ShouldKeepScreenOn="False"
                            ShowCustomControls="True"
-                           Source="{Binding MediaUrl}"
-                           IsVisible="True"
-                           HorizontalOptions="FillAndExpand"
-                           VerticalOptions="Fill"/>
-    </VerticalStackLayout>
+                           Source="{Binding MediaUrl}"/>
+    </Grid>
 </ContentPage>

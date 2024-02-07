@@ -37,7 +37,7 @@ public partial class TitlePage : ContentPage
             };
             button.Clicked += async (sender, e) =>
             {
-                await Navigation.PushAsync(new PlayerPage(viewModel.Title.Player.Episodes[$"{i}"].HlsUrls.Hd));
+                await Navigation.PushAsync(new PlayerPage(viewModel.Title.Player.Episodes[i.ToString()].HlsUrls.Sd));
             };
 
             if (i % 4 == 1)

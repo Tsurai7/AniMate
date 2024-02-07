@@ -4,12 +4,12 @@ namespace AniMate_app.Views;
 
 public partial class PlayerPage : ContentPage
 {
-	private PlayerViewModel viewModel;
+	private readonly PlayerViewModel viewModel;
 
 	public PlayerPage(string mediaUrl)
 	{
 		InitializeComponent();
 
-		viewModel = new PlayerViewModel(mediaUrl);
+        BindingContext = viewModel = new PlayerViewModel(mediaUrl);
 	}
 }
