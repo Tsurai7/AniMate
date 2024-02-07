@@ -7,10 +7,12 @@ namespace AniMate_app.ViewModels;
 
 public partial class GenreViewModel : ObservableObject
 {
-    public string Genre { get; private set; }
+    public string Genre { get; set; }
     public ObservableCollection<Title> Titles { get; private set; }
 
     private readonly AnilibriaService _anilibriaService;
+
+    private int LoadedTitles;
 
     public GenreViewModel(ObservableCollection<Title> titles, string genre, AnilibriaService anilibriaService)
     {
@@ -19,10 +21,12 @@ public partial class GenreViewModel : ObservableObject
         Genre = genre;
 
         _anilibriaService = anilibriaService;
+
+        LoadedTitles = titles.Count;
     }
+
 
     private async void LoadMoreTitles()
     {
-
     }
 }

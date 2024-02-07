@@ -1,5 +1,4 @@
-﻿using AniMate_app.Anilibria;
-using AniMate_app.Services.AnilibriaService.Models;
+﻿using AniMate_app.Services.AnilibriaService.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 
