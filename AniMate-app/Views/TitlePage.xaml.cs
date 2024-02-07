@@ -29,6 +29,8 @@ public partial class TitlePage : ContentPage
 
         for (int i = 1; i < viewModel.Title.Player.Episodes.Count; i++)
         {
+            string episodeIndex = i.ToString();
+
             Button button = new()
             {
                 Text = $"Серия {i}",
@@ -37,7 +39,7 @@ public partial class TitlePage : ContentPage
             };
             button.Clicked += async (sender, e) =>
             {
-                await Navigation.PushAsync(new PlayerPage(viewModel.Title.Player.Episodes[i.ToString()].HlsUrls.Sd));
+                await Navigation.PushAsync(new PlayerPage(viewModel.Title.Player.Episodes[episodeIndex].HlsUrls.Sd));
             };
 
             if (i % 4 == 1)
