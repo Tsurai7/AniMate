@@ -94,7 +94,7 @@
                                     </Label.GestureRecognizers>
                                 </Label>
                                 <CollectionView SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource Key=mainTemplateSelector}" HorizontalOptions="Start"
-                                        SelectionChanged="TitleSelected" EmptyView="Loading Data" RemainingItemsThreshold="0" 
+                                        SelectionChanged="TitleSelected" RemainingItemsThreshold="0" 
                                         RemainingItemsThresholdReachedCommand="{Binding Source={RelativeSource AncestorType={x:Type local:MainViewModel}}, Path=LoadMoreTitlesForGenreCommand}"
                                         RemainingItemsThresholdReachedCommandParameter="{Binding .}">
                                     <CollectionView.ItemsLayout>
