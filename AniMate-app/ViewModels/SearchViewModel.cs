@@ -3,7 +3,6 @@ using AniMate_app.Services.AnilibriaService;
 using AniMate_app.Services.AnilibriaService.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Xml.Linq;
 
 namespace AniMate_app.ViewModels
 {
