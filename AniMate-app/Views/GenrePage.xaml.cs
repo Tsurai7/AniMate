@@ -26,7 +26,7 @@ public partial class GenrePage : ContentPage
 
             collectionView.SelectedItem = null;
 
-            await Navigation.PushAsync(new PlayerPage(selectedTitle));
+            await Navigation.PushAsync(new TitlePage(selectedTitle));
         }
     }
 }

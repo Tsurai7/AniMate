@@ -26,7 +26,7 @@ public partial class SearchPage : ContentPage
 
             collectionView.SelectedItem = null;
 
-            await Navigation.PushAsync(new PlayerPage(selectedTitle));
+            await Navigation.PushAsync(new TitlePage(selectedTitle));
         }
     }
 

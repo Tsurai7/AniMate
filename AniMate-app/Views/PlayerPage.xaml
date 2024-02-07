@@ -1,156 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:MediaControls.Controls;assembly=MediaControls"
+             x:Class="AniMate_app.Views.PlayerPage"
              xmlns:local="clr-namespace:AniMate_app.ViewModels"
              x:DataType="local:PlayerViewModel"
-             x:Class="AniMate_app.Views.PlayerPage">
-
-    <ScrollView>
-        <StackLayout Orientation="Vertical">
-            <Label Text="{Binding Title.Names.Ru}"
-               FontSize="Large"
-               FontAttributes="Bold"
-               HorizontalOptions="CenterAndExpand"
-               VerticalOptions="StartAndExpand"/>
-
-            <Image Source="{Binding Title.Posters.Small.Url}"/>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Label Text="Тип:"
-                   FontSize="Medium"
-                   VerticalTextAlignment="Center"
-                   HorizontalOptions="Start" />
-
-                <Label Text="{Binding Title.Type.FullInfo}"
-                   FontSize="Medium"
-                   VerticalTextAlignment="Center"
-                   HorizontalOptions="Start"
-                   Grid.Column="1" />
-            </Grid>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Label Text="Количество серий:"
-                   FontSize="Medium"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="Start" />
-
-                <Label Text="{Binding Title.Player.Episodes.Count}"
-                   FontSize="Medium"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="Start"
-                   Grid.Column="1" />
-            </Grid>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Label Text="Статус:"
-                   FontSize="Medium"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="Start" />
-
-                <Label Text="{Binding Title.Status.Status}"
-                   FontSize="Medium"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="Start"
-                   Grid.Column="1" />
-            </Grid>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Label Text="Жанр:"
-                   FontSize="Medium"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="Start" />
-
-                <Label Text="{Binding Genres}"
-                   FontSize="Medium"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="Start"
-                   Grid.Column="1" />
-            </Grid>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Label Text="Сезон:"
-                   FontSize="Medium"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="Start" />
-
-                <Label Text="{Binding Title.Season.Season}"
-                   FontSize="Medium"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="Start"
-                   Grid.Column="1" />
-            </Grid>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Label Text="Год выпуска:"
-                   FontSize="Medium"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="Start" />
-
-                <Label Text="{Binding Title.Season.Year}"
-                   FontSize="Medium"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="Start"
-                   Grid.Column="1" />
-            </Grid>
-
-
-            <Label Text="Не работает пока что"
-               FontSize="Small"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               Margin="0,5,0,0"/>
-
-            <Label Text="1 сезон"
-               FontSize="Medium"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               Margin="0,10,0,0"/>
-
-            <Button Text="Смотреть"
-                    Clicked="OnWatchButtonClicked"
-                    HorizontalOptions="Start"
-                    VerticalOptions="Start"/>
-
-            <controls:MediaControl x:Name="mediaControl"
+             Title="PlayerPage">
+    <VerticalStackLayout>
+        <controls:MediaControl x:Name="mediaControl"
                            ShouldAutoPlay="False"
                            ShouldKeepScreenOn="False"
                            ShowCustomControls="True"
-                           Source=""
+                           Source="{Binding MediaUrl}"
                            IsVisible="True"
-                           MaximumHeightRequest="450"
-                           MaximumWidthRequest="450"
                            HorizontalOptions="FillAndExpand"
                            VerticalOptions="Fill"/>
-        </StackLayout>
-    </ScrollView>
+    </VerticalStackLayout>
 </ContentPage>

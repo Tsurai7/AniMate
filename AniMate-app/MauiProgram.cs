@@ -47,6 +47,12 @@ namespace AniMate_app
 
             services.AddTransient<GenreViewModel>();
             services.AddTransient<GenrePage>();
+
+            services.AddTransient<TitleViewModel>();
+            services.AddTransient<TitlePage>();
+
+            services.AddTransient<PlayerViewModel>();
+            services.AddTransient<PlayerPage>();
         }
     }
 }

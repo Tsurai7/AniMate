@@ -1,21 +1,15 @@
-using AniMate_app.Services.AnilibriaService.Models;
 using AniMate_app.ViewModels;
 
 namespace AniMate_app.Views;
 
 public partial class PlayerPage : ContentPage
 {
-    private PlayerViewModel viewModel;
+	private PlayerViewModel viewModel;
 
-    public PlayerPage(Title title)
-    {
-        InitializeComponent();
+	public PlayerPage(string mediaUrl)
+	{
+		InitializeComponent();
 
-        BindingContext = viewModel = new PlayerViewModel(title);
-    }
-
-    private void OnWatchButtonClicked(object sender, EventArgs e)
-    {
-        mediaControl.IsVisible = true;
-    }
+		viewModel = new PlayerViewModel(mediaUrl);
+	}
 }
