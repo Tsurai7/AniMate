@@ -1,5 +1,6 @@
 ﻿using AniMate_app.Services.AnilibriaService.Models;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace AniMate_app.Services.AnilibriaService
 {
@@ -20,7 +21,6 @@ namespace AniMate_app.Services.AnilibriaService
             return title;
         }
 
-
         public async Task<List<Title>> GetTitlesByName(string name, int skip = 0, int count = 6)
         {
             using HttpResponseMessage response = await _httpClient.GetAsync($"""{_url}title/search?search={name}&order_by=in_favorites&sort_direction=1&{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
@@ -31,7 +31,6 @@ namespace AniMate_app.Services.AnilibriaService
 
             return titles;
         }
-
 
         public async Task<List<string>> GetAllGenres()
         {
@@ -48,12 +47,17 @@ namespace AniMate_app.Services.AnilibriaService
         {
             using HttpResponseMessage response =
                 await _httpClient.GetAsync($"""{_url}title/search?genres={genre}&order_by=in_favorites&sort_direction=1{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
-
+            
             string jsonInfo = await response.Content.ReadAsStringAsync();
 
-            List<Title> titles = JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
-
-            return titles;
+            try
+            {
+                return JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
+            }
+            catch (Exception)
+            {
+                return new();
+            }
         }
     }
 }
