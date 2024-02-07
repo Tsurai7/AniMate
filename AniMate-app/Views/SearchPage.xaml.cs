@@ -30,10 +30,17 @@ public partial class SearchPage : ContentPage
         }
     }
 
-    private async void OnEntryChanged(object sender, TextChangedEventArgs e)
+    private async void OnEntryChanged(object sender, EventArgs e)
     {
-        _searchText = e.NewTextValue;
+        _searchText = entry.Text;
 
         await viewModel.FindTitles(_searchText);
+    }
+
+    private void ClearTextEntry(object sender, EventArgs e)
+    {
+        entry.Text = string.Empty;
+
+        viewModel.ClearSearchData();
     }
 }
