@@ -32,22 +32,32 @@ namespace AniMate_app.ViewModels
 
         public async Task FindTitles(string name)
         {
-            TitlesCollection.Clear();
+            if (string.IsNullOrEmpty(name))
+            {
+                ClearSearchData();
 
-            _searchResult.Clear();
-
-            _loadedCount = 0;
-
-            if (string.IsNullOrEmpty(name)) 
                 return;
+            }
 
             _nameToFind = name;
 
             _searchResult = new(await _anilibriaService.GetTitlesByName(_nameToFind, 0, 6));
 
+            ClearSearchData();
+
+            if (_searchResult.Count.Equals(0))
+                return;
+
             TitlesCollection.TargetTitleCount = _searchResult.Count > 6 ? 6 : _searchResult.Count;
 
             await LoadMoreResults();
+        }
+
+        private void ClearSearchData()
+        {
+            TitlesCollection.Clear();
+
+            _loadedCount = 0;
         }
 
         [RelayCommand]
