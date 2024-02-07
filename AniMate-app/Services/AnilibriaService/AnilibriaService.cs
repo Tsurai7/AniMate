@@ -44,7 +44,7 @@ namespace AniMate_app.Services.AnilibriaService
             return genres;
         }
 
-        public async Task<List<Title>> GetAllTitlesByGenre(string genre, int skip = 0, int count = 1)
+        public async Task<List<Title>> GetTitlesByGenre(string genre, int skip = 0, int count = 1)
         {
             using HttpResponseMessage response =
                 await _httpClient.GetAsync($"""{_url}title/search?genres={genre}&order_by=in_favorites&sort_direction=1{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
