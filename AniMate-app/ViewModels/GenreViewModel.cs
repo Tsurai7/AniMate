@@ -20,4 +20,9 @@ public partial class GenreViewModel : ObservableObject
 
         _anilibriaService = anilibriaService;
     }
+
+    private async void LoadMoreTitles()
+    {
+
+    }
 }

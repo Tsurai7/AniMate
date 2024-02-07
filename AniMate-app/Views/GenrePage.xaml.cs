@@ -1,3 +1,4 @@
+using AniMate_app.Services.AnilibriaService.Models;
 using AniMate_app.ViewModels;
 
 namespace AniMate_app.Views;
@@ -11,5 +12,19 @@ public partial class GenrePage : ContentPage
         InitializeComponent();
 
         BindingContext = viewModel = genreViewModel;
+    }
+
+    private async void TitleSelected(object sender, SelectionChangedEventArgs e)
+    {
+        var collectionView = sender as CollectionView;
+
+        if (collectionView.SelectedItem != null)
+        {
+            Title selectedTitle = collectionView.SelectedItem as Title;
+
+            collectionView.SelectedItem = null;
+
+            await Navigation.PushAsync(new PlayerPage(selectedTitle));
+        }
     }
 }
