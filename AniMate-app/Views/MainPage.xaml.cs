@@ -58,7 +58,7 @@ namespace AniMate_app.Views
 
             var titles = viewModel.TitlesByGenre.FirstOrDefault(t => t.GenreName == genreName).Titles;
 
-            await Navigation.PushAsync(new GenrePage(new GenreViewModel(titles, genreName, viewModel._anilibriaService)));
+            await Navigation.PushAsync(new GenrePage(genreName, titles, viewModel._anilibriaService));
         }
     }
 }

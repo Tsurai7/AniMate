@@ -7,18 +7,17 @@
              xmlns:local="clr-namespace:AniMate_app.ViewModels"
              x:DataType="local:GenreViewModel">
 
-
     <StackLayout Orientation="Horizontal"
                      VerticalOptions="CenterAndExpand"
                      HorizontalOptions="FillAndExpand"
                      Grid.Row="0">
 
-        <CollectionView ItemsSource="{Binding Titles}" Grid.Row="1" SelectionMode="Single" SelectionChanged= "TitleSelected">
+        <CollectionView ItemsSource="{Binding Titles}" Grid.Row="1" SelectionMode="Single" SelectionChanged= "TitleSelected"
+                          RemainingItemsThresholdReachedCommand="{Binding LoadMoreTitlesCommand}" RemainingItemsThreshold="0">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
                      Span="2" />
             </CollectionView.ItemsLayout>
-
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="Models:Title">
@@ -32,7 +31,7 @@
                             <Border StrokeShape="RoundRectangle 10,10,10,10">
                                 <Image Aspect="AspectFill">
                                     <Image.Source>
-                                        <UriImageSource Uri="{Binding Posters.Small.Url}" CachingEnabled="False" />
+                                        <UriImageSource Uri="{Binding Posters.Small.Url}" CachingEnabled="True" />
                                     </Image.Source>
                                 </Image>
                             </Border>

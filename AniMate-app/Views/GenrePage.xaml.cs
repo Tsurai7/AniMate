@@ -1,5 +1,7 @@
+using AniMate_app.Services.AnilibriaService;
 using AniMate_app.Services.AnilibriaService.Models;
 using AniMate_app.ViewModels;
+using System.Collections.ObjectModel;
 
 namespace AniMate_app.Views;
 
@@ -7,11 +9,11 @@ public partial class GenrePage : ContentPage
 {
     public readonly GenreViewModel viewModel;
 
-    public GenrePage(GenreViewModel genreViewModel)
+    public GenrePage(string genre, ObservableCollection<Title> titles, AnilibriaService anilibriaService )
     {
         InitializeComponent();
 
-        BindingContext = viewModel = genreViewModel;
+        BindingContext = viewModel = new GenreViewModel(genre, titles, anilibriaService);
     }
 
     private async void TitleSelected(object sender, SelectionChangedEventArgs e)

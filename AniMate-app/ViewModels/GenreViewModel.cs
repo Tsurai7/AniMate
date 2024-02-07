@@ -1,6 +1,7 @@
 using AniMate_app.Services.AnilibriaService;
 using AniMate_app.Services.AnilibriaService.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 
 namespace AniMate_app.ViewModels;
@@ -12,9 +13,13 @@ public partial class GenreViewModel : ObservableObject
 
     private readonly AnilibriaService _anilibriaService;
 
+    private bool _isLoading = false;
+
     private int LoadedTitles;
 
-    public GenreViewModel(ObservableCollection<Title> titles, string genre, AnilibriaService anilibriaService)
+    private int _loadMoreResultsOffset = 6;
+
+    public GenreViewModel(string genre, ObservableCollection<Title> titles, AnilibriaService anilibriaService)
     {
         Titles = titles;
 
@@ -25,8 +30,18 @@ public partial class GenreViewModel : ObservableObject
         LoadedTitles = titles.Count;
     }
 
-
-    private async void LoadMoreTitles()
+    [RelayCommand]
+    public async Task LoadMoreTitles()
     {
+        if (_isLoading)
+            return;
+
+        _isLoading = true;
+
+        foreach (var title in await _anilibriaService.GetTitlesByGenre(Genre, skip: LoadedTitles, LoadedTitles + _loadMoreResultsOffset))
+            Titles.Add(title);
+
+
+        _isLoading = false;
     }
 }
