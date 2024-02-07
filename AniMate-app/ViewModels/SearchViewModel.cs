@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Xml.Linq;
 
-namespace AniMate_app.ViewModel
+namespace AniMate_app.ViewModels
 {
     public partial class SearchViewModel : ObservableObject
     {

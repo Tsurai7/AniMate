@@ -1,7 +1,8 @@
 ﻿using AniMate_app.Services.AnilibriaService.Models;
-using AniMate_app.ViewModel;
+using AniMate_app.ViewModels;
+using System.Collections.ObjectModel;
 
-namespace AniMate_app.View
+namespace AniMate_app.Views
 {
     public partial class MainPage : ContentPage
     {
@@ -48,5 +49,17 @@ namespace AniMate_app.View
         {
             isFirstLoad = false;
         }
+
+        private async void OnGenreLabelTapped(object sender, TappedEventArgs e)
+        {
+            var tappedLabel = (Label)sender;
+
+            string genreName = tappedLabel.Text;
+
+            var titles = viewModel.TitlesByGenre.FirstOrDefault(t => t.GenreName == genreName).Titles;
+
+            await Navigation.PushAsync(new GenrePage(new GenreViewModel(titles, genreName, viewModel._anilibriaService)));
+        }
     }
 }
+    

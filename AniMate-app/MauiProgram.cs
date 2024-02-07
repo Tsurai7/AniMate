@@ -1,6 +1,6 @@
 ﻿using AniMate_app.Services.AnilibriaService;
-using AniMate_app.View;
-using AniMate_app.ViewModel;
+using AniMate_app.Views;
+using AniMate_app.ViewModels;
 using CommunityToolkit.Maui;
 using MediaControls;
 using Microsoft.Extensions.Logging;
@@ -28,6 +28,8 @@ namespace AniMate_app
             builder.Services.AddTransient<MainViewModel>();
             builder.Services.AddTransient<SearchPage>();
             builder.Services.AddTransient<SearchViewModel>();
+            builder.Services.AddTransient<GenreViewModel>();
+            builder.Services.AddTransient<GenrePage>();
           
 #if DEBUG
             builder.Logging.AddDebug();

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:AniMate_app.ViewModel"
+             xmlns:local="clr-namespace:AniMate_app.ViewModels"
              xmlns:model="clr-namespace:AniMate_app.Model"
              xmlns:Models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
-             x:Class="AniMate_app.View.MainPage"
+             x:Class="AniMate_app.Views.MainPage"
              x:DataType="local:MainViewModel"
              xmlns:templateSelector="clr-namespace:AniMate_app.View.TemplateSelectors"
              Loaded="LoadContent"
@@ -87,7 +87,11 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:GenreCollection">
                         <StackLayout Orientation="Vertical">
-                            <Label Text="{Binding GenreName}" FontSize="Title" Margin="0,0,0,7" TextColor="White"/>
+                            <Label Text="{Binding GenreName}" FontSize="Title" Margin="0,0,0,7" TextColor="White">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnGenreLabelTapped" />
+                                </Label.GestureRecognizers>
+                            </Label>
                             <CollectionView SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource Key=mainTemplateSelector}" HorizontalOptions="Start"
                                             SelectionChanged="TitleSelected" EmptyView="Loading Data" RemainingItemsThreshold="0" 
                                             RemainingItemsThresholdReachedCommand="{Binding Source={RelativeSource AncestorType={x:Type local:MainViewModel}}, Path=LoadMoreTitlesForGenreCommand}"

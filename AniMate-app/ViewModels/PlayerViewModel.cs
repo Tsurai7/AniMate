@@ -1,7 +1,6 @@
-﻿using AniMate_app.Anilibria;
-using AniMate_app.Services.AnilibriaService.Models;
+﻿using AniMate_app.Services.AnilibriaService.Models;
 
-namespace AniMate_app.ViewModel
+namespace AniMate_app.ViewModels
 {
     public class PlayerViewModel : BindableObject
     {
