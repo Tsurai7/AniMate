@@ -21,9 +21,9 @@ namespace AniMate_app.Services.AnilibriaService
         }
 
 
-        public async Task<List<Title>> GetAllTitlesByName(string name)
+        public async Task<List<Title>> GetTitlesByName(string name, int skip = 0, int count = 6)
         {
-            using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}title/search?search={name}");
+            using HttpResponseMessage response = await _httpClient.GetAsync($"""{_url}title/search?search={name}&order_by=in_favorites&sort_direction=1&{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
 
             string jsonInfo = await response.Content.ReadAsStringAsync();
 

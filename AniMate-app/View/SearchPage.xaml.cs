@@ -11,8 +11,8 @@ public partial class SearchPage : ContentPage
         BindingContext = viewModel = searchViewModel;
     }
 
-    void OnEntryCompleted(object sender, EventArgs e)
+    private async void OnEntryCompleted(object sender, EventArgs e)
     {
-        viewModel.FindTitles(entry.Text);
+        await viewModel.FindTitles(entry.Text);
     }
 }

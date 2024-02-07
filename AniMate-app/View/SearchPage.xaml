@@ -36,13 +36,18 @@
             </Button>
         </StackLayout>
 
-        <CollectionView ItemsSource="{Binding Titles}" Grid.Row="1">
+        <CollectionView ItemsSource="{Binding TitlesCollection.Titles}" Grid.Row="1" RemainingItemsThresholdReachedCommand="{Binding LoadMoreResultsCommand}" RemainingItemsThreshold="0">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
                              Span="2" />
             </CollectionView.ItemsLayout>
 
-            
+            <CollectionView.EmptyView>
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <Image Source="nodatafound.svg" WidthRequest="200" HeightRequest="200" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Aspect="AspectFill"/>
+                </StackLayout>
+            </CollectionView.EmptyView>
+
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="Models:Title">
                     <StackLayout Margin="2, 5, 5, 5"
@@ -55,7 +60,7 @@
                             <Border StrokeShape="RoundRectangle 10,10,10,10">
                                 <Image Aspect="AspectFill">
                                     <Image.Source>
-                                        <UriImageSource Uri="{Binding Posters.Small.Url}" CachingEnabled="False" />
+                                        <UriImageSource Uri="{Binding Posters.Small.Url}" CachingEnabled="True" />
                                     </Image.Source>
                                 </Image>
                             </Border>

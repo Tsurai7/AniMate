@@ -25,5 +25,12 @@ namespace AniMate_app.Model
             foreach (var title in titles)
                 AddTitle(title);
         }
+
+        public void Clear()
+        {
+            Titles.Clear();
+
+            TargetTitleCount = 0;
+        }
     }
 }
