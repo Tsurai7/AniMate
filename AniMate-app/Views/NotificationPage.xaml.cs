@@ -1,4 +1,4 @@
-namespace AniMate_app.View;
+namespace AniMate_app.Views;
 
 public partial class NotificationPage : ContentPage
 {

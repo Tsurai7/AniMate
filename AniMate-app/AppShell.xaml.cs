@@ -1,4 +1,4 @@
-﻿using AniMate_app.View;
+﻿using AniMate_app.Views;
 
 namespace AniMate_app
 {

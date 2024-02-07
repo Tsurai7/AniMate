@@ -1,7 +1,7 @@
-namespace AniMate_app.View;
-
 using AniMate_app.Services.AnilibriaService.Models;
-using AniMate_app.ViewModel;
+using AniMate_app.ViewModels;
+
+namespace AniMate_app.Views;
 
 public partial class SearchPage : ContentPage
 {
@@ -52,7 +52,6 @@ public partial class SearchPage : ContentPage
 
         viewModel.FindTitles(entry.Text);
 
-        entry.Unfocus();
-        
+        entry.Unfocus();   
     }
 }

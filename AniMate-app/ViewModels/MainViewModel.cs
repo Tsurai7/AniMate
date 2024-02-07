@@ -4,9 +4,8 @@ using AniMate_app.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
-namespace AniMate_app.ViewModel
+namespace AniMate_app.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
@@ -37,7 +36,7 @@ namespace AniMate_app.ViewModel
         [ObservableProperty]
         private bool _isRefreshing;
 
-        private readonly AnilibriaService _anilibriaService;
+        public readonly AnilibriaService _anilibriaService;
 
         public MainViewModel(AnilibriaService anilibriaService)
         {

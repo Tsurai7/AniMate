@@ -3,7 +3,7 @@ using AniMate_app.Services.AnilibriaService.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 
-namespace AniMate_app.ViewModel
+namespace AniMate_app.ViewModels
 {
     public partial class SearchViewModel : ObservableObject
     {

@@ -1,9 +1,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:MediaControls.Controls;assembly=MediaControls"
-             xmlns:local="clr-namespace:AniMate_app.ViewModel"
+             xmlns:local="clr-namespace:AniMate_app.ViewModels"
              x:DataType="local:PlayerViewModel"
-             x:Class="AniMate_app.View.PlayerPage">
+             x:Class="AniMate_app.Views.PlayerPage">
 
     <ScrollView>
         <StackLayout Orientation="Vertical">
