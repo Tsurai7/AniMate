@@ -31,18 +31,14 @@ namespace AniMate_app.ViewModels
 
         public async Task FindTitles(string name)
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                ClearSearchData();
+            ClearSearchData();
 
+            if (string.IsNullOrEmpty(name))
                 return;
-            }
 
             _nameToFind = name;
 
             _searchResult = new(await _anilibriaService.GetTitlesByName(_nameToFind, 0, 6));
-
-            ClearSearchData();
 
             if (_searchResult.Count.Equals(0))
                 return;
@@ -52,7 +48,7 @@ namespace AniMate_app.ViewModels
             await LoadMoreResults();
         }
 
-        private void ClearSearchData()
+        public void ClearSearchData()
         {
             TitlesCollection.Clear();
 

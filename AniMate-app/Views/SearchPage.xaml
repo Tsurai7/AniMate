@@ -16,7 +16,7 @@
                      VerticalOptions="CenterAndExpand"
                      HorizontalOptions="FillAndExpand"
                      Grid.Row="0">
-            <Button >
+            <Button Clicked="ClearTextEntry">
                 <Button.ImageSource>
                     <FileImageSource File="{AppThemeBinding Light= arrowleft.svg, Dark= arrowleftwhite.svg}" />
                 </Button.ImageSource>
@@ -26,7 +26,7 @@
                    HorizontalOptions="FillAndExpand"
                    FontSize="18"
                    IsTextPredictionEnabled="True"
-                   TextChanged="OnEntryChanged">
+                   Completed="OnEntryChanged">
             </Entry>
             
             <Button x:Name="filterButton"

@@ -3,13 +3,13 @@ using AniMate_app.Services.AnilibriaService;
 using AniMate_app.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
 
 namespace AniMate_app.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        public ObservableCollection<GenreCollection> TitlesByGenre { get; private set; } = new();
+        [ObservableProperty]
+        private List<GenreCollection> _genreList = new();
 
         public List<string> Genres { get; private set; }
 
@@ -19,18 +19,19 @@ namespace AniMate_app.ViewModels
 
         public bool AllGenresLoaded => GenresLoaded.Equals(Genres.Count);
 
-        public bool IsTitlesLoaded { get; private set; } = true;
+        [ObservableProperty]
+        private bool _isLoadingGenres = false;
 
-        public bool IsGenresLoaded { get; private set; } = true;
-
-        private readonly CommandCollection<int> _loadGenreCommandsQueue = new();
+        [ObservableProperty]
+        private bool _isLoadingTitles = false;
 
         private readonly CommandCollection<GenreCollection> _loadMoreTitlesCommandsQueue = new();
 
-        private Utils.Command<int> LoadNewGenreTitlesCommand => new(5, LoadTitlesByGenreAction, CanLoadMoreGenres);
+        private readonly int _loadMoreGenresCount = 5;
 
         private readonly int _loadMoreTitlesCount = 5;
 
+        [ObservableProperty]
         private bool _isBusy = false;
 
         [ObservableProperty]
@@ -45,60 +46,42 @@ namespace AniMate_app.ViewModels
 
         public async Task LoadContent()
         {
-            _loadGenreCommandsQueue.Clear();
-            
+            IsBusy = true;
+
             _loadMoreTitlesCommandsQueue.Clear();
 
             Genres = await _anilibriaService.GetAllGenres();
 
-            RemainingItems = Genres.Count - GenresLoaded - 1;
+            await LoadMoreGenres(_loadMoreGenresCount);
 
-            LoadGenres();
-
-            _loadGenreCommandsQueue.Add(LoadNewGenreTitlesCommand);
+            IsBusy = false;
         }
 
         [RelayCommand]
-        public void Refresh()
+        public async Task Refresh()
         {
-            if (_isBusy) return;
+            if (IsBusy) return;
 
-            _isBusy = true;
+            IsBusy = true;
 
             IsRefreshing = true;
 
-            _loadGenreCommandsQueue.Clear();
-
-            _loadMoreTitlesCommandsQueue.Clear();
-
-            TitlesByGenre.Clear();
-
-            LoadGenres();
+            GenreList.Clear();
 
             GenresLoaded = 0;
 
-            IsGenresLoaded = true;
+            await LoadMoreGenres(_loadMoreGenresCount);
 
-            _loadGenreCommandsQueue.Add(LoadNewGenreTitlesCommand);
+            IsRefreshing = false;
 
-            IsRefreshing = false; 
-
-            _isBusy = false;
-        }
-
-        private void LoadGenres()
-        {
-            foreach (var genre in Genres)
-                TitlesByGenre.Add(new(genre));
+            IsBusy = false;
         }
 
         [RelayCommand]
-        public void LoadMoreGenres()
+        public async Task LoadMoreGenres()
         {
-            if (!AllGenresLoaded)
-                _loadGenreCommandsQueue.Add(LoadNewGenreTitlesCommand);
-            else if (_loadGenreCommandsQueue.CommandCount > 0)
-                _loadGenreCommandsQueue.Clear();
+            if (!AllGenresLoaded && !IsLoadingGenres)
+                await LoadMoreGenres(_loadMoreGenresCount);
         }
 
         [RelayCommand]
@@ -113,15 +96,15 @@ namespace AniMate_app.ViewModels
 
         private bool CanLoadMoreTitlesForGenre(GenreCollection genreCollection)
         {
-            return genreCollection.TargetTitleCount.Equals(genreCollection.TitleCount) && IsTitlesLoaded;
+            return genreCollection.TargetTitleCount.Equals(genreCollection.TitleCount) && !IsLoadingTitles;
         }
 
         private async void LoadMoreTitlesForGenreAction(GenreCollection genreCollection)
         {
-            if (!IsTitlesLoaded)
+            if (IsLoadingTitles)
                 return;
 
-            IsTitlesLoaded = false;
+            IsLoadingTitles = true;
 
             if (genreCollection.TargetTitleCount > genreCollection.TitleCount)
                 return;
@@ -130,38 +113,40 @@ namespace AniMate_app.ViewModels
 
             genreCollection.AddTitleList(await _anilibriaService.GetTitlesByGenre(genreCollection.GenreName, genreCollection.TitleCount, _loadMoreTitlesCount));
 
-            IsTitlesLoaded = true;
+            IsLoadingTitles = false;
         }
 
-        private bool CanLoadMoreGenres(int count)
+        private async Task LoadMoreGenres(int count)
         {
-            return IsGenresLoaded && !AllGenresLoaded;
+            IsLoadingGenres = true;
+
+            List<GenreCollection> newGenres = await LoadGenres(count);
+
+            GenreList.AddRange(newGenres);
+
+            IsLoadingGenres = false;
         }
 
-        private async void LoadTitlesByGenreAction(int count)
+        private async Task<List<GenreCollection>> LoadGenres(int count)
         {
-            if(!IsGenresLoaded) return;
-
-            IsGenresLoaded = false;
-
             int newCount = GenresLoaded + count < Genres.Count ? GenresLoaded + count : Genres.Count;
+
+            List<GenreCollection> list = new();
 
             for (int i = GenresLoaded; i < newCount; i++)
             {
-                var genreTitles = TitlesByGenre[i];
+                GenreCollection genreCollection = new(Genres[i]);
 
-                genreTitles.AddTitleList(await _anilibriaService.GetTitlesByGenre(Genres[i], 0, 5));
+                genreCollection.AddTitleList(await _anilibriaService.GetTitlesByGenre(Genres[i], 0, _loadMoreTitlesCount));
 
-                genreTitles.TargetTitleCount = count;
+                genreCollection.TargetTitleCount = _loadMoreTitlesCount;
+
+                list.Add(genreCollection);
             }
 
             GenresLoaded = newCount;
 
-            IsGenresLoaded = true;
-
-            RemainingItems = Genres.Count - GenresLoaded - 1;
-
-            OnPropertyChanged(nameof(RemainingItems));
+            return list;
         }
     }
 }

@@ -12,6 +12,6 @@ namespace AniMate_app.Services.AnilibriaService.Dtos
         public string Host { get; set; }
 
         [JsonProperty("list")]
-        public Dictionary<string, Episode>? Episodes { get; set; }
+        public Dictionary<string, Episode> Episodes { get; set; }
     }
 }
