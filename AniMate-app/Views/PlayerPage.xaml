@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AniMate_app.ViewModels"
              x:DataType="local:PlayerViewModel"
              Title="PlayerPage">
-    <Grid BackgroundColor="Black">
+    <Grid>
         <controls:MediaControl x:Name="mediaControl"
                            ShouldAutoPlay="True"
                            ShouldKeepScreenOn="False"

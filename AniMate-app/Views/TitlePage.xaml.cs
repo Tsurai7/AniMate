@@ -1,4 +1,4 @@
-﻿using AniMate_app.Services.AnilibriaService.Models;
+ï»¿using AniMate_app.Services.AnilibriaService.Models;
 using AniMate_app.ViewModels;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Layouts;
@@ -27,9 +27,5 @@ public partial class TitlePage : ContentPage
 
     private void OnTextRecognizerTap(object sender, EventArgs e)
     {
-         
     }
-
-
-
 }
