@@ -21,12 +21,15 @@ public partial class TitlePage : ContentPage
         if (sender is Button button && button.CommandParameter is string hlsUrl)
         {
             await Navigation.PushAsync(new PlayerPage(hlsUrl));
-            // Переход на страницу PlayerPage с использованием hlsUrl
-            // Например:
-            // await Navigation.PushAsync(new PlayerPage(hlsUrl));
         }
         
     }
 
-    
+    private void OnTextRecognizerTap(object sender, EventArgs e)
+    {
+         
+    }
+
+
+
 }
