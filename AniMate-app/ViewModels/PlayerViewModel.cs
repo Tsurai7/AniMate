@@ -1,18 +1,18 @@
-﻿using AniMate_app.Services.AnilibriaService.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AniMate_app.ViewModels
 {
-    public class PlayerViewModel : BindableObject
+    internal class PlayerViewModel
     {
-        public Title Title {  get; private set; }
+        public string MediaUrl { get; set; }
 
-        public string Genres { get; private set; }
-
-        public PlayerViewModel(Title currentTitle)
+        public PlayerViewModel(string mediaUrl)
         {
-            Title = currentTitle;
-
-            Genres = string.Join(", ", Title.Genres);
+            MediaUrl = mediaUrl;
         }
     }
 }

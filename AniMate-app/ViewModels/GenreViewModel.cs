@@ -41,7 +41,6 @@ public partial class GenreViewModel : ObservableObject
         foreach (var title in await _anilibriaService.GetTitlesByGenre(Genre, skip: LoadedTitles, LoadedTitles + _loadMoreResultsOffset))
             Titles.Add(title);
 
-
         _isLoading = false;
     }
 }

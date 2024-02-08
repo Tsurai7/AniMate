@@ -74,6 +74,12 @@
 	  <Compile Update="Views\GenrePage.xaml.cs">
 	    <DependentUpon>GenrePage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\PlayerPage.xaml.cs">
+	    <DependentUpon>PlayerPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\TitlePage.xaml.cs">
+	    <DependentUpon>TitlePage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -83,10 +89,13 @@
 	  <MauiXaml Update="Views\GenrePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\PlayerPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\NotificationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\PlayerPage.xaml">
+	  <MauiXaml Update="Views\TitlePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ProfilePage.xaml">

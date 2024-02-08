@@ -37,7 +37,7 @@ namespace AniMate_app.Views
 
             var collectionView = sender as CollectionView;
 
-            await Navigation.PushAsync(new PlayerPage(collectionView.SelectedItem as Title));
+            await Navigation.PushAsync(new TitlePage(collectionView.SelectedItem as Title));
 
             collectionView.SelectedItem = null;
 
