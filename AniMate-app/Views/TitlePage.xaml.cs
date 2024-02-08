@@ -27,7 +27,7 @@ public partial class TitlePage : ContentPage
     {
         StackLayout rowStackLayout = null;
 
-        for (int i = 1; i < viewModel.Title.Player.Episodes.Count; i++)
+        for (int i = 1; i <= viewModel.Title.Player.Episodes.Count; i++)
         {
             string episodeIndex = i.ToString();
 
