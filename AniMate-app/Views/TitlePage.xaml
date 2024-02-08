@@ -145,7 +145,7 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Episode">
-                        <Button Text="{Binding Ordinal}"
+                        <Button Text="{Binding Ordinal, StringFormat='Серия {0}'} "
                                 Clicked="OnWatchButtonClicked"
                                 CommandParameter="{Binding HlsUrls.Fhd}"
                                 BackgroundColor= "Grey"
