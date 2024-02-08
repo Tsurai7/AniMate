@@ -2,7 +2,7 @@
 
 namespace AniMate_app.ViewModels
 {
-    public class TitleViewModel : BindableObject
+    public  class TitleViewModel : BindableObject
     {
         public Title Title {  get; private set; }
 

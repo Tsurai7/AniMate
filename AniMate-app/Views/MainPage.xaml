@@ -88,7 +88,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:GenreCollection">
                             <StackLayout Orientation="Vertical">
-                                <Label Text="{Binding GenreName}" FontSize="Title" Margin="0,0,0,7" TextColor="White">
+                                <Label Text="{Binding GenreName}" FontSize="Title" Margin="0,0,0,7">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="OnGenreLabelTapped" />
                                     </Label.GestureRecognizers>

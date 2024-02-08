@@ -2,8 +2,14 @@
 
 namespace AniMate_app.Services.AnilibriaService.Models
 {
-    public class Episode
+    public record Episode
     {
+        [JsonProperty("episode")]
+        public int Ordinal { get; set; }
+
+        [JsonProperty("name")]
+        public string? Name { get; set; }
+
         [JsonProperty("hls")]
         public Hls HlsUrls { get; set; }
     }
