@@ -29,7 +29,8 @@
                    TextChanged="OnEntryChanged">
             </Entry>
             
-            <Button>
+            <Button x:Name="filterButton"
+                    Clicked="OnFiltredButtonClicked">
                 <Button.ImageSource>
                     <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
                 </Button.ImageSource>
