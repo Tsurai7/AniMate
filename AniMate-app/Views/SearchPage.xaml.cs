@@ -1,5 +1,7 @@
-using AniMate_app.Services.AnilibriaService.Models;
+﻿using AniMate_app.Services.AnilibriaService.Models;
 using AniMate_app.ViewModels;
+using AniMate_app.Views.Components;
+using CommunityToolkit.Maui.Views;
 
 namespace AniMate_app.Views;
 
@@ -37,6 +39,12 @@ public partial class SearchPage : ContentPage
         await viewModel.FindTitles(_searchText);
     }
 
+
+    void OnFiltredButtonClicked(object sender, EventArgs args)
+    {
+      this.ShowPopup(new FilterPopUp());
+    }
+    
     private void ClearTextEntry(object sender, EventArgs e)
     {
         entry.Text = string.Empty;
