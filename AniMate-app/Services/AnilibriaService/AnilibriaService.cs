@@ -49,14 +49,7 @@ namespace AniMate_app.Services.AnilibriaService
             
             string jsonInfo = await response.Content.ReadAsStringAsync();
 
-            try
-            {
-                return JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
-            }
-            catch (Exception)
-            {
-                return new();
-            }
+            return JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
         }
     }
 }

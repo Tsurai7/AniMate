@@ -1,7 +1,5 @@
-ï»¿using AniMate_app.Services.AnilibriaService.Models;
+using AniMate_app.Services.AnilibriaService.Models;
 using AniMate_app.ViewModels;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Layouts;
 
 namespace AniMate_app.Views;
 

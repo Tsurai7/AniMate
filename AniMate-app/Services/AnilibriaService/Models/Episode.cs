@@ -5,7 +5,7 @@ namespace AniMate_app.Services.AnilibriaService.Models
     public record Episode
     {
         [JsonProperty("episode")]
-        public int Ordinal { get; set; }
+        public string Ordinal { get; set; }
 
         [JsonProperty("name")]
         public string? Name { get; set; }
