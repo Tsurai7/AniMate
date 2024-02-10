@@ -49,11 +49,9 @@ namespace AniMate_app.Views
             isFirstLoad = false;
         }
 
-        private async void OnGenreLabelTapped(object sender, TappedEventArgs e)
+        private async void OnGenreTapped(object sender, TappedEventArgs e)
         {
-            var tappedLabel = (Label)sender;
-
-            string genreName = tappedLabel.Text;
+            string genreName = e.Parameter as string;
 
             var titles = viewModel.GenreList.FirstOrDefault(t => t.GenreName == genreName).Titles;
 

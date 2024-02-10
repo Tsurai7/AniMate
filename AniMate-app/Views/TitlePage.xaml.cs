@@ -25,12 +25,12 @@ public partial class TitlePage : ContentPage
         
     }
 
-    private void OnTextRecognizerTap(object sender, EventArgs e)
+    private void OnTextRecognizerTap(object sender, TappedEventArgs e)
     {
+        FormattedString formattedString = new FormattedString();
+
         if (isFullDescriptionOpen)
         {
-            FormattedString formattedString = new FormattedString();
-
             formattedString.Spans.Add(new Span
             {
                 Text = viewModel.ShortDescription,
@@ -47,12 +47,9 @@ public partial class TitlePage : ContentPage
         }
         else
         {
-            FormattedString formattedString = new FormattedString();
-
             formattedString.Spans.Add(new Span
             {
                 Text = viewModel.Title.RuDescription,
-                TextColor = Colors.Black,
                 FontSize = 15,
 
             }); ;
