@@ -8,11 +8,15 @@ namespace AniMate_app.ViewModels
 
         public string Genres { get; private set; }
 
+        public string ShortDescription {  get; private set; }
+
         public TitleViewModel(Title currentTitle)
         {
             Title = currentTitle;
 
             Genres = string.Join(", ", Title.Genres);
+
+            ShortDescription = string.Join(" ", currentTitle.RuDescription.Split(' ').Take(7));
         }
     }
 }
