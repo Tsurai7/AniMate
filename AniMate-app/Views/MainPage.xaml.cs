@@ -7,9 +7,9 @@ namespace AniMate_app.Views
     {
         private readonly MainViewModel viewModel;
 
-        private bool isOpeningPlayer = false;
+        private bool _isOpeningPlayer = false;
 
-        private bool isFirstLoad = true;
+        private bool _isFirstLoad = true;
 
         public MainPage(MainViewModel mainViewModel)
         {
@@ -20,20 +20,25 @@ namespace AniMate_app.Views
 
         private async void LoadContent(object sender, EventArgs e)
         {
-            if(isFirstLoad)
+            if(_isFirstLoad)
+            {
                 await viewModel.LoadContent();
+
+                _isFirstLoad = false;
+            }
+                
         }
 
         private async void TitleSelected(object sender, SelectionChangedEventArgs e)
         {
-            if (isOpeningPlayer)
+            if (_isOpeningPlayer)
             {
                 (sender as CollectionView).SelectedItem = null;
 
                 return;
             }   
 
-            isOpeningPlayer = true;
+            _isOpeningPlayer = true;
 
             var collectionView = sender as CollectionView;
 
@@ -41,12 +46,7 @@ namespace AniMate_app.Views
 
             collectionView.SelectedItem = null;
 
-            isOpeningPlayer = false;
-        }
-
-        private void ContentPage_Unloaded(object sender, EventArgs e)
-        {
-            isFirstLoad = false;
+            _isOpeningPlayer = false;
         }
 
         private async void OnGenreTapped(object sender, TappedEventArgs e)

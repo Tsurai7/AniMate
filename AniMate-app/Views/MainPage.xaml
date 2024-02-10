@@ -7,8 +7,7 @@
              x:Class="AniMate_app.Views.MainPage"
              x:DataType="local:MainViewModel"
              xmlns:templateSelector="clr-namespace:AniMate_app.View.TemplateSelectors"
-             Loaded="LoadContent"
-             Unloaded="ContentPage_Unloaded">
+             Loaded="LoadContent">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -18,7 +17,18 @@
                     VerticalOptions="FillAndExpand"
                      HorizontalOptions="FillAndExpand">
                     
-                        <Border HeightRequest="250" HorizontalOptions="FillAndExpand">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup Name="CommonStates">
+                            <VisualState Name="Normal"></VisualState>
+                            <VisualState Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="Transparent"></Setter>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                    
+                    <Border HeightRequest="250" HorizontalOptions="FillAndExpand">
                             <Image Aspect="AspectFill">
                                 <Image.Source>
                                     <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}" CachingEnabled="True" />
