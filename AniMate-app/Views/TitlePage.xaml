@@ -29,7 +29,7 @@
                              Margin="0,0,60,0">
                     <Button>
                         <Button.ImageSource>
-                            <FileImageSource File="{AppThemeBinding Light= favourite_for_title_page.svg, Dark= favourite_for_title_page.svg}" />
+                            <FileImageSource File="{AppThemeBinding Light= favourite_for_title_page.svg, Dark= favourite_for_title_page_white.svg}" />
                         </Button.ImageSource>
                     </Button>
                     <Label Text="В избранное"
@@ -43,7 +43,7 @@
                              Margin="0,0,60,0">
                     <Button>
                         <Button.ImageSource>
-                            <FileImageSource File="{AppThemeBinding Light= star_for_title_page.svg, Dark= star_for_title_page.svg}" />
+                            <FileImageSource File="{AppThemeBinding Light= star_for_title_page.svg, Dark= star_for_title_page_white.svg}" />
                         </Button.ImageSource>
                     </Button>
                     <Label Text="Оценить"
@@ -57,7 +57,7 @@
                              Margin="0,0,0,0">
                     <Button>
                         <Button.ImageSource>
-                            <FileImageSource File="{AppThemeBinding Light= download_for_title_page.svg, Dark= download_for_title_page.svg}" />
+                            <FileImageSource File="{AppThemeBinding Light= download_for_title_page.svg, Dark= download_for_title_page_white.svg}" />
                         </Button.ImageSource>
                     </Button>
                     <Label Text="Скачать"
@@ -75,12 +75,12 @@
                          >
                 <StackLayout Orientation="Vertical">
                     <Button Text="{Binding . , StringFormat='{0}/10'} "
-                            Opacity="0.5"
+                            Opacity="0.7"
                             FontAttributes="Bold"
                             FontSize="20"
                             >
                         <Button.ImageSource>
-                            <FileImageSource File="{AppThemeBinding Light= yellow_star_for_title_page.svg, Dark= yellow_star_for_title_page.svg}" />
+                            <FileImageSource File="{AppThemeBinding Light= yellow_star_for_title_page_2.svg, Dark= yellow_star_for_title_page_2_white.svg}" />
                         </Button.ImageSource>
                     </Button>
                 </StackLayout>
@@ -108,14 +108,22 @@
 
             <StackLayout Orientation="Vertical"
                          Margin="0,20,0,0">
-                <Label Text="{Binding Title.RuDescription}"
+                <Label Text="{Binding ShortDescription, StringFormat='{0}... ещё'}"
                        FontSize="15"
                        FontAttributes="Bold"
                        Margin="20,0,0,0"
+                       x:Name="descriptionLabel"
                        >
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding ShortDescription}" />
+                            <Span Text="... ещё"
+                                  TextColor="Grey" />
+                        </FormattedString>
+                    </Label.FormattedText>
                     <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnTextRecognizerTap"
-                              NumberOfTapsRequired="1" />
+                                          NumberOfTapsRequired="1" />
                     </Label.GestureRecognizers>
                 </Label>
             </StackLayout>
@@ -148,8 +156,8 @@
                                 CommandParameter="{Binding HlsUrls.Fhd}"
                                 BackgroundColor= "Grey"
                                 CornerRadius="10"
-                                Margin="2,5,2,5"
-                                FontSize="13"
+                                Margin="5,5,5,5"
+                                FontSize="12"
                                 >
                             
                         </Button>
