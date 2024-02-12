@@ -2,23 +2,45 @@
 
 public partial class LoginPage : ContentPage
 {
-	public LoginPage()
+    private AppTheme currentTheme = App.Current.RequestedTheme;
+    public LoginPage()
 	{
 		InitializeComponent();
 	}
 
     private async void LoginButton_Clicked(object sender, EventArgs e)
     {
-        // Ваш код для аутентификации пользователя
-        // Проверка логина и пароля и т.д.
-        // Если вход успешный, выполните нужные действия, например, переход на следующую страницу
-        await Navigation.PushAsync(new ProfilePage()); // Переход на основную страницу приложения
+        await Navigation.PushAsync(new ProfilePage());
     }
 
-    private async void RegisterButton_Clicked(object sender, EventArgs e)
+    private void usernameEntry_Focused(object sender, FocusEventArgs e)
     {
-        // Ваш код для обработки нажатия на кнопку регистрации
-        // Например, переход на страницу регистрации
+        loginFrame.BackgroundColor = Colors.Grey;
+        usernameEntry.BackgroundColor = Colors.Grey;
+    }
+
+    private void usernameEntry_Unfocused(object sender, FocusEventArgs e)
+    {
+        
+        loginFrame.BackgroundColor =  currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
+        usernameEntry.BackgroundColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
+    }
+
+    private void passwordEntry_Focused(object sender, FocusEventArgs e)
+    {
+        passwordFrame.BackgroundColor = Colors.Grey;
+        passwordEntry.BackgroundColor = Colors.Grey;
+    }
+
+    private void passwordEntry_Unfocused(object sender, FocusEventArgs e)
+    {
+        passwordFrame.BackgroundColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
+        passwordEntry.BackgroundColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
+
+    }
+
+    private async void registrationLabelTapped(object sender, TappedEventArgs e)
+    {
         await Navigation.PushAsync(new RegistrationPage());
     }
 }
