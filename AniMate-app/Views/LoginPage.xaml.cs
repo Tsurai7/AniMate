@@ -15,32 +15,28 @@ public partial class LoginPage : ContentPage
 
     private void usernameEntry_Focused(object sender, FocusEventArgs e)
     {
-        loginFrame.BackgroundColor = Colors.Grey;
-        usernameEntry.BackgroundColor = Colors.Grey;
+        loginFrame.BorderColor = Colors.Blue;
     }
 
     private void usernameEntry_Unfocused(object sender, FocusEventArgs e)
     {
-        
-        loginFrame.BackgroundColor =  currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
-        usernameEntry.BackgroundColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
+        loginFrame.BorderColor =  currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
     }
 
     private void passwordEntry_Focused(object sender, FocusEventArgs e)
     {
-        passwordFrame.BackgroundColor = Colors.Grey;
-        passwordEntry.BackgroundColor = Colors.Grey;
+        passwordFrame.BorderColor = Colors.Blue;
+        
     }
 
     private void passwordEntry_Unfocused(object sender, FocusEventArgs e)
     {
-        passwordFrame.BackgroundColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
-        passwordEntry.BackgroundColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
-
+        passwordFrame.BorderColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
     }
 
     private async void registrationLabelTapped(object sender, TappedEventArgs e)
     {
-        await Navigation.PushAsync(new RegistrationPage());
+        NavigationPage.SetHasNavigationBar(new RegistrationPage(), true);
+        await Navigation.PushModalAsync(new RegistrationPage());
     }
 }

@@ -15,44 +15,38 @@ public partial class RegistrationPage : ContentPage
 
     private void usernameEntry_Focused(object sender, FocusEventArgs e)
     {
-        loginFrame.BackgroundColor = Colors.Grey;
-        usernameEntry.BackgroundColor = Colors.Grey;
+        loginFrame.BorderColor = Colors.Blue;
     }
 
     private void usernameEntry_Unfocused(object sender, FocusEventArgs e)
     {
 
-        loginFrame.BackgroundColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
-        usernameEntry.BackgroundColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
+        loginFrame.BorderColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
+
     }
 
     private void passwordEntry_Focused(object sender, FocusEventArgs e)
     {
-        passwordFrame.BackgroundColor = Colors.Grey;
-        passwordEntry.BackgroundColor = Colors.Grey;
+        passwordFrame.BorderColor = Colors.Blue;
     }
 
     private void passwordEntry_Unfocused(object sender, FocusEventArgs e)
     {
-        passwordFrame.BackgroundColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
-        passwordEntry.BackgroundColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
-
+        passwordFrame.BorderColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; 
     }
 
     private async void loginLabelTapped(object sender, TappedEventArgs e)
     {
-        await Navigation.PushAsync(new LoginPage());
+        await Navigation.PopModalAsync();
     }
 
     private void passwordConfirmEntry_Unfocused(object sender, FocusEventArgs e)
     {
-        passwordConfirmFrame.BackgroundColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
-        passwordConfirmEntry.BackgroundColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
+        passwordConfirmFrame.BorderColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
     }
 
     private void passwordConfirmEntry_Focused(object sender, FocusEventArgs e)
     {
-        passwordConfirmFrame.BackgroundColor = Colors.Grey;
-        passwordConfirmEntry.BackgroundColor = Colors.Grey;
+        passwordConfirmFrame.BorderColor = Colors.Blue;
     }
 }
