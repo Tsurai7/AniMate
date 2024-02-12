@@ -2,13 +2,86 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AniMate_app.Views.LoginPage"
-             Title="LoginPage">
-    <StackLayout Orientation="Vertical"
-                 HorizontalOptions="Center"
-                 VerticalOptions="Center"> 
-        <Entry x:Name="usernameEntry" Placeholder="Логин" />
-        <Entry x:Name="passwordEntry" Placeholder="Пароль" IsPassword="True" />
-        <Button Text="Войти" Clicked="LoginButton_Clicked" />
-        <Button Text="Зарегистрироваться" Clicked="RegisterButton_Clicked" />
-    </StackLayout>
+             >
+    <Grid 
+          VerticalOptions="CenterAndExpand">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <Label Text="Вход"
+               FontSize="Large"
+               Grid.Row="0"
+               HorizontalOptions="Center">
+            
+        </Label>
+
+        <StackLayout Orientation="Vertical"
+                     Grid.Row="1"
+                     Margin="20,0,20,0">
+            <Label Text="Логин"
+                   FontSize="Small"
+                   Margin="0,20,0,5">
+
+            </Label>
+
+            <Frame Padding="10"
+                   CornerRadius="10"
+                   >
+                <Entry x:Name="usernameEntry"
+                       Placeholder="Логин"
+                       />
+            </Frame>
+        </StackLayout>
+
+        <StackLayout Orientation="Vertical"
+                     Grid.Row="2"
+                     Margin="20,10,20,0">
+            <Label Text="Пароль"
+                   FontSize="Small"
+                   Margin="0,0,0,5"
+                   >
+
+            </Label>
+
+            <Frame Padding="10"
+                   CornerRadius="10"
+                   Margin="0,0,0,0">
+                <Entry x:Name="passwordEntry"
+                    Placeholder="Пароль"
+                    IsPassword="True" />
+            </Frame>
+
+            <Label Text="Нет аккаунта, зарегистрируйтесь"
+                   FontSize="Micro"
+                   Margin="0,5,0,0"
+                   >
+                
+            </Label>
+        </StackLayout>
+        
+
+        <Frame Grid.Row="3"
+               Margin="20,10,20,0"
+               HorizontalOptions="FillAndExpand"
+               CornerRadius="10"
+               >
+            <StackLayout Orientation="Vertical">
+                <Button Text="Войти"
+                        Clicked="LoginButton_Clicked"
+                        Margin="0,0,0,0"
+                        />
+            </StackLayout>
+        </Frame>
+
+    </Grid>
+    
+    <ContentPage.Title>
+        <x:Null />
+    </ContentPage.Title>
+    
 </ContentPage> 
