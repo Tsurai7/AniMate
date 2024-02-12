@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AniMate_app.Views.LoginPage"
+             Title="LoginPage">
+    <StackLayout Orientation="Vertical"
+                 HorizontalOptions="Center"
+                 VerticalOptions="Center"> 
+        <Entry x:Name="usernameEntry" Placeholder="Логин" />
+        <Entry x:Name="passwordEntry" Placeholder="Пароль" IsPassword="True" />
+        <Button Text="Войти" Clicked="LoginButton_Clicked" />
+        <Button Text="Зарегистрироваться" Clicked="RegisterButton_Clicked" />
+    </StackLayout>
+</ContentPage> 

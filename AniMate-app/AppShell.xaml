@@ -20,7 +20,7 @@
         </ShellContent>
         <ShellContent Title="Profile"
           Icon="user.svg">
-            <local:ProfilePage />
+            <local:LoginPage />
         </ShellContent>
     </TabBar>
 </Shell>
