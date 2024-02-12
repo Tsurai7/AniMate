@@ -9,6 +9,7 @@
 
         </FileImageSource>
     </ContentPage.BackgroundImageSource>
+    
     <Frame CornerRadius="10"
            Margin="30,120,30,120">
         <Grid VerticalOptions="CenterAndExpand">
@@ -111,21 +112,18 @@
                 </Label>
             </StackLayout>
 
-
             <Button Grid.Row="4"
-        Margin="20,40,20,0"
-        HorizontalOptions="FillAndExpand"
-        CornerRadius="10"
-        Text="Регистрация"
-        FontSize="Medium"
-        Clicked="RegistrationButton_Clicked"
-        BackgroundColor="{AppThemeBinding Light=Black , Dark = White}"
-        TextColor="{AppThemeBinding Light=White , Dark = Black}"
-        >
+                    Margin="20,40,20,0"
+                    HorizontalOptions="FillAndExpand"
+                    CornerRadius="10"
+                    Text="Регистрация"
+                    FontSize="Medium"
+                    Clicked="RegistrationButton_Clicked"
+                    BackgroundColor="{AppThemeBinding Light=Black , Dark = White}"
+                    TextColor="{AppThemeBinding Light=White , Dark = Black}"
+                    >
 
             </Button>
-
-
         </Grid>
     </Frame>
     

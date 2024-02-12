@@ -2,13 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AniMate_app.Views.LoginPage"
-             
-    >
+             >
+    
     <ContentPage.BackgroundImageSource  >
         <FileImageSource File="background_2.jpg">
             
         </FileImageSource>
     </ContentPage.BackgroundImageSource>
+    
     <Frame CornerRadius="10"
            Margin="30,150,30,150"
            >
@@ -105,8 +106,7 @@
 
         </Grid>
     </Frame>
-    
-    
+
     <ContentPage.Title>
         <x:Null />
     </ContentPage.Title>
