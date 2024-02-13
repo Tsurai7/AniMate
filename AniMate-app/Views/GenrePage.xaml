@@ -5,14 +5,14 @@
              Title="{Binding Genre}"
              xmlns:Models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
              xmlns:local="clr-namespace:AniMate_app.ViewModels"
-             x:DataType="local:GenreViewModel">
+             x:DataType="local:GenreViewModel"
+             Appearing="OnAppearing">
 
     <StackLayout Orientation="Horizontal"
                      VerticalOptions="CenterAndExpand"
-                     HorizontalOptions="FillAndExpand"
-                     Grid.Row="0">
+                     HorizontalOptions="FillAndExpand">
 
-        <CollectionView ItemsSource="{Binding Titles}" Grid.Row="1" SelectionMode="Single" SelectionChanged= "TitleSelected"
+        <CollectionView ItemsSource="{Binding TitlesCollection.Titles}" SelectionMode="Single" SelectionChanged= "TitleSelected"
                           RemainingItemsThresholdReachedCommand="{Binding LoadMoreTitlesCommand}" RemainingItemsThreshold="0">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
@@ -63,6 +63,9 @@
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+            <CollectionView.Footer>
+                <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </CollectionView.Footer>
         </CollectionView>
     </StackLayout>
 </ContentPage>

@@ -1,6 +1,5 @@
 ﻿using AniMate_app.Model;
 using AniMate_app.Services.AnilibriaService;
-using AniMate_app.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -15,8 +14,6 @@ namespace AniMate_app.ViewModels
 
         public int GenresLoaded { get; private set; } = 0;
 
-        public int RemainingItems { get; private set; }
-
         public bool AllGenresLoaded => GenresLoaded.Equals(Genres.Count);
 
         [ObservableProperty]
@@ -25,11 +22,9 @@ namespace AniMate_app.ViewModels
         [ObservableProperty]
         private bool _isLoadingTitles = false;
 
-        private readonly CommandCollection<GenreCollection> _loadMoreTitlesCommandsQueue = new();
+        private readonly int _loadMoreGenresCount = 4;
 
-        private readonly int _loadMoreGenresCount = 5;
-
-        private readonly int _loadMoreTitlesCount = 5;
+        private readonly int _loadTitlesCount = 4;
 
         [ObservableProperty]
         private bool _isBusy = false;
@@ -47,8 +42,6 @@ namespace AniMate_app.ViewModels
         public async Task LoadContent()
         {
             IsBusy = true;
-
-            _loadMoreTitlesCommandsQueue.Clear();
 
             Genres = await _anilibriaService.GetAllGenres();
 
@@ -80,41 +73,41 @@ namespace AniMate_app.ViewModels
         [RelayCommand]
         public async Task LoadMoreGenres()
         {
-            if (!AllGenresLoaded && !IsLoadingGenres)
+            if (!IsBusy && !IsLoadingGenres && !AllGenresLoaded)
                 await LoadMoreGenres(_loadMoreGenresCount);
         }
 
-        [RelayCommand]
-        public void LoadMoreTitlesForGenre(GenreCollection genreCollection)
-        {
-            if (genreCollection.TargetTitleCount.Equals(genreCollection.TitleCount))
-                _loadMoreTitlesCommandsQueue.Add(new(genreCollection, LoadMoreTitlesForGenreAction, CanLoadMoreTitlesForGenre));
+        //[RelayCommand]
+        //public void LoadMoreTitlesForGenre(GenreCollection genreCollection)
+        //{
+        //    if (genreCollection.TargetTitleCount.Equals(genreCollection.TitleCount))
+        //        _loadMoreTitlesCommandsQueue.Add(new(genreCollection, LoadMoreTitlesForGenreAction, CanLoadMoreTitlesForGenre));
 
-            else if (_loadMoreTitlesCommandsQueue.CommandCount > 0)
-                _loadMoreTitlesCommandsQueue.Clear();
-        }
+        //    else if (_loadMoreTitlesCommandsQueue.CommandCount > 0)
+        //        _loadMoreTitlesCommandsQueue.Clear();
+        //}
 
-        private bool CanLoadMoreTitlesForGenre(GenreCollection genreCollection)
-        {
-            return genreCollection.TargetTitleCount.Equals(genreCollection.TitleCount) && !IsLoadingTitles;
-        }
+        //private bool CanLoadMoreTitlesForGenre(GenreCollection genreCollection)
+        //{
+        //    return genreCollection.TargetTitleCount.Equals(genreCollection.TitleCount) && !IsLoadingTitles;
+        //}
 
-        private async void LoadMoreTitlesForGenreAction(GenreCollection genreCollection)
-        {
-            if (IsLoadingTitles)
-                return;
+        //private async void LoadMoreTitlesForGenreAction(GenreCollection genreCollection)
+        //{
+        //    if (IsLoadingTitles)
+        //        return;
 
-            IsLoadingTitles = true;
+        //    IsLoadingTitles = true;
 
-            if (genreCollection.TargetTitleCount > genreCollection.TitleCount)
-                return;
+        //    if (genreCollection.TargetTitleCount > genreCollection.TitleCount)
+        //        return;
 
-            genreCollection.TargetTitleCount += _loadMoreTitlesCount;
+        //    genreCollection.TargetTitleCount += _loadTitlesCount;
 
-            genreCollection.AddTitleList(await _anilibriaService.GetTitlesByGenre(genreCollection.GenreName, genreCollection.TitleCount, _loadMoreTitlesCount));
+        //    genreCollection.AddTitleList(await _anilibriaService.GetTitlesByGenre(genreCollection.GenreName, genreCollection.TitleCount, _loadTitlesCount));
 
-            IsLoadingTitles = false;
-        }
+        //    IsLoadingTitles = false;
+        //}
 
         private async Task LoadMoreGenres(int count)
         {
@@ -137,14 +130,14 @@ namespace AniMate_app.ViewModels
             {
                 GenreCollection genreCollection = new(Genres[i]);
 
-                genreCollection.AddTitleList(await _anilibriaService.GetTitlesByGenre(Genres[i], 0, _loadMoreTitlesCount));
+                genreCollection.AddTitleList(await _anilibriaService.GetTitlesByGenre(Genres[i], 0, _loadTitlesCount));
 
-                genreCollection.TargetTitleCount = _loadMoreTitlesCount;
+                genreCollection.TargetTitleCount = _loadTitlesCount;
 
                 list.Add(genreCollection);
-            }
 
-            GenresLoaded = newCount;
+                GenresLoaded++;
+            }
 
             return list;
         }
