@@ -26,9 +26,9 @@
                          VerticalOptions="FillAndExpand"
                          HorizontalOptions="FillAndExpand">
                         <Grid
-                      HorizontalOptions="FillAndExpand"
-                      HeightRequest="250">
-                            <Border StrokeShape="RoundRectangle 10,10,10,10">
+                              HorizontalOptions="FillAndExpand"
+                              HeightRequest="250">
+                            <Border>
                                 <Image Aspect="AspectFill">
                                     <Image.Source>
                                         <UriImageSource Uri="{Binding Posters.Small.Url}" CachingEnabled="True" />
@@ -36,28 +36,28 @@
                                 </Image>
                             </Border>
                         </Grid>
-                        <Grid VerticalOptions="Start"
-                      HorizontalOptions="FillAndExpand">
+                        <Grid   VerticalOptions="Start"
+                                HorizontalOptions="FillAndExpand">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="160" />
                                 <ColumnDefinition Width="20" />
                             </Grid.ColumnDefinitions>
                             <StackLayout Grid.Column="0">
                                 <Label Text="{Binding Names.Ru}"
-                               VerticalOptions="Start" 
-                               HorizontalOptions="Start"
-                               LineBreakMode="WordWrap"
-           Margin="10,10,0,0"/>
+                                    VerticalOptions="Start" 
+                                    HorizontalOptions="Start"
+                                    LineBreakMode="WordWrap"
+                                    Margin="10,10,0,0"/>
                             </StackLayout>
                             <Button 
-                            Grid.Column="1"
-                            VerticalOptions="Start"
-                            HorizontalOptions="End"
-                            HeightRequest="20"
-                            Margin="10,10,0,0">
-                                <Button.ImageSource>
-                                    <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
-                                </Button.ImageSource>
+                                Grid.Column="1"
+                                VerticalOptions="Start"
+                                HorizontalOptions="End"
+                                HeightRequest="20"
+                                Margin="10,10,0,0">
+                                    <Button.ImageSource>
+                                        <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
+                                    </Button.ImageSource>
                             </Button>
                         </Grid>
                     </StackLayout>

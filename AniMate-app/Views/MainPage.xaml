@@ -29,30 +29,30 @@
                     </VisualStateManager.VisualStateGroups>
                     
                     <Border HeightRequest="250" HorizontalOptions="FillAndExpand">
-                            <Image Aspect="AspectFill">
-                                <Image.Source>
-                                    <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}" CachingEnabled="True" />
-                                </Image.Source>
-                            </Image>
-                        </Border>
-                        <Grid VerticalOptions="Start"
-                            HorizontalOptions="FillAndExpand">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="160" />
-                                <ColumnDefinition Width="20" />
-                            </Grid.ColumnDefinitions>
+                        <Image Aspect="AspectFill">
+                            <Image.Source>
+                                <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}" CachingEnabled="True" />
+                            </Image.Source>
+                        </Image>
+                    </Border>
+                    <Grid VerticalOptions="Start"
+                        HorizontalOptions="FillAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160" />
+                            <ColumnDefinition Width="20" />
+                        </Grid.ColumnDefinitions>
                         
-                            <Label Text="{Binding Names.Ru, Mode=OneTime}" Grid.Column="0"
-                                   VerticalOptions="Start" 
-                                   HorizontalOptions="Start"
-                                   LineBreakMode="WordWrap"
-                                   Margin="10,10,0,0"/>
-                            <Button 
-                                Grid.Column="1"
-                                VerticalOptions="Start"
-                                HorizontalOptions="End"
-                                HeightRequest="20"
-                                Margin="10,10,0,0">
+                        <Label Text="{Binding Names.Ru, Mode=OneTime}" Grid.Column="0"
+                                VerticalOptions="Start" 
+                                HorizontalOptions="Start"
+                                LineBreakMode="WordWrap"
+                                Margin="10,10,0,0"/>
+                        <Button 
+                            Grid.Column="1"
+                            VerticalOptions="Start"
+                            HorizontalOptions="End"
+                            HeightRequest="20"
+                            Margin="10,10,0,0">
                             <Button.ImageSource>
                                 <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
                             </Button.ImageSource>
@@ -83,6 +83,7 @@
         </Image>
 
         <ActivityIndicator Grid.Row="1" IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsBusy}" HeightRequest="40" HorizontalOptions="Center"/>
+        
         <RefreshView Margin="10,10,0,0" Grid.Row="1" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
             <CollectionView ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" 
                         ItemsSource="{Binding GenreList}" VerticalOptions="FillAndExpand" 

@@ -42,9 +42,9 @@ public partial class GenreViewModel : ObservableObject
 
         IsLoading = true;
 
-        List<Title> loadedTitles = await _anilibriaService.GetTitlesByGenre(Genre, LoadedTitles, LoadedTitles + _loadMoreResultsOffset);
-
         TitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
+
+        List<Title> loadedTitles = await _anilibriaService.GetTitlesByGenre(Genre, LoadedTitles, LoadedTitles + _loadMoreResultsOffset);
 
         if (loadedTitles.Count > 0)
             TitlesCollection.AddTitleList(loadedTitles);
