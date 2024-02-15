@@ -45,7 +45,7 @@ namespace AniMate_app.ViewModels
 
             Genres = await _anilibriaService.GetAllGenres();
 
-            await LoadMoreGenres(_loadMoreGenresCount);
+            await LoadMoreGenres(_loadMoreGenresCount).ConfigureAwait(false);
 
             IsBusy = false;
         }
@@ -63,7 +63,7 @@ namespace AniMate_app.ViewModels
 
             GenresLoaded = 0;
 
-            await LoadMoreGenres(_loadMoreGenresCount);
+            await LoadMoreGenres(_loadMoreGenresCount).ConfigureAwait(false);
 
             IsRefreshing = false;
 
