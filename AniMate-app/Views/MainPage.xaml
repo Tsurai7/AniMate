@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:AniMate_app.ViewModels"
-             xmlns:model="clr-namespace:AniMate_app.Model"
-             xmlns:Models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
-             x:Class="AniMate_app.Views.MainPage"
-             x:DataType="local:MainViewModel"
-             xmlns:templateSelector="clr-namespace:AniMate_app.View.TemplateSelectors"
-             Loaded="LoadContent">
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:AniMate_app.ViewModels"
+    xmlns:model="clr-namespace:AniMate_app.Model"
+    xmlns:Models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
+    x:Class="AniMate_app.Views.MainPage"
+    x:DataType="local:MainViewModel"
+    xmlns:templateSelector="clr-namespace:AniMate_app.View.TemplateSelectors"
+    Loaded="LoadContent">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -37,22 +38,19 @@
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
                         
-                    <Image Aspect="AspectFill" HeightRequest="250" Grid.ColumnSpan="2">
+                    <Image Aspect="AspectFill" Grid.ColumnSpan="2">
                         <Image.Source>
                             <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}" CachingEnabled="True" />
                         </Image.Source>
                     </Image>
 
                     <Label Text="{Binding Names.Ru, Mode=OneTime}" Grid.Column="0" Grid.Row="1"
-                        VerticalOptions="Start" 
-                        HorizontalOptions="Start"
-                        LineBreakMode="WordWrap" Margin="10,0,0,0"/>
+                        LineBreakMode="WordWrap" Margin="5,0,0,0"/>
 
                     <Button 
                         Grid.Column="1" Grid.Row="1"
                         VerticalOptions="Start"
-                        HorizontalOptions="End"
-                        HeightRequest="20">
+                        HorizontalOptions="End">
                         <Button.ImageSource>
                             <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
                         </Button.ImageSource>
