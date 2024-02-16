@@ -14,10 +14,8 @@
         <ResourceDictionary>
 
             <DataTemplate x:Key="TitleTile" x:DataType="Models:Title">
-
                 <Grid VerticalOptions="Start" HeightRequest="300" RowSpacing="10"
                         HorizontalOptions="FillAndExpand">
-                    
                     <VisualStateManager.VisualStateGroups>
                         <VisualStateGroup Name="CommonStates">
                             <VisualState Name="Normal"></VisualState>
@@ -28,7 +26,7 @@
                             </VisualState>
                         </VisualStateGroup>
                     </VisualStateManager.VisualStateGroups>
-                    
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="160" />
                         <ColumnDefinition Width="20" />
@@ -37,7 +35,7 @@
                         <RowDefinition Height="250"/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                        
+
                     <Image Aspect="AspectFill" Grid.ColumnSpan="2">
                         <Image.Source>
                             <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}" CachingEnabled="True" />
@@ -57,7 +55,7 @@
                     </Button>
                 </Grid>
             </DataTemplate>
-
+            
         </ResourceDictionary>
     </ContentPage.Resources>
     

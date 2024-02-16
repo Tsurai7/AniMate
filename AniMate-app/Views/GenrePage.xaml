@@ -25,17 +25,12 @@
                          HeightRequest="300"
                          VerticalOptions="FillAndExpand"
                          HorizontalOptions="FillAndExpand">
-                        <Grid
-                              HorizontalOptions="FillAndExpand"
-                              HeightRequest="250">
-                            <Border>
-                                <Image Aspect="AspectFill">
-                                    <Image.Source>
-                                        <UriImageSource Uri="{Binding Posters.Small.Url}" CachingEnabled="True" />
-                                    </Image.Source>
-                                </Image>
-                            </Border>
-                        </Grid>
+                        <Image Aspect="AspectFill">
+                            <Image.Source>
+                                <UriImageSource Uri="{Binding Posters.Small.Url}" CachingEnabled="True" />
+                            </Image.Source>
+                        </Image>
+                        
                         <Grid   VerticalOptions="Start"
                                 HorizontalOptions="FillAndExpand">
                             <Grid.ColumnDefinitions>
