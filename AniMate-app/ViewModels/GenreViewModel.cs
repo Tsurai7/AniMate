@@ -1,46 +1,54 @@
+using AniMate_app.Model;
 using AniMate_app.Services.AnilibriaService;
 using AniMate_app.Services.AnilibriaService.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
 
 namespace AniMate_app.ViewModels;
 
 public partial class GenreViewModel : ObservableObject
 {
     public string Genre { get; set; }
-    public ObservableCollection<Title> Titles { get; private set; }
+    public GenreCollection TitlesCollection { get; private set; }
 
     private readonly AnilibriaService _anilibriaService;
 
-    private bool _isLoading = false;
+    [ObservableProperty]
+    private bool _isLoading;
 
-    private int LoadedTitles;
+    private int LoadedTitles => TitlesCollection.TitleCount;
 
     private int _loadMoreResultsOffset = 6;
 
-    public GenreViewModel(string genre, ObservableCollection<Title> titles, AnilibriaService anilibriaService)
+    public GenreViewModel(string genreName, AnilibriaService anilibriaService)
     {
-        Titles = titles;
+        IsLoading = false;
 
-        Genre = genre;
+        Genre = genreName;
+
+        TitlesCollection = new(Genre);
 
         _anilibriaService = anilibriaService;
-
-        LoadedTitles = titles.Count;
     }
 
     [RelayCommand]
     public async Task LoadMoreTitles()
     {
-        if (_isLoading)
+        if (IsLoading)
             return;
 
-        _isLoading = true;
+        if (TitlesCollection.TargetTitleCount > TitlesCollection.TitleCount)
+            return;
 
-        foreach (var title in await _anilibriaService.GetTitlesByGenre(Genre, skip: LoadedTitles, LoadedTitles + _loadMoreResultsOffset))
-            Titles.Add(title);
+        IsLoading = true;
 
-        _isLoading = false;
+        TitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
+
+        List<Title> loadedTitles = await _anilibriaService.GetTitlesByGenre(Genre, LoadedTitles, LoadedTitles + _loadMoreResultsOffset);
+
+        if (loadedTitles.Count > 0)
+            TitlesCollection.AddTitleList(loadedTitles);
+
+        IsLoading = false;
     }
 }

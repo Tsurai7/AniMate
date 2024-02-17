@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:AniMate_app.ViewModels"
-             xmlns:model="clr-namespace:AniMate_app.Model"
-             xmlns:Models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
-             x:Class="AniMate_app.Views.MainPage"
-             x:DataType="local:MainViewModel"
-             xmlns:templateSelector="clr-namespace:AniMate_app.View.TemplateSelectors"
-             Loaded="LoadContent">
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:AniMate_app.ViewModels"
+    xmlns:model="clr-namespace:AniMate_app.Model"
+    xmlns:Models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
+    x:Class="AniMate_app.Views.MainPage"
+    x:DataType="local:MainViewModel"
+    xmlns:templateSelector="clr-namespace:AniMate_app.View.TemplateSelectors"
+    Loaded="LoadContent">
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            
+
             <DataTemplate x:Key="TitleTile" x:DataType="Models:Title">
-                <StackLayout Margin="2, 5, 5, 5" HeightRequest="300"
-                    VerticalOptions="FillAndExpand"
-                     HorizontalOptions="FillAndExpand">
-                    
+                <Grid VerticalOptions="Start" HeightRequest="300" RowSpacing="10"
+                        HorizontalOptions="FillAndExpand">
                     <VisualStateManager.VisualStateGroups>
                         <VisualStateGroup Name="CommonStates">
                             <VisualState Name="Normal"></VisualState>
@@ -27,95 +26,87 @@
                             </VisualState>
                         </VisualStateGroup>
                     </VisualStateManager.VisualStateGroups>
-                    
-                    <Border HeightRequest="250" HorizontalOptions="FillAndExpand">
-                            <Image Aspect="AspectFill">
-                                <Image.Source>
-                                    <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}" CachingEnabled="True" />
-                                </Image.Source>
-                            </Image>
-                        </Border>
-                        <Grid VerticalOptions="Start"
-                            HorizontalOptions="FillAndExpand">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="160" />
-                                <ColumnDefinition Width="20" />
-                            </Grid.ColumnDefinitions>
-                        
-                            <Label Text="{Binding Names.Ru, Mode=OneTime}" Grid.Column="0"
-                                   VerticalOptions="Start" 
-                                   HorizontalOptions="Start"
-                                   LineBreakMode="WordWrap"
-                                   Margin="10,10,0,0"/>
-                            <Button 
-                                Grid.Column="1"
-                                VerticalOptions="Start"
-                                HorizontalOptions="End"
-                                HeightRequest="20"
-                                Margin="10,10,0,0">
-                            <Button.ImageSource>
-                                <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
-                            </Button.ImageSource>
-                        </Button>
-                    </Grid>
-                </StackLayout>
-            </DataTemplate>
 
-            <templateSelector:MainpageTemplateSelector x:Key="mainTemplateSelector"
-                TitleTileTemplate ="{StaticResource TitleTile}"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160" />
+                        <ColumnDefinition Width="20" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="250"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+
+                    <Image Aspect="AspectFill" Grid.ColumnSpan="2">
+                        <Image.Source>
+                            <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}" CachingEnabled="True" />
+                        </Image.Source>
+                    </Image>
+
+                    <Label Text="{Binding Names.Ru, Mode=OneTime}" Grid.Column="0" Grid.Row="1"
+                        LineBreakMode="WordWrap" Margin="5,0,0,0"/>
+
+                    <Button 
+                        Grid.Column="1" Grid.Row="1"
+                        VerticalOptions="Start"
+                        HorizontalOptions="End">
+                        <Button.ImageSource>
+                            <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
+                        </Button.ImageSource>
+                    </Button>
+                </Grid>
+            </DataTemplate>
             
         </ResourceDictionary>
     </ContentPage.Resources>
     
-    <StackLayout Orientation="Vertical">
-        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <Image Source="{AppThemeBinding Light = logo.svg, Dark = logowhite.svg}"
+        <Image Source="{AppThemeBinding Light = logo.svg, Dark = logowhite.svg}"
                 MaximumHeightRequest="50"
                 MaximumWidthRequest="100"
                 HorizontalOptions="Start"
                 VerticalOptions="Start"
                 Margin="10, 20, 0, 0">
-            </Image>
+        </Image>
 
-            <ActivityIndicator Grid.Row="1" IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsBusy}" HeightRequest="40" HorizontalOptions="Center"/>
-            <RefreshView Margin="10,10,0,0" Grid.Row="1" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
-                <CollectionView ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" 
+        <ActivityIndicator Grid.Row="1" IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsBusy}" HeightRequest="40" HorizontalOptions="Center"/>
+        
+        <RefreshView Margin="10,10,0,0" Grid.Row="1" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
+            <CollectionView ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" 
                         ItemsSource="{Binding GenreList}" VerticalOptions="FillAndExpand" 
                         RemainingItemsThresholdReachedCommand="{Binding LoadMoreGenresCommand}" 
                         RemainingItemsThreshold="0">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" SnapPointsType="None"/>
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:GenreCollection">
-                            <StackLayout Orientation="Vertical">
-                                <Label Text="{Binding GenreName, Mode=OneTime}" FontSize="Title" Margin="0,0,0,7">
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnGenreTapped" CommandParameter="{Binding GenreName}" />
-                                    </Label.GestureRecognizers>
-                                </Label>
-                                <CollectionView SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource Key=mainTemplateSelector}" HorizontalOptions="Start"
-                                        SelectionChanged="TitleSelected" RemainingItemsThreshold="0" 
-                                        RemainingItemsThresholdReachedCommand="{Binding Source={RelativeSource AncestorType={x:Type local:MainViewModel}}, Path=LoadMoreTitlesForGenreCommand}"
-                                        RemainingItemsThresholdReachedCommandParameter="{Binding .}">
-                                    <CollectionView.ItemsLayout>
-                                        <LinearItemsLayout Orientation="Horizontal" SnapPointsType="None" ItemSpacing="4"/>
-                                    </CollectionView.ItemsLayout>
-                                </CollectionView>
-                            </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </RefreshView>
-        </Grid>
-        <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoadingGenres}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
-    </StackLayout>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" SnapPointsType="None"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:GenreCollection">
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="{Binding GenreName, Mode=OneTime}" FontSize="Title" Margin="0,0,0,7">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnGenreTapped" CommandParameter="{Binding .}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <CollectionView SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource Key=TitleTile}" HorizontalOptions="Start"
+                                        SelectionChanged="TitleSelected">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Horizontal" SnapPointsType="None" ItemSpacing="10"/>
+                                </CollectionView.ItemsLayout>
+                            </CollectionView>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.Footer>
+                    <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoadingGenres}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </CollectionView.Footer>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
     <ContentPage.Title>
         <x:Null />
     </ContentPage.Title>

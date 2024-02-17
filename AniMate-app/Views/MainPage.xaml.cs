@@ -1,4 +1,5 @@
-﻿using AniMate_app.Services.AnilibriaService.Models;
+﻿using AniMate_app.Model;
+using AniMate_app.Services.AnilibriaService.Models;
 using AniMate_app.ViewModels;
 
 namespace AniMate_app.Views
@@ -51,11 +52,9 @@ namespace AniMate_app.Views
 
         private async void OnGenreTapped(object sender, TappedEventArgs e)
         {
-            string genreName = e.Parameter as string;
+            GenreCollection genreCollection = e.Parameter as GenreCollection;
 
-            var titles = viewModel.GenreList.FirstOrDefault(t => t.GenreName == genreName).Titles;
-
-            await Navigation.PushAsync(new GenrePage(genreName, titles, viewModel._anilibriaService));
+            await Navigation.PushAsync(new GenrePage(genreCollection.GenreName, viewModel._anilibriaService));
         }
     }
 }
