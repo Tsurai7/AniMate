@@ -8,7 +8,7 @@
     x:DataType="local:MainViewModel"
     Loaded="LoadContent">
 
-    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+    <Grid VerticalOptions="FillAndExpand" Padding="10, 20">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
@@ -16,38 +16,45 @@
         </Grid.RowDefinitions>
 
         <Image Source="{AppThemeBinding Light = logo.svg, Dark = logowhite.svg}"
-                MaximumHeightRequest="50"
-                MaximumWidthRequest="100"
-                HorizontalOptions="Start"
-                VerticalOptions="Start"
-                Margin="10, 20, 0, 0">
-        </Image>
+            MaximumHeightRequest="50"
+            MaximumWidthRequest="100"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"/>
 
-        <RefreshView Margin="10,10,0,0" Grid.Row="1" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
-            <CollectionView ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" 
-                        ItemsSource="{Binding GenreList}" VerticalOptions="FillAndExpand" 
-                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" 
-                        RemainingItemsThreshold="0">
+        <RefreshView Grid.Row="1" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
+            <CollectionView 
+                ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" 
+                ItemsSource="{Binding GenreList}" VerticalOptions="FillAndExpand" 
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" 
+                RemainingItemsThreshold="0">
+                
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" SnapPointsType="None"/>
                 </CollectionView.ItemsLayout>
+                
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:GenreCollection">
-                        <StackLayout Orientation="Vertical">
-                            <Label Text="{Binding GenreName, Mode=OneTime}" FontSize="Title" Margin="0,0,0,7">
-                                <Label.GestureRecognizers>
+                        <VerticalStackLayout Spacing="7">
+
+                            <Label Text="{Binding GenreName, Mode=OneTime}" FontSize="Title">
+                                <Label.GestureRecognizers >
                                     <TapGestureRecognizer Tapped="OnGenreTapped" CommandParameter="{Binding .}" />
                                 </Label.GestureRecognizers>
                             </Label>
-                            <CollectionView SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource Key=TitleTile}" HorizontalOptions="Start"
-                                        SelectionChanged="TitleSelected">
+                            
+                            <CollectionView
+                                SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource Key=TitleTile}" 
+                                HorizontalOptions="Start" SelectionChanged="TitleSelected">
+
                                 <CollectionView.ItemsLayout>
                                     <LinearItemsLayout Orientation="Horizontal" SnapPointsType="None" ItemSpacing="10"/>
                                 </CollectionView.ItemsLayout>
                             </CollectionView>
-                        </StackLayout>
+                            
+                        </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+                
                 <CollectionView.Footer>
                     <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
                 </CollectionView.Footer>
