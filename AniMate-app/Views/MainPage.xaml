@@ -23,11 +23,11 @@
 
         <RefreshView Grid.Row="1" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
             <CollectionView 
-                ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" 
-                ItemsSource="{Binding GenreList}" VerticalOptions="FillAndExpand" 
+                ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" SelectionMode="None"
+                ItemsSource="{Binding GenreList}" VerticalOptions="FillAndExpand"
                 RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" 
                 RemainingItemsThreshold="0">
-                
+
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" SnapPointsType="None"/>
                 </CollectionView.ItemsLayout>
