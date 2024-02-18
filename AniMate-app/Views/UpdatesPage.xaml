@@ -18,7 +18,7 @@
 
             </CarouselView>
             
-            <CollectionView HeightRequest="500" SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource TitleTile}"
+            <CollectionView VerticalOptions="FillAndExpand" SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource TitleTile}"
                             RemainingItemsThreshold="0" RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" SnapPointsType="None" ItemSpacing="10"/>

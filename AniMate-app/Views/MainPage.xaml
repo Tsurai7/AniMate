@@ -4,10 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:AniMate_app.ViewModels"
     xmlns:model="clr-namespace:AniMate_app.Model"
-    xmlns:Models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
     x:Class="AniMate_app.Views.MainPage"
     x:DataType="local:MainViewModel"
-    xmlns:templateSelector="clr-namespace:AniMate_app.View.TemplateSelectors"
     Loaded="LoadContent">
 
     <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
@@ -25,12 +23,10 @@
                 Margin="10, 20, 0, 0">
         </Image>
 
-        <ActivityIndicator Grid.Row="1" IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsBusy}" HeightRequest="40" HorizontalOptions="Center"/>
-        
         <RefreshView Margin="10,10,0,0" Grid.Row="1" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
             <CollectionView ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" 
                         ItemsSource="{Binding GenreList}" VerticalOptions="FillAndExpand" 
-                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreGenresCommand}" 
+                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" 
                         RemainingItemsThreshold="0">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" SnapPointsType="None"/>
@@ -53,7 +49,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
                 <CollectionView.Footer>
-                    <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoadingGenres}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
                 </CollectionView.Footer>
             </CollectionView>
         </RefreshView>
