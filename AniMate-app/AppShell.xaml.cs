@@ -9,6 +9,7 @@ namespace AniMate_app
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+            Routing.RegisterRoute(nameof(UpdatesPage), typeof(UpdatesPage));
             Routing.RegisterRoute(nameof(SearchPage), typeof(SearchPage));
         }
     }

@@ -42,6 +42,9 @@ namespace AniMate_app
             services.AddTransient<MainPage>();
             services.AddTransient<MainViewModel>();
 
+            services.AddTransient<UpdatesPage>();
+            services.AddTransient<UpdatesViewModel>();
+
             services.AddTransient<SearchPage>();
             services.AddTransient<SearchViewModel>();
 
