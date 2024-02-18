@@ -31,6 +31,17 @@ namespace AniMate_app.Services.AnilibriaService
             return titles;
         }
 
+        public async Task<List<Title>> GetUpdates(int skip = 0, int count = 6)
+        {
+            using HttpResponseMessage response = await _httpClient.GetAsync($"""{_url}title/updates?{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
+
+            string jsonInfo = await response.Content.ReadAsStringAsync();
+
+            List<Title> titles = JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
+
+            return titles;
+        }
+
         public async Task<List<string>> GetAllGenres()
         {
             using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}genres");

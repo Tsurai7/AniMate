@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AniMate_app.Views.UpdatesPage"
+             xmlns:local="clr-namespace:AniMate_app.ViewModels"
+             xmlns:model="clr-namespace:AniMate_app.Model"
+             xmlns:Models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
+             x:DataType="local:UpdatesViewModel"
+             Title="UpdatesPage">
+
+    <RefreshView>
+        <VerticalStackLayout>
+            
+            <CarouselView ItemsSource="{Binding ResumeWatchList}">
+
+            </CarouselView>
+            
+            <CollectionView SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource Key=TitleTile}" HorizontalOptions="Start"
+                SelectionChanged="TitleSelected">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" SnapPointsType="None" ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+            
+        </VerticalStackLayout>
+    </RefreshView>
+</ContentPage>
