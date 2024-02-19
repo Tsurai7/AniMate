@@ -9,18 +9,19 @@ public partial class TitlePage : ContentPage
 
     private bool isFullDescriptionOpen = false;
 
-    public TitlePage(Title title)
+    public TitlePage()
     {
         InitializeComponent();
 
-        BindingContext = viewModel = new TitleViewModel(title);
+        BindingContext = viewModel = new TitleViewModel();
     }
 
     private async void OnWatchButtonClicked(object sender, EventArgs e)
     {
         if (sender is Button button && button.CommandParameter is string hlsUrl)
         {
-            await Navigation.PushAsync(new PlayerPage(hlsUrl));
+            await Shell.Current.GoToAsync($"playerpage?mediaurl={hlsUrl}" );
+            //await Navigation.PushAsync(new PlayerPage(hlsUrl));
         }
         
     }

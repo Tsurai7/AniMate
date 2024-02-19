@@ -9,8 +9,9 @@
     <Grid>
         <controls:MediaControl x:Name="mediaControl"
                            ShouldAutoPlay="True"
-                           ShouldKeepScreenOn="False"
+                           ShouldKeepScreenOn="True"
                            ShowCustomControls="True"
-                           Source="{Binding MediaUrl}"/>
+                           Source="{Binding MediaUrl}"
+                           />
     </Grid>
 </ContentPage>

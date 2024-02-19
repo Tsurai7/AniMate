@@ -8,11 +8,11 @@ public partial class GenrePage : ContentPage
 {
     public readonly GenreViewModel viewModel;
 
-    public GenrePage(string genreName, AnilibriaService anilibriaService )
+    public GenrePage()
     {
         InitializeComponent();
 
-        BindingContext = viewModel = new GenreViewModel(genreName, anilibriaService);
+        BindingContext = viewModel = new GenreViewModel();
     }
 
     private async void TitleSelected(object sender, SelectionChangedEventArgs e)
@@ -25,7 +25,13 @@ public partial class GenrePage : ContentPage
 
             collectionView.SelectedItem = null;
 
-            await Navigation.PushAsync(new TitlePage(selectedTitle));
+            var navigationParameter = new Dictionary<string, object>
+            {
+                {"TheTitle", collectionView.SelectedItem}
+            };
+
+            await Shell.Current.GoToAsync($"titlepage", navigationParameter);
+
         }
     }
 

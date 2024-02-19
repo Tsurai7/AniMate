@@ -6,11 +6,12 @@ public partial class RegistrationPage : ContentPage
     public RegistrationPage()
 	{
 		InitializeComponent();
-	}
+        AppShell.SetNavBarIsVisible(this, false);
+    }
 
     private async void RegistrationButton_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new ProfilePage());
+        await Shell.Current.GoToAsync($"profilepage");
     }
 
     private void usernameEntry_Focused(object sender, FocusEventArgs e)
@@ -37,7 +38,7 @@ public partial class RegistrationPage : ContentPage
 
     private async void loginLabelTapped(object sender, TappedEventArgs e)
     {
-        await Navigation.PopModalAsync();
+        await Shell.Current.Navigation.PopAsync();
     }
 
     private void passwordConfirmEntry_Unfocused(object sender, FocusEventArgs e)

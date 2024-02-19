@@ -4,6 +4,7 @@ public partial class ProfilePage : ContentPage
 {
 	public ProfilePage()
 	{
-		InitializeComponent();
+        AppShell.SetNavBarIsVisible(this, false);
+        InitializeComponent();
 	}
 }

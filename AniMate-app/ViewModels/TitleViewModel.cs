@@ -1,22 +1,49 @@
 ﻿using AniMate_app.Services.AnilibriaService.Models;
-
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 namespace AniMate_app.ViewModels
 {
-    public  class TitleViewModel : BindableObject
+    [QueryProperty(nameof(Title), "TheTitle")]
+    public partial class TitleViewModel : ObservableObject
     {
-        public Title Title {  get; private set; }
-
-        public string Genres { get; private set; }
-
-        public string ShortDescription {  get; private set; }
-
-        public TitleViewModel(Title currentTitle)
+        private Title _title;
+        public Title Title
         {
-            Title = currentTitle;
+            get => _title;
+            set
+            {
+                _title = value;
+                Genres = string.Join(", ", _title.Genres);
+                ShortDescription = string.Join(" ", _title.RuDescription.Split(' ').Take(7));
+                OnPropertyChanged(nameof(Title));
+            }
+        }
 
-            Genres = string.Join(", ", Title.Genres);
+        private string _genres;
+        public string Genres
+        {
+            get => _genres;
+            set
+            {
+                _genres = value;
+                OnPropertyChanged(nameof(Genres));
+            }
+        }
 
-            ShortDescription = string.Join(" ", currentTitle.RuDescription.Split(' ').Take(7));
+        private string _shortDescription;
+        public string ShortDescription
+        {
+            get => _shortDescription;
+            set
+            {
+                _shortDescription = value;
+                OnPropertyChanged(nameof(ShortDescription));
+            }
+        }
+
+        public TitleViewModel()
+        {
+
         }
     }
 }

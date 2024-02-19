@@ -10,7 +10,8 @@ public partial class LoginPage : ContentPage
 
     private async void LoginButton_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new ProfilePage());
+        
+        await Shell.Current.GoToAsync($"profilepage");
     }
 
     private void usernameEntry_Focused(object sender, FocusEventArgs e)
@@ -36,7 +37,8 @@ public partial class LoginPage : ContentPage
 
     private async void registrationLabelTapped(object sender, TappedEventArgs e)
     {
-        NavigationPage.SetHasNavigationBar(new RegistrationPage(), true);
-        await Navigation.PushModalAsync(new RegistrationPage());
+        await Shell.Current.GoToAsync($"registrationpage");
+        //NavigationPage.SetHasNavigationBar(new RegistrationPage(), true);
+        //await Navigation.PushModalAsync(new RegistrationPage());
     }
 }
