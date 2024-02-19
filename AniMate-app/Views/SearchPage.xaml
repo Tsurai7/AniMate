@@ -16,18 +16,15 @@
                      VerticalOptions="CenterAndExpand"
                      HorizontalOptions="FillAndExpand"
                      Grid.Row="0">
-            <Button Clicked="ClearTextEntry">
-                <Button.ImageSource>
-                    <FileImageSource File="{AppThemeBinding Light= arrowleft.svg, Dark= arrowleftwhite.svg}" />
-                </Button.ImageSource>
-            </Button>
-            <Entry x:Name="entry"
+            
+            <SearchBar x:Name="searchBar"
                    Placeholder = "Search in AniMate"
                    HorizontalOptions="FillAndExpand"
                    FontSize="18"
                    IsTextPredictionEnabled="True"
-                   Completed="OnEntryChanged">
-            </Entry>
+                   SearchButtonPressed="OnSearch"
+                   TextChanged="SearchBarTextChanged">
+            </SearchBar>
             
             <Button x:Name="filterButton"
                     Clicked="OnFiltredButtonClicked">
