@@ -1,5 +1,4 @@
-﻿using AniMate_app.Services.AnilibriaService.Models;
-using AniMate_app.ViewModels;
+﻿using AniMate_app.ViewModels;
 using AniMate_app.Views.Components;
 using CommunityToolkit.Maui.Views;
 
@@ -24,22 +23,22 @@ public partial class SearchPage : ContentPage
 
         if (collectionView.SelectedItem != null)
         {
-            Title selectedTitle = collectionView.SelectedItem as Title;
-
             collectionView.SelectedItem = null;
+
             var navigationParameter = new Dictionary<string, object>
             {
                 {"TheTitle", collectionView.SelectedItem}
             };
 
             await Shell.Current.GoToAsync($"titlepage", navigationParameter);
-
         }
     }
 
     private async void OnSearch(object sender, EventArgs e)
     {
         _searchText = searchBar.Text;
+
+        searchBar.Unfocus();
 
         await viewModel.FindTitles(_searchText);
     }

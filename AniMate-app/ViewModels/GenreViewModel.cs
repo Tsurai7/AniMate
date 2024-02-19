@@ -28,16 +28,11 @@ public partial class GenreViewModel : ViewModelBase
     private AnilibriaService _anilibriaService;
 
     [ObservableProperty]
-    private bool _isLoading;
+    private bool _isLoading = false;
 
     private int LoadedTitles => TitlesCollection.TitleCount;
 
-    private int _loadMoreResultsOffset = 6;
-
-    public GenreViewModel()
-    {
-        IsLoading = false;
-    }
+    private readonly int _loadMoreResultsOffset = 6;
 
     public override Task LoadContent()
     {
