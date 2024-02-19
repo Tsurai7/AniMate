@@ -8,10 +8,9 @@
              x:DataType="local:GenreViewModel"
              Appearing="OnAppearing">
 
-    <StackLayout Orientation="Horizontal"
-                     VerticalOptions="CenterAndExpand"
-                     HorizontalOptions="FillAndExpand">
-
+    <Grid VerticalOptions="CenterAndExpand"
+          HorizontalOptions="FillAndExpand">
+        
         <CollectionView ItemsSource="{Binding TitlesCollection.Titles}" SelectionMode="Single" SelectionChanged= "TitleSelected"
                           RemainingItemsThresholdReachedCommand="{Binding LoadMoreTitlesCommand}" RemainingItemsThreshold="0">
             <CollectionView.ItemsLayout>
@@ -25,12 +24,15 @@
                          HeightRequest="300"
                          VerticalOptions="FillAndExpand"
                          HorizontalOptions="FillAndExpand">
-                        <Image Aspect="AspectFill">
-                            <Image.Source>
-                                <UriImageSource Uri="{Binding Posters.Small.Url}" CachingEnabled="True" />
-                            </Image.Source>
-                        </Image>
-                        
+
+                        <Border HorizontalOptions="FillAndExpand"
+                                HeightRequest="250">
+                            <Image Aspect="AspectFill">
+                                <Image.Source>
+                                    <UriImageSource Uri="{Binding Posters.Small.Url}" CachingEnabled="True" />
+                                </Image.Source>
+                            </Image>
+                        </Border>
                         <Grid   VerticalOptions="Start"
                                 HorizontalOptions="FillAndExpand">
                             <Grid.ColumnDefinitions>
@@ -62,5 +64,5 @@
                 <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
             </CollectionView.Footer>
         </CollectionView>
-    </StackLayout>
+    </Grid>
 </ContentPage>
