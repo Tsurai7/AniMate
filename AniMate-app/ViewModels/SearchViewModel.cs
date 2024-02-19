@@ -1,12 +1,12 @@
 ﻿using AniMate_app.Model;
 using AniMate_app.Services.AnilibriaService;
 using AniMate_app.Services.AnilibriaService.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
+using AniMate_app.Views;
 using CommunityToolkit.Mvvm.Input;
 
 namespace AniMate_app.ViewModels
 {
-    public partial class SearchViewModel : ObservableObject
+    public partial class SearchViewModel : ViewModelBase
     {
         public GenreCollection TitlesCollection { get; private set; }
 
@@ -18,15 +18,13 @@ namespace AniMate_app.ViewModels
 
         private string _nameToFind;
 
-        private bool _isLoading = false;
-
-        private int _loadMoreResultsOffset = 6;
-
         public SearchViewModel(AnilibriaService anilibriaService)
         {
             _anilibriaService = anilibriaService;
 
             TitlesCollection = new("Search");
+
+            _loadMoreContentOffset = 6;
         }
 
         public async Task FindTitles(string name)
@@ -45,7 +43,7 @@ namespace AniMate_app.ViewModels
 
             TitlesCollection.TargetTitleCount = _searchResult.Count > 6 ? 6 : _searchResult.Count;
 
-            await LoadMoreResults();
+            await LoadMoreContent();
         }
 
         public void ClearSearchData()
@@ -55,16 +53,21 @@ namespace AniMate_app.ViewModels
             _loadedCount = 0;
         }
 
-        [RelayCommand]
-        public async Task LoadMoreResults()
+        public override Task LoadContent()
         {
-            if(_isLoading) 
+            throw new NotImplementedException();
+        }
+
+        [RelayCommand]
+        public override async Task LoadMoreContent()
+        {
+            if(IsLoading) 
                 return;
 
             if(_searchResult.Count.Equals(0))
                 return;
 
-            _isLoading = true;
+            IsLoading = true;
 
             int count = _searchResult.Count.Equals(TitlesCollection.TargetTitleCount) ? TitlesCollection.TargetTitleCount : _searchResult.Count;
 
@@ -73,12 +76,12 @@ namespace AniMate_app.ViewModels
 
             _loadedCount = TitlesCollection.TargetTitleCount;
 
-            TitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
+            TitlesCollection.TargetTitleCount += _loadMoreContentOffset;
 
-            foreach (var title in await _anilibriaService.GetTitlesByName(_nameToFind, skip: _loadedCount, _loadedCount + _loadMoreResultsOffset))
+            foreach (var title in await _anilibriaService.GetTitlesByName(_nameToFind, skip: _loadedCount, _loadedCount + _loadMoreContentOffset))
                 _searchResult.Enqueue(title);
 
-            _isLoading = false;
+            IsLoading = false;
         }
     }
 }

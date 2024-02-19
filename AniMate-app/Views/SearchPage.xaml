@@ -38,7 +38,7 @@
         </StackLayout>
 
         <CollectionView ItemsSource="{Binding TitlesCollection.Titles}" Grid.Row="1"
-                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreResultsCommand}" RemainingItemsThreshold="0"
+                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="0"
                         SelectionMode="Single" SelectionChanged="TitleSelected">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"

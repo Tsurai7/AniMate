@@ -1,6 +1,7 @@
 using AniMate_app.Model;
 using AniMate_app.Services.AnilibriaService;
 using AniMate_app.Services.AnilibriaService.Models;
+using AniMate_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -8,7 +9,7 @@ namespace AniMate_app.ViewModels;
 
 [QueryProperty(nameof(Genre), "GenreName")]
 [QueryProperty(nameof(AnilibriaService), "AnilibriaService")]
-public partial class GenreViewModel : ObservableObject
+public partial class GenreViewModel : ViewModelBase
 {
     private string _genre;
     public string Genre { get => _genre;
@@ -38,8 +39,13 @@ public partial class GenreViewModel : ObservableObject
         IsLoading = false;
     }
 
+    public override Task LoadContent()
+    {
+        throw new NotImplementedException();
+    }
+
     [RelayCommand]
-    public async Task LoadMoreTitles()
+    public override async Task LoadMoreContent()
     {
         if (IsLoading)
             return;

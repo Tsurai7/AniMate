@@ -12,7 +12,7 @@
           HorizontalOptions="FillAndExpand">
         
         <CollectionView ItemsSource="{Binding TitlesCollection.Titles}" SelectionMode="Single" SelectionChanged= "TitleSelected"
-                          RemainingItemsThresholdReachedCommand="{Binding LoadMoreTitlesCommand}" RemainingItemsThreshold="0">
+                          RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="0">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
                      Span="2" />

@@ -1,4 +1,3 @@
-using AniMate_app.Services.AnilibriaService;
 using AniMate_app.Services.AnilibriaService.Models;
 using AniMate_app.ViewModels;
 
@@ -37,6 +36,6 @@ public partial class GenrePage : ContentPage
 
     private async void OnAppearing(object sender, EventArgs e)
     {
-        await viewModel.LoadMoreTitles();
+        await viewModel.LoadMoreContent();
     }
 }
