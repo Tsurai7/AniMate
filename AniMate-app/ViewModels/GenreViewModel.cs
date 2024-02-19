@@ -5,13 +5,32 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace AniMate_app.ViewModels;
-
+[QueryProperty(nameof(Genre), "GenreName")]
+[QueryProperty(nameof(AnilibriaService), "AnilibriaService")]
 public partial class GenreViewModel : ObservableObject
 {
-    public string Genre { get; set; }
+    private string _genre;
+    public string Genre { get => _genre;
+        set
+        {
+            _genre = value;
+            TitlesCollection = new(Genre);
+            OnPropertyChanged(nameof(TitlesCollection));
+            OnPropertyChanged(nameof(Genre));
+        }
+    }
     public GenreCollection TitlesCollection { get; private set; }
 
-    private readonly AnilibriaService _anilibriaService;
+    private AnilibriaService _anilibriaService;
+
+    public AnilibriaService AnilibriaService {
+        get => _anilibriaService;
+        set
+        {
+            _anilibriaService = value;
+            OnPropertyChanged(nameof(AnilibriaService));
+        }
+    }
 
     [ObservableProperty]
     private bool _isLoading;
@@ -20,15 +39,9 @@ public partial class GenreViewModel : ObservableObject
 
     private int _loadMoreResultsOffset = 6;
 
-    public GenreViewModel(string genreName, AnilibriaService anilibriaService)
+    public GenreViewModel()
     {
         IsLoading = false;
-
-        Genre = genreName;
-
-        TitlesCollection = new(Genre);
-
-        _anilibriaService = anilibriaService;
     }
 
     [RelayCommand]
@@ -44,7 +57,7 @@ public partial class GenreViewModel : ObservableObject
 
         TitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
 
-        List<Title> loadedTitles = await _anilibriaService.GetTitlesByGenre(Genre, LoadedTitles, LoadedTitles + _loadMoreResultsOffset);
+        List<Title> loadedTitles = await AnilibriaService.GetTitlesByGenre(Genre, LoadedTitles, LoadedTitles + _loadMoreResultsOffset);
 
         if (loadedTitles.Count > 0)
             TitlesCollection.AddTitleList(loadedTitles);

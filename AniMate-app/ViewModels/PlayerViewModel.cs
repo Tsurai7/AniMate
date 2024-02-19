@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,13 +7,20 @@ using System.Threading.Tasks;
 
 namespace AniMate_app.ViewModels
 {
-    internal class PlayerViewModel
+    [QueryProperty(nameof(MediaUrl), "mediaurl")]
+    public partial class PlayerViewModel : ObservableObject
     {
-        public string MediaUrl { get; set; }
+        private string _mediaUrl;
 
-        public PlayerViewModel(string mediaUrl)
-        {
-            MediaUrl = mediaUrl;
-        }
+        public string MediaUrl {
+            get => _mediaUrl;
+            set
+            {
+                _mediaUrl = value;
+                OnPropertyChanged(nameof(MediaUrl));
+            }
+            }
+
+        public PlayerViewModel() { }
     }
 }

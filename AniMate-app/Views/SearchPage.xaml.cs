@@ -27,8 +27,13 @@ public partial class SearchPage : ContentPage
             Title selectedTitle = collectionView.SelectedItem as Title;
 
             collectionView.SelectedItem = null;
+            var navigationParameter = new Dictionary<string, object>
+            {
+                {"TheTitle", collectionView.SelectedItem}
+            };
 
-            await Navigation.PushAsync(new TitlePage(selectedTitle));
+            await Shell.Current.GoToAsync($"titlepage", navigationParameter);
+
         }
     }
 

@@ -43,7 +43,13 @@ namespace AniMate_app.Views
 
             var collectionView = sender as CollectionView;
 
-            await Navigation.PushAsync(new TitlePage(collectionView.SelectedItem as Title));
+            var navigationParameter = new Dictionary<string, object>
+            {
+                {"TheTitle", collectionView.SelectedItem}
+            };
+
+            await Shell.Current.GoToAsync($"titlepage", navigationParameter);
+            //await Navigation.PushAsync(new TitlePage(collectionView.SelectedItem as Title));
 
             collectionView.SelectedItem = null;
 
@@ -54,7 +60,14 @@ namespace AniMate_app.Views
         {
             GenreCollection genreCollection = e.Parameter as GenreCollection;
 
-            await Navigation.PushAsync(new GenrePage(genreCollection.GenreName, viewModel._anilibriaService));
+            var navigationParameter = new Dictionary<string, object>
+            {
+                {"GenreName", genreCollection.GenreName},
+                {"AnilibriaService",  viewModel._anilibriaService}
+            };
+
+            await Shell.Current.GoToAsync($"genrepage", navigationParameter);
+            //await Navigation.PushAsync(new GenrePage(genreCollection.GenreName, viewModel._anilibriaService));
         }
     }
 }

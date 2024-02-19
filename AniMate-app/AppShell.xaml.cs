@@ -1,4 +1,5 @@
-﻿using AniMate_app.Views;
+﻿using AndroidX.Lifecycle;
+using AniMate_app.Views;
 
 namespace AniMate_app
 {
@@ -8,8 +9,14 @@ namespace AniMate_app
         {
             InitializeComponent();
 
-            Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
-            Routing.RegisterRoute(nameof(SearchPage), typeof(SearchPage));
+            Routing.RegisterRoute("mainpage", typeof(MainPage));
+            Routing.RegisterRoute("serchpage", typeof(SearchPage));
+            Routing.RegisterRoute("registrationpage", typeof(RegistrationPage));
+            Routing.RegisterRoute("playerpage", typeof(PlayerPage));
+            Routing.RegisterRoute("titlepage", typeof(TitlePage));
+            Routing.RegisterRoute("genrepage", typeof(GenrePage));
+            Routing.RegisterRoute("profilepage", typeof(ProfilePage));
+            Routing.RegisterRoute("loginpage", typeof(LoginPage));
         }
     }
 }
