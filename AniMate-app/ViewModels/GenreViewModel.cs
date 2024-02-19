@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace AniMate_app.ViewModels;
+
 [QueryProperty(nameof(Genre), "GenreName")]
 [QueryProperty(nameof(AnilibriaService), "AnilibriaService")]
 public partial class GenreViewModel : ObservableObject
@@ -15,22 +16,15 @@ public partial class GenreViewModel : ObservableObject
         {
             _genre = value;
             TitlesCollection = new(Genre);
-            OnPropertyChanged(nameof(TitlesCollection));
             OnPropertyChanged(nameof(Genre));
         }
     }
-    public GenreCollection TitlesCollection { get; private set; }
 
+    [ObservableProperty]
+    private GenreCollection _titlesCollection;
+
+    [ObservableProperty]
     private AnilibriaService _anilibriaService;
-
-    public AnilibriaService AnilibriaService {
-        get => _anilibriaService;
-        set
-        {
-            _anilibriaService = value;
-            OnPropertyChanged(nameof(AnilibriaService));
-        }
-    }
 
     [ObservableProperty]
     private bool _isLoading;

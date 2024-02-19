@@ -10,17 +10,7 @@ namespace AniMate_app.ViewModels
     [QueryProperty(nameof(MediaUrl), "mediaurl")]
     public partial class PlayerViewModel : ObservableObject
     {
+        [ObservableProperty]
         private string _mediaUrl;
-
-        public string MediaUrl {
-            get => _mediaUrl;
-            set
-            {
-                _mediaUrl = value;
-                OnPropertyChanged(nameof(MediaUrl));
-            }
-            }
-
-        public PlayerViewModel() { }
     }
 }

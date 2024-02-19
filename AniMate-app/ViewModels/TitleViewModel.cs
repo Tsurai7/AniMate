@@ -1,6 +1,5 @@
 ﻿using AniMate_app.Services.AnilibriaService.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 namespace AniMate_app.ViewModels
 {
     [QueryProperty(nameof(Title), "TheTitle")]
@@ -19,31 +18,10 @@ namespace AniMate_app.ViewModels
             }
         }
 
+        [ObservableProperty]
         private string _genres;
-        public string Genres
-        {
-            get => _genres;
-            set
-            {
-                _genres = value;
-                OnPropertyChanged(nameof(Genres));
-            }
-        }
 
+        [ObservableProperty]
         private string _shortDescription;
-        public string ShortDescription
-        {
-            get => _shortDescription;
-            set
-            {
-                _shortDescription = value;
-                OnPropertyChanged(nameof(ShortDescription));
-            }
-        }
-
-        public TitleViewModel()
-        {
-
-        }
     }
 }
