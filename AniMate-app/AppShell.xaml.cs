@@ -17,6 +17,7 @@ namespace AniMate_app
             Routing.RegisterRoute("genrepage", typeof(GenrePage));
             Routing.RegisterRoute("profilepage", typeof(ProfilePage));
             Routing.RegisterRoute("loginpage", typeof(LoginPage));
+            Routing.RegisterRoute("updatespage", typeof(UpdatesPage));
         }
     }
 }
