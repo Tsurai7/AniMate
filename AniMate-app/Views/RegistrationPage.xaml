@@ -11,7 +11,8 @@
     </ContentPage.BackgroundImageSource>
     
     <Frame CornerRadius="10"
-           Margin="30,120,30,120">
+           Margin="30,120,30,120"
+           BackgroundColor="{AppThemeBinding Light=White , Dark = Black}">
         <Grid VerticalOptions="CenterAndExpand">
 
             <Grid.RowDefinitions>
@@ -100,7 +101,7 @@
                         <FormattedString>
                             <Span Text="Есть аккаунт? " />
                             <Span Text=" Войти"
-                                  TextColor="Blue" />
+                                  TextColor="{AppThemeBinding Light=Blue , Dark = LightBlue}" />
                         </FormattedString>
                     </Label.FormattedText>
                     <Label.GestureRecognizers>
