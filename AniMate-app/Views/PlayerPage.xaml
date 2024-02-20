@@ -12,21 +12,11 @@
         <toolkit:MediaElement x:Name="mediaControl"
                               ShouldAutoPlay="False"
                               Source="{Binding MediaUrl}"
-                              Aspect="AspectFit"
+                              Aspect="Center"
                               BackgroundColor="Black"
                               AbsoluteLayout.LayoutFlags="All"
                               AbsoluteLayout.LayoutBounds="0,0,1,1"
-                              StateChanged="OnMediaElementStateChanged">
-            <toolkit:MediaElement.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnMediaElementTapped"
-                                      NumberOfTapsRequired="1"/>
-            </toolkit:MediaElement.GestureRecognizers>
+                              >
         </toolkit:MediaElement>
-
-        <Button Text="Назад" 
-                x:Name="BackButton"
-                AbsoluteLayout.LayoutFlags="PositionProportional"
-                AbsoluteLayout.LayoutBounds="0.05,0.05"
-                IsVisible="False"/>
     </AbsoluteLayout>
 </ContentPage>
