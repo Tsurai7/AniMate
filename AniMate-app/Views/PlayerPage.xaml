@@ -2,16 +2,31 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:MediaControls.Control;assembly=MediaControls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="AniMate_app.Views.PlayerPage"
              xmlns:local="clr-namespace:AniMate_app.ViewModels"
              x:DataType="local:PlayerViewModel"
-             Title="PlayerPage">
-    <Grid>
-        <controls:MediaControl x:Name="mediaControl"
-                           ShouldAutoPlay="True"
-                           ShouldKeepScreenOn="True"
-                           ShowCustomControls="True"
-                           Source="{Binding MediaUrl}"
-                           />
-    </Grid>
+             Title="PlayerPage"
+             BackgroundColor="Black">
+    <AbsoluteLayout>
+        <toolkit:MediaElement x:Name="mediaControl"
+                              ShouldAutoPlay="False"
+                              Source="{Binding MediaUrl}"
+                              Aspect="AspectFit"
+                              BackgroundColor="Black"
+                              AbsoluteLayout.LayoutFlags="All"
+                              AbsoluteLayout.LayoutBounds="0,0,1,1"
+                              StateChanged="OnMediaElementStateChanged">
+            <toolkit:MediaElement.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnMediaElementTapped"
+                                      NumberOfTapsRequired="1"/>
+            </toolkit:MediaElement.GestureRecognizers>
+        </toolkit:MediaElement>
+
+        <Button Text="Назад" 
+                x:Name="BackButton"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                AbsoluteLayout.LayoutBounds="0.05,0.05"
+                IsVisible="False"/>
+    </AbsoluteLayout>
 </ContentPage>
