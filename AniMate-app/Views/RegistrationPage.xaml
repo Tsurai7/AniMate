@@ -12,7 +12,7 @@
     
     <Frame CornerRadius="10"
            Margin="30,120,30,120"
-           BackgroundColor="{AppThemeBinding Light=White , Dark = Black}">
+           BackgroundColor="{AppThemeBinding Light=White , Dark = {StaticResource Background}}">
         <Grid VerticalOptions="CenterAndExpand">
 
             <Grid.RowDefinitions>
@@ -120,8 +120,8 @@
                     Text="Регистрация"
                     FontSize="Medium"
                     Clicked="RegistrationButton_Clicked"
-                    BackgroundColor="{AppThemeBinding Light=Black , Dark = White}"
-                    TextColor="{AppThemeBinding Light=White , Dark = Black}"
+                    BackgroundColor="{AppThemeBinding Light=Black , Dark = Red}"
+                    TextColor="{AppThemeBinding Light=White , Dark = White}"
                     >
 
             </Button>

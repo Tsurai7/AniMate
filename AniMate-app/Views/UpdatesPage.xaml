@@ -7,7 +7,8 @@
              xmlns:Models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
              x:DataType="local:UpdatesViewModel"
              Title="UpdatesPage"
-             Loaded="ContentPage_Loaded">
+             Loaded="ContentPage_Loaded"
+             BackgroundColor="{AppThemeBinding Light=White , Dark = {StaticResource Background}}">
 
     <RefreshView>
         <VerticalStackLayout>

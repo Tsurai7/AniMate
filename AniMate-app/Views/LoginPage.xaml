@@ -11,9 +11,9 @@
     </ContentPage.BackgroundImageSource>
     
     <Frame CornerRadius="10"
-           Margin="30,150,30,150"
-           BackgroundColor="{AppThemeBinding Light=White , Dark = Black}"
-           >
+           Margin="30,170,30,170"
+           BackgroundColor="{AppThemeBinding Light=White , Dark = {StaticResource Background}}">
+           
         <Grid VerticalOptions="CenterAndExpand">
 
             <Grid.RowDefinitions>
@@ -102,8 +102,8 @@
                     Text="Войти"
                     FontSize="Medium"
                     Clicked="LoginButton_Clicked"
-                    BackgroundColor="{AppThemeBinding Light=Black , Dark = White}"
-                    TextColor="{AppThemeBinding Light=White , Dark = Black}"
+                    BackgroundColor="{AppThemeBinding Light=Black , Dark = Red}"
+                    TextColor="{AppThemeBinding Light=White , Dark = White}"
             >
 
             </Button>

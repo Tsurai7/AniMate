@@ -8,7 +8,7 @@
     x:DataType="local:MainViewModel"
     Loaded="LoadContent">
 
-    <Grid VerticalOptions="FillAndExpand" Padding="10, 20">
+    <Grid VerticalOptions="FillAndExpand" Padding="10, 20" BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
@@ -19,7 +19,8 @@
             MaximumHeightRequest="50"
             MaximumWidthRequest="100"
             HorizontalOptions="Start"
-            VerticalOptions="Start"/>
+            VerticalOptions="Start"
+            />
 
         <RefreshView Grid.Row="1" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
             <CollectionView 
@@ -43,6 +44,7 @@
                             </Label>
                             
                             <CollectionView
+                                
                                 SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource Key=TitleTile}" 
                                 HorizontalOptions="Start" SelectionChanged="TitleSelected">
 
