@@ -23,9 +23,7 @@ namespace AniMate_app
             .UseMauiCommunityToolkitMediaElement()
             .UseMediaControls();
 
-            var services = builder.Services;
-
-            ConfigureServices(services);
+            ConfigureServices(builder.Services);
           
 #if DEBUG
             builder.Logging.AddDebug();

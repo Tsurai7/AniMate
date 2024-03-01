@@ -10,7 +10,7 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
+
             <DataTemplate x:Key="TitleTile" x:DataType="Models:Title">
                 <Grid VerticalOptions="Start" HeightRequest="300" RowSpacing="10"
                     HorizontalOptions="FillAndExpand">
@@ -26,15 +26,14 @@
                     </VisualStateManager.VisualStateGroups>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="160" />
-                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="180" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="250"/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
 
-                    <Image Aspect="AspectFill" Grid.ColumnSpan="2">
+                    <Image Aspect="AspectFill">
                         <Image.Source>
                             <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}" CachingEnabled="True" />
                         </Image.Source>
@@ -42,18 +41,8 @@
 
                     <Label Text="{Binding Names.Ru, Mode=OneTime}" Grid.Column="0" Grid.Row="1"
                         LineBreakMode="WordWrap" Margin="5,0,0,0"/>
-
-                    <Button 
-                        Grid.Column="1" Grid.Row="1"
-                        VerticalOptions="Start"
-                        HorizontalOptions="End">
-                        <Button.ImageSource>
-                            <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
-                        </Button.ImageSource>
-                    </Button>
                 </Grid>
             </DataTemplate>
-            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
