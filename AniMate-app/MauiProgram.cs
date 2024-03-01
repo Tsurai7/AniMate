@@ -36,7 +36,7 @@ namespace AniMate_app
         public static void ConfigureServices(IServiceCollection services)
         {
             // Service configuration
-            services.AddTransient<AnilibriaService>();
+            services.AddHttpClient<AnilibriaService>();
 
             // Pages configuration
             services.AddTransient<MainPage>();

@@ -5,9 +5,14 @@ namespace AniMate_app.Services.AnilibriaService
 {
     public class AnilibriaService
     {
-        private readonly HttpClient _httpClient = new();
+        private readonly HttpClient _httpClient;
 
         private const string _url = "https://api.anilibria.tv/v3/";
+
+        public AnilibriaService(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
 
         public async Task<Title> GetTitleByCode(string code)
         {
