@@ -4,7 +4,7 @@ namespace AniMate_app.Views;
 
 public partial class TitlePage : ContentPage
 {
-    private TitleViewModel viewModel;
+    private readonly TitleViewModel _viewModel;
 
     private bool isFullDescriptionOpen = false;
 
@@ -12,7 +12,7 @@ public partial class TitlePage : ContentPage
     {
         InitializeComponent();
 
-        BindingContext = viewModel = new TitleViewModel();
+        BindingContext = _viewModel = new TitleViewModel();
     }
 
     private async void OnWatchButtonClicked(object sender, EventArgs e)
@@ -27,7 +27,7 @@ public partial class TitlePage : ContentPage
 
         formattedString.Spans.Add(new Span
         {
-            Text = isFullDescriptionOpen ? viewModel.ShortDescription : viewModel.Title.RuDescription,
+            Text = isFullDescriptionOpen ? _viewModel.ShortDescription : _viewModel.Title.RuDescription,
         });
 
         if (isFullDescriptionOpen)
