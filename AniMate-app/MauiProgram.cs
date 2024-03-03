@@ -4,6 +4,7 @@ using AniMate_app.ViewModels;
 using CommunityToolkit.Maui;
 using MediaControls;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.LifecycleEvents;
 
 
 namespace AniMate_app
@@ -37,6 +38,9 @@ namespace AniMate_app
             services.AddHttpClient<AnilibriaService>();
 
             // Pages configuration
+            services.AddTransient<TitlePage>();
+            services.AddTransient<TitleViewModel>();
+
             services.AddTransient<MainPage>();
             services.AddTransient<MainViewModel>();
 
@@ -48,9 +52,6 @@ namespace AniMate_app
 
             services.AddTransient<GenreViewModel>();
             services.AddTransient<GenrePage>();
-
-            services.AddTransient<TitleViewModel>();
-            services.AddTransient<TitlePage>();
 
             services.AddTransient<PlayerViewModel>();
             services.AddTransient<PlayerPage>();

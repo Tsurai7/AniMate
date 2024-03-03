@@ -1,11 +1,44 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 
 namespace AniMate_app
 {
-    [Activity(Theme = "@style/Maui.SplashTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
+    [Activity(Theme = "@style/Maui.SplashTheme", LaunchMode = LaunchMode.SingleTask, MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
+    [IntentFilter(
+        [Intent.ActionView],
+        Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
+        DataScheme = "https",
+        DataHost ="animate",
+        DataPathPrefix = "/",
+        AutoVerify = true
+        )
+    ]
     public class MainActivity : MauiAppCompatActivity
     {
+        protected override void OnNewIntent(Intent intent)
+        {
+            base.OnNewIntent(intent);
+
+            ProcessIntent(intent);
+        }
+
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            ProcessIntent(Intent);
+        }
+
+        private void ProcessIntent(Intent intent)
+        {
+            var url = intent.DataString;
+
+            if (string.IsNullOrEmpty(url))
+                return;
+
+            Microsoft.Maui.Controls.Application.Current.SendOnAppLinkRequestReceived(new Uri(url));
+        }
     }
 }

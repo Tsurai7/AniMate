@@ -11,7 +11,6 @@
     <ScrollView>
         <StackLayout Orientation="Vertical">
             
-
             <Image Source="{Binding Title.Posters.Small.Url}"/>
             
             <Label Text="{Binding Title.Names.Ru}"
@@ -36,7 +35,6 @@
                            FontSize="12"
                            FontAttributes="Bold"
                            HorizontalTextAlignment="Center">
-                        
                     </Label>
                 </StackLayout>
                 <StackLayout Orientation="Vertical"
@@ -50,7 +48,6 @@
                            FontSize="12"
                            FontAttributes="Bold"
                            HorizontalTextAlignment="Center">
-
                     </Label>
                 </StackLayout>
                 <StackLayout Orientation="Vertical"
@@ -64,7 +61,6 @@
                            FontSize="12"
                            FontAttributes="Bold"
                            HorizontalTextAlignment="Center">
-
                     </Label>
                 </StackLayout>
 

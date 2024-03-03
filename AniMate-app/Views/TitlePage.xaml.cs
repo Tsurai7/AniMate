@@ -8,17 +8,17 @@ public partial class TitlePage : ContentPage
 
     private bool isFullDescriptionOpen = false;
 
-    public TitlePage()
+    public TitlePage(TitleViewModel titleViewModel)
     {
         InitializeComponent();
 
-        BindingContext = _viewModel = new TitleViewModel();
+        BindingContext = _viewModel = titleViewModel;
     }
 
     private async void OnWatchButtonClicked(object sender, EventArgs e)
     {
         if (sender is Button button && button.CommandParameter is string hlsUrl)
-            await Shell.Current.GoToAsync($"playerpage?mediaurl={hlsUrl}" );
+            await Shell.Current.GoToAsync($"playerpage?mediaurl={hlsUrl}");
     }
 
     private void OnTextRecognizerTap(object sender, TappedEventArgs e)
