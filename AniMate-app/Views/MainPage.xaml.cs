@@ -44,7 +44,7 @@ namespace AniMate_app.Views
 
             var navigationParameter = new Dictionary<string, object>
             {
-                {"TheTitle", e.CurrentSelection}
+                {"TheTitle", collection.SelectedItem}
             };
 
             await Shell.Current.GoToAsync($"titlepage", navigationParameter);
