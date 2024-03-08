@@ -1,11 +1,8 @@
 ﻿using AniMate_app.Services.AnilibriaService;
-using AniMate_app.Views;
 using AniMate_app.ViewModels;
+using AniMate_app.Views;
 using CommunityToolkit.Maui;
-using MediaControls;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.LifecycleEvents;
-
 
 namespace AniMate_app
 {
@@ -21,8 +18,7 @@ namespace AniMate_app
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             })
             .UseMauiCommunityToolkit()
-            .UseMauiCommunityToolkitMediaElement()
-            .UseMediaControls();
+            .UseMauiCommunityToolkitMediaElement();
 
             ConfigureServices(builder.Services);
           

@@ -1,6 +1,5 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:MediaControls.Controls;assembly=MediaControls"
              xmlns:local="clr-namespace:AniMate_app.ViewModels"
              xmlns:DTO="clr-namespace:AniMate_app.Services.AnilibriaService.Dtos"
              xmlns:models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
@@ -130,10 +129,9 @@
                        FontSize="20"
                        FontAttributes="Bold"></Label>
                 <CollectionView>
-                    
+
                 </CollectionView>
             </StackLayout>
-            
 
             <Label Text="1 сезон"
                FontSize="Medium"
