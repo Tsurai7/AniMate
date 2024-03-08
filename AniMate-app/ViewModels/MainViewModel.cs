@@ -9,7 +9,7 @@ namespace AniMate_app.ViewModels
     public partial class MainViewModel : ViewModelBase
     {
         [ObservableProperty]
-        private List<GenreCollection> _genreList = new();
+        private List<GenreCollection> _genreList;
 
         public List<string> Genres { get; private set; }
 
@@ -35,9 +35,11 @@ namespace AniMate_app.ViewModels
         {
             IsBusy = true;
 
+            GenreList = new(_loadMoreContentOffset);
+
             Genres = await _anilibriaService.GetAllGenres();
 
-            await LoadMoreGenres(_loadMoreContentOffset).ConfigureAwait(false);
+            await LoadMoreGenres(_loadMoreContentOffset);
 
             IsBusy = false;
         }
@@ -51,11 +53,9 @@ namespace AniMate_app.ViewModels
 
             IsRefreshing = true;
 
-            GenreList.Clear();
-
             GenresLoaded = 0;
 
-            await LoadMoreGenres(_loadMoreContentOffset);
+            await LoadContent();
 
             IsRefreshing = false;
 

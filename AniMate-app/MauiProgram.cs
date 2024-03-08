@@ -28,7 +28,7 @@ namespace AniMate_app
             return builder.Build();
         }
 
-        public static void ConfigureServices(IServiceCollection services)
+        private static void ConfigureServices(IServiceCollection services)
         {
             // Service configuration
             services.AddHttpClient<AnilibriaService>();
