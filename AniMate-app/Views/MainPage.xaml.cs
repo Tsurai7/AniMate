@@ -32,26 +32,24 @@ namespace AniMate_app.Views
 
         private async void TitleSelected(object sender, SelectionChangedEventArgs e)
         {
+            var collection = sender as CollectionView;
             if (_isOpeningPlayer)
             {
-                (sender as CollectionView).SelectedItem = null;
+                collection.SelectedItem = null;
 
                 return;
             }   
 
             _isOpeningPlayer = true;
 
-            var collectionView = sender as CollectionView;
-
             var navigationParameter = new Dictionary<string, object>
             {
-                {"TheTitle", collectionView.SelectedItem}
+                {"TheTitle", collection.SelectedItem}
             };
 
             await Shell.Current.GoToAsync($"titlepage", navigationParameter);
-            //await Navigation.PushAsync(new TitlePage(collectionView.SelectedItem as Title));
 
-            collectionView.SelectedItem = null;
+            collection.SelectedItem = null;
 
             _isOpeningPlayer = false;
         }
@@ -67,7 +65,6 @@ namespace AniMate_app.Views
             };
 
             await Shell.Current.GoToAsync($"genrepage", navigationParameter);
-            //await Navigation.PushAsync(new GenrePage(genreCollection.GenreName, viewModel._anilibriaService));
         }
     }
 }

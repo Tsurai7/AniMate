@@ -1,10 +1,8 @@
 ﻿using AniMate_app.Services.AnilibriaService;
-using AniMate_app.Views;
 using AniMate_app.ViewModels;
+using AniMate_app.Views;
 using CommunityToolkit.Maui;
-using MediaControls;
 using Microsoft.Extensions.Logging;
-
 
 namespace AniMate_app
 {
@@ -20,12 +18,9 @@ namespace AniMate_app
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             })
             .UseMauiCommunityToolkit()
-            .UseMauiCommunityToolkitMediaElement()
-            .UseMediaControls();
+            .UseMauiCommunityToolkitMediaElement();
 
-            var services = builder.Services;
-
-            ConfigureServices(services);
+            ConfigureServices(builder.Services);
           
 #if DEBUG
             builder.Logging.AddDebug();
@@ -33,12 +28,15 @@ namespace AniMate_app
             return builder.Build();
         }
 
-        public static void ConfigureServices(IServiceCollection services)
+        private static void ConfigureServices(IServiceCollection services)
         {
             // Service configuration
-            services.AddTransient<AnilibriaService>();
+            services.AddHttpClient<AnilibriaService>();
 
             // Pages configuration
+            services.AddTransient<TitlePage>();
+            services.AddTransient<TitleViewModel>();
+
             services.AddTransient<MainPage>();
             services.AddTransient<MainViewModel>();
 
@@ -50,9 +48,6 @@ namespace AniMate_app
 
             services.AddTransient<GenreViewModel>();
             services.AddTransient<GenrePage>();
-
-            services.AddTransient<TitleViewModel>();
-            services.AddTransient<TitlePage>();
 
             services.AddTransient<PlayerViewModel>();
             services.AddTransient<PlayerPage>();
