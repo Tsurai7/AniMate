@@ -5,12 +5,17 @@
              xmlns:local="clr-namespace:AniMate_app.ViewModels"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="local:PlayerViewModel"
-             Title="PlayerPage">
-    <Grid>
+             Title="PlayerPage"
+             BackgroundColor="Black">
+    <AbsoluteLayout>
         <toolkit:MediaElement x:Name="mediaControl"
-            ShouldAutoPlay="True"
-            ShouldKeepScreenOn="True"
-            ShouldShowPlaybackControls="True"
-            Source="{Binding MediaUrl}"/>
-    </Grid>
+                              ShouldAutoPlay="False"
+                              Source="{Binding MediaUrl}"
+                              Aspect="Center"
+                              BackgroundColor="Black"
+                              AbsoluteLayout.LayoutFlags="All"
+                              AbsoluteLayout.LayoutBounds="0,0,1,1"
+                              >
+        </toolkit:MediaElement>
+    </AbsoluteLayout>
 </ContentPage>

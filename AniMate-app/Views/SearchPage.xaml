@@ -6,8 +6,8 @@
              xmlns:Models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
              x:Class="AniMate_app.Views.SearchPage"
              x:DataType="local:SearchViewModel">
-    
-    <Grid>
+
+    <Grid BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
             <RowDefinition Height="*" />

@@ -11,8 +11,9 @@
     </ContentPage.BackgroundImageSource>
     
     <Frame CornerRadius="10"
-           Margin="30,150,30,150"
-           >
+           Margin="30,170,30,170"
+           BackgroundColor="{AppThemeBinding Light=White , Dark = {StaticResource Background}}">
+           
         <Grid VerticalOptions="CenterAndExpand">
 
             <Grid.RowDefinitions>
@@ -25,7 +26,8 @@
             <Label Text="Вход"
                    FontSize="Large"
                    Grid.Row="0"
-                   HorizontalOptions="Center">
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light=Black , Dark = White}">
 
             </Label>
 
@@ -34,7 +36,8 @@
                          Margin="20,0,20,0">
                 <Label Text="Логин"
                        FontSize="Small"
-                       Margin="0,20,0,5">
+                       Margin="0,20,0,5"
+                       >
 
                 </Label>
 
@@ -55,6 +58,7 @@
                 <Label Text="Пароль"
                        FontSize="Small"
                        Margin="0,0,0,5"
+                       TextColor="{AppThemeBinding Light=Black , Dark = White}"
                >
 
                 </Label>
@@ -75,9 +79,10 @@
                >
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="Нет аккаунта, " />
+                            <Span Text="Нет аккаунта, "
+                                  TextColor="{AppThemeBinding Light=Black , Dark = White}"/>
                             <Span Text=" зарегистрируйтесь"
-                                  TextColor="Blue" />
+                                  TextColor="{AppThemeBinding Light=Blue , Dark = LightBlue}" />
                         </FormattedString>
                     </Label.FormattedText>
                     <Label.GestureRecognizers>
@@ -97,8 +102,8 @@
                     Text="Войти"
                     FontSize="Medium"
                     Clicked="LoginButton_Clicked"
-                    BackgroundColor="{AppThemeBinding Light=Black , Dark = White}"
-                    TextColor="{AppThemeBinding Light=White , Dark = Black}"
+                    BackgroundColor="{AppThemeBinding Light=Black , Dark = Red}"
+                    TextColor="{AppThemeBinding Light=White , Dark = White}"
             >
 
             </Button>

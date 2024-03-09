@@ -1,5 +1,4 @@
-﻿using AndroidX.Lifecycle;
-using AniMate_app.Views;
+﻿using AniMate_app.Views;
 
 namespace AniMate_app
 {

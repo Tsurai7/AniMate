@@ -7,7 +7,7 @@
              x:Class="AniMate_app.Views.TitlePage"
               >
 
-    <ScrollView>
+    <ScrollView BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
         <StackLayout Orientation="Vertical">
             
             <Image Source="{Binding Title.Posters.Small.Url}"/>
