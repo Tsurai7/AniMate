@@ -1,12 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
-	<style name="AppTheme" parent="Maui.SplashTheme">
-		<item name="android:windowLightStatusBar">true</item>
-	</style>
-	
 	<style name="AppTheme.Starting" parent="Theme.SplashScreen.IconBackground">
 		<item name="android:windowSplashScreenAnimatedIcon">@drawable/logo_anim</item>
-		<item name="windowSplashScreenBackground">#f2f3f4</item>
-		<item name="postSplashScreenTheme">@style/AppTheme</item>
+		<item name="postSplashScreenTheme">@style/Maui.SplashTheme</item>
 	</style>
 </resources>

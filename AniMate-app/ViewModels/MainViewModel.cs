@@ -51,8 +51,6 @@ namespace AniMate_app.ViewModels
 
             IsBusy = true;
 
-            IsRefreshing = true;
-
             GenresLoaded = 0;
 
             await LoadContent();
