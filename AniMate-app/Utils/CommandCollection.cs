@@ -1,8 +1,8 @@
 ﻿namespace AniMate_app.Utils
 {
-    public class Command<T>(T paremeter, Action<T> action, Func<T, bool> checkFunc)
+    public class Command<T>(T parameter, Action<T> action, Func<T, bool> checkFunc)
     {
-        private T Paremeter { get; } = paremeter;
+        private T Paremeter { get; } = parameter;
 
         private readonly Action<T> _action = action;
 

@@ -8,11 +8,11 @@
     x:DataType="local:MainViewModel"
     Loaded="LoadContent">
 
-    <Grid VerticalOptions="FillAndExpand" Padding="10, 20" BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
+    <Grid Padding="10, 20" BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
-            <RowDefinition Height="*" />
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Image Source="{AppThemeBinding Light = logo.svg, Dark = logowhite.svg}"

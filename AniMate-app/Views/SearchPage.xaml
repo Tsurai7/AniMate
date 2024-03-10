@@ -10,12 +10,11 @@
     <Grid BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
-            <RowDefinition Height="*" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <StackLayout Orientation="Horizontal"
-                     VerticalOptions="CenterAndExpand"
-                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="Center"
                      Grid.Row="0">
             
             <SearchBar x:Name="searchBar"
@@ -44,11 +43,12 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.EmptyView>
-                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <StackLayout>
+                    <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsBusy}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
                     <Image Source="nodatafound.svg" WidthRequest="200" HeightRequest="200" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Aspect="AspectFill"/>
                 </StackLayout>
             </CollectionView.EmptyView>
-
+                
             <CollectionView.Footer>
                 <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
             </CollectionView.Footer>
