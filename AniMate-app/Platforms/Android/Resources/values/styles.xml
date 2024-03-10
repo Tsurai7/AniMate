@@ -2,6 +2,8 @@
 <resources>
 	<style name="AppTheme.Starting" parent="Theme.SplashScreen.IconBackground">
 		<item name="android:windowSplashScreenAnimatedIcon">@drawable/logo_anim</item>
+		<item name="android:windowSplashScreenBehavior">icon_preferred</item>
+		<item name="android:windowSplashScreenBackground">#1d2333</item>
 		<item name="postSplashScreenTheme">@style/Maui.SplashTheme</item>
 	</style>
 </resources>

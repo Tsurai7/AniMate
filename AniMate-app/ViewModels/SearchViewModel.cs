@@ -30,14 +30,23 @@ namespace AniMate_app.ViewModels
             if (string.IsNullOrEmpty(name))
                 return;
 
+            IsBusy = true;
+
             _nameToFind = name;
 
             var result = await _anilibriaService.GetTitlesByName(_nameToFind, 0, _loadMoreContentOffset);
 
             if (result.Count.Equals(0))
-                return;//add no titles found popup!
+            {
+                IsBusy = false;
+
+                return;
+            }
+                
 
             TitlesCollection.TargetTitleCount = result.Count > _loadMoreContentOffset ? _loadMoreContentOffset : result.Count;
+
+            IsBusy = false;
 
             TitlesCollection.AddTitleList(result);
         }
