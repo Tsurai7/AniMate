@@ -12,8 +12,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate x:Key="TitleTile" x:DataType="Models:Title">
-                <Grid VerticalOptions="Start" HeightRequest="300" RowSpacing="10"
-                    HorizontalOptions="FillAndExpand">
+                <Grid VerticalOptions="Start" HeightRequest="300" RowSpacing="10">
                     <VisualStateManager.VisualStateGroups>
                         <VisualStateGroup Name="CommonStates">
                             <VisualState Name="Normal"></VisualState>

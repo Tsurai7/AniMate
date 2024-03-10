@@ -25,7 +25,7 @@
         <RefreshView Grid.Row="1" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
             <CollectionView 
                 ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" SelectionMode="None"
-                ItemsSource="{Binding GenreList}" VerticalOptions="FillAndExpand"
+                ItemsSource="{Binding GenreList}"
                 RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" 
                 RemainingItemsThreshold="0">
 

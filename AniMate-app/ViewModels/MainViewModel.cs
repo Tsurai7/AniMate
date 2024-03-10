@@ -47,7 +47,12 @@ namespace AniMate_app.ViewModels
         [RelayCommand]
         public async Task Refresh()
         {
-            if (IsBusy) return;
+            if (IsBusy)
+            {
+                IsRefreshing = false;
+
+                return;
+            }
 
             IsBusy = true;
 
