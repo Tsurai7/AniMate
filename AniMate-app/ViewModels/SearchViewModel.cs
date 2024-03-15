@@ -1,6 +1,5 @@
 ﻿using AniMate_app.Model;
 using AniMate_app.Services.AnilibriaService;
-using AniMate_app.Services.AnilibriaService.Models;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.Input;
 
@@ -41,8 +40,7 @@ namespace AniMate_app.ViewModels
                 IsBusy = false;
 
                 return;
-            }
-                
+            }  
 
             TitlesCollection.TargetTitleCount = result.Count > _loadMoreContentOffset ? _loadMoreContentOffset : result.Count;
 

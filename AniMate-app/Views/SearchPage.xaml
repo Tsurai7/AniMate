@@ -26,8 +26,7 @@
                    TextChanged="SearchBarTextChanged">
             </SearchBar>
             
-            <Button x:Name="filterButton"
-                    Clicked="OnFiltredButtonClicked">
+            <Button x:Name="filterButton" Clicked="OnFiltredButtonClicked">
                 <Button.ImageSource>
                     <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
                 </Button.ImageSource>
@@ -38,8 +37,7 @@
                         RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="0"
                         SelectionMode="Single" SelectionChanged="TitleSelected" ItemTemplate="{StaticResource TitleTile}">
             <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical"
-                             Span="2" VerticalItemSpacing="20" />
+                <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="20" />
             </CollectionView.ItemsLayout>
 
             <CollectionView.EmptyView>
