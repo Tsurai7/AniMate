@@ -11,10 +11,9 @@
         <ScrollView HorizontalScrollBarVisibility="Never" IsClippedToBounds="True" InputTransparent="False" Orientation="Vertical" VerticalScrollBarVisibility="Never">
             <Grid Padding="10, 20" RowSpacing="10" BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="40"/>
-                    <RowDefinition Height="320"/>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="270"/>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
@@ -26,8 +25,14 @@
 
                 <Label Grid.Row="1" Text="Recently Visited" FontSize="Title"/>
 
-                <CarouselView Grid.Row="2" ItemsSource="{Binding ResumeWatchList.Titles}" IsVisible="{Binding IsResumeWatchListVisible}" IndicatorView="indicatorView" HeightRequest="320">
-                    <CarouselView.ItemTemplate>
+                <CollectionView Grid.Row="2" ItemsSource="{Binding ResumeWatchList.Titles}">
+                    <CollectionView.EmptyView>
+                        <Label Text="No visited titles :(" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Large"/>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="15"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10" x:DataType="Models:Title">
                                 <VisualStateManager.VisualStateGroups>
@@ -42,11 +47,11 @@
                                 </VisualStateManager.VisualStateGroups>
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="150" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="250"/>
-                                    <RowDefinition Height="70"/>
+                                    <RowDefinition Height="220"/>
+                                    <RowDefinition Height="50"/>
                                 </Grid.RowDefinitions>
 
                                 <Image Aspect="AspectFill" Grid.Column="0" Grid.Row="0">
@@ -55,21 +60,16 @@
                                     </Image.Source>
                                 </Image>
 
-                                <Label Text="{Binding Names.Ru, Mode=OneTime}" Grid.Column="0" Grid.Row="1"
-                        LineBreakMode="WordWrap" Margin="5,0,0,0"/>
+                                <Label Text="{Binding Names.Ru, Mode=OneTime}" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" Grid.Column="0" Grid.Row="1"
+                        LineBreakMode="WordWrap"/>
                             </Grid>
                         </DataTemplate>
-                    </CarouselView.ItemTemplate>
-                </CarouselView>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-                <IndicatorView Grid.Row="3" x:Name="indicatorView" IsVisible="{Binding IsResumeWatchListVisible}"
-                IndicatorColor="{StaticResource BackgroundBlack}"
-                SelectedIndicatorColor="{StaticResource Primary}"
-                HorizontalOptions="Center" HideSingle="False" IndicatorsShape="Circle"/>
+                <Label Grid.Row="3" Text="Lastest Updates" FontSize="Title"/>
 
-                <Label Grid.Row="4" Text="Lastest Updates" FontSize="Title"/>
-
-                <CollectionView Grid.Row="5" SelectionMode="Single" ItemsSource="{Binding Titles.Titles}">
+                <CollectionView Grid.Row="4" SelectionMode="Single" ItemsSource="{Binding Titles.Titles}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid BackgroundColor="{StaticResource BackgroundLight}" VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10" x:DataType="Models:Title">

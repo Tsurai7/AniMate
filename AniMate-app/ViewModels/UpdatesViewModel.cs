@@ -16,9 +16,6 @@ namespace AniMate_app.ViewModels
         [ObservableProperty]
         private GenreCollection _resumeWatchList = new("resume");
 
-        [ObservableProperty]
-        private bool _isResumeWatchListVisible = false;
-
         public UpdatesViewModel(AnilibriaService anilibriaService)
         {
             _anilibriaService = anilibriaService;
@@ -61,8 +58,6 @@ namespace AniMate_app.ViewModels
 
                 foreach (string code in lastVisited)
                     ResumeWatchList.AddTitle(await _anilibriaService.GetTitleByCode(code));
-
-                IsResumeWatchListVisible = ResumeWatchList.TitleCount > 0;
             }
         }
     }
