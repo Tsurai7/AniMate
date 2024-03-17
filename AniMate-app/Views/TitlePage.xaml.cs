@@ -15,6 +15,13 @@ public partial class TitlePage : ContentPage
         BindingContext = _viewModel = titleViewModel;
     }
 
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+
+        _viewModel.OnNavigatedTo();
+    }
+
     private async void OnWatchButtonClicked(object sender, EventArgs e)
     {
         if (sender is Button button && button.CommandParameter is string hlsUrl)

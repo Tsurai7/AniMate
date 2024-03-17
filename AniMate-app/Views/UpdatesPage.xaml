@@ -3,30 +3,115 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AniMate_app.Views.UpdatesPage"
              xmlns:local="clr-namespace:AniMate_app.ViewModels"
-             xmlns:model="clr-namespace:AniMate_app.Model"
              xmlns:Models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
              x:DataType="local:UpdatesViewModel"
-             Title="UpdatesPage"
-             Loaded="ContentPage_Loaded"
-             BackgroundColor="{AppThemeBinding Light=White , Dark = {StaticResource Background}}">
+             Loaded="ContentPage_Loaded">
 
-    <RefreshView>
-        <VerticalStackLayout>
+    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
+        <ScrollView HorizontalScrollBarVisibility="Never" IsClippedToBounds="True" InputTransparent="False" Orientation="Vertical" VerticalScrollBarVisibility="Never">
+            <Grid Padding="10, 20" RowSpacing="10" BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="320"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <Label Text="Resume Watch" FontSize="Title"/>
+                <Image Grid.Row="0" Source="{AppThemeBinding Light = logo.svg, Dark = logowhite.svg}"
+                MaximumWidthRequest="100"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"/>
 
-            <CarouselView ItemsSource="{Binding ResumeWatchList}" ItemTemplate="{StaticResource TitleTile}">
+                <Label Grid.Row="1" Text="Recently Visited" FontSize="Title"/>
 
-            </CarouselView>
-            
-            <CollectionView VerticalOptions="FillAndExpand" SelectionMode="Single" ItemsSource="{Binding Titles}" ItemTemplate="{StaticResource TitleTile}"
-                            RemainingItemsThreshold="0" RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" SnapPointsType="None" ItemSpacing="10"/>
-                </CollectionView.ItemsLayout>
-            </CollectionView>
-            
-        </VerticalStackLayout>
+                <CarouselView Grid.Row="2" ItemsSource="{Binding ResumeWatchList.Titles}" IsVisible="{Binding IsResumeWatchListVisible}" IndicatorView="indicatorView" HeightRequest="320">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10" x:DataType="Models:Title">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <VisualState Name="Normal"></VisualState>
+                                        <VisualState Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="Transparent"></Setter>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="250"/>
+                                    <RowDefinition Height="70"/>
+                                </Grid.RowDefinitions>
+
+                                <Image Aspect="AspectFill" Grid.Column="0" Grid.Row="0">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}" CachingEnabled="True" />
+                                    </Image.Source>
+                                </Image>
+
+                                <Label Text="{Binding Names.Ru, Mode=OneTime}" Grid.Column="0" Grid.Row="1"
+                        LineBreakMode="WordWrap" Margin="5,0,0,0"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+
+                <IndicatorView Grid.Row="3" x:Name="indicatorView" IsVisible="{Binding IsResumeWatchListVisible}"
+                IndicatorColor="{StaticResource BackgroundBlack}"
+                SelectedIndicatorColor="{StaticResource Primary}"
+                HorizontalOptions="Center" HideSingle="False" IndicatorsShape="Circle"/>
+
+                <Label Grid.Row="4" Text="Lastest Updates" FontSize="Title"/>
+
+                <CollectionView Grid.Row="5" SelectionMode="Single" ItemsSource="{Binding Titles.Titles}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid BackgroundColor="{StaticResource BackgroundLight}" VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10" x:DataType="Models:Title">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <VisualState Name="Normal"></VisualState>
+                                        <VisualState Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="{StaticResource Key=BackgroundLight}"></Setter>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="130" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="120"/>
+                                </Grid.RowDefinitions>
+
+                                <Image Aspect="AspectFit" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="0,5,0,5">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}" CachingEnabled="True" />
+                                    </Image.Source>
+                                </Image>
+
+                                <Label Text="{Binding Names.Ru, Mode=OneTime}" FontSize="14" Grid.Column="1" Grid.Row="0"
+                                    LineBreakMode="WordWrap" Margin="10,5,10,0"/>
+
+                                <Label Text="{Binding RuDescription, Mode=OneTime}" FontSize="10" Grid.Column="1" Grid.Row="1"
+                                    LineBreakMode="WordWrap" Margin="10,0,10,10"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" SnapPointsType="None" ItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+            </Grid>
+        </ScrollView>
     </RefreshView>
     <ContentPage.Title>
         <x:Null />

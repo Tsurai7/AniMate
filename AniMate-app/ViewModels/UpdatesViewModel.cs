@@ -1,5 +1,5 @@
-﻿using AniMate_app.Services.AnilibriaService;
-using AniMate_app.Services.AnilibriaService.Models;
+﻿using AniMate_app.Model;
+using AniMate_app.Services.AnilibriaService;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,10 +11,13 @@ namespace AniMate_app.ViewModels
         private AnilibriaService _anilibriaService;
 
         [ObservableProperty]
-        private List<Title> _titles = new();
+        private GenreCollection _titles = new("updates");
 
         [ObservableProperty]
-        private List<Title> _resumeWatchList = new();
+        private GenreCollection _resumeWatchList = new("resume");
+
+        [ObservableProperty]
+        private bool _isResumeWatchListVisible = false;
 
         public UpdatesViewModel(AnilibriaService anilibriaService)
         {
@@ -25,15 +28,42 @@ namespace AniMate_app.ViewModels
         {
             var titles = await _anilibriaService.GetUpdates(0, _loadMoreContentOffset);
 
-            Titles.AddRange(titles);
-
-            ResumeWatchList.AddRange(titles);
+            Titles.AddTitleList(titles);
         }
 
         [RelayCommand]
         public override async Task LoadMoreContent()
         {
-            Titles.AddRange(await _anilibriaService.GetUpdates(Titles.Count, _loadMoreContentOffset));
+            Titles.AddTitleList(await _anilibriaService.GetUpdates(Titles.TitleCount, _loadMoreContentOffset));
+        }
+
+        [RelayCommand]
+        public async Task Refresh()
+        {
+            IsBusy = IsRefreshing = true;
+
+            Titles.Clear();
+
+            ResumeWatchList.Clear();
+
+            await LoadContent();
+
+            await LoadSavedData();
+
+            IsBusy = IsRefreshing = false;
+        }
+
+        public async Task LoadSavedData()
+        {
+            if (Preferences.Default.ContainsKey("visited"))
+            {
+                var lastVisited = Preferences.Default.Get<string>("visited", default).Split(';');
+
+                foreach (string code in lastVisited)
+                    ResumeWatchList.AddTitle(await _anilibriaService.GetTitleByCode(code));
+
+                IsResumeWatchListVisible = ResumeWatchList.TitleCount > 0;
+            }
         }
     }
 }

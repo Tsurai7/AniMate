@@ -19,6 +19,7 @@
     <Color x:Key="Gray950">#141414</Color>
     <Color x:Key="Background">#1d2333</Color>
     <Color x:Key="BackgroundBlack">#111725</Color>
+    <Color x:Key="BackgroundLight">#252c41</Color>
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>

@@ -6,6 +6,8 @@ public partial class UpdatesPage : ContentPage
 {
 	private UpdatesViewModel _viewModel;
 
+	private bool _isFirstLoad = true;
+
     public UpdatesPage(UpdatesViewModel viewModel)
 	{
 		InitializeComponent();
@@ -15,6 +17,14 @@ public partial class UpdatesPage : ContentPage
 
     private async void ContentPage_Loaded(object sender, EventArgs e)
     {
-		await _viewModel.LoadContent().ConfigureAwait(false);
+        if (_isFirstLoad)
+		{
+            await _viewModel.LoadContent();
+
+            await _viewModel.LoadSavedData();
+        }
+			
+
+		_isFirstLoad = false;
     }
 }
