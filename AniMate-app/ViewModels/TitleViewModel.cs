@@ -57,7 +57,8 @@ namespace AniMate_app.ViewModels
             while(_lastVisited.Count > 4)
                 _lastVisited.Pop();
 
-            _lastVisited.Push(Title.Code);
+            if(!_lastVisited.Contains(Title.Code))
+                _lastVisited.Push(Title.Code);
 
             Preferences.Default.Set<string>("visited", string.Join(';', _lastVisited));
         }

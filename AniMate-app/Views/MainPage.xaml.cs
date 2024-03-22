@@ -25,8 +25,7 @@ namespace AniMate_app.Views
                 await viewModel.LoadContent();
 
                 _isFirstLoad = false;
-            }
-                
+            }    
         }
 
         private async void TitleSelected(object sender, SelectionChangedEventArgs e)

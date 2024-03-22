@@ -61,7 +61,7 @@
                                 </Image>
 
                                 <Label Text="{Binding Names.Ru, Mode=OneTime}" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" Grid.Column="0" Grid.Row="1"
-                        LineBreakMode="WordWrap"/>
+                                    LineBreakMode="WordWrap"/>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
