@@ -72,13 +72,13 @@
                 <CollectionView Grid.Row="4" SelectionMode="Single" ItemsSource="{Binding Titles.Titles}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid BackgroundColor="{StaticResource BackgroundLight}" VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10" x:DataType="Models:Title">
+                            <Grid BackgroundColor="{AppThemeBinding Dark = {StaticResource BackgroundLight}, Light = {StaticResource Gray100}}" VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10" x:DataType="Models:Title">
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup Name="CommonStates">
                                         <VisualState Name="Normal"></VisualState>
                                         <VisualState Name="Selected">
                                             <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="{StaticResource Key=BackgroundLight}"></Setter>
+                                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark = {StaticResource BackgroundLight}, Light = {StaticResource Gray100}}"></Setter>
                                             </VisualState.Setters>
                                         </VisualState>
                                     </VisualStateGroup>
