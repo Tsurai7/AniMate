@@ -1,4 +1,5 @@
 ﻿using AniMate_app.Model;
+using AniMate_app.Services.AuthService;
 using AniMate_app.Services.AnilibriaService;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -10,14 +11,20 @@ namespace AniMate_app.ViewModels
     {
         private AnilibriaService _anilibriaService;
 
+        public AuthService _authService;
+
         [ObservableProperty]
         private GenreCollection _titles = new("updates");
 
         [ObservableProperty]
+        private string _labelText;
+
+        [ObservableProperty]
         private GenreCollection _resumeWatchList = new("resume");
 
-        public UpdatesViewModel(AnilibriaService anilibriaService)
+        public UpdatesViewModel(AnilibriaService anilibriaService, AuthService authService)
         {
+            _authService = authService;
             _anilibriaService = anilibriaService;
         }
 

@@ -1,4 +1,5 @@
-﻿using AniMate_app.Services.AnilibriaService;
+﻿using AniMate_app.Services.AuthService;
+using AniMate_app.Services.AnilibriaService;
 using AniMate_app.ViewModels;
 using AniMate_app.Views;
 using CommunityToolkit.Maui;
@@ -30,8 +31,9 @@ namespace AniMate_app
 
         private static void ConfigureServices(IServiceCollection services)
         {
-            // Service configuration
+            // Services configuration
             services.AddHttpClient<AnilibriaService>();
+            services.AddHttpClient<AuthService>();
 
             // Pages configuration
             services.AddTransient<TitlePage>();
@@ -51,6 +53,12 @@ namespace AniMate_app
 
             services.AddTransient<PlayerViewModel>();
             services.AddTransient<PlayerPage>();
+
+            services.AddTransient<ProfileViewModel>();
+            services.AddTransient<ProfilePage>();
+            
+            services.AddTransient<LoginViewModel>();
+            services.AddTransient<LoginViewModel>();
         }
     }
 }

@@ -1,38 +1,53 @@
-﻿namespace AniMate_app.Views;
+﻿using AniMate_app.Services;
+using AniMate_app.ViewModels;
+
+namespace AniMate_app.Views;
 
 public partial class LoginPage : ContentPage
 {
-    private AppTheme currentTheme = App.Current.RequestedTheme;
-    public LoginPage()
+    private readonly LoginViewModel _viewModel;
+    private AppTheme CurrentTheme => App.Current.RequestedTheme;
+    
+    public LoginPage(LoginViewModel viewModel)
 	{
 		InitializeComponent();
+        
+        BindingContext = _viewModel = viewModel;
 	}
 
     private async void LoginButton_Clicked(object sender, EventArgs e)
     {
+        string email = EmailEntry.Text;
+        string password = PasswordEntry.Text;
+
+        string token = await _viewModel._authService.SignIn(email, password);
         
-        await Shell.Current.GoToAsync($"profilepage");
+        var navigationParameter = new Dictionary<string, object>
+        {
+            {"Email", token},
+        };
+        
+        await Shell.Current.GoToAsync($"profilepage", navigationParameter);
     }
 
     private void usernameEntry_Focused(object sender, FocusEventArgs e)
     {
-        loginFrame.BorderColor = Colors.Blue;
+        LoginFrame.BorderColor = Colors.Blue;
     }
 
     private void usernameEntry_Unfocused(object sender, FocusEventArgs e)
     {
-        loginFrame.BorderColor =  currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
+        LoginFrame.BorderColor =  CurrentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
     }
 
     private void passwordEntry_Focused(object sender, FocusEventArgs e)
     {
-        passwordFrame.BorderColor = Colors.Blue;
-        
+        PasswordFrame.BorderColor = Colors.Blue;
     }
 
     private void passwordEntry_Unfocused(object sender, FocusEventArgs e)
     {
-        passwordFrame.BorderColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
+        PasswordFrame.BorderColor = CurrentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
     }
 
     private async void registrationLabelTapped(object sender, TappedEventArgs e)

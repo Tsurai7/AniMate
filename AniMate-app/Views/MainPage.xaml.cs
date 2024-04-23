@@ -31,6 +31,7 @@ namespace AniMate_app.Views
         private async void TitleSelected(object sender, SelectionChangedEventArgs e)
         {
             var collection = sender as CollectionView;
+            
             if (_isOpeningPlayer)
             {
                 collection.SelectedItem = null;

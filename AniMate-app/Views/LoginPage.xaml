@@ -43,9 +43,9 @@
 
                 <Frame Padding="10"
                        CornerRadius="10"
-                       x:Name="loginFrame">
-                    <Entry x:Name="usernameEntry"
-                           Placeholder="Логин"
+                       x:Name="LoginFrame">
+                    <Entry x:Name="EmailEntry"
+                           Placeholder="Почта"
                            Focused="usernameEntry_Focused"
                            Unfocused="usernameEntry_Unfocused"
                    />
@@ -66,8 +66,8 @@
                 <Frame Padding="10"
                        CornerRadius="10"
                        Margin="0,0,0,0"
-                       x:Name="passwordFrame">
-                    <Entry x:Name="passwordEntry"
+                       x:Name="PasswordFrame">
+                    <Entry x:Name="PasswordEntry"
                            Placeholder="Пароль"
                            IsPassword="True"
                            Focused="passwordEntry_Focused"
