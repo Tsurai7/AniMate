@@ -1,4 +1,5 @@
 using System.Text;
+using AniMate_app.Services.AuthService.Dtos;
 using Newtonsoft.Json;
 
 namespace AniMate_app.Services.AuthService;
@@ -14,15 +15,17 @@ public class AuthService
         _httpClient = httpClient;
     }
     
-    public async Task<string> GetStringFromApi()
+    public async Task<string> GetStringFromApi(string token)
     {
         string jsonInfo = "test";
+        
         try
         {
-            using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/test");
+            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+            
+            using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/data");
 
             jsonInfo = await response.Content.ReadAsStringAsync();
-
         }
         catch (Exception e)
         {
@@ -32,7 +35,7 @@ public class AuthService
         return jsonInfo;
     }
     
-    public async Task<string> SignIn(string email, string password)
+    public async Task<SignInResponse> SignIn(string email, string password)
     {
         string jsonInfo = "test";
 
@@ -51,12 +54,15 @@ public class AuthService
             using HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/signIn", requestContent);
 
             jsonInfo = await response.Content.ReadAsStringAsync();
+            
+            SignInResponse res = JsonConvert.DeserializeObject<SignInResponse>(jsonInfo);
+            
+            return res;
         }
         catch (Exception e)
         {
-            return e.Message;
+            return new SignInResponse();
         }
-
-        return jsonInfo;
+        
     }
 }

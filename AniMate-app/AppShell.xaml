@@ -23,8 +23,9 @@
             <local:NotificationPage />
         </ShellContent>
         <ShellContent Title="Profile"
-          Icon="user.svg">
-            <local:LoginPage />
+            Icon="user.svg"
+            Route="LoginPage"
+            ContentTemplate="{DataTemplate local:LoginPage}">
         </ShellContent>
     </TabBar>
 </Shell>

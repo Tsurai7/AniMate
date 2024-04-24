@@ -1,4 +1,5 @@
 ﻿using AniMate_app.Services;
+using AniMate_app.Services.AuthService.Dtos;
 using AniMate_app.ViewModels;
 
 namespace AniMate_app.Views;
@@ -20,11 +21,12 @@ public partial class LoginPage : ContentPage
         string email = EmailEntry.Text;
         string password = PasswordEntry.Text;
 
-        string token = await _viewModel._authService.SignIn(email, password);
+        SignInResponse response = await _viewModel._authService.SignIn(email, password);
         
         var navigationParameter = new Dictionary<string, object>
         {
-            {"Email", token},
+            {"Token", response.access_token},
+            {"Username", response.username},
         };
         
         await Shell.Current.GoToAsync($"profilepage", navigationParameter);

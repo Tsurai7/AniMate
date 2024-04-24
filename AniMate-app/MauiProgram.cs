@@ -58,7 +58,7 @@ namespace AniMate_app
             services.AddTransient<ProfilePage>();
             
             services.AddTransient<LoginViewModel>();
-            services.AddTransient<LoginViewModel>();
+            services.AddTransient<LoginPage>();
         }
     }
 }

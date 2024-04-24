@@ -11,11 +11,11 @@ public partial class PlayerPage : ContentPage
 	public PlayerPage()
 	{
 		InitializeComponent();
+        
         AppShell.SetNavBarIsVisible(this, true);
         AppShell.SetTabBarIsVisible(this, false);
+        
         BindingContext = viewModel = new PlayerViewModel();
-
-
     }
 
     protected override void OnDisappearing()
