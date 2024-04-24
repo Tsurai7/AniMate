@@ -22,10 +22,6 @@ public partial class UpdatesPage : ContentPage
 		{
             await _viewModel.LoadContent();
 
-            string myLabel = await _viewModel._authService.GetStringFromApi("haha");
-
-            _viewModel.LabelText = myLabel;
-
             await _viewModel.LoadSavedData();
         }
 			

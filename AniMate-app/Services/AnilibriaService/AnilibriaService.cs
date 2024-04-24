@@ -1,10 +1,12 @@
 ﻿using AniMate_app.Services.AnilibriaService.Models;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace AniMate_app.Services.AnilibriaService
 {
     public class AnilibriaService
     {
+        
         private readonly HttpClient _httpClient;
 
         private const string _url = "https://api.anilibria.tv/v3/";
@@ -60,19 +62,12 @@ namespace AniMate_app.Services.AnilibriaService
 
         public async Task<List<Title>> GetTitlesByGenre(string genre, int skip = 0, int count = 1)
         {
-            using HttpResponseMessage response =
-                await _httpClient.GetAsync($"""{_url}title/search?genres={genre}&order_by=in_favorites&sort_direction=1{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
-            
+            using HttpResponseMessage response = await _httpClient.
+                GetAsync($"""{_url}title/search?genres={genre}&order_by=in_favorites&sort_direction=1{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
+        
             string jsonInfo = await response.Content.ReadAsStringAsync();
-
-            try
-            {
-                return JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
-            }
-            catch
-            {
-                return new();
-            }
+            
+            return JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
         }
     }
 }

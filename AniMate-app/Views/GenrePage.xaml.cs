@@ -5,7 +5,7 @@ namespace AniMate_app.Views;
 
 public partial class GenrePage : ContentPage
 {
-    public readonly GenreViewModel viewModel;
+    private readonly GenreViewModel viewModel;
 
     public GenrePage()
     {

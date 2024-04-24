@@ -11,8 +11,6 @@ namespace AniMate_app.ViewModels
     {
         private AnilibriaService _anilibriaService;
 
-        public AuthService _authService;
-
         [ObservableProperty]
         private GenreCollection _titles = new("updates");
 
@@ -22,9 +20,8 @@ namespace AniMate_app.ViewModels
         [ObservableProperty]
         private GenreCollection _resumeWatchList = new("resume");
 
-        public UpdatesViewModel(AnilibriaService anilibriaService, AuthService authService)
+        public UpdatesViewModel(AnilibriaService anilibriaService)
         {
-            _authService = authService;
             _anilibriaService = anilibriaService;
         }
 

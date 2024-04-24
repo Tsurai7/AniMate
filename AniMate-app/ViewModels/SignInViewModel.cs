@@ -8,13 +8,13 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AniMate_app.ViewModels
 {
-    public class LoginViewModel : ObservableObject
+    public class SignInViewModel : ObservableObject
     {
-        public readonly AuthService _authService;
+        public readonly AuthService AuthService;
 
-        public LoginViewModel(AuthService authService)
+        public SignInViewModel(AuthService authService)
         {
-            _authService = authService;
+            AuthService = authService;
         }
     }
 }

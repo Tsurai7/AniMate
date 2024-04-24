@@ -10,7 +10,14 @@ namespace AniMate_app.ViewModels
         private readonly AuthService _authService;
         
         private string _username;
+        
         private string _token;
+        
+        public string Token
+        {
+            get => _token;
+            set => SetProperty(ref _token, value);
+        }
 
         public string Username
         {
@@ -22,21 +29,12 @@ namespace AniMate_app.ViewModels
         {
             _authService = authService;
         }
-        
-        public string Token
-        {
-            set
-            {
-                _token = value;
-                GetDataFromApi(_token);
-            }
-        }
 
         public async void GetDataFromApi(string token)
         {
-            Preferences.Default.Set("AccessToken", token);
             string newUsername = await _authService.GetStringFromApi(token);
-            Username = newUsername; // Обновляем значение Username
+            
+            Username = newUsername;
         }
     }
 }

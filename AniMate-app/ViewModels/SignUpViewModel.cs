@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AniMate_app.ViewModels
 {
-    class RegistrationViewModel
+    class SignUpViewModel
     {
     }
 }

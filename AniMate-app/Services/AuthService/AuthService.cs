@@ -23,7 +23,7 @@ public class AuthService
         {
             _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
             
-            using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/data");
+            using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/profile");
 
             jsonInfo = await response.Content.ReadAsStringAsync();
         }
@@ -59,10 +59,10 @@ public class AuthService
             
             return res;
         }
+        
         catch (Exception e)
         {
             return new SignInResponse();
         }
-        
     }
 }

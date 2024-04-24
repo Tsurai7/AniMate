@@ -4,12 +4,12 @@ using AniMate_app.ViewModels;
 
 namespace AniMate_app.Views;
 
-public partial class LoginPage : ContentPage
+public partial class SignInPage : ContentPage
 {
-    private readonly LoginViewModel _viewModel;
+    private readonly SignInViewModel _viewModel;
     private AppTheme CurrentTheme => App.Current.RequestedTheme;
     
-    public LoginPage(LoginViewModel viewModel)
+    public SignInPage(SignInViewModel viewModel)
 	{
 		InitializeComponent();
         
@@ -21,15 +21,23 @@ public partial class LoginPage : ContentPage
         string email = EmailEntry.Text;
         string password = PasswordEntry.Text;
 
-        SignInResponse response = await _viewModel._authService.SignIn(email, password);
-        
-        var navigationParameter = new Dictionary<string, object>
+        SignInResponse response = await _viewModel.AuthService.SignIn(email, password);
+
+        if (response is not null)
         {
-            {"Token", response.access_token},
-            {"Username", response.username},
-        };
+            var navigationParameter = new Dictionary<string, object>
+            {
+                {"Token", response.access_token},
+                {"Username", response.email},
+            };
+            
+            Preferences.Default.Set("AccessToken", response.access_token);
         
-        await Shell.Current.GoToAsync($"profilepage", navigationParameter);
+            await Shell.Current.GoToAsync($"profilepage", navigationParameter);
+            
+        }
+        else 
+            await DisplayAlert("Error", "Wrong credentials", "OK");
     }
 
     private void usernameEntry_Focused(object sender, FocusEventArgs e)

@@ -1,9 +1,9 @@
 namespace AniMate_app.Views;
 
-public partial class RegistrationPage : ContentPage
+public partial class SignUpPage : ContentPage
 {
     private AppTheme currentTheme = App.Current.RequestedTheme;
-    public RegistrationPage()
+    public SignUpPage()
 	{
 		InitializeComponent();
         AppShell.SetNavBarIsVisible(this, false);
