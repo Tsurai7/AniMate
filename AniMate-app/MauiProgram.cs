@@ -1,4 +1,4 @@
-﻿using AniMate_app.Services.AuthService;
+﻿using AniMate_app.Services.AccountService;
 using AniMate_app.Services.AnilibriaService;
 using AniMate_app.ViewModels;
 using AniMate_app.Views;
@@ -33,7 +33,7 @@ namespace AniMate_app
         {
             // Services configuration
             services.AddHttpClient<AnilibriaService>();
-            services.AddHttpClient<AuthService>();
+            services.AddHttpClient<AccountService>();
 
             // Pages configuration
             services.AddTransient<TitlePage>();

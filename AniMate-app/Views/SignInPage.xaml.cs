@@ -1,5 +1,4 @@
-﻿using AniMate_app.Services;
-using AniMate_app.Services.AuthService.Dtos;
+﻿using AniMate_app.Services.AccountService.Dtos;
 using AniMate_app.ViewModels;
 
 namespace AniMate_app.Views;
@@ -19,9 +18,10 @@ public partial class SignInPage : ContentPage
     private async void LoginButton_Clicked(object sender, EventArgs e)
     {
         string email = EmailEntry.Text;
+        
         string password = PasswordEntry.Text;
 
-        SignInResponse response = await _viewModel.AuthService.SignIn(email, password);
+        SignInResponse response = await _viewModel.AccountService.SignIn(email, password);
 
         if (response is not null)
         {

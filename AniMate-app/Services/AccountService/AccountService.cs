@@ -1,44 +1,37 @@
 using System.Text;
-using AniMate_app.Services.AuthService.Dtos;
+using AniMate_app.Services.AccountService.Dtos;
 using Newtonsoft.Json;
 
-namespace AniMate_app.Services.AuthService;
+namespace AniMate_app.Services.AccountService;
 
-public class AuthService
+public class AccountService
 {
     private readonly HttpClient _httpClient;
 
     private const string _url = "http://10.0.2.2:5100";
 
-    public AuthService(HttpClient httpClient)
+    public AccountService(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }
     
-    public async Task<string> GetStringFromApi(string token)
+    public async Task<ProfileDto> GetProfileInfo(string token)
     {
-        string jsonInfo = "test";
+        _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
         
-        try
-        {
-            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-            
-            using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/profile");
+        using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/profile");
 
-            jsonInfo = await response.Content.ReadAsStringAsync();
-        }
-        catch (Exception e)
-        {
-            return e.Message;
-        }
+        string jsonInfo = await response.Content.ReadAsStringAsync();
         
-        return jsonInfo;
+        ProfileDto profileDto = JsonConvert.DeserializeObject<ProfileDto>(jsonInfo);
+        
+        return profileDto;
     }
     
     public async Task<SignInResponse> SignIn(string email, string password)
     {
         string jsonInfo = "test";
-
+        
         try
         {
             var authData = new

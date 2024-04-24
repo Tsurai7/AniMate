@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace AniMate_app.Services.AuthService.Dtos;
+namespace AniMate_app.Services.AccountService.Dtos;
 
 public record SignInResponse
 {

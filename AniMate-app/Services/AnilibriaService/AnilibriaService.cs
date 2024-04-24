@@ -6,7 +6,6 @@ namespace AniMate_app.Services.AnilibriaService
 {
     public class AnilibriaService
     {
-        
         private readonly HttpClient _httpClient;
 
         private const string _url = "https://api.anilibria.tv/v3/";
@@ -29,7 +28,8 @@ namespace AniMate_app.Services.AnilibriaService
 
         public async Task<List<Title>> GetTitlesByName(string name, int skip = 0, int count = 6)
         {
-            using HttpResponseMessage response = await _httpClient.GetAsync($"""{_url}title/search?search={name}&order_by=in_favorites&sort_direction=1&{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
+            using HttpResponseMessage response = await _httpClient.
+                GetAsync($"""{_url}title/search?search={name}&order_by=in_favorites&sort_direction=1&{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
 
             string jsonInfo = await response.Content.ReadAsStringAsync();
 
@@ -40,7 +40,8 @@ namespace AniMate_app.Services.AnilibriaService
 
         public async Task<List<Title>> GetUpdates(int skip = 0, int count = 6)
         {
-            using HttpResponseMessage response = await _httpClient.GetAsync($"""{_url}title/updates?{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
+            using HttpResponseMessage response = await _httpClient.
+                GetAsync($"""{_url}title/updates?{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
 
             string jsonInfo = await response.Content.ReadAsStringAsync();
 

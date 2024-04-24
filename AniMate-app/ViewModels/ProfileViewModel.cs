@@ -1,15 +1,18 @@
-﻿using AniMate_app.Services.AuthService;
+﻿using AniMate_app.Services.AccountService;
+using AniMate_app.Services.AccountService.Dtos;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Maui.Controls;
 
 namespace AniMate_app.ViewModels
 {
     [QueryProperty(nameof(_token), "Token")]
     public partial class ProfileViewModel : ObservableObject
     {
-        private readonly AuthService _authService;
+        private readonly AccountService _accountService;
         
         private string _username;
+
+        [ObservableProperty]
+        private string _profileImage;
         
         private string _token;
         
@@ -25,16 +28,18 @@ namespace AniMate_app.ViewModels
             set => SetProperty(ref _username, value);
         }
 
-        public ProfileViewModel(AuthService authService)
+        public ProfileViewModel(AccountService accountService)
         {
-            _authService = authService;
+            _accountService = accountService;
         }
 
         public async void GetDataFromApi(string token)
         {
-            string newUsername = await _authService.GetStringFromApi(token);
+            ProfileDto profileDto = await _accountService.GetProfileInfo(token);
             
-            Username = newUsername;
+            Username = profileDto.Username;
+
+            ProfileImage = profileDto.ProfileImage;
         }
     }
 }
