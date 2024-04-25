@@ -4,36 +4,26 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AniMate_app.ViewModels
 {
-    [QueryProperty(nameof(_token), "Token")]
+    [QueryProperty(nameof(Token), "Token")]
     public partial class ProfileViewModel : ObservableObject
     {
         private readonly AccountService _accountService;
-        
+
+        [ObservableProperty]
         private string _username;
 
         [ObservableProperty]
         private string _profileImage;
-        
-        private string _token;
-        
-        public string Token
-        {
-            get => _token;
-            set => SetProperty(ref _token, value);
-        }
 
-        public string Username
-        {
-            get => _username;
-            set => SetProperty(ref _username, value);
-        }
+        [ObservableProperty]
+        private string _token;
 
         public ProfileViewModel(AccountService accountService)
         {
             _accountService = accountService;
         }
 
-        public async void GetDataFromApi(string token)
+        public async void LoadProfileData(string token)
         {
             ProfileDto profileDto = await _accountService.GetProfileInfo(token);
             

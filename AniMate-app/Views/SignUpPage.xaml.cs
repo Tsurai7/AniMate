@@ -21,9 +21,7 @@ public partial class SignUpPage : ContentPage
 
     private void usernameEntry_Unfocused(object sender, FocusEventArgs e)
     {
-
         loginFrame.BorderColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
-
     }
 
     private void passwordEntry_Focused(object sender, FocusEventArgs e)

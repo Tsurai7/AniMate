@@ -13,6 +13,7 @@
     <Frame CornerRadius="10"
            Margin="30,120,30,120"
            BackgroundColor="{AppThemeBinding Light=White , Dark = {StaticResource Background}}">
+        
         <Grid VerticalOptions="CenterAndExpand">
 
             <Grid.RowDefinitions>

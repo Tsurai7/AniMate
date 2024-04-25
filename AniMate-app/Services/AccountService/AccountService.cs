@@ -30,30 +30,28 @@ public class AccountService
     
     public async Task<SignInResponse> SignIn(string email, string password)
     {
-        string jsonInfo = "test";
-        
+        var authData = new
+        {
+            email,
+            password
+        };
+            
+        string jsonContent = JsonConvert.SerializeObject(authData);
+
+        var requestContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
         try
         {
-            var authData = new
-            {
-                email,
-                password
-            };
-            
-            var jsonContent = JsonConvert.SerializeObject(authData);
-
-            var requestContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
             using HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/signIn", requestContent);
 
-            jsonInfo = await response.Content.ReadAsStringAsync();
+            string jsonInfo = await response.Content.ReadAsStringAsync();
             
             SignInResponse res = JsonConvert.DeserializeObject<SignInResponse>(jsonInfo);
             
             return res;
         }
         
-        catch (Exception e)
+        catch (Exception)
         {
             return new SignInResponse();
         }

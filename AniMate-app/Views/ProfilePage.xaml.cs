@@ -5,6 +5,7 @@ namespace AniMate_app.Views;
 public partial class ProfilePage : ContentPage
 {
 	private readonly ProfileViewModel _viewModel;
+
 	public ProfilePage(ProfileViewModel profileViewModel)
 	{
         AppShell.SetNavBarIsVisible(this, false);
@@ -13,6 +14,6 @@ public partial class ProfilePage : ContentPage
         
         BindingContext = _viewModel = profileViewModel;
         
-        _viewModel.GetDataFromApi(Preferences.Default.Get<string>("AccessToken", default));
+        _viewModel.LoadProfileData(Preferences.Default.Get<string>("AccessToken", default));
 	}
 }
