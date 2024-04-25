@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AniMate_app.Views.SignUpPage"
-             >
+             x:Class="AniMate_app.Views.SignUpPage">
     
-    <ContentPage.BackgroundImageSource  >
+    <ContentPage.BackgroundImageSource>
         <FileImageSource File="background_4.jpg">
-
         </FileImageSource>
     </ContentPage.BackgroundImageSource>
     
     <Frame CornerRadius="10"
-           Margin="30,120,30,120"
+           Margin="30,80,30,70"
            BackgroundColor="{AppThemeBinding Light=White , Dark = {StaticResource Background}}">
         
         <Grid VerticalOptions="CenterAndExpand">
-
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -28,76 +26,89 @@
                    FontSize="Large"
                    Grid.Row="0"
                    HorizontalOptions="Center">
-
             </Label>
 
             <StackLayout Orientation="Vertical"
                          Grid.Row="1"
                          Margin="20,0,20,0">
-                <Label Text="Логин"
+                <Label Text="Имя пользователя"
                        FontSize="Small"
                        Margin="0,20,0,5">
-
                 </Label>
 
                 <Frame Padding="10"
                        CornerRadius="10"
-                       x:Name="loginFrame">
-                    <Entry x:Name="usernameEntry"
-                           Placeholder="Логин"
-                           Focused="usernameEntry_Focused"
-                           Unfocused="usernameEntry_Unfocused"
-               />
+                       x:Name="UsernameFrame">
+                    <Entry x:Name="UsernameEntry"
+                           Placeholder="Имя пользователя"
+                           Focused="UsernameEntry_Focused"
+                           Unfocused="UsernameEntry_Unfocused"/>
                 </Frame>
             </StackLayout>
-
+            
             <StackLayout Orientation="Vertical"
                          Grid.Row="2"
                          Margin="20,10,20,0">
-                <Label Text="Пароль"
+                <Label Text="Почта"
                        FontSize="Small"
-                       Margin="0,0,0,5"
-   >
-
+                       Margin="0,0,0,5">
                 </Label>
 
                 <Frame Padding="10"
                        CornerRadius="10"
                        Margin="0,0,0,0"
-                       x:Name="passwordFrame">
-                    <Entry x:Name="passwordEntry"
-                           Placeholder="Пароль"
+                       x:Name="EmailFrame">
+                    <Entry x:Name="EmailEntry"
+                           Placeholder="Почта"
                            IsPassword="True"
-                           Focused="passwordEntry_Focused"
-                           Unfocused="passwordEntry_Unfocused"/>
+                           Focused="EmailEntry_Focused"
+                           Unfocused="EmailEntry_Unfocused"/>
                 </Frame>
-
-
             </StackLayout>
 
+            
             <StackLayout Orientation="Vertical"
                          Grid.Row="3"
                          Margin="20,10,20,0">
-                <Label Text="Повторите пароль"
+                <Label Text="Пароль"
                        FontSize="Small"
-                       Margin="0,0,0,5"
-           >
-
+                       Margin="0,0,0,5">
                 </Label>
 
                 <Frame Padding="10"
                        CornerRadius="10"
                        Margin="0,0,0,0"
-                       x:Name="passwordConfirmFrame">
-                    <Entry x:Name="passwordConfirmEntry"
+                       x:Name="PasswordFrame">
+                    <Entry x:Name="PasswordEntry"
+                           Placeholder="Пароль"
+                           IsPassword="True"
+                           Focused="PasswordEntry_Focused"
+                           Unfocused="PasswordEntry_Unfocused"/>
+                </Frame>
+            </StackLayout>
+
+            
+            <StackLayout Orientation="Vertical"
+                         Grid.Row="4"
+                         Margin="20,10,20,0">
+                <Label Text="Повторите пароль"
+                       FontSize="Small"
+                       Margin="0,0,0,5">
+                </Label>
+
+                <Frame Padding="10"
+                       CornerRadius="10"
+                       Margin="0,0,0,0"
+                       x:Name="PasswordConfirmFrame">
+                    <Entry x:Name="PasswordConfirmEntry"
                            Placeholder="Повторите пароль"
                            IsPassword="True"
-                           Focused="passwordConfirmEntry_Focused"
-                           Unfocused="passwordConfirmEntry_Unfocused"/>
+                           Focused="PasswordConfirmEntry_Focused"
+                           Unfocused="PasswordConfirmEntry_Unfocused"/>
                 </Frame>
+                
                 <Label FontSize="Micro"
-                       Margin="0,5,0,0"
-                        >
+                       Margin="0,5,0,0">
                     <Label.FormattedText>
                         <FormattedString>
                             <Span Text="Есть аккаунт? " />
@@ -106,30 +117,26 @@
                         </FormattedString>
                     </Label.FormattedText>
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="loginLabelTapped"
-                       >
+                        <TapGestureRecognizer Tapped="SignInLabel_Tapped">
 
                         </TapGestureRecognizer>
                     </Label.GestureRecognizers>
                 </Label>
             </StackLayout>
 
-            <Button Grid.Row="4"
+            <Button Grid.Row="5"
                     Margin="20,40,20,0"
                     HorizontalOptions="FillAndExpand"
                     CornerRadius="10"
                     Text="Регистрация"
                     FontSize="Medium"
-                    Clicked="RegistrationButton_Clicked"
+                    Clicked="SignUpButton_Clicked"
                     BackgroundColor="{AppThemeBinding Light=Black , Dark = Red}"
-                    TextColor="{AppThemeBinding Light=White , Dark = White}"
-                    >
-
+                    TextColor="{AppThemeBinding Light=White , Dark = White}">
             </Button>
         </Grid>
     </Frame>
     
-
     <ContentPage.Title>
         <x:Null />
     </ContentPage.Title>

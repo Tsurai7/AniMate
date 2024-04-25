@@ -15,13 +15,13 @@ public partial class SignInPage : ContentPage
         BindingContext = _viewModel = viewModel;
 	}
 
-    private async void LoginButton_Clicked(object sender, EventArgs e)
+    private async void SignInButton_Clicked(object sender, EventArgs e)
     {
         string email = EmailEntry.Text;
         
         string password = PasswordEntry.Text;
 
-        SignInResponse response = await _viewModel.AccountService.SignIn(email, password);
+        AuthResponse response = await _viewModel.AccountService.SignIn(email, password);
 
         if (response is not null)
         {
@@ -40,27 +40,27 @@ public partial class SignInPage : ContentPage
             await DisplayAlert("Error", "Wrong credentials", "OK");
     }
 
-    private void usernameEntry_Focused(object sender, FocusEventArgs e)
+    private void EmailEntry_Focused(object sender, FocusEventArgs e)
     {
         LoginFrame.BorderColor = Colors.Blue;
     }
 
-    private void usernameEntry_Unfocused(object sender, FocusEventArgs e)
+    private void EmailEntry_Unfocused(object sender, FocusEventArgs e)
     {
         LoginFrame.BorderColor =  CurrentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
     }
 
-    private void passwordEntry_Focused(object sender, FocusEventArgs e)
+    private void PasswordEntry_Focused(object sender, FocusEventArgs e)
     {
         PasswordFrame.BorderColor = Colors.Blue;
     }
 
-    private void passwordEntry_Unfocused(object sender, FocusEventArgs e)
+    private void PasswordEntry_Unfocused(object sender, FocusEventArgs e)
     {
         PasswordFrame.BorderColor = CurrentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
     }
 
-    private async void registrationLabelTapped(object sender, TappedEventArgs e)
+    private async void SignUpLabel_Tapped(object sender, TappedEventArgs e)
     {
         await Shell.Current.GoToAsync($"registrationpage");
         //NavigationPage.SetHasNavigationBar(new RegistrationPage(), true);

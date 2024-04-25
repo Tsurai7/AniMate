@@ -34,7 +34,7 @@
             <StackLayout Orientation="Vertical"
                          Grid.Row="1"
                          Margin="20,0,20,0">
-                <Label Text="Логин"
+                <Label Text="Почта"
                        FontSize="Small"
                        Margin="0,20,0,5"
                        >
@@ -46,8 +46,8 @@
                        x:Name="LoginFrame">
                     <Entry x:Name="EmailEntry"
                            Placeholder="Почта"
-                           Focused="usernameEntry_Focused"
-                           Unfocused="usernameEntry_Unfocused"
+                           Focused="EmailEntry_Focused"
+                           Unfocused="EmailEntry_Unfocused"
                    />
                 </Frame>
             </StackLayout>
@@ -70,8 +70,8 @@
                     <Entry x:Name="PasswordEntry"
                            Placeholder="Пароль"
                            IsPassword="True"
-                           Focused="passwordEntry_Focused"
-                           Unfocused="passwordEntry_Unfocused"/>
+                           Focused="PasswordEntry_Focused"
+                           Unfocused="PasswordEntry_Unfocused"/>
                 </Frame>
 
                 <Label FontSize="Micro"
@@ -86,7 +86,7 @@
                         </FormattedString>
                     </Label.FormattedText>
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="registrationLabelTapped"
+                        <TapGestureRecognizer Tapped="SignUpLabel_Tapped"
                                       >
 
                         </TapGestureRecognizer>
@@ -101,7 +101,7 @@
                     CornerRadius="10"
                     Text="Войти"
                     FontSize="Medium"
-                    Clicked="LoginButton_Clicked"
+                    Clicked="SignInButton_Clicked"
                     BackgroundColor="{AppThemeBinding Light=Black , Dark = Red}"
                     TextColor="{AppThemeBinding Light=White , Dark = White}"
             >

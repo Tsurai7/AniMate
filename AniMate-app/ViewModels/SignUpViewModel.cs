@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AniMate_app.Services.AccountService;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AniMate_app.ViewModels
 {
-    class SignUpViewModel
+    public class SignUpViewModel : ObservableObject
     {
+        public readonly AccountService AccountService;
+
+        public SignUpViewModel(AccountService accountService)
+        {
+            AccountService = accountService;
+        }
     }
 }

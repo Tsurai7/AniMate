@@ -1,5 +1,4 @@
 ﻿using AniMate_app.Model;
-using AniMate_app.Services.AccountService;
 using AniMate_app.Services.AnilibriaService;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;

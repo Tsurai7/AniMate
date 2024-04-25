@@ -28,7 +28,7 @@ public class AccountService
         return profileDto;
     }
     
-    public async Task<SignInResponse> SignIn(string email, string password)
+    public async Task<AuthResponse> SignIn(string email, string password)
     {
         var authData = new
         {
@@ -39,21 +39,35 @@ public class AccountService
         string jsonContent = JsonConvert.SerializeObject(authData);
 
         var requestContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-        try
-        {
-            using HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/signIn", requestContent);
-
-            string jsonInfo = await response.Content.ReadAsStringAsync();
-            
-            SignInResponse res = JsonConvert.DeserializeObject<SignInResponse>(jsonInfo);
-            
-            return res;
-        }
         
-        catch (Exception)
+        using HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/signIn", requestContent);
+
+        string jsonInfo = await response.Content.ReadAsStringAsync();
+        
+        AuthResponse res = JsonConvert.DeserializeObject<AuthResponse>(jsonInfo);
+        
+        return res;
+    }
+
+    public async Task<AuthResponse> SignUp(string email, string password, string username)
+    {
+        var authData = new
         {
-            return new SignInResponse();
-        }
+            username,
+            email,
+            password,
+        };
+            
+        string jsonContent = JsonConvert.SerializeObject(authData);
+
+        var requestContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+        using HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/signUp", requestContent);
+
+        string jsonInfo = await response.Content.ReadAsStringAsync();
+        
+        AuthResponse res = JsonConvert.DeserializeObject<AuthResponse>(jsonInfo);
+        
+        return res;
     }
 }

@@ -59,6 +59,9 @@ namespace AniMate_app
             
             services.AddTransient<SignInViewModel>();
             services.AddTransient<SignInPage>();
+            
+            services.AddTransient<SignUpViewModel>();
+            services.AddTransient<SignUpPage>();
         }
     }
 }

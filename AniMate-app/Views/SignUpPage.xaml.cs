@@ -1,51 +1,95 @@
+using AniMate_app.Services.AccountService.Dtos;
+using AniMate_app.ViewModels;
+
 namespace AniMate_app.Views;
 
 public partial class SignUpPage : ContentPage
 {
+    private readonly SignUpViewModel _viewModel;
+    
     private AppTheme currentTheme = App.Current.RequestedTheme;
-    public SignUpPage()
+    
+    public SignUpPage(SignUpViewModel viewModel)
 	{
 		InitializeComponent();
+        
+        BindingContext = _viewModel = viewModel;
+        
         AppShell.SetNavBarIsVisible(this, false);
     }
 
-    private async void RegistrationButton_Clicked(object sender, EventArgs e)
+    private void UsernameEntry_Focused(object sender, FocusEventArgs e)
     {
-        await Shell.Current.GoToAsync($"profilepage");
+        UsernameFrame.BorderColor = Colors.Blue;
     }
 
-    private void usernameEntry_Focused(object sender, FocusEventArgs e)
+    private void UsernameEntry_Unfocused(object sender, FocusEventArgs e)
     {
-        loginFrame.BorderColor = Colors.Blue;
+        UsernameFrame.BorderColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
+    }
+    
+    private void EmailEntry_Focused(object sender, FocusEventArgs e)
+    {
+        EmailFrame.BorderColor = Colors.Blue;
     }
 
-    private void usernameEntry_Unfocused(object sender, FocusEventArgs e)
+    private void EmailEntry_Unfocused(object sender, FocusEventArgs e)
     {
-        loginFrame.BorderColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
+        EmailFrame.BorderColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
     }
 
-    private void passwordEntry_Focused(object sender, FocusEventArgs e)
+    private void PasswordEntry_Focused(object sender, FocusEventArgs e)
     {
-        passwordFrame.BorderColor = Colors.Blue;
+        PasswordFrame.BorderColor = Colors.Blue;
     }
 
-    private void passwordEntry_Unfocused(object sender, FocusEventArgs e)
+    private void PasswordEntry_Unfocused(object sender, FocusEventArgs e)
     {
-        passwordFrame.BorderColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; 
+        PasswordFrame.BorderColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; 
     }
 
-    private async void loginLabelTapped(object sender, TappedEventArgs e)
+    private async void SignInLabel_Tapped(object sender, TappedEventArgs e)
     {
         await Shell.Current.Navigation.PopAsync();
     }
 
-    private void passwordConfirmEntry_Unfocused(object sender, FocusEventArgs e)
+    private void PasswordConfirmEntry_Unfocused(object sender, FocusEventArgs e)
     {
-        passwordConfirmFrame.BorderColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
+        PasswordConfirmFrame.BorderColor = currentTheme == AppTheme.Dark ? Colors.Black : Colors.White; ;
     }
 
-    private void passwordConfirmEntry_Focused(object sender, FocusEventArgs e)
+    private void PasswordConfirmEntry_Focused(object sender, FocusEventArgs e)
     {
-        passwordConfirmFrame.BorderColor = Colors.Blue;
+        PasswordConfirmFrame.BorderColor = Colors.Blue;
+    }
+    
+    private async void SignUpButton_Clicked(object sender, EventArgs e)
+    {
+        if (PasswordEntry.Text != PasswordConfirmEntry.Text)
+        {
+            await DisplayAlert("Error", "Wrong passwords", "OK");
+            return;
+        }
+        
+        
+        AuthResponse response = await _viewModel.AccountService.
+            SignUp(EmailEntry.Text, UsernameEntry.Text, PasswordEntry.Text);
+
+        if (response != null)
+        {
+            var navigationParameter = new Dictionary<string, object>
+            {
+                {"Token", response.access_token},
+                {"Username", response.email},
+            };
+            
+            Preferences.Default.Set("AccessToken", response.access_token);
+        
+            await Shell.Current.GoToAsync($"profilepage", navigationParameter);
+        }
+        else
+        {
+            await DisplayAlert("Error", "Unable to sign up", "OK");
+        }
     }
 }
