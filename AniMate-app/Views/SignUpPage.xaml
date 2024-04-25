@@ -60,7 +60,6 @@
                        x:Name="EmailFrame">
                     <Entry x:Name="EmailEntry"
                            Placeholder="Почта"
-                           IsPassword="True"
                            Focused="EmailEntry_Focused"
                            Unfocused="EmailEntry_Unfocused"/>
                 </Frame>

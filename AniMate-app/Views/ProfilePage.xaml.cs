@@ -13,7 +13,5 @@ public partial class ProfilePage : ContentPage
         InitializeComponent();
         
         BindingContext = _viewModel = profileViewModel;
-        
-        _viewModel.LoadProfileData(Preferences.Default.Get<string>("AccessToken", default));
 	}
 }

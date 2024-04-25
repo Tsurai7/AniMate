@@ -71,19 +71,19 @@ public partial class SignUpPage : ContentPage
             return;
         }
         
-        
-        AuthResponse response = await _viewModel.AccountService.
+        AuthResponse response = await _viewModel._accountService.
             SignUp(EmailEntry.Text, UsernameEntry.Text, PasswordEntry.Text);
 
         if (response != null)
         {
+            ProfileDto profileDto = await _viewModel._accountService.GetProfileInfo(response.AccessToken);
+            
             var navigationParameter = new Dictionary<string, object>
             {
-                {"Token", response.access_token},
-                {"Username", response.email},
+                {"Profile", profileDto},
             };
             
-            Preferences.Default.Set("AccessToken", response.access_token);
+            Preferences.Default.Set("AccessToken", response.AccessToken);
         
             await Shell.Current.GoToAsync($"profilepage", navigationParameter);
         }

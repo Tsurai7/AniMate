@@ -36,11 +36,11 @@
                    Padding="0"
                    HasShadow="False"
                    Margin=" 10,0,0,0">
-                <Image Source="{Binding ProfileImage}"
+                <Image Source="{Binding ProfileInfo.ProfileImage}"
                        Aspect="AspectFill"/>
             </Frame>
 
-            <Label Text="{Binding Username}"
+            <Label Text="{Binding ProfileInfo.Username}"
                    VerticalOptions="CenterAndExpand"
                    Margin=" 10,0,0,0"
                    FontAttributes="Bold"

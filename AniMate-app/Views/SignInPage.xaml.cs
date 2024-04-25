@@ -21,23 +21,26 @@ public partial class SignInPage : ContentPage
         
         string password = PasswordEntry.Text;
 
-        AuthResponse response = await _viewModel.AccountService.SignIn(email, password);
+        AuthResponse response = await _viewModel._accountService.SignIn(email, password);
 
         if (response is not null)
         {
+            ProfileDto profileDto = await _viewModel._accountService.GetProfileInfo(response.AccessToken);
+            
             var navigationParameter = new Dictionary<string, object>
             {
-                {"Token", response.access_token},
-                {"Username", response.email},
+                {"Profile", profileDto},
             };
             
-            Preferences.Default.Set("AccessToken", response.access_token);
+            Preferences.Default.Set("AccessToken", response.AccessToken);
         
             await Shell.Current.GoToAsync($"profilepage", navigationParameter);
-            
         }
-        else 
+
+        else
+        {
             await DisplayAlert("Error", "Wrong credentials", "OK");
+        }
     }
 
     private void EmailEntry_Focused(object sender, FocusEventArgs e)

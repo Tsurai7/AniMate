@@ -5,11 +5,11 @@ namespace AniMate_app.ViewModels
 {
     public class SignInViewModel : ObservableObject
     {
-        public readonly AccountService AccountService;
+        public readonly AccountService _accountService;
 
         public SignInViewModel(AccountService accountService)
         {
-            AccountService = accountService;
+            _accountService = accountService;
         }
     }
 }
