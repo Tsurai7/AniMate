@@ -8,17 +8,17 @@
               >
 
     <ScrollView BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
-        <StackLayout Orientation="Vertical">
-            
-            <Image Source="{Binding Title.Posters.Small.Url}"/>
+        <StackLayout Orientation="Vertical" Margin="5,0,10,10">
+
+            <Image Source="{Binding Title.Posters.Small.Url}" Margin="30,10,20,10"/>
             
             <Label Text="{Binding Title.Names.Ru}"
                    FontSize="Large"
                    FontAttributes="Bold"
-                   HorizontalOptions="StartAndExpand"
                    VerticalOptions="StartAndExpand"
+                   HorizontalTextAlignment="Center"
                    Margin="20,5,0,0"/>
-            
+
             <StackLayout Orientation="Horizontal"
                          HorizontalOptions="Center"
                          Margin="20,20,0,0"
@@ -98,7 +98,7 @@
                     </Button>
                 </StackLayout>
 
- 
+
             </StackLayout>
 
             <StackLayout Orientation="Vertical"
@@ -117,7 +117,7 @@
                         </FormattedString>
                     </Label.FormattedText>
                     <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnTextRecognizerTap"
+                        <TapGestureRecognizer Tapped="OnTextRecognizerTap"
                                           NumberOfTapsRequired="1" />
                     </Label.GestureRecognizers>
                 </Label>
@@ -153,7 +153,7 @@
                                 Margin="5,5,5,5"
                                 FontSize="12"
                                 >
-                            
+
                         </Button>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

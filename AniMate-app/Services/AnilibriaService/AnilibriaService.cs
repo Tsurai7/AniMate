@@ -1,5 +1,4 @@
 ﻿using AniMate_app.Services.AnilibriaService.Models;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace AniMate_app.Services.AnilibriaService

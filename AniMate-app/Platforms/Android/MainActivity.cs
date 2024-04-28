@@ -10,7 +10,7 @@ namespace AniMate_app
         [Intent.ActionView],
         Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
         DataScheme = "https",
-        DataHost ="animate",
+        DataHost = "animate",
         DataPathPrefix = "/",
         AutoVerify = true
         )
