@@ -22,19 +22,26 @@ namespace AniMate_app.ViewModels
         public UpdatesViewModel(AnilibriaService anilibriaService)
         {
             _anilibriaService = anilibriaService;
+
+            _loadMoreContentOffset = 4;
         }
 
         public override async Task LoadContent()
         {
-            var titles = await _anilibriaService.GetUpdates(0, _loadMoreContentOffset);
-
-            Titles.AddTitleList(titles);
+            await LoadMoreContent();
         }
 
         [RelayCommand]
         public override async Task LoadMoreContent()
         {
+            if (IsLoading)
+                return;
+
+            IsLoading = true;
+
             Titles.AddTitleList(await _anilibriaService.GetUpdates(Titles.TitleCount, _loadMoreContentOffset));
+        
+            IsLoading = false;
         }
 
         [RelayCommand]
@@ -46,22 +53,22 @@ namespace AniMate_app.ViewModels
 
             ResumeWatchList.Clear();
 
-            await LoadContent();
+            await LoadMoreContent();
 
-            await LoadSavedData();
+            //await LoadSavedData();
 
             IsBusy = IsRefreshing = false;
         }
 
-        public async Task LoadSavedData()
-        {
-            if (Preferences.Default.ContainsKey("visited"))
-            {
-                var lastVisited = Preferences.Default.Get<string>("visited", default).Split(';');
+        //public async Task LoadSavedData()
+        //{
+        //    if (Preferences.Default.ContainsKey("visited"))
+        //    {
+        //        var lastVisited = Preferences.Default.Get<string>("visited", default).Split(';');
 
-                foreach (string code in lastVisited)
-                    ResumeWatchList.AddTitle(await _anilibriaService.GetTitleByCode(code));
-            }
-        }
+        //        foreach (string code in lastVisited)
+        //            ResumeWatchList.AddTitle(await _anilibriaService.GetTitleByCode(code));
+        //    }
+        //}
     }
 }

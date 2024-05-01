@@ -5,110 +5,82 @@
              x:DataType="local:ProfileViewModel"
              x:Class="AniMate_app.Views.ProfilePage">
     
-    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+    <Grid Margin="10,20,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="150" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="150" />
-            <RowDefinition Height="150" />
-            <RowDefinition Height="150" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="150" />
         </Grid.RowDefinitions>
 
-        <StackLayout  Orientation="Horizontal"
-                      VerticalOptions="CenterAndExpand"
-                      HorizontalOptions="End"
-                      Grid.Row="0">
-            <Button >
-                <Button.ImageSource>
-                    <FileImageSource File="{AppThemeBinding Light= settings.svg, Dark= settingswhite.svg}" />
-                </Button.ImageSource>
-            </Button>
-        </StackLayout>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="170"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Row="0" Grid.Column="1" VerticalOptions="Start" HorizontalOptions="End">
+            <Button.ImageSource>
+                <FileImageSource File="{AppThemeBinding Light= settings.svg, Dark= settingswhite.svg}" />
+            </Button.ImageSource>
+        </Button>
 
         <StackLayout Orientation="Horizontal"
                      VerticalOptions="CenterAndExpand"
                      HorizontalOptions="Start"
-                     Grid.Row="1">
+                     Grid.Row="0" Grid.RowSpan="2" Margin="10,0,0,0">
             <Frame CornerRadius="100"
-                   WidthRequest="150"
-                   HeightRequest="150"
+                   WidthRequest="120"
+                   HeightRequest="120"
                    Padding="0"
-                   HasShadow="False"
-                   Margin=" 10,0,0,0">
+                   HasShadow="False">
                 <Image Source="{Binding ProfileInfo.ProfileImage}"
                        Aspect="AspectFill"/>
             </Frame>
 
             <Label Text="{Binding ProfileInfo.Username}"
                    VerticalOptions="CenterAndExpand"
-                   Margin=" 10,0,0,0"
                    FontAttributes="Bold"
                    FontSize="18"/>
         </StackLayout>
-        
-        <StackLayout Orientation="Horizontal"
-                     VerticalOptions="CenterAndExpand"
-                     HorizontalOptions="Start"
-                     Grid.Row="2">
-            <StackLayout Orientation="Horizontal"
-                         VerticalOptions="CenterAndExpand"
-                         HorizontalOptions="Start">
-                <Button Text="Favourite"
-                        Margin=" 10,0,0,0"
-                        FontAttributes="Bold"
-                        FontSize="18">
-                    <Button.ImageSource>
-                        <FileImageSource File="{AppThemeBinding Light= favourite.svg, Dark= favouritewhite.svg}" />
-                    </Button.ImageSource>
-                </Button>
-            </StackLayout>
-            <CollectionView>
-                
-            </CollectionView>
-        </StackLayout>
 
-        <StackLayout Orientation="Horizontal"
-                     VerticalOptions="CenterAndExpand"
-                     HorizontalOptions="Start"
-                     Grid.Row="3">
-            <StackLayout Orientation="Horizontal"
-                         VerticalOptions="CenterAndExpand"
-                         HorizontalOptions="Start">
-                <Button Text="History"
-                        Margin=" 10,0,0,0"
-                        FontAttributes="Bold"
-                        FontSize="18">
-                    <Button.ImageSource>
-                        <FileImageSource File="{AppThemeBinding Light= history.svg, Dark= historywhite.svg}" />
-                    </Button.ImageSource>
-                </Button>
-            </StackLayout>
-            <CollectionView>
 
-            </CollectionView>
-        </StackLayout>
+        <Button Text="Favourite"
+                FontAttributes="Bold"
+                FontSize="18" Grid.Row="3">
+            <Button.ImageSource>
+                <FileImageSource File="{AppThemeBinding Light= favourite.svg, Dark= favouritewhite.svg}" />
+            </Button.ImageSource>
+        </Button>
+        <CollectionView Grid.Row="4">
+            <CollectionView.EmptyView>
+                <Label Text="History"
+                FontAttributes="Bold"
+                FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </CollectionView.EmptyView>
+        </CollectionView>
 
-        <StackLayout Orientation="Horizontal"
-                     VerticalOptions="CenterAndExpand"
-                     HorizontalOptions="Start"
-                     Grid.Row="4">
-            <StackLayout Orientation="Horizontal"
-                         VerticalOptions="CenterAndExpand"
-                         HorizontalOptions="Start">
-                <Button Text="Achivments"
-                        Margin=" 10,0,0,0"
-                        FontAttributes="Bold"
-                        FontSize="18">
-                    <Button.ImageSource>
-                        <FileImageSource File="{AppThemeBinding Light= achivments.svg, Dark= achivmentswhite.svg}" />
-                    </Button.ImageSource>
-                </Button>
-            </StackLayout>
-            <CollectionView>
+        <Button Text="History"
+                FontAttributes="Bold"
+                FontSize="18" Grid.Row="5">
+            <Button.ImageSource>
+                <FileImageSource File="{AppThemeBinding Light= history.svg, Dark= historywhite.svg}" />
+            </Button.ImageSource>
+        </Button>
 
-            </CollectionView>
-        </StackLayout>
+        <CollectionView Grid.Row="6">
+            <CollectionView.EmptyView>
+                <Label Text="History"
+                    FontAttributes="Bold"
+                    FontSize="18" 
+                    HorizontalOptions="Center" VerticalOptions="Center"/>
+            </CollectionView.EmptyView>
+        </CollectionView>
+
     </Grid>
     <ContentPage.Title>
         <x:Null />

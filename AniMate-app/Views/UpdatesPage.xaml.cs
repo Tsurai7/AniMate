@@ -8,6 +8,7 @@ public partial class UpdatesPage : ContentPage
 	private UpdatesViewModel _viewModel;
 
 	private bool _isFirstLoad = true;
+    private bool _isOpeningPlayer;
 
     public UpdatesPage(UpdatesViewModel viewModel)
 	{
@@ -19,13 +20,33 @@ public partial class UpdatesPage : ContentPage
     private async void ContentPage_Loaded(object sender, EventArgs e)
     {
         if (_isFirstLoad)
-		{
             await _viewModel.LoadContent();
 
-            await _viewModel.LoadSavedData();
-        }
-			
-
 		_isFirstLoad = false;
+    }
+
+    private async void TitleSelected(object sender, SelectionChangedEventArgs e)
+    {
+        var collection = sender as CollectionView;
+
+        if (_isOpeningPlayer)
+        {
+            collection.SelectedItem = null;
+
+            return;
+        }
+
+        _isOpeningPlayer = true;
+
+        var navigationParameter = new Dictionary<string, object>
+            {
+                {"TheTitle", collection.SelectedItem}
+            };
+
+        await Shell.Current.GoToAsync($"titlepage", navigationParameter);
+
+        collection.SelectedItem = null;
+
+        _isOpeningPlayer = false;
     }
 }
