@@ -9,18 +9,14 @@
               Icon="home.svg"
               Route="UpdatesPage"
               ContentTemplate="{DataTemplate local:UpdatesPage}"/>
-        <ShellContent Title="Home"
-                      Icon="home.svg"
+        <ShellContent Title="Genre"
+                      Icon="genre.svg"
                       Route="MainPage"
                       ContentTemplate="{DataTemplate local:MainPage}"/>
         <ShellContent Title="Search"
                       Icon="search.svg"
                       ContentTemplate="{DataTemplate local:SearchPage}"
                       Route="SearchPage">
-        </ShellContent>
-        <ShellContent Title="Notifications"
-          Icon="ring.svg">
-            <local:NotificationPage />
         </ShellContent>
         <ShellContent Title="Profile"
             Icon="user.svg"

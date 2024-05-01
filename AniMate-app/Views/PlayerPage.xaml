@@ -17,9 +17,9 @@
                               ShouldAutoPlay="False"
                               Source="{Binding MediaUrl}"
                               Aspect="Center"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center"
                               BackgroundColor="Black"
-                              AbsoluteLayout.LayoutFlags="All"
-                              AbsoluteLayout.LayoutBounds="0,0,1,1"
                               >
         </toolkit:MediaElement>
     </Grid>

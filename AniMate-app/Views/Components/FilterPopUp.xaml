@@ -9,7 +9,7 @@
             HeightRequest="400"
             WidthRequest="300"
             Stroke="Transparent"
-            BackgroundColor="#FFEAE7EC">
+            BackgroundColor="{AppThemeBinding Light=White , Dark = {StaticResource BackgroundLight}}">
         <Border.StrokeShape>
             <RoundRectangle CornerRadius="28"/>
         </Border.StrokeShape>
