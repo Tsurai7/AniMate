@@ -24,8 +24,8 @@
         </ShellContent>
         <ShellContent Title="Profile"
             Icon="user.svg"
-            Route="ProfilePage"
-            ContentTemplate="{DataTemplate local:ProfilePage}">
+            Route="SingInPage"
+            ContentTemplate="{DataTemplate local:SingInPage}">
         </ShellContent>
     </TabBar>
 </Shell>

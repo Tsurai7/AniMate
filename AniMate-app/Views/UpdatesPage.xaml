@@ -23,14 +23,20 @@
             <Label Grid.Row="1" Text="Lastest Updates" FontSize="Title"/>
 
             <CollectionView Grid.Row="2" SelectionMode="Single" 
+                            VerticalOptions="Start"
                             ItemsSource="{Binding Titles.Titles}" 
                             ItemsUpdatingScrollMode="KeepScrollOffset"
                             SelectionChanged="TitleSelected"
-                            RemainingItemsThreshold="0" 
+                            RemainingItemsThreshold="0"
                             RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}">
+                
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" SnapPointsType="None" ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid BackgroundColor="{AppThemeBinding Dark = {StaticResource BackgroundLight}, Light = {StaticResource Gray100}}" VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10" x:DataType="Models:Title">
+                        <Grid ColumnSpacing="5" BackgroundColor="{AppThemeBinding Dark = {StaticResource BackgroundLight}, Light = {StaticResource Gray100}}" VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10" x:DataType="Models:Title">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup Name="CommonStates">
                                     <VisualState Name="Normal"></VisualState>
@@ -50,7 +56,7 @@
                                 <RowDefinition Height="120"/>
                             </Grid.RowDefinitions>
 
-                            <Image Aspect="AspectFit" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="0,5,0,5">
+                            <Image Aspect="AspectFit" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
                                 <Image.Source>
                                     <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}" CachingEnabled="True" />
                                 </Image.Source>
@@ -64,9 +70,6 @@
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" SnapPointsType="None" ItemSpacing="10"/>
-                </CollectionView.ItemsLayout>
 
                 <CollectionView.Footer>
                     <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
