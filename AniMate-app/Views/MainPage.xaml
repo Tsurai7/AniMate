@@ -8,7 +8,7 @@
     x:DataType="local:MainViewModel"
     Loaded="LoadContent">
 
-    <Grid Padding="10, 20" BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
+    <Grid Padding="10, 20, 0, 0" BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />

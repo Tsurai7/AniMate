@@ -8,7 +8,7 @@
              Loaded="ContentPage_Loaded">
 
     <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
-        <Grid Padding="10,20" BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
+        <Grid Padding="10,20,0,0" BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="40"/>
