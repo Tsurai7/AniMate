@@ -9,18 +9,8 @@
     Loaded="LoadContent">
 
     <Grid Padding="10, 20, 0, 0" BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <Image Grid.Row="0" Source="{AppThemeBinding Light = logo.svg, Dark = logowhite.svg}"
-            MaximumWidthRequest="100"
-            HorizontalOptions="Start"
-            VerticalOptions="Start"/>
-
-        <RefreshView Grid.Row="1" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
+        
+        <RefreshView Grid.Row="0" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
             <CollectionView 
                 ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" SelectionMode="None" 
                 ItemsSource="{Binding GenreList}"

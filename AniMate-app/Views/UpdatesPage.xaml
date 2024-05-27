@@ -9,20 +9,15 @@
 
     <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
         <Grid Padding="10,20,0,0" BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Image Grid.Row="0" Source="{AppThemeBinding Light = logo.svg, Dark = logowhite.svg}"
-                MaximumWidthRequest="100"
-                HorizontalOptions="Start"
-                VerticalOptions="Start"/>
+            <Label Grid.Row="0" Text="Latest Updates" FontSize="Title"/>
 
-            <Label Grid.Row="1" Text="Lastest Updates" FontSize="Title"/>
-
-            <CollectionView Grid.Row="2" SelectionMode="Single"
+            <CollectionView Grid.Row="1" SelectionMode="Single"
                             ItemsSource="{Binding Titles.Titles}" 
                             ItemsUpdatingScrollMode="KeepScrollOffset"
                             SelectionChanged="TitleSelected"
