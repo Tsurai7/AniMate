@@ -13,7 +13,7 @@
         {
             base.OnAppLinkRequestReceived(uri);
 
-            await Shell.Current.GoToAsync($"titlepage?TitleCode={uri.Segments[1]}");
+            await Shell.Current.GoToAsync($"TitlePage?TitleCode={uri.Segments[1]}");
         }
     }
 }

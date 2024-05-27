@@ -1,4 +1,3 @@
-using AniMate_app.Services;
 using AniMate_app.ViewModels;
 
 namespace AniMate_app.Views;
@@ -43,7 +42,7 @@ public partial class UpdatesPage : ContentPage
                 {"TheTitle", collection.SelectedItem}
             };
 
-        await Shell.Current.GoToAsync($"titlepage", navigationParameter);
+        await Shell.Current.GoToAsync($"TitlePage", navigationParameter);
 
         collection.SelectedItem = null;
 

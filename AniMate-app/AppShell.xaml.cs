@@ -8,15 +8,15 @@ namespace AniMate_app
         {
             InitializeComponent();
 
-            Routing.RegisterRoute("mainpage", typeof(MainPage));
-            Routing.RegisterRoute("serchpage", typeof(SearchPage));
-            Routing.RegisterRoute("registrationpage", typeof(SignUpPage));
-            Routing.RegisterRoute("playerpage", typeof(PlayerPage));
-            Routing.RegisterRoute("titlepage", typeof(TitlePage));
-            Routing.RegisterRoute("genrepage", typeof(GenrePage));
-            Routing.RegisterRoute("profilepage", typeof(ProfilePage));
-            Routing.RegisterRoute("loginpage", typeof(SignInPage));
-            Routing.RegisterRoute("updatespage", typeof(UpdatesPage));
+            Routing.RegisterRoute("MainPage", typeof(MainPage));
+            Routing.RegisterRoute("SearchPage", typeof(SearchPage));
+            Routing.RegisterRoute("SignUpPage", typeof(SignUpPage));
+            Routing.RegisterRoute("PlayerPage", typeof(PlayerPage));
+            Routing.RegisterRoute("TitlePage", typeof(TitlePage));
+            Routing.RegisterRoute("GenrePage", typeof(GenrePage));
+            Routing.RegisterRoute("ProfilePage", typeof(ProfilePage));
+            Routing.RegisterRoute("SignInPage", typeof(SignInPage));
+            Routing.RegisterRoute("UpdatesPage", typeof(UpdatesPage));
         }
     }
 }

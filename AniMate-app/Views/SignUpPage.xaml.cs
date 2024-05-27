@@ -85,7 +85,7 @@ public partial class SignUpPage : ContentPage
             
             Preferences.Default.Set("AccessToken", response.AccessToken);
         
-            await Shell.Current.GoToAsync($"profilepage", navigationParameter);
+            await Shell.Current.GoToAsync($"ProfilePage", navigationParameter);
         }
         else
         {

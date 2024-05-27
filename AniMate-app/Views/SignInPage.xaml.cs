@@ -34,7 +34,7 @@ public partial class SignInPage : ContentPage
             
             Preferences.Default.Set("AccessToken", response.AccessToken);
         
-            await Shell.Current.GoToAsync($"profilepage", navigationParameter);
+            await Shell.Current.GoToAsync($"ProfilePage", navigationParameter);
         }
 
         else
@@ -65,7 +65,7 @@ public partial class SignInPage : ContentPage
 
     private async void SignUpLabel_Tapped(object sender, TappedEventArgs e)
     {
-        await Shell.Current.GoToAsync($"registrationpage");
+        await Shell.Current.GoToAsync($"SignUpPage");
         //NavigationPage.SetHasNavigationBar(new RegistrationPage(), true);
         //await Navigation.PushModalAsync(new RegistrationPage());
     }

@@ -1,6 +1,4 @@
 using AniMate_app.ViewModels;
-using CommunityToolkit.Maui.Core.Primitives;
-using CommunityToolkit.Maui.Views;
 
 namespace AniMate_app.Views;
 

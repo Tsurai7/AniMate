@@ -46,7 +46,7 @@ namespace AniMate_app.Views
                 {"TheTitle", collection.SelectedItem}
             };
 
-            await Shell.Current.GoToAsync($"titlepage", navigationParameter);
+            await Shell.Current.GoToAsync($"TitlePage", navigationParameter);
 
             collection.SelectedItem = null;
 
@@ -63,7 +63,7 @@ namespace AniMate_app.Views
                 {"AnilibriaService",  viewModel._anilibriaService}
             };
 
-            await Shell.Current.GoToAsync($"genrepage", navigationParameter);
+            await Shell.Current.GoToAsync($"GenrePage", navigationParameter);
         }
     }
 }

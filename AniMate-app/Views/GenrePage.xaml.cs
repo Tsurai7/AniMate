@@ -29,7 +29,7 @@ public partial class GenrePage : ContentPage
                 {"TheTitle", collectionView.SelectedItem}
             };
 
-            await Shell.Current.GoToAsync($"titlepage", navigationParameter);
+            await Shell.Current.GoToAsync($"TitlePage", navigationParameter);
 
         }
     }
