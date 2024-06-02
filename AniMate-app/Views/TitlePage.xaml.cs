@@ -43,4 +43,11 @@ public partial class TitlePage : ContentPage
 
         isFullDescriptionOpen = !isFullDescriptionOpen;
     }
+
+    private void LikeButtonClicked(object sender, EventArgs e)
+    {
+        _viewModel.IsTitleInLikes = !_viewModel.IsTitleInLikes;
+
+        // Here you can also add logic to update the profile in Preferences if needed.
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using AniMate_app.Services.AccountService.Dtos;
 using AniMate_app.ViewModels;
-
+using System.Text.Json;
+using Microsoft.Maui.Storage;
 namespace AniMate_app.Views;
 
 public partial class SignInPage : ContentPage
@@ -31,9 +32,12 @@ public partial class SignInPage : ContentPage
             {
                 {"Profile", profileDto},
             };
-            
+
             Preferences.Default.Set("AccessToken", response.AccessToken);
-        
+
+            string jsonProfile = JsonSerializer.Serialize(profileDto);
+            Preferences.Default.Set("Profile", jsonProfile);
+
             await Shell.Current.GoToAsync($"ProfilePage", navigationParameter);
         }
 

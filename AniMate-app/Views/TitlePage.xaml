@@ -3,10 +3,20 @@
              xmlns:local="clr-namespace:AniMate_app.ViewModels"
              xmlns:DTO="clr-namespace:AniMate_app.Services.AnilibriaService.Dtos"
              xmlns:models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
+             xmlns:converters="clr-namespace:AniMate_app.Converters"
              x:DataType="local:TitleViewModel"
              x:Class="AniMate_app.Views.TitlePage"
               >
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <FileImageSource x:Key="FavouriteImage" File="favourite_for_title_page_white.svg"/>
+            <FileImageSource x:Key="FavouriteImageSelected" File="favourite_for_title_page_selected.svg"/>
+            <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+        </ResourceDictionary>
+        
+    </ContentPage.Resources>
+    
     <ScrollView BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
         <StackLayout Orientation="Vertical" Margin="5,0,10,10">
 
@@ -25,15 +35,26 @@
 >
                 <StackLayout Orientation="Vertical"
                              Margin="0,0,60,0">
-                    <Button>
+                    <Button Clicked="LikeButtonClicked"
+                            TextColor="{Binding IsTitleInLikes, Converter={StaticResource BoolToColorConverter}}"
+                            >
                         <Button.ImageSource>
-                            <FileImageSource File="{AppThemeBinding Light= favourite_for_title_page.svg, Dark= favourite_for_title_page_white.svg}" />
+                            <FileImageSource File="{AppThemeBinding Light=favourite_for_title_page.svg, Dark=favourite_for_title_page_white.svg}"/>
                         </Button.ImageSource>
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding IsTitleInLikes}" Value="true">
+                                <Setter Property="ImageSource" Value="{StaticResource FavouriteImageSelected}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Button" Binding="{Binding IsTitleInLikes}" Value="false">
+                                <Setter Property="ImageSource" Value="{StaticResource FavouriteImage}"/>
+                            </DataTrigger>
+                        </Button.Triggers>
                     </Button>
                     <Label Text="В избранное"
                            FontSize="12"
                            FontAttributes="Bold"
-                           HorizontalTextAlignment="Center">
+                           HorizontalTextAlignment="Center"
+                           TextColor="{Binding IsTitleInLikes, Converter={StaticResource BoolToColorConverter}}">
                     </Label>
                 </StackLayout>
                 <StackLayout Orientation="Vertical"
@@ -65,7 +86,7 @@
 
             </StackLayout>
 
-            <StackLayout Orientation="Horizontal"
+            <!--<StackLayout Orientation="Horizontal"
                          Margin="0,20,0,0"
                          >
                 <StackLayout Orientation="Vertical">
@@ -97,7 +118,7 @@
                             >
                     </Button>
                 </StackLayout>
-            </StackLayout>
+            </StackLayout>-->
 
             <StackLayout Orientation="Vertical"
                          Margin="0,20,0,0">
@@ -281,14 +302,6 @@
                        HorizontalOptions="Start"
                        Grid.Column="1" />
             </Grid>
-
-
-            <Label Text="Не работает пока что"
-                   FontSize="Small"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Margin="0,5,0,0"/>
 
             <!--<controls:MediaControl x:Name="mediaControl"
                            ShouldAutoPlay="False"
