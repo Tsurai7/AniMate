@@ -46,8 +46,6 @@ public partial class TitlePage : ContentPage
 
     private void LikeButtonClicked(object sender, EventArgs e)
     {
-        _viewModel.IsTitleInLikes = !_viewModel.IsTitleInLikes;
-
-        // Here you can also add logic to update the profile in Preferences if needed.
+        _ = _viewModel.LikesButtonClicked();
     }
 }

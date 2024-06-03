@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using System.Text;
 using AniMate_app.Services.AccountService.Dtos;
 using Newtonsoft.Json;
@@ -8,7 +9,7 @@ public class AccountService
 {
     private readonly HttpClient _httpClient;
 
-    private const string _url = "http://10.0.2.2:5100";
+    private const string _url = "http://10.0.2.2:10100";
 
     public AccountService(HttpClient httpClient)
     {
@@ -27,7 +28,31 @@ public class AccountService
         
         return profileDto;
     }
-    
+    public async Task<bool> AddTitleToLiked(string token, string titleCode)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var requestContent = new StringContent(string.Empty, Encoding.UTF8, "application/json");
+        requestContent.Headers.Add("titleCode", titleCode);
+
+        using HttpResponseMessage response = await _httpClient.PatchAsync($"{_url}/addTitleToLiked", requestContent);
+
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task<bool> RemoveTitleFromLiked(string token, string titleCode)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var requestContent = new StringContent(string.Empty, Encoding.UTF8, "application/json");
+        requestContent.Headers.Add("titleCode", titleCode);
+
+        using HttpResponseMessage response = await _httpClient.PatchAsync($"{_url}/removeTitleFromLiked", requestContent);
+
+        return response.IsSuccessStatusCode;
+    }
+
+
     public async Task<AuthResponse> SignIn(string email, string password)
     {
         var authData = new
