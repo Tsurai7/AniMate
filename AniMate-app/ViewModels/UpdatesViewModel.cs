@@ -38,7 +38,6 @@ namespace AniMate_app.ViewModels
                 return;
 
             IsLoading = true;
-
             Titles.AddTitleList(await _anilibriaService.GetUpdates(Titles.TitleCount, _loadMoreContentOffset));
         
             IsLoading = false;

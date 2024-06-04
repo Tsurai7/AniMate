@@ -1,4 +1,5 @@
 ﻿using AniMate_app.ViewModels;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AniMate_app.Views;
 
@@ -8,11 +9,15 @@ public partial class TitlePage : ContentPage
 
     private bool isFullDescriptionOpen = false;
 
+    private bool inLikes = false;
+
     public TitlePage(TitleViewModel titleViewModel)
     {
         InitializeComponent();
 
         BindingContext = _viewModel = titleViewModel;
+
+        inLikes = _viewModel.IsTitleInLikes;
     }
 
     private async void OnWatchButtonClicked(object sender, EventArgs e)
@@ -47,5 +52,6 @@ public partial class TitlePage : ContentPage
     private async void LikeButtonClicked(object sender, EventArgs e)
     {
         await _viewModel.LikesButtonClicked();
+        inLikes = _viewModel.IsTitleInLikes;
     }
 }

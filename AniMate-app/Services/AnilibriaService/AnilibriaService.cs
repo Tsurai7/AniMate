@@ -95,12 +95,19 @@ namespace AniMate_app.Services.AnilibriaService
             {
                 using HttpResponseMessage response =
                     await _httpClient.GetAsync($"""{_url}title/updates?{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
-                
-                string jsonInfo = await response.Content.ReadAsStringAsync();
 
-                List<Title> titles = JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonInfo = await response.Content.ReadAsStringAsync();
 
-                return titles;
+                    List<Title> titles = JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
+
+                    return titles;
+                }
+                else
+                {
+                    throw new Exception("Не прошёл запрос");
+                }
             }
             catch (Exception ex)
             {
