@@ -44,8 +44,8 @@ public partial class TitlePage : ContentPage
         isFullDescriptionOpen = !isFullDescriptionOpen;
     }
 
-    private void LikeButtonClicked(object sender, EventArgs e)
+    private async void LikeButtonClicked(object sender, EventArgs e)
     {
-        _ = _viewModel.LikesButtonClicked();
+        await _viewModel.LikesButtonClicked();
     }
 }

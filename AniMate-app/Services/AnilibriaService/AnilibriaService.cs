@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using AniMate_app.Services.AnilibriaService.Models;
 using Newtonsoft.Json;
 
@@ -31,6 +32,40 @@ namespace AniMate_app.Services.AnilibriaService
             {
                 Debug.WriteLine($"Ошибка: {ex.Message}");
                 return new Title();
+            }
+        }
+
+        public async Task<List<Title>> GetTitlesByCode(List<string> codes, int skip = 0, int count = 6)
+        {
+            try
+            {
+                if (codes == null)
+                {
+                    List<Title> title = new();
+                    return title;
+                }
+                List<Title> titles = new();
+                for(int i = skip; i < skip + count; i++)
+                {
+                    if (codes[i] == null)
+                    {
+                        break;
+                    }
+                    using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}title?code={codes[i]}");
+
+                    string jsonInfo = await response.Content.ReadAsStringAsync();
+
+                    Title title = JsonConvert.DeserializeObject<Title>(jsonInfo);
+
+                    titles.Add(title);
+                }
+
+                return titles;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Ошибка: {ex.Message}");
+                return new List<Title>();
             }
         }
 

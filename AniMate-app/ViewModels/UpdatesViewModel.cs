@@ -8,7 +8,7 @@ namespace AniMate_app.ViewModels
 {
     public partial class UpdatesViewModel : ViewModelBase
     {
-        private AnilibriaService _anilibriaService;
+        private readonly AnilibriaService _anilibriaService;
 
         [ObservableProperty]
         private GenreCollection _titles = new("updates");

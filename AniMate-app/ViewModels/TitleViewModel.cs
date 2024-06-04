@@ -4,6 +4,7 @@ using AniMate_app.Services.AnilibriaService.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using AniMate_app.Services.AccountService.Dtos;
 using System.Text.Json;
+using AniMate_app.Views;
 
 namespace AniMate_app.ViewModels
 {
@@ -15,7 +16,8 @@ namespace AniMate_app.ViewModels
 
         private readonly AccountService _accountService;
 
-        private ProfileDto _profileDto;
+        [ObservableProperty]
+        private ProfileDto profile = null;
 
         public TitleViewModel(AnilibriaService anilibriaService, AccountService accountService)
         {
@@ -24,11 +26,10 @@ namespace AniMate_app.ViewModels
             _accountService = accountService;
 
             string jsonProfile = Preferences.Default.Get("Profile", string.Empty);
-            ProfileDto profileDto = null;
 
             if (!string.IsNullOrEmpty(jsonProfile))
             {
-                _profileDto = JsonSerializer.Deserialize<ProfileDto>(jsonProfile);
+                Profile = JsonSerializer.Deserialize<ProfileDto>(jsonProfile);
             }
 
         }
@@ -50,8 +51,10 @@ namespace AniMate_app.ViewModels
                 Genres = string.Join(", ", _title.Genres);
                 ShortDescription = string.Join(" ", _title.RuDescription.Split(' ').Take(7));
                 OnPropertyChanged(nameof(Title));
-
-                IsTitleInLikes = _profileDto?.LikedTitles?.Any(likedTitle => likedTitle == _title.Id) ?? false;
+                if(Profile != null)
+                {
+                    IsTitleInLikes = Profile?.LikedTitles?.Any(likedTitle => likedTitle == _title.Code) ?? false;
+                }
             }
         }
 
@@ -76,19 +79,18 @@ namespace AniMate_app.ViewModels
 
         public async Task<bool> LikesButtonClicked()
         {
-            var token = Preferences.Default.Get("AccessToken", string.Empty);
-            var titleCode = Title.Id;
-
-            if (_profileDto != null)
+            if (Profile != null)
             {
-                if (_profileDto.LikedTitles.Contains(titleCode))
+                var titleCode = Title.Code;
+                var token = Preferences.Default.Get("AccessToken", string.Empty);
+                if (Profile.LikedTitles.Contains(titleCode))
                 {
-                    _profileDto.LikedTitles.Remove(titleCode);
+                    Profile.LikedTitles.Remove(titleCode);
                     bool success = await _accountService.RemoveTitleFromLiked(token, titleCode);
 
                     if (success)
                     {
-                        var jsonProfile = JsonSerializer.Serialize(_profileDto);
+                        var jsonProfile = JsonSerializer.Serialize(Profile);
                         Preferences.Default.Set("Profile", jsonProfile);
                         IsTitleInLikes = false;
                         return true;
@@ -96,12 +98,12 @@ namespace AniMate_app.ViewModels
                 }
                 else
                 {
-                    _profileDto.LikedTitles.Add(titleCode);
+                    Profile.LikedTitles.Add(titleCode);
                     bool success = await _accountService.AddTitleToLiked(token, titleCode);
 
                     if (success)
                     {
-                        var jsonProfile = JsonSerializer.Serialize(_profileDto);
+                        var jsonProfile = JsonSerializer.Serialize(Profile);
                         Preferences.Default.Set("Profile", jsonProfile);
                         IsTitleInLikes = true;
                         return true;
