@@ -116,7 +116,7 @@
                 </Button.ImageSource>
             </Button>
 
-            <CollectionView ItemsSource="{Binding }" SelectionMode="Single" SelectionChanged= "TitleSelected"
+            <CollectionView ItemsSource="{Binding WatchedTitlesCollection}" SelectionMode="Single" SelectionChanged= "TitleSelected"
                   RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="0">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Horizontal"

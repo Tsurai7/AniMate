@@ -23,7 +23,11 @@ public partial class TitlePage : ContentPage
     private async void OnWatchButtonClicked(object sender, EventArgs e)
     {
         if (sender is Button button && button.CommandParameter is string hlsUrl)
+        {
+            await _viewModel.WatchButtonClicked();
             await Shell.Current.GoToAsync($"PlayerPage?mediaurl={hlsUrl}");
+
+        }
     }
 
     private void OnTextRecognizerTap(object sender, TappedEventArgs e)
