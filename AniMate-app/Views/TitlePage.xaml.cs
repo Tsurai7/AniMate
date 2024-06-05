@@ -52,6 +52,5 @@ public partial class TitlePage : ContentPage
     private async void LikeButtonClicked(object sender, EventArgs e)
     {
         await _viewModel.LikesButtonClicked();
-        inLikes = _viewModel.IsTitleInLikes;
     }
 }

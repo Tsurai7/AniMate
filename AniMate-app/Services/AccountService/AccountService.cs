@@ -74,6 +74,18 @@ public class AccountService
         return res;
     }
 
+    public async Task<bool> AddTitleToHistory(string token, string titleCode)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var requestContent = new StringContent(string.Empty, Encoding.UTF8, "application/json");
+        requestContent.Headers.Add("titleCode", titleCode);
+
+        using HttpResponseMessage response = await _httpClient.PatchAsync($"{_url}/addTitleToHistory", requestContent);
+
+        return response.IsSuccessStatusCode;
+    }
+
     public async Task<AuthResponse> SignUp(string email, string password, string username)
     {
         var authData = new

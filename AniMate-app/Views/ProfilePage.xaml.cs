@@ -15,11 +15,6 @@ public partial class ProfilePage : ContentPage
         BindingContext = _viewModel = profileViewModel;
 	}
 
-    private void RefreshProfile(object sender, EventArgs e)
-    {
-
-    }
-
     private async void TitleSelected(object sender, SelectionChangedEventArgs e)
     {
         var collectionView = sender as CollectionView;

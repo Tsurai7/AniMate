@@ -113,5 +113,32 @@ namespace AniMate_app.ViewModels
 
             return false;
         }
+
+        public async Task<bool> WatchButtonClicked()
+        {
+            if (Profile != null)
+            {
+                var titleCode = Title.Code;
+                var token = Preferences.Default.Get("AccessToken", string.Empty);
+                if (!Profile.WatchedTitles.Contains(titleCode))
+                {
+                    return true;
+                }
+                else
+                {
+                    Profile.WatchedTitles.Add(titleCode);
+                    bool success = await _accountService.AddTitleToHistory(token, titleCode);
+
+                    if (success)
+                    {
+                        var jsonProfile = JsonSerializer.Serialize(Profile);
+                        Preferences.Default.Set("Profile", jsonProfile);
+                        return true;
+                    }
+                }
+            }
+            return false;
+            
+        }
     }
 }

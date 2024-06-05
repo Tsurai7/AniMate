@@ -80,10 +80,13 @@ namespace AniMate_app.ViewModels
         [RelayCommand]
         public override async Task LoadMoreContent()
         {
-            if (IsLoading)
+            if (IsLoading || IsRefreshing)
                 return;
 
             if (LikedTitlesCollection.TargetTitleCount > LikedTitlesCollection.TitleCount)
+                return;
+
+            if (WatchedTitlesCollection.TargetTitleCount > WatchedTitlesCollection.TitleCount)
                 return;
 
             IsLoading = true;
@@ -97,6 +100,17 @@ namespace AniMate_app.ViewModels
                 LikedTitlesCollection.TitleCount, LikedTitlesCollection.TargetTitleCount);
             if (loadedTitles.Count > 0)
                 LikedTitlesCollection.AddTitleList(loadedTitles);
+
+
+            WatchedTitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
+            if(ProfileInfo.WatchedTitles.Count <= WatchedTitlesCollection.TargetTitleCount)
+            {
+                return;
+            }
+            List<Title> loadedWatchedTitles = await _anilibriaService.GetTitlesByCode(ProfileInfo.WatchedTitles,
+                WatchedTitlesCollection.TitleCount, WatchedTitlesCollection.TargetTitleCount);
+            if (loadedWatchedTitles.Count > 0)
+                WatchedTitlesCollection.AddTitleList(loadedWatchedTitles);
             IsLoading = false;
         }
     }

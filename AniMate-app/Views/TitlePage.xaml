@@ -42,10 +42,10 @@
                             <FileImageSource File="{AppThemeBinding Light=favourite_for_title_page.svg, Dark=favourite_for_title_page_white.svg}"/>
                         </Button.ImageSource>
                         <Button.Triggers>
-                            <DataTrigger TargetType="Button" Binding="{Binding inLikes}" Value="true">
+                            <DataTrigger TargetType="Button" Binding="{Binding IsTitleInLikes}" Value="true">
                                 <Setter Property="ImageSource" Value="{StaticResource FavouriteImageSelected}"/>
                             </DataTrigger>
-                            <DataTrigger TargetType="Button" Binding="{Binding inLikes}" Value="false">
+                            <DataTrigger TargetType="Button" Binding="{Binding IsTitleInLikes}" Value="false">
                                 <Setter Property="ImageSource" Value="{StaticResource FavouriteImage}"/>
                             </DataTrigger>
                         </Button.Triggers>
