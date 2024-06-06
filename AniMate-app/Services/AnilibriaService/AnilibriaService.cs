@@ -39,26 +39,25 @@ namespace AniMate_app.Services.AnilibriaService
         {
             try
             {
-                if (codes == null)
+                if (codes == null || !codes.Any())
                 {
-                    List<Title> title = new();
-                    return title;
+                    return new List<Title>();
                 }
+
                 List<Title> titles = new();
-                for(int i = skip; i < skip + count; i++)
+                var codesToProcess = codes.Skip(skip).Take(count).Where(code => code != null).ToList();
+
+                if (!codesToProcess.Any())
                 {
-                    if (codes[i] == null)
-                    {
-                        break;
-                    }
-                    using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}title?code={codes[i]}");
-
-                    string jsonInfo = await response.Content.ReadAsStringAsync();
-
-                    Title title = JsonConvert.DeserializeObject<Title>(jsonInfo);
-
-                    titles.Add(title);
+                    return titles;
                 }
+
+                string codeList = string.Join(",", codesToProcess);
+                using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}title/list?code_list={codeList}");
+
+                string jsonInfo = await response.Content.ReadAsStringAsync();
+
+                titles = JsonConvert.DeserializeObject<List<Title>>(jsonInfo);
 
                 return titles;
             }

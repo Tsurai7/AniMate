@@ -120,7 +120,7 @@ namespace AniMate_app.ViewModels
             {
                 var titleCode = Title.Code;
                 var token = Preferences.Default.Get("AccessToken", string.Empty);
-                if (!Profile.WatchedTitles.Contains(titleCode))
+                if (Profile.WatchedTitles.Contains(titleCode))
                 {
                     return true;
                 }

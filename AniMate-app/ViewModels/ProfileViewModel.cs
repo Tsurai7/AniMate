@@ -63,16 +63,25 @@ namespace AniMate_app.ViewModels
         public override async Task LoadContent()
         {
             string accessToken = Preferences.Default.Get("AccessToken", string.Empty);
-
+            LikedTitlesCollection.Clear();
+            WatchedTitlesCollection.Clear();
             ProfileInfo = await _accountService.GetProfileInfo(accessToken);
+            if (ProfileInfo != null)
+            {
+                var likedTitles = await _anilibriaService.GetTitlesByCode(ProfileInfo.LikedTitles);
+                if (likedTitles != null)
+                {
+                    LikedTitlesCollection.AddTitleList(likedTitles);
+                    LikedTitlesCollection.TargetTitleCount = _loadMoreResultsOffset;
+                }
 
-            LikedTitlesCollection.AddTitleList(await _anilibriaService.GetTitlesByCode(ProfileInfo.LikedTitles));
-
-            //LikedTitlesCollection.TargetTitleCount = _loadMoreResultsOffset;
-
-            WatchedTitlesCollection.AddTitleList(await _anilibriaService.GetTitlesByCode(ProfileInfo.WatchedTitles));
-
-            //WatchedTitlesCollection.TargetTitleCount = _loadMoreResultsOffset;
+                var watchedTitles = await _anilibriaService.GetTitlesByCode(ProfileInfo.WatchedTitles);
+                if (watchedTitles != null)
+                {
+                    WatchedTitlesCollection.AddTitleList(watchedTitles);
+                    WatchedTitlesCollection.TargetTitleCount = _loadMoreResultsOffset;
+                }
+            }
         }
 
         [RelayCommand]

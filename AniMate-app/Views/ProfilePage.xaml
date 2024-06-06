@@ -5,169 +5,163 @@
              xmlns:Models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
              x:DataType="local:ProfileViewModel"
              x:Class="AniMate_app.Views.ProfilePage">
-    <RefreshView Grid.Row="0" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
-        <Grid Margin="10,20,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="80" />
-                <RowDefinition Height="100" />
-                <RowDefinition Height="20" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="150" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="150" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="150" />
-            </Grid.RowDefinitions>
+    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
+        <ScrollView>
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="140" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="320" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="320" />
+                </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="170"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+                <Button Grid.Row="0" VerticalOptions="Start" HorizontalOptions="End">
+                    <Button.ImageSource>
+                        <FileImageSource File="{AppThemeBinding Light= settings.svg, Dark= settingswhite.svg}" />
+                    </Button.ImageSource>
+                </Button>
 
-            <Button Grid.Row="0" Grid.Column="1" VerticalOptions="Start" HorizontalOptions="End">
-                <Button.ImageSource>
-                    <FileImageSource File="{AppThemeBinding Light= settings.svg, Dark= settingswhite.svg}" />
-                </Button.ImageSource>
-            </Button>
+                <StackLayout Orientation="Horizontal"
+                     VerticalOptions="CenterAndExpand"
+                     HorizontalOptions="Start"
+                     Grid.Row="1">
+                    <Frame CornerRadius="100"
+                   WidthRequest="120"
+                   HeightRequest="120"
+                   Padding="0"
+                   HasShadow="False">
+                        <Image Source="{Binding ProfileInfo.ProfileImage}"
+                       Aspect="AspectFill"/>
+                    </Frame>
 
-            <StackLayout Orientation="Horizontal"
-                 VerticalOptions="CenterAndExpand"
-                 HorizontalOptions="Start"
-                 Grid.Row="0" Grid.RowSpan="2" Margin="10,0,0,0">
-                <Frame CornerRadius="100"
-               WidthRequest="120"
-               HeightRequest="120"
-               Padding="0"
-               HasShadow="False">
-                    <Image Source="{Binding ProfileInfo.ProfileImage}"
-                   Aspect="AspectFill"/>
-                </Frame>
-
-                <Label Text="{Binding ProfileInfo.Username}"
-               VerticalOptions="CenterAndExpand"
-               FontAttributes="Bold"
-               FontSize="18"/>
-            </StackLayout>
+                    <Label Text="{Binding ProfileInfo.Username}"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="18"/>
+                </StackLayout>
 
 
-            <Button Text="Favourite"
-            FontAttributes="Bold"
-            FontSize="18" Grid.Row="3">
-                <Button.ImageSource>
-                    <FileImageSource File="{AppThemeBinding Light= favourite.svg, Dark= favouritewhite.svg}" />
-                </Button.ImageSource>
-            </Button>
-            <CollectionView ItemsSource="{Binding LikedTitlesCollection}" SelectionMode="Single" SelectionChanged= "TitleSelected"
-                  RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="0">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Horizontal"
-             Span="1" />
-                </CollectionView.ItemsLayout>
+                <Button Text="Favourite"
+                FontAttributes="Bold"
+                FontSize="18" Grid.Row="2">
+                    <Button.ImageSource>
+                        <FileImageSource File="{AppThemeBinding Light= favourite.svg, Dark= favouritewhite.svg}" />
+                    </Button.ImageSource>
+                </Button>
+                <CollectionView ItemsSource="{Binding LikedTitlesCollection.Titles}" SelectionMode="Single" SelectionChanged= "TitleSelected"
+                      RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="0" Grid.Row="3">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Horizontal"
+                 Span="1" />
+                    </CollectionView.ItemsLayout>
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="Models:Title">
-                        <StackLayout Margin="2, 5, 5, 5"
-                 HeightRequest="300"
-                 VerticalOptions="FillAndExpand"
-                 HorizontalOptions="FillAndExpand">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="Models:Title">
+                            <StackLayout Margin="2, 5, 5, 5"
+                                         HeightRequest="300"
+                                         VerticalOptions="FillAndExpand"
+                                         HorizontalOptions="FillAndExpand">
 
-                            <Image Aspect="AspectFill" HeightRequest="250">
-                                <Image.Source>
-                                    <UriImageSource Uri="{Binding Posters.Small.Url}" CachingEnabled="True" />
-                                </Image.Source>
-                            </Image>
-                            <Grid   VerticalOptions="Start"
-                        HorizontalOptions="FillAndExpand">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="160" />
-                                    <ColumnDefinition Width="20" />
-                                </Grid.ColumnDefinitions>
-                                <StackLayout Grid.Column="0">
-                                    <Label Text="{Binding Names.Ru}"
-                            VerticalOptions="Start" 
-                            HorizontalOptions="Start"
-                            LineBreakMode="WordWrap"
-                            Margin="10,10,0,0"/>
-                                </StackLayout>
-                                <Button 
-                        Grid.Column="1"
-                        VerticalOptions="Start"
-                        HorizontalOptions="End"
-                        HeightRequest="20"
-                        Margin="10,10,0,0">
-                                    <Button.ImageSource>
-                                        <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
-                                    </Button.ImageSource>
-                                </Button>
-                            </Grid>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-                <CollectionView.Footer>
-                    <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
-                </CollectionView.Footer>
-            </CollectionView>
+                                <Image Aspect="AspectFill" HeightRequest="250">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding Posters.Small.Url}" CachingEnabled="True" />
+                                    </Image.Source>
+                                </Image>
+                                <Grid   VerticalOptions="Start"
+                            HorizontalOptions="FillAndExpand">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="160" />
+                                        <ColumnDefinition Width="20" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout Grid.Column="0">
+                                        <Label Text="{Binding Names.Ru}"
+                                VerticalOptions="Start" 
+                                HorizontalOptions="Start"
+                                LineBreakMode="WordWrap"
+                                Margin="10,10,0,0"/>
+                                    </StackLayout>
+                                    <Button 
+                            Grid.Column="1"
+                            VerticalOptions="Start"
+                            HorizontalOptions="End"
+                            HeightRequest="20"
+                            Margin="10,10,0,0">
+                                        <Button.ImageSource>
+                                            <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
+                                        </Button.ImageSource>
+                                    </Button>
+                                </Grid>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.Footer>
+                        <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </CollectionView.Footer>
+                </CollectionView>
 
-            <Button Text="History"
-            FontAttributes="Bold"
-            FontSize="18" Grid.Row="5">
-                <Button.ImageSource>
-                    <FileImageSource File="{AppThemeBinding Light= history.svg, Dark= historywhite.svg}" />
-                </Button.ImageSource>
-            </Button>
+                <Button Text="History"
+                FontAttributes="Bold"
+                FontSize="18" Grid.Row="4">
+                    <Button.ImageSource>
+                        <FileImageSource File="{AppThemeBinding Light= history.svg, Dark= historywhite.svg}" />
+                    </Button.ImageSource>
+                </Button>
 
-            <CollectionView ItemsSource="{Binding WatchedTitlesCollection}" SelectionMode="Single" SelectionChanged= "TitleSelected"
-                  RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="0">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Horizontal"
-             Span="1" />
-                </CollectionView.ItemsLayout>
+                <CollectionView ItemsSource="{Binding WatchedTitlesCollection.Titles}" SelectionMode="Single" SelectionChanged= "TitleSelected"
+                      RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="0" Grid.Row="5" >
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Horizontal"
+                 Span="1" />
+                    </CollectionView.ItemsLayout>
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="Models:Title">
-                        <StackLayout Margin="2, 5, 5, 5"
-                 HeightRequest="300"
-                 VerticalOptions="FillAndExpand"
-                 HorizontalOptions="FillAndExpand">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="Models:Title">
+                            <StackLayout Margin="2, 5, 5, 5"
+                     HeightRequest="300"
+                     VerticalOptions="FillAndExpand"
+                     HorizontalOptions="FillAndExpand">
 
-                            <Image Aspect="AspectFill" HeightRequest="250">
-                                <Image.Source>
-                                    <UriImageSource Uri="{Binding Posters.Small.Url}" CachingEnabled="True" />
-                                </Image.Source>
-                            </Image>
-                            <Grid   VerticalOptions="Start"
-                        HorizontalOptions="FillAndExpand">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="160" />
-                                    <ColumnDefinition Width="20" />
-                                </Grid.ColumnDefinitions>
-                                <StackLayout Grid.Column="0">
-                                    <Label Text="{Binding Names.Ru}"
-                            VerticalOptions="Start" 
-                            HorizontalOptions="Start"
-                            LineBreakMode="WordWrap"
-                            Margin="10,10,0,0"/>
-                                </StackLayout>
-                                <Button 
-                        Grid.Column="1"
-                        VerticalOptions="Start"
-                        HorizontalOptions="End"
-                        HeightRequest="20"
-                        Margin="10,10,0,0">
-                                    <Button.ImageSource>
-                                        <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
-                                    </Button.ImageSource>
-                                </Button>
-                            </Grid>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-                <CollectionView.Footer>
-                    <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
-                </CollectionView.Footer>
-            </CollectionView>
+                                <Image Aspect="AspectFill" HeightRequest="250">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding Posters.Small.Url}" CachingEnabled="True" />
+                                    </Image.Source>
+                                </Image>
+                                <Grid   VerticalOptions="Start"
+                            HorizontalOptions="FillAndExpand">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="160" />
+                                        <ColumnDefinition Width="20" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout Grid.Column="0">
+                                        <Label Text="{Binding Names.Ru}"
+                                VerticalOptions="Start" 
+                                HorizontalOptions="Start"
+                                LineBreakMode="WordWrap"
+                                Margin="10,10,0,0"/>
+                                    </StackLayout>
+                                    <Button 
+                            Grid.Column="1"
+                            VerticalOptions="Start"
+                            HorizontalOptions="End"
+                            HeightRequest="20"
+                            Margin="10,10,0,0">
+                                        <Button.ImageSource>
+                                            <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
+                                        </Button.ImageSource>
+                                    </Button>
+                                </Grid>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.Footer>
+                        <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </CollectionView.Footer>
+                </CollectionView>
 
-        </Grid>
+            </Grid>
+        </ScrollView>
     </RefreshView>
     <ContentPage.Title>
         <x:Null />

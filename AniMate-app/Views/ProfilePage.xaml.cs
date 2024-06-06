@@ -37,6 +37,7 @@ public partial class ProfilePage : ContentPage
 
     private async void OnAppearing(object sender, EventArgs e)
     {
-        await _viewModel.LoadMoreContent();
+        base.OnAppearing();
+        await _viewModel.LoadContent();
     }
 }
