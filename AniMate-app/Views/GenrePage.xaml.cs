@@ -7,6 +7,8 @@ public partial class GenrePage : ContentPage
 {
     private readonly GenreViewModel viewModel;
 
+    private bool _isOpeningPlayer = false;
+
     public GenrePage()
     {
         InitializeComponent();
@@ -18,12 +20,17 @@ public partial class GenrePage : ContentPage
     {
         var collectionView = sender as CollectionView;
 
-        if (collectionView.SelectedItem != null)
+        if (_isOpeningPlayer)
         {
-            Title selectedTitle = collectionView.SelectedItem as Title;
-
             collectionView.SelectedItem = null;
 
+            return;
+        }
+
+        _isOpeningPlayer = true;
+
+        if (collectionView.SelectedItem != null)
+        {
             var navigationParameter = new Dictionary<string, object>
             {
                 {"TheTitle", collectionView.SelectedItem}
@@ -31,6 +38,9 @@ public partial class GenrePage : ContentPage
 
             await Shell.Current.GoToAsync($"TitlePage", navigationParameter);
 
+            collectionView.SelectedItem = null;
+
+            _isOpeningPlayer = false;
         }
     }
 

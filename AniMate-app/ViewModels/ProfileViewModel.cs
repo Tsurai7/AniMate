@@ -27,10 +27,10 @@ namespace AniMate_app.ViewModels
         }
 
         [ObservableProperty]
-        private GenreCollection _likedTitlesCollection;
+        private GenreCollection _likedTitlesCollection = new("Likes");
         
         [ObservableProperty]
-        private GenreCollection _watchedTitlesCollection;
+        private GenreCollection _watchedTitlesCollection = new("Watched");
 
         [ObservableProperty]
         private bool _isLoading = false;
@@ -66,15 +66,13 @@ namespace AniMate_app.ViewModels
 
             ProfileInfo = await _accountService.GetProfileInfo(accessToken);
 
-            LikedTitlesCollection = new GenreCollection("Liked Titles");
-
             LikedTitlesCollection.AddTitleList(await _anilibriaService.GetTitlesByCode(ProfileInfo.LikedTitles));
 
-            LikedTitlesCollection.TargetTitleCount = _loadMoreResultsOffset;
+            //LikedTitlesCollection.TargetTitleCount = _loadMoreResultsOffset;
 
             WatchedTitlesCollection.AddTitleList(await _anilibriaService.GetTitlesByCode(ProfileInfo.WatchedTitles));
 
-            WatchedTitlesCollection.TargetTitleCount = _loadMoreResultsOffset;
+            //WatchedTitlesCollection.TargetTitleCount = _loadMoreResultsOffset;
         }
 
         [RelayCommand]
@@ -89,13 +87,22 @@ namespace AniMate_app.ViewModels
             if (WatchedTitlesCollection.TargetTitleCount > WatchedTitlesCollection.TitleCount)
                 return;
 
-            IsLoading = true;
-
             LikedTitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
+
+            WatchedTitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
+
             if(ProfileInfo.LikedTitles.Count <= LikedTitlesCollection.TargetTitleCount)
             {
                 return;
             }
+
+            if (ProfileInfo.WatchedTitles.Count <= WatchedTitlesCollection.TargetTitleCount)
+            {
+                return;
+            }
+
+            IsLoading = true;
+
             List<Title> loadedTitles = await _anilibriaService.GetTitlesByCode(ProfileInfo.LikedTitles,
                 LikedTitlesCollection.TitleCount, LikedTitlesCollection.TargetTitleCount);
             if (loadedTitles.Count > 0)
@@ -103,10 +110,7 @@ namespace AniMate_app.ViewModels
 
 
             WatchedTitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
-            if(ProfileInfo.WatchedTitles.Count <= WatchedTitlesCollection.TargetTitleCount)
-            {
-                return;
-            }
+
             List<Title> loadedWatchedTitles = await _anilibriaService.GetTitlesByCode(ProfileInfo.WatchedTitles,
                 WatchedTitlesCollection.TitleCount, WatchedTitlesCollection.TargetTitleCount);
             if (loadedWatchedTitles.Count > 0)
