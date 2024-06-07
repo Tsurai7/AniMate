@@ -1,5 +1,4 @@
 ﻿using AniMate_app.Model;
-using AniMate_app.Services.AnilibriaService.Models;
 using AniMate_app.ViewModels;
 
 namespace AniMate_app.Views
@@ -21,31 +20,35 @@ namespace AniMate_app.Views
 
         private async void LoadContent(object sender, EventArgs e)
         {
-            if(_isFirstLoad)
+            if (_isFirstLoad)
             {
                 await viewModel.LoadContent();
 
                 _isFirstLoad = false;
-            }
-                
+            }    
         }
 
         private async void TitleSelected(object sender, SelectionChangedEventArgs e)
         {
+            var collection = sender as CollectionView;
+            
             if (_isOpeningPlayer)
             {
-                (sender as CollectionView).SelectedItem = null;
+                collection.SelectedItem = null;
 
                 return;
             }   
 
             _isOpeningPlayer = true;
 
-            var collectionView = sender as CollectionView;
+            var navigationParameter = new Dictionary<string, object>
+            {
+                {"TheTitle", collection.SelectedItem}
+            };
 
-            await Navigation.PushAsync(new TitlePage(collectionView.SelectedItem as Title));
+            await Shell.Current.GoToAsync($"TitlePage", navigationParameter);
 
-            collectionView.SelectedItem = null;
+            collection.SelectedItem = null;
 
             _isOpeningPlayer = false;
         }
@@ -54,7 +57,13 @@ namespace AniMate_app.Views
         {
             GenreCollection genreCollection = e.Parameter as GenreCollection;
 
-            await Navigation.PushAsync(new GenrePage(genreCollection.GenreName, viewModel._anilibriaService));
+            var navigationParameter = new Dictionary<string, object>
+            {
+                {"GenreName", genreCollection.GenreName},
+                {"AnilibriaService",  viewModel._anilibriaService}
+            };
+
+            await Shell.Current.GoToAsync($"GenrePage", navigationParameter);
         }
     }
 }

@@ -9,13 +9,12 @@
             HeightRequest="400"
             WidthRequest="300"
             Stroke="Transparent"
-            BackgroundColor="#FFEAE7EC">
+            BackgroundColor="{AppThemeBinding Light=White , Dark = {StaticResource BackgroundLight}}">
         <Border.StrokeShape>
             <RoundRectangle CornerRadius="28"/>
         </Border.StrokeShape>
         
         <Grid>
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="80" />
                 <RowDefinition Height="60" />
@@ -23,6 +22,7 @@
                 <RowDefinition Height="60" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            
             <Label Grid.Row="0"
                    Text="Поисковые фильтры"
                    VerticalOptions="Start" 

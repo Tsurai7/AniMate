@@ -6,95 +6,50 @@
              xmlns:Models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
              x:Class="AniMate_app.Views.SearchPage"
              x:DataType="local:SearchViewModel">
-    <Grid>
+
+    <Grid BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
-            <RowDefinition Height="*" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <StackLayout Orientation="Horizontal"
-                     VerticalOptions="CenterAndExpand"
-                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="Center"
                      Grid.Row="0">
-            <Button Clicked="ClearTextEntry">
-                <Button.ImageSource>
-                    <FileImageSource File="{AppThemeBinding Light= arrowleft.svg, Dark= arrowleftwhite.svg}" />
-                </Button.ImageSource>
-            </Button>
-            <Entry x:Name="entry"
+            
+            <SearchBar x:Name="searchBar"
                    Placeholder = "Search in AniMate"
                    HorizontalOptions="FillAndExpand"
                    FontSize="18"
                    IsTextPredictionEnabled="True"
-                   Completed="OnEntryChanged">
-            </Entry>
+                   SearchButtonPressed="OnSearch"
+                   TextChanged="SearchBarTextChanged">
+            </SearchBar>
             
-            <Button x:Name="filterButton"
-                    Clicked="OnFiltredButtonClicked">
+            <Button x:Name="filterButton" Clicked="OnFiltredButtonClicked">
                 <Button.ImageSource>
                     <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
                 </Button.ImageSource>
             </Button>
         </StackLayout>
 
-        <CollectionView ItemsSource="{Binding TitlesCollection.Titles}" Grid.Row="1"
-                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreResultsCommand}" RemainingItemsThreshold="0"
-                        SelectionMode="Single" SelectionChanged="TitleSelected">
+        <CollectionView ItemsSource="{Binding TitlesCollection.Titles}" Grid.Row="1" Margin="12, 0, 0, 0"
+                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="0"
+                        SelectionMode="Single" SelectionChanged="TitleSelected" ItemTemplate="{StaticResource TitleTile}">
             <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical"
-                             Span="2" />
+                <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="20" />
             </CollectionView.ItemsLayout>
 
             <CollectionView.EmptyView>
-                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <StackLayout>
+                    <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsBusy}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
                     <Image Source="nodatafound.svg" WidthRequest="200" HeightRequest="200" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Aspect="AspectFill"/>
                 </StackLayout>
             </CollectionView.EmptyView>
-
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="Models:Title">
-                    <StackLayout Margin="2, 5, 5, 5"
-                                 HeightRequest="300"
-                                 VerticalOptions="FillAndExpand"
-                                 HorizontalOptions="FillAndExpand">
-                        <Grid
-                              HorizontalOptions="FillAndExpand"
-                              HeightRequest="250">
-                            <Border StrokeShape="RoundRectangle 10,10,10,10">
-                                <Image Aspect="AspectFill">
-                                    <Image.Source>
-                                        <UriImageSource Uri="{Binding Posters.Small.Url}" CachingEnabled="True" />
-                                    </Image.Source>
-                                </Image>
-                            </Border>
-                        </Grid>
-                        <Grid VerticalOptions="Start"
-                              HorizontalOptions="FillAndExpand">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="160" />
-                                <ColumnDefinition Width="20" />
-                            </Grid.ColumnDefinitions>
-                            <StackLayout Grid.Column="0">
-                                <Label Text="{Binding Names.Ru}"
-                                       VerticalOptions="Start" 
-                                       HorizontalOptions="Start"
-                                       LineBreakMode="WordWrap"
-                   Margin="10,10,0,0"/>
-                            </StackLayout>
-                            <Button 
-                                    Grid.Column="1"
-                                    VerticalOptions="Start"
-                                    HorizontalOptions="End"
-                                    HeightRequest="20"
-                                    Margin="10,10,0,0">
-                                <Button.ImageSource>
-                                    <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
-                                </Button.ImageSource>
-                            </Button>
-                        </Grid>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+                
+            <CollectionView.Footer>
+                <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </CollectionView.Footer>
         </CollectionView>
     </Grid>
     <ContentPage.Title>

@@ -10,7 +10,7 @@ namespace AniMate_app.Services.AnilibriaService.Dtos
 
         [JsonProperty("host")]
         public string Host { get; set; }
-
+        
         [JsonProperty("list")]
         public Dictionary<string, Episode> Episodes { get; set; }
     }

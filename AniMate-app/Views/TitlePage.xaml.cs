@@ -1,62 +1,60 @@
-﻿using AniMate_app.Services.AnilibriaService.Models;
-using AniMate_app.ViewModels;
+﻿using AniMate_app.ViewModels;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AniMate_app.Views;
 
 public partial class TitlePage : ContentPage
 {
-    private TitleViewModel viewModel;
+    private readonly TitleViewModel _viewModel;
 
     private bool isFullDescriptionOpen = false;
 
-    public TitlePage(Title title)
+    private bool inLikes = false;
+
+    public TitlePage(TitleViewModel titleViewModel)
     {
         InitializeComponent();
 
-        BindingContext = viewModel = new TitleViewModel(title);
+        BindingContext = _viewModel = titleViewModel;
+
+        inLikes = _viewModel.IsTitleInLikes;
     }
 
     private async void OnWatchButtonClicked(object sender, EventArgs e)
     {
         if (sender is Button button && button.CommandParameter is string hlsUrl)
         {
-            await Navigation.PushAsync(new PlayerPage(hlsUrl));
+            await _viewModel.WatchButtonClicked();
+            await Shell.Current.GoToAsync($"PlayerPage?mediaurl={hlsUrl}");
+
         }
-        
     }
 
     private void OnTextRecognizerTap(object sender, TappedEventArgs e)
     {
-        FormattedString formattedString = new FormattedString();
+        FormattedString formattedString = new();
+
+        formattedString.Spans.Add(new Span
+        {
+            Text = isFullDescriptionOpen ? _viewModel.ShortDescription : _viewModel.Title.RuDescription,
+        });
 
         if (isFullDescriptionOpen)
         {
             formattedString.Spans.Add(new Span
             {
-                Text = viewModel.ShortDescription,
-                
-            });
-            formattedString.Spans.Add(new Span
-            {
                 Text = "... ещё",
                 TextColor = Colors.Grey,
-                
             });
-            descriptionLabel.FormattedText = formattedString;
-            isFullDescriptionOpen= false;
         }
-        else
-        {
-            formattedString.Spans.Add(new Span
-            {
-                Text = viewModel.Title.RuDescription,
-                FontSize = 15,
 
-            }); ;
-            descriptionLabel.FormattedText = formattedString;
-            isFullDescriptionOpen= true;
-        }
-        
+        descriptionLabel.FormattedText = formattedString;
 
+        isFullDescriptionOpen = !isFullDescriptionOpen;
+    }
+
+    private async void LikeButtonClicked(object sender, EventArgs e)
+    {
+        await _viewModel.LikesButtonClicked();
     }
 }

@@ -1,42 +1,60 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:MediaControls.Controls;assembly=MediaControls"
              xmlns:local="clr-namespace:AniMate_app.ViewModels"
              xmlns:DTO="clr-namespace:AniMate_app.Services.AnilibriaService.Dtos"
              xmlns:models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
+             xmlns:converters="clr-namespace:AniMate_app.Converters"
              x:DataType="local:TitleViewModel"
              x:Class="AniMate_app.Views.TitlePage"
               >
 
-    <ScrollView>
-        <StackLayout Orientation="Vertical">
-            
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <FileImageSource x:Key="FavouriteImage" File="favourite_for_title_page_white.svg"/>
+            <FileImageSource x:Key="FavouriteImageSelected" File="favourite_for_title_page_selected.svg"/>
+            <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+        </ResourceDictionary>
+        
+    </ContentPage.Resources>
+    
+    <ScrollView BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
+        <StackLayout Orientation="Vertical" Margin="5,0,10,10">
 
-            <Image Source="{Binding Title.Posters.Small.Url}"/>
+            <Image Source="{Binding Title.Posters.Small.Url}" Margin="30,10,20,10"/>
             
             <Label Text="{Binding Title.Names.Ru}"
                    FontSize="Large"
                    FontAttributes="Bold"
-                   HorizontalOptions="StartAndExpand"
                    VerticalOptions="StartAndExpand"
+                   HorizontalTextAlignment="Center"
                    Margin="20,5,0,0"/>
-            
+
             <StackLayout Orientation="Horizontal"
                          HorizontalOptions="Center"
                          Margin="20,20,0,0"
 >
                 <StackLayout Orientation="Vertical"
                              Margin="0,0,60,0">
-                    <Button>
+                    <Button Clicked="LikeButtonClicked"
+                            TextColor="{Binding IsTitleInLikes, Converter={StaticResource BoolToColorConverter}}"
+                            >
                         <Button.ImageSource>
-                            <FileImageSource File="{AppThemeBinding Light= favourite_for_title_page.svg, Dark= favourite_for_title_page_white.svg}" />
+                            <FileImageSource File="{AppThemeBinding Light=favourite_for_title_page.svg, Dark=favourite_for_title_page_white.svg}"/>
                         </Button.ImageSource>
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding IsTitleInLikes}" Value="true">
+                                <Setter Property="ImageSource" Value="{StaticResource FavouriteImageSelected}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Button" Binding="{Binding IsTitleInLikes}" Value="false">
+                                <Setter Property="ImageSource" Value="{StaticResource FavouriteImage}"/>
+                            </DataTrigger>
+                        </Button.Triggers>
                     </Button>
                     <Label Text="В избранное"
                            FontSize="12"
                            FontAttributes="Bold"
-                           HorizontalTextAlignment="Center">
-                        
+                           HorizontalTextAlignment="Center"
+                           TextColor="{Binding IsTitleInLikes, Converter={StaticResource BoolToColorConverter}}">
                     </Label>
                 </StackLayout>
                 <StackLayout Orientation="Vertical"
@@ -50,7 +68,6 @@
                            FontSize="12"
                            FontAttributes="Bold"
                            HorizontalTextAlignment="Center">
-
                     </Label>
                 </StackLayout>
                 <StackLayout Orientation="Vertical"
@@ -64,17 +81,16 @@
                            FontSize="12"
                            FontAttributes="Bold"
                            HorizontalTextAlignment="Center">
-
                     </Label>
                 </StackLayout>
 
             </StackLayout>
 
-            <StackLayout Orientation="Horizontal"
+            <!--<StackLayout Orientation="Horizontal"
                          Margin="0,20,0,0"
                          >
                 <StackLayout Orientation="Vertical">
-                    <Button Text="{Binding ., StringFormat='{0}/10'} "
+                    <Button Text="{Binding ., StringFormat='{0}/10'}"
                             Opacity="0.7"
                             FontAttributes="Bold"
                             FontSize="20"
@@ -102,9 +118,7 @@
                             >
                     </Button>
                 </StackLayout>
-
- 
-            </StackLayout>
+            </StackLayout>-->
 
             <StackLayout Orientation="Vertical"
                          Margin="0,20,0,0">
@@ -122,25 +136,13 @@
                         </FormattedString>
                     </Label.FormattedText>
                     <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnTextRecognizerTap"
+                        <TapGestureRecognizer Tapped="OnTextRecognizerTap"
                                           NumberOfTapsRequired="1" />
                     </Label.GestureRecognizers>
                 </Label>
             </StackLayout>
-
-            <StackLayout Orientation="Vertical">
-                <Label Text="Связанное"
-                       Margin="20,20,0,0"
-                       FontSize="20"
-                       FontAttributes="Bold"></Label>
-                <CollectionView>
-                    
-                </CollectionView>
-            </StackLayout>
-            
-
-            <Label Text="1 сезон"
-               FontSize="Medium"
+            <Label Text="Список серий"
+               FontSize="Large"
                HorizontalOptions="Center"
                VerticalOptions="Center"
                Margin="0,10,0,0"/>
@@ -151,7 +153,7 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Episode">
-                        <Button Text="{Binding Ordinal, StringFormat='Серия {0}'} "
+                        <Button Text="{Binding Ordinal, StringFormat='Серия {0}'}"
                                 Clicked="OnWatchButtonClicked"
                                 CommandParameter="{Binding HlsUrls.Fhd}"
                                 BackgroundColor= "Grey"
@@ -159,12 +161,22 @@
                                 Margin="5,5,5,5"
                                 FontSize="12"
                                 >
-                            
+
                         </Button>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <!-- template for future functionality
+            <StackLayout Orientation="Vertical">
+                <Label Text="Связанное"
+                       Margin="20,20,0,0"
+                       FontSize="20"
+                       FontAttributes="Bold"></Label>
+                <CollectionView>
 
+                </CollectionView>
+            </StackLayout>
+            -->
             <Label Text="Информация о тайтле"
                    FontSize="20"
                    FontAttributes="Bold"
@@ -290,14 +302,6 @@
                        HorizontalOptions="Start"
                        Grid.Column="1" />
             </Grid>
-
-
-            <Label Text="Не работает пока что"
-                   FontSize="Small"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Margin="0,5,0,0"/>
 
             <!--<controls:MediaControl x:Name="mediaControl"
                            ShouldAutoPlay="False"

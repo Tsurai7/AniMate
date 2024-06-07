@@ -1,6 +1,7 @@
 ﻿using AniMate_app.Services.AnilibriaService.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace AniMate_app.Model
 {
@@ -10,7 +11,20 @@ namespace AniMate_app.Model
 
         public ObservableCollection<Title> Titles { get; private set; } = new();
 
-        public int TargetTitleCount { get; set; }
+        private int _targetTitleCount;
+
+        public int TargetTitleCount
+        {
+            get => _targetTitleCount;
+            set
+            {
+                if (_targetTitleCount != value)
+                {
+                    _targetTitleCount = value;
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(TargetTitleCount)));
+                }
+            }
+        }
 
         public int TitleCount => Titles.Count;
 

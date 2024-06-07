@@ -1,4 +1,3 @@
-using AniMate_app.Services.AnilibriaService;
 using AniMate_app.Services.AnilibriaService.Models;
 using AniMate_app.ViewModels;
 
@@ -6,31 +5,47 @@ namespace AniMate_app.Views;
 
 public partial class GenrePage : ContentPage
 {
-    public readonly GenreViewModel viewModel;
+    private readonly GenreViewModel viewModel;
 
-    public GenrePage(string genreName, AnilibriaService anilibriaService )
+    private bool _isOpeningPlayer = false;
+
+    public GenrePage()
     {
         InitializeComponent();
 
-        BindingContext = viewModel = new GenreViewModel(genreName, anilibriaService);
+        BindingContext = viewModel = new GenreViewModel();
     }
 
     private async void TitleSelected(object sender, SelectionChangedEventArgs e)
     {
         var collectionView = sender as CollectionView;
 
+        if (_isOpeningPlayer)
+        {
+            collectionView.SelectedItem = null;
+
+            return;
+        }
+
+        _isOpeningPlayer = true;
+
         if (collectionView.SelectedItem != null)
         {
-            Title selectedTitle = collectionView.SelectedItem as Title;
+            var navigationParameter = new Dictionary<string, object>
+            {
+                {"TheTitle", collectionView.SelectedItem}
+            };
+
+            await Shell.Current.GoToAsync($"TitlePage", navigationParameter);
 
             collectionView.SelectedItem = null;
 
-            await Navigation.PushAsync(new TitlePage(selectedTitle));
+            _isOpeningPlayer = false;
         }
     }
 
     private async void OnAppearing(object sender, EventArgs e)
     {
-        await viewModel.LoadMoreTitles();
+        await viewModel.LoadMoreContent();
     }
 }

@@ -8,12 +8,12 @@
              x:DataType="local:GenreViewModel"
              Appearing="OnAppearing">
 
-    <StackLayout Orientation="Horizontal"
-                     VerticalOptions="CenterAndExpand"
-                     HorizontalOptions="FillAndExpand">
-
+    <Grid VerticalOptions="CenterAndExpand"
+          HorizontalOptions="FillAndExpand"
+          BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
+        
         <CollectionView ItemsSource="{Binding TitlesCollection.Titles}" SelectionMode="Single" SelectionChanged= "TitleSelected"
-                          RemainingItemsThresholdReachedCommand="{Binding LoadMoreTitlesCommand}" RemainingItemsThreshold="0">
+                          RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="0">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
                      Span="2" />
@@ -25,13 +25,13 @@
                          HeightRequest="300"
                          VerticalOptions="FillAndExpand"
                          HorizontalOptions="FillAndExpand">
-                        <Image Aspect="AspectFill">
-                            <Image.Source>
-                                <UriImageSource Uri="{Binding Posters.Small.Url}" CachingEnabled="True" />
-                            </Image.Source>
-                        </Image>
-                        
-                        <Grid   VerticalOptions="Start"
+
+                            <Image Aspect="AspectFill" HeightRequest="250">
+                                <Image.Source>
+                                    <UriImageSource Uri="{Binding Posters.Small.Url}" CachingEnabled="True" />
+                                </Image.Source>
+                            </Image>
+                            <Grid   VerticalOptions="Start"
                                 HorizontalOptions="FillAndExpand">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="160" />
@@ -62,5 +62,5 @@
                 <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
             </CollectionView.Footer>
         </CollectionView>
-    </StackLayout>
+    </Grid>
 </ContentPage>
