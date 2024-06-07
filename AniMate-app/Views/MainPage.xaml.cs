@@ -20,7 +20,7 @@ namespace AniMate_app.Views
 
         private async void LoadContent(object sender, EventArgs e)
         {
-            if(_isFirstLoad)
+            if (_isFirstLoad)
             {
                 await viewModel.LoadContent();
 

@@ -13,6 +13,7 @@ public partial class ProfilePage : ContentPage
         InitializeComponent();
         
         BindingContext = _viewModel = profileViewModel;
+        _ = _viewModel.LoadContent();
 	}
 
     private async void TitleSelected(object sender, SelectionChangedEventArgs e)
