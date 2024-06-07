@@ -5,6 +5,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using AniMate_app.Services.AccountService.Dtos;
 using System.Text.Json;
 using AniMate_app.Views;
+using AniMate_app.Model;
+using AniMate_app.Services.AnilibriaService.Dtos;
 
 namespace AniMate_app.ViewModels
 {
@@ -15,6 +17,9 @@ namespace AniMate_app.ViewModels
         private readonly AnilibriaService _service;
 
         private readonly AccountService _accountService;
+
+        [ObservableProperty]
+        private GenreCollection _franchiseTitlesCollection = new("Franchise");
 
         [ObservableProperty]
         private ProfileDto profile = null;
@@ -55,9 +60,29 @@ namespace AniMate_app.ViewModels
                 {
                     IsTitleInLikes = Profile?.LikedTitles?.Any(likedTitle => likedTitle == _title.Code) ?? false;
                 }
+                LoadFranchiseTitlesAsync(value);
             }
         }
 
+        private async void LoadFranchiseTitlesAsync(Title value)
+        {
+            List<string> codes = new();
+            foreach (FranchiseDto franchise in value.Franchises)
+            {
+                if (franchise != null)
+                {
+                    foreach (ReleaseDto release in franchise.Releases)
+                    {
+                        if (release != null)
+                        {
+                            codes.Add(release.Code);
+                        }
+                    }
+                }
+            }
+
+            FranchiseTitlesCollection.AddTitleList(await _service.GetTitlesByCode(codes));
+        }
         public string TitleCode
         {
             set
