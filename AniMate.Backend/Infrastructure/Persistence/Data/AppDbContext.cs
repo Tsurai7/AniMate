@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Data;
 
-public sealed class DataContext : IdentityDbContext<User, IdentityRole<long>, long>
+public sealed class AppDbContext : IdentityDbContext<User, IdentityRole<long>, long>
 {
     public DbSet<User> Users { get; set; } = null!;
     
-    public DataContext (DbContextOptions<DataContext> options) : base(options)
+    public AppDbContext (DbContextOptions<AppDbContext> options) : base(options)
     {
         Database.Migrate();
     }
