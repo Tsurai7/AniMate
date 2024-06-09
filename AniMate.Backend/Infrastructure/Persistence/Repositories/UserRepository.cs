@@ -1,37 +1,41 @@
+using Domain.Interfaces;
 using Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 
 namespace Persistence.Repositories;
 
 public class UserRepository : IGenericRepository<User>
 {
-    private readonly AppDbContext _context;
+    private readonly ApplicationContext _context;
     
     private bool _disposed = false;
 
-    public UserRepository(AppDbContext context)
+    public UserRepository(ApplicationContext context)
     {
         _context = context;
     }
 
-    public Task<User> GetAllAsync(CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
-
+    public async Task<IList<User>> GetAllAsync(CancellationToken cancellationToken) =>
+        await _context.Users.ToListAsync(cancellationToken);
+    
     public Task<User> GetByParamAsync(dynamic param, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
 
-    public Task<User> AddAsync(User model, CancellationToken cancellationToken)
+    public async Task<User> AddAsync(User user, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await _context.AddAsync(user, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return user;
     }
 
-    public Task<User> UpdateAsync(User model, CancellationToken cancellationToken)
+    public async Task<User> UpdateAsync(User user, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        _context.Update(user);
+        await _context.SaveChangesAsync(cancellationToken);
+        return user;
     }
 
     public Task<User> DeleteAsync(long id, CancellationToken cancellationToken)
@@ -39,8 +43,21 @@ public class UserRepository : IGenericRepository<User>
         throw new NotImplementedException();
     }
     
+    protected virtual void Dispose(bool disposing)
+    {
+        if(!_disposed)
+        {
+            if(disposing)
+            {
+                _context.Dispose();
+            }
+        }
+        _disposed = true;
+    }
+    
     public void Dispose()
     {
-        throw new NotImplementedException();
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 }

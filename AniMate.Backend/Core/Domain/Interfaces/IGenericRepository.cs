@@ -1,8 +1,8 @@
-namespace Persistence.Repositories;
+namespace Domain.Interfaces;
 
 public interface IGenericRepository<T> : IDisposable
 {
-    Task<T> GetAllAsync(CancellationToken cancellationToken);
+    Task<IList<T>> GetAllAsync(CancellationToken cancellationToken);
 
     Task<T> GetByParamAsync(dynamic param, CancellationToken cancellationToken);
 
