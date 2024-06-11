@@ -1,6 +1,6 @@
 namespace Domain.Interfaces;
 
-public interface IGenericRepository<T> : IDisposable
+public interface IGenericRepository<T>
 {
     Task<IList<T>> GetAllAsync(CancellationToken cancellationToken);
 

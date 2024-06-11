@@ -8,8 +8,6 @@ namespace Persistence.Repositories;
 public class UserRepository : IGenericRepository<User>
 {
     private readonly ApplicationContext _context;
-    
-    private bool _disposed = false;
 
     public UserRepository(ApplicationContext context)
     {
@@ -41,23 +39,5 @@ public class UserRepository : IGenericRepository<User>
     public Task<User> DeleteAsync(long id, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
-    }
-    
-    protected virtual void Dispose(bool disposing)
-    {
-        if(!_disposed)
-        {
-            if(disposing)
-            {
-                _context.Dispose();
-            }
-        }
-        _disposed = true;
-    }
-    
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
     }
 }
