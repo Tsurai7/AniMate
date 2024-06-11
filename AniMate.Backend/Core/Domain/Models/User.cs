@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Models;
 
-public class User : IdentityUser<long>
+public class User
 {
+    [Key]
+    public long Id { get; set; }
     [Required]
-    public string NickName { get; set; }
+    public string UserName { get; set; }
     [Required]
     public string Email { get; set; }
     [Required]

@@ -14,29 +14,27 @@ public class UserRepository : IGenericRepository<User>
         _context = context;
     }
 
-    public async Task<IList<User>> GetAllAsync(CancellationToken cancellationToken) =>
-        await _context.Users.ToListAsync(cancellationToken);
-    
-    public Task<User> GetByParamAsync(dynamic param, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IList<User>> GetAllAsync() =>
+        await _context.Users.ToListAsync();
 
-    public async Task<User> AddAsync(User user, CancellationToken cancellationToken)
+    public async Task<User?> GetByEmail(string email) =>
+        await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+    
+    public async Task<User> AddAsync(User user)
     {
-        await _context.AddAsync(user, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await _context.AddAsync(user);
+        await _context.SaveChangesAsync();
         return user;
     }
 
-    public async Task<User> UpdateAsync(User user, CancellationToken cancellationToken)
+    public async Task<User> UpdateAsync(User user)
     {
         _context.Update(user);
-        await _context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync();
         return user;
     }
 
-    public Task<User> DeleteAsync(long id, CancellationToken cancellationToken)
+    public Task<User> DeleteAsync(long id)
     {
         throw new NotImplementedException();
     }

@@ -1,6 +1,55 @@
+using System.Security.Authentication;
+using Application.DTOs;
+using Domain.Models;
+using Persistence.Repositories;
+
 namespace Application.Services;
 
 public class AuthService
 {
-    
+    private readonly TokenService _tokenService;
+
+    private readonly UserRepository _userRepository;
+
+    public AuthService(TokenService tokenService, UserRepository userRepository)
+    {
+        _tokenService = tokenService;
+        _userRepository = userRepository;
+    }
+
+    public async Task<AuthResponse> SignIn(SignInRequest signInRequest)
+    {
+        var userInDb = await _userRepository.GetByEmail(signInRequest.Email);
+
+        if (userInDb is null || (userInDb.PasswordHash != signInRequest.Password))
+            throw new InvalidCredentialException();
+        
+        var accessToken = _tokenService.BuildToken(signInRequest.Email);
+        
+         return new AuthResponse(
+            AccessToken: accessToken, 
+            RefreshToken: accessToken);
+    }
+
+    public async Task<AuthResponse> SignUp(SignUpRequest signUpRequest)
+    {
+        var userInDb = await _userRepository.GetByEmail(signUpRequest.Email);
+        
+        if (userInDb != null)
+            throw new ArgumentException($"Пользователь с email {signUpRequest.Email} уже существует.");
+        
+        var newUser = new User
+        {
+            Email = signUpRequest.Email,
+            PasswordHash = signUpRequest.Password,
+        };
+        
+        await _userRepository.AddAsync(newUser);
+        
+        var accessToken = _tokenService.BuildToken(newUser.Email);
+
+        return new AuthResponse(
+            AccessToken: accessToken,
+            RefreshToken: accessToken);
+    }
 }
