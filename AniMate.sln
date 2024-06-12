@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AniMate.Client", "AniMate.Client\AniMate.Client\AniMate.Client.csproj", "{388DBB4A-136E-4301-AC25-F7F318B649F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AniMate.Client", "AniMate.Client\AniMate.Client.csproj", "{388DBB4A-136E-4301-AC25-F7F318B649F7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AniMate.Backend", "AniMate.Backend", "{85BEB107-84C3-49C5-BD37-B3D14C617285}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{D6FB51D4-7B83-4619-AA2C-8D68948A5FD4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend.Core", "Backend.Core", "{D6FB51D4-7B83-4619-AA2C-8D68948A5FD4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{ED0634D6-BFF1-41A1-9837-F85D3F97CF4D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend.Infrastructure", "Backend.Infrastructure", "{ED0634D6-BFF1-41A1-9837-F85D3F97CF4D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{3B93825C-50FC-4A00-BCEF-CBBA19A02E8D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend.Presentation", "Backend.Presentation", "{3B93825C-50FC-4A00-BCEF-CBBA19A02E8D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "AniMate.Backend\Core\Domain\Domain.csproj", "{1B5D3536-5385-4E9C-A4D0-F87ABDAB8132}"
 EndProject

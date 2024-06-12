@@ -15,4 +15,8 @@ public class User
     public string PasswordHash { get; set; }
     [Required]
     public string ProfileImage { get; set; }
+    
+    public List<string> WatchedTitles { get; set; }
+    
+    public List<string> LikedTitles { get; set; }
 }
