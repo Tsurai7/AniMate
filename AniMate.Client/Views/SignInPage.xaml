@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AniMate_app.Views.SignInPage"
+             >
+    
+    <ContentPage.BackgroundImageSource  >
+        <FileImageSource File="background_2.jpg">
+            
+        </FileImageSource>
+    </ContentPage.BackgroundImageSource>
+    
+    <Frame CornerRadius="10"
+           Margin="30,170,30,170"
+           BackgroundColor="{AppThemeBinding Light=White , Dark = {StaticResource Background}}">
+           
+        <Grid VerticalOptions="CenterAndExpand">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Text="Вход"
+                   FontSize="Large"
+                   Grid.Row="0"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light=Black , Dark = White}">
+
+            </Label>
+
+            <StackLayout Orientation="Vertical"
+                         Grid.Row="1"
+                         Margin="20,0,20,0">
+                <Label Text="Почта"
+                       FontSize="Small"
+                       Margin="0,20,0,5"
+                       >
+
+                </Label>
+
+                <Frame Padding="10"
+                       CornerRadius="10"
+                       x:Name="LoginFrame">
+                    <Entry x:Name="EmailEntry"
+                           Placeholder="Почта"
+                           Focused="EmailEntry_Focused"
+                           Unfocused="EmailEntry_Unfocused"
+                   />
+                </Frame>
+            </StackLayout>
+
+            <StackLayout Orientation="Vertical"
+                         Grid.Row="2"
+                         Margin="20,10,20,0">
+                <Label Text="Пароль"
+                       FontSize="Small"
+                       Margin="0,0,0,5"
+                       TextColor="{AppThemeBinding Light=Black , Dark = White}"
+               >
+
+                </Label>
+
+                <Frame Padding="10"
+                       CornerRadius="10"
+                       Margin="0,0,0,0"
+                       x:Name="PasswordFrame">
+                    <Entry x:Name="PasswordEntry"
+                           Placeholder="Пароль"
+                           IsPassword="True"
+                           Focused="PasswordEntry_Focused"
+                           Unfocused="PasswordEntry_Unfocused"/>
+                </Frame>
+
+                <Label FontSize="Micro"
+                       Margin="0,5,0,0"
+               >
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Нет аккаунта, "
+                                  TextColor="{AppThemeBinding Light=Black , Dark = White}"/>
+                            <Span Text=" зарегистрируйтесь"
+                                  TextColor="{AppThemeBinding Light=Blue , Dark = LightBlue}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="SignUpLabel_Tapped"
+                                      >
+
+                        </TapGestureRecognizer>
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+
+
+            <Button Grid.Row="3"
+                    Margin="20,40,20,0"
+                    HorizontalOptions="FillAndExpand"
+                    CornerRadius="10"
+                    Text="Войти"
+                    FontSize="Medium"
+                    Clicked="SignInButton_Clicked"
+                    BackgroundColor="{AppThemeBinding Light=Black , Dark = Red}"
+                    TextColor="{AppThemeBinding Light=White , Dark = White}"
+            >
+
+            </Button>
+
+
+        </Grid>
+    </Frame>
+
+    <ContentPage.Title>
+        <x:Null />
+    </ContentPage.Title>
+    
+</ContentPage> 
