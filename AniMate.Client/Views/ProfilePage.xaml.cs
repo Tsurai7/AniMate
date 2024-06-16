@@ -1,5 +1,5 @@
+using AniMate_app.DTOs.Anime;
 using AniMate_app.ViewModels;
-using AniMate_app.Services.AnilibriaService.Models;
 namespace AniMate_app.Views;
 
 public partial class ProfilePage : ContentPage
@@ -22,7 +22,7 @@ public partial class ProfilePage : ContentPage
 
         if (collectionView.SelectedItem != null)
         {
-            Title selectedTitle = collectionView.SelectedItem as Title;
+            TitleDto selectedTitleDto = collectionView.SelectedItem as TitleDto;
 
             collectionView.SelectedItem = null;
 

@@ -1,14 +1,13 @@
 ﻿using AniMate_app.Services.AccountService;
 using AniMate_app.Services.AnilibriaService;
-using AniMate_app.Services.AnilibriaService.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
-using AniMate_app.Services.AccountService.Dtos;
 using System.Text.Json;
-using AniMate_app.Views;
+using AniMate_app.DTOs.Account;
+using AniMate_app.DTOs.Anime;
 
 namespace AniMate_app.ViewModels
 {
-    [QueryProperty(nameof(Title), "TheTitle")]
+    [QueryProperty(nameof(TitleDto), "TheTitle")]
     [QueryProperty(nameof(TitleCode), "TitleCode")]
     public partial class TitleViewModel : ObservableObject
     {
@@ -41,19 +40,19 @@ namespace AniMate_app.ViewModels
             set => SetProperty(ref _isTitleInLikes, value);
         }
 
-        private Title _title;
-        public Title Title
+        private TitleDto _titleDto;
+        public TitleDto TitleDto
         {
-            get => _title;
+            get => _titleDto;
             set
             {
-                _title = value;
-                Genres = string.Join(", ", _title.Genres);
-                ShortDescription = string.Join(" ", _title.RuDescription.Split(' ').Take(7));
-                OnPropertyChanged(nameof(Title));
+                _titleDto = value;
+                Genres = string.Join(", ", _titleDto.Genres);
+                ShortDescription = string.Join(" ", _titleDto.RuDescription.Split(' ').Take(7));
+                OnPropertyChanged(nameof(TitleDto));
                 if(Profile != null)
                 {
-                    IsTitleInLikes = Profile?.LikedTitles?.Any(likedTitle => likedTitle == _title.Code) ?? false;
+                    IsTitleInLikes = Profile?.LikedTitles?.Any(likedTitle => likedTitle == _titleDto.Code) ?? false;
                 }
             }
         }
@@ -68,7 +67,7 @@ namespace AniMate_app.ViewModels
 
         private async void LoadTitleFromCode(string code)
         {
-            Title = await _service.GetTitleByCode(code);
+            TitleDto = await _service.GetTitleByCode(code);
         }
 
         [ObservableProperty]
@@ -81,7 +80,7 @@ namespace AniMate_app.ViewModels
         {
             if (Profile != null)
             {
-                var titleCode = Title.Code;
+                var titleCode = TitleDto.Code;
                 var token = Preferences.Default.Get("AccessToken", string.Empty);
                 if (Profile.LikedTitles.Contains(titleCode))
                 {
@@ -118,7 +117,7 @@ namespace AniMate_app.ViewModels
         {
             if (Profile != null)
             {
-                var titleCode = Title.Code;
+                var titleCode = TitleDto.Code;
                 var token = Preferences.Default.Get("AccessToken", string.Empty);
                 if (Profile.WatchedTitles.Contains(titleCode))
                 {

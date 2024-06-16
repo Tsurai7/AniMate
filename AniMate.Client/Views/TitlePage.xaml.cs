@@ -36,7 +36,7 @@ public partial class TitlePage : ContentPage
 
         formattedString.Spans.Add(new Span
         {
-            Text = isFullDescriptionOpen ? _viewModel.ShortDescription : _viewModel.Title.RuDescription,
+            Text = isFullDescriptionOpen ? _viewModel.ShortDescription : _viewModel.TitleDto.RuDescription,
         });
 
         if (isFullDescriptionOpen)

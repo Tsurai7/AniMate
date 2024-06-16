@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AniMate_app.Views.UpdatesPage"
              xmlns:local="clr-namespace:AniMate_app.ViewModels"
-             xmlns:Models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
+             xmlns:dtos="clr-namespace:AniMate_app.DTOs.Anime"
              x:DataType="local:UpdatesViewModel"
              Loaded="ContentPage_Loaded">
 
@@ -30,7 +30,7 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="0,10,0,0" ColumnSpacing="10" BackgroundColor="{AppThemeBinding Dark = {StaticResource BackgroundLight}, Light = {StaticResource Gray100}}" VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10" x:DataType="Models:Title">
+                        <Grid Margin="0,10,0,0" ColumnSpacing="10" BackgroundColor="{AppThemeBinding Dark = {StaticResource BackgroundLight}, Light = {StaticResource Gray100}}" VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10" x:DataType="dtos:TitleDto">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup Name="CommonStates">
                                     <VisualState Name="Normal"></VisualState>

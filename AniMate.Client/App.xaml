@@ -2,7 +2,7 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AniMate_app"
-             xmlns:Models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
+             xmlns:dtos="clr-namespace:AniMate_app.DTOs.Anime"
              x:Class="AniMate_app.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -11,7 +11,7 @@
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <DataTemplate x:Key="TitleTile" x:DataType="Models:Title">
+            <DataTemplate x:Key="TitleTile" x:DataType="dtos:TitleDto">
                 <Grid VerticalOptions="Start" HeightRequest="300" RowSpacing="10">
                     <VisualStateManager.VisualStateGroups>
                         <VisualStateGroup Name="CommonStates">

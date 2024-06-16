@@ -1,8 +1,10 @@
 using Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
 
+[Authorize]
 [Controller]
 [Route("account")]
 public class AccountController : ControllerBase

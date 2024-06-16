@@ -38,18 +38,21 @@ public class AuthService
         if (userInDb != null)
             throw new ArgumentException($"Пользователь с email {signUpRequest.Email} уже существует.");
         
-        var newUser = new User
-        {
-            Email = signUpRequest.Email,
-            PasswordHash = signUpRequest.Password,
-        };
+        var newUser = new User(
+            signUpRequest.Username,
+            signUpRequest.Email,
+            signUpRequest.Password,
+            "img",
+            new List<string>(),
+            new List<string>());
         
         await _userRepository.AddAsync(newUser);
         
         var accessToken = _tokenService.BuildToken(newUser.Email);
+        var refreshToken = _tokenService.BuildToken(newUser.Email);
 
         return new AuthResponse(
-            AccessToken: accessToken,
-            RefreshToken: accessToken);
+            accessToken,
+            refreshToken);
     }
 }

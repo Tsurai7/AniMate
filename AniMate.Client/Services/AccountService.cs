@@ -1,6 +1,7 @@
 using System.Net.Http.Headers;
 using System.Text;
-using AniMate_app.Services.AccountService.Dtos;
+using AniMate_app.DTOs.Account;
+using AniMate_app.DTOs.Auth;
 using Newtonsoft.Json;
 
 namespace AniMate_app.Services.AccountService
@@ -17,7 +18,7 @@ namespace AniMate_app.Services.AccountService
 
         public async Task<ProfileDto> GetProfileInfo(string token)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{_url}/profile");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_url}/account/profile");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             using HttpResponseMessage response = await _httpClient.SendAsync(request);
@@ -61,7 +62,7 @@ namespace AniMate_app.Services.AccountService
             string jsonContent = JsonConvert.SerializeObject(authData);
             var requestContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            using HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/signIn", requestContent);
+            using HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/auth/signIn", requestContent);
             string jsonInfo = await response.Content.ReadAsStringAsync();
             AuthResponse res = JsonConvert.DeserializeObject<AuthResponse>(jsonInfo);
             return res;
@@ -91,7 +92,7 @@ namespace AniMate_app.Services.AccountService
             string jsonContent = JsonConvert.SerializeObject(authData);
             var requestContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            using HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/signUp", requestContent);
+            using HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/auth/signUp", requestContent);
             string jsonInfo = await response.Content.ReadAsStringAsync();
             AuthResponse res = JsonConvert.DeserializeObject<AuthResponse>(jsonInfo);
             return res;

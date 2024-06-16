@@ -1,10 +1,13 @@
 using Application;
 using Persistence;
+using WebAPI.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSignalR();
 
 builder.Services.AddControllers();
 
@@ -27,5 +30,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<AnimeHub>("/animeHub");
+
+app.UseStaticFiles();
 
 app.Run();

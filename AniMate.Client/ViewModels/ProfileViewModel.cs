@@ -1,8 +1,8 @@
-﻿using AniMate_app.Model;
+﻿using AniMate_app.DTOs.Account;
+using AniMate_app.DTOs.Anime;
+using AniMate_app.Model;
 using AniMate_app.Services.AccountService;
-using AniMate_app.Services.AccountService.Dtos;
 using AniMate_app.Services.AnilibriaService;
-using AniMate_app.Services.AnilibriaService.Models;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -112,7 +112,7 @@ namespace AniMate_app.ViewModels
 
             IsLoading = true;
 
-            List<Title> loadedTitles = await _anilibriaService.GetTitlesByCode(ProfileInfo.LikedTitles,
+            List<TitleDto> loadedTitles = await _anilibriaService.GetTitlesByCode(ProfileInfo.LikedTitles,
                 LikedTitlesCollection.TitleCount, LikedTitlesCollection.TargetTitleCount);
             if (loadedTitles.Count > 0)
                 LikedTitlesCollection.AddTitleList(loadedTitles);
@@ -120,7 +120,7 @@ namespace AniMate_app.ViewModels
 
             WatchedTitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
 
-            List<Title> loadedWatchedTitles = await _anilibriaService.GetTitlesByCode(ProfileInfo.WatchedTitles,
+            List<TitleDto> loadedWatchedTitles = await _anilibriaService.GetTitlesByCode(ProfileInfo.WatchedTitles,
                 WatchedTitlesCollection.TitleCount, WatchedTitlesCollection.TargetTitleCount);
             if (loadedWatchedTitles.Count > 0)
                 WatchedTitlesCollection.AddTitleList(loadedWatchedTitles);

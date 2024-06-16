@@ -1,7 +1,8 @@
-﻿using AniMate_app.Services.AccountService.Dtos;
-using AniMate_app.ViewModels;
+﻿using AniMate_app.ViewModels;
 using System.Text.Json;
-using Microsoft.Maui.Storage;
+using AniMate_app.DTOs.Account;
+using AniMate_app.DTOs.Auth;
+
 namespace AniMate_app.Views;
 
 public partial class SignInPage : ContentPage

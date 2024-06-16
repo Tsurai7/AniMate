@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "AniMate.Back
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "AniMate.Backend\Presentation\WebAPI\WebAPI.csproj", "{EEC1E76E-20D9-45EC-BBCB-4D60FCBBAA0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.UnitTests", "AniMate.Backend\Backend.UnitTests\Backend.UnitTests.csproj", "{5B03DC84-06DA-4851-BAE7-D170ECCAECB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{EEC1E76E-20D9-45EC-BBCB-4D60FCBBAA0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEC1E76E-20D9-45EC-BBCB-4D60FCBBAA0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEC1E76E-20D9-45EC-BBCB-4D60FCBBAA0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B03DC84-06DA-4851-BAE7-D170ECCAECB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B03DC84-06DA-4851-BAE7-D170ECCAECB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B03DC84-06DA-4851-BAE7-D170ECCAECB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B03DC84-06DA-4851-BAE7-D170ECCAECB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,5 +70,6 @@ Global
 		{B8C8BDC9-53B5-483C-A8B0-EABE747FFEBF} = {D6FB51D4-7B83-4619-AA2C-8D68948A5FD4}
 		{BE8766FB-7B19-460B-87AE-73FC4AAA2798} = {ED0634D6-BFF1-41A1-9837-F85D3F97CF4D}
 		{EEC1E76E-20D9-45EC-BBCB-4D60FCBBAA0E} = {3B93825C-50FC-4A00-BCEF-CBBA19A02E8D}
+		{5B03DC84-06DA-4851-BAE7-D170ECCAECB9} = {85BEB107-84C3-49C5-BD37-B3D14C617285}
 	EndGlobalSection
 EndGlobal

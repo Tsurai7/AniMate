@@ -1,12 +1,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AniMate_app.ViewModels"
-             xmlns:DTO="clr-namespace:AniMate_app.Services.AnilibriaService.Dtos"
-             xmlns:models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
+             xmlns:dtos="clr-namespace:AniMate_app.DTOs.Anime"
              xmlns:converters="clr-namespace:AniMate_app.Converters"
              x:DataType="local:TitleViewModel"
-             x:Class="AniMate_app.Views.TitlePage"
-              >
+             x:Class="AniMate_app.Views.TitlePage">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -20,9 +18,9 @@
     <ScrollView BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
         <StackLayout Orientation="Vertical" Margin="5,0,10,10">
 
-            <Image Source="{Binding Title.Posters.Small.Url}" Margin="30,10,20,10"/>
+            <Image Source="{Binding TitleDto.Posters.Small.Url}" Margin="30,10,20,10"/>
             
-            <Label Text="{Binding Title.Names.Ru}"
+            <Label Text="{Binding TitleDto.Names.Ru}"
                    FontSize="Large"
                    FontAttributes="Bold"
                    VerticalOptions="StartAndExpand"
@@ -147,12 +145,12 @@
                VerticalOptions="Center"
                Margin="0,10,0,0"/>
 
-            <CollectionView ItemsSource="{Binding Title.Player.Episodes.Values}">
+            <CollectionView ItemsSource="{Binding TitleDto.Player.Episodes.Values}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="4" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Episode">
+                    <DataTemplate x:DataType="dtos:EpisodeDto">
                         <Button Text="{Binding Ordinal, StringFormat='Серия {0}'}"
                                 Clicked="OnWatchButtonClicked"
                                 CommandParameter="{Binding HlsUrls.Fhd}"
@@ -195,7 +193,7 @@
                        VerticalTextAlignment="Center"
                        HorizontalOptions="Start" />
 
-                <Label Text="{Binding Title.Type.FullInfo}"
+                <Label Text="{Binding TitleDto.Type.FullInfo}"
                        FontSize="Small"
                        FontAttributes="Bold"
                        VerticalTextAlignment="Center"
@@ -215,7 +213,7 @@
                        VerticalOptions="CenterAndExpand"
                        HorizontalOptions="Start" />
 
-                <Label Text="{Binding Title.Player.Episodes.Count}"
+                <Label Text="{Binding TitleDto.Player.Episodes.Count}"
                        FontSize="Small"
                        FontAttributes="Bold"
                        VerticalOptions="CenterAndExpand"
@@ -235,7 +233,7 @@
                        VerticalOptions="CenterAndExpand"
                        HorizontalOptions="Start" />
 
-                <Label Text="{Binding Title.Status.Status}"
+                <Label Text="{Binding TitleDto.Status.Status}"
                        FontSize="Small"
                        FontAttributes="Bold"
                        VerticalOptions="CenterAndExpand"
@@ -275,7 +273,7 @@
                        VerticalOptions="CenterAndExpand"
                        HorizontalOptions="Start" />
 
-                <Label Text="{Binding Title.Season.Season}"
+                <Label Text="{Binding TitleDto.Season.Season}"
                        FontSize="Small"
                        FontAttributes="Bold"
                        VerticalOptions="CenterAndExpand"
@@ -295,7 +293,7 @@
                        VerticalOptions="CenterAndExpand"
                        HorizontalOptions="Start" />
 
-                <Label Text="{Binding Title.Season.Year}"
+                <Label Text="{Binding TitleDto.Season.Year}"
                        FontSize="Small"
                        FontAttributes="Bold"
                        VerticalOptions="CenterAndExpand"

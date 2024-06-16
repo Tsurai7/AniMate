@@ -1,7 +1,7 @@
-﻿using AniMate_app.Services.AnilibriaService.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using AniMate_app.DTOs.Anime;
 
 namespace AniMate_app.Model
 {
@@ -9,7 +9,7 @@ namespace AniMate_app.Model
     {
         public string GenreName { get; private set; } = name;
 
-        public ObservableCollection<Title> Titles { get; private set; } = new();
+        public ObservableCollection<TitleDto> Titles { get; private set; } = new();
 
         private int _targetTitleCount;
 
@@ -28,12 +28,12 @@ namespace AniMate_app.Model
 
         public int TitleCount => Titles.Count;
 
-        public void AddTitle(Title title)
+        public void AddTitle(TitleDto titleDto)
         {
-            Titles.Add(title);
+            Titles.Add(titleDto);
         }
 
-        public void AddTitleList(IEnumerable<Title> titles)
+        public void AddTitleList(IEnumerable<TitleDto> titles)
         {
             foreach (var title in titles)
                 AddTitle(title);

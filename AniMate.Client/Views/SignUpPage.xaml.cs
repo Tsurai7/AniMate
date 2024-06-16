@@ -1,4 +1,5 @@
-using AniMate_app.Services.AccountService.Dtos;
+using AniMate_app.DTOs.Account;
+using AniMate_app.DTOs.Auth;
 using AniMate_app.ViewModels;
 
 namespace AniMate_app.Views;

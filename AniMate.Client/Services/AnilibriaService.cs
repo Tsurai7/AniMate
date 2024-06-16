@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using AniMate_app.Services.AnilibriaService.Models;
+﻿using System.Diagnostics;
+using AniMate_app.DTOs.Anime;
 using Newtonsoft.Json;
 
 namespace AniMate_app.Services.AnilibriaService
@@ -16,7 +15,7 @@ namespace AniMate_app.Services.AnilibriaService
             _httpClient = httpClient;
         }
 
-        public async Task<Title> GetTitleByCode(string code)
+        public async Task<TitleDto> GetTitleByCode(string code)
         {
             try
             {
@@ -24,27 +23,27 @@ namespace AniMate_app.Services.AnilibriaService
                 
                 string jsonInfo = await response.Content.ReadAsStringAsync();
 
-                Title title = JsonConvert.DeserializeObject<Title>(jsonInfo);
+                TitleDto titleDto = JsonConvert.DeserializeObject<TitleDto>(jsonInfo);
 
-                return title;
+                return titleDto;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Ошибка: {ex.Message}");
-                return new Title();
+                return new TitleDto();
             }
         }
 
-        public async Task<List<Title>> GetTitlesByCode(List<string> codes, int skip = 0, int count = 6)
+        public async Task<List<TitleDto>> GetTitlesByCode(List<string> codes, int skip = 0, int count = 6)
         {
             try
             {
                 if (codes == null || !codes.Any())
                 {
-                    return new List<Title>();
+                    return new List<TitleDto>();
                 }
 
-                List<Title> titles = new();
+                List<TitleDto> titles = new();
                 var codesToProcess = codes.Skip(skip).Take(count).Where(code => code != null).ToList();
 
                 if (!codesToProcess.Any())
@@ -57,18 +56,18 @@ namespace AniMate_app.Services.AnilibriaService
 
                 string jsonInfo = await response.Content.ReadAsStringAsync();
 
-                titles = JsonConvert.DeserializeObject<List<Title>>(jsonInfo);
+                titles = JsonConvert.DeserializeObject<List<TitleDto>>(jsonInfo);
 
                 return titles;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Ошибка: {ex.Message}");
-                return new List<Title>();
+                return new List<TitleDto>();
             }
         }
 
-        public async Task<List<Title>> GetTitlesByName(string name, int skip = 0, int count = 6)
+        public async Task<List<TitleDto>> GetTitlesByName(string name, int skip = 0, int count = 6)
         {
             try
             {
@@ -77,18 +76,18 @@ namespace AniMate_app.Services.AnilibriaService
                 
                 string jsonInfo = await response.Content.ReadAsStringAsync();
 
-                List<Title> titles = JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
+                List<TitleDto> titles = JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
 
                 return titles;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Ошибка: {ex.Message}");
-                return new List<Title>(); 
+                return new List<TitleDto>(); 
             }
         }
 
-        public async Task<List<Title>> GetUpdates(int skip = 0, int count = 6)
+        public async Task<List<TitleDto>> GetUpdates(int skip = 0, int count = 6)
         {
             try
             {
@@ -99,7 +98,7 @@ namespace AniMate_app.Services.AnilibriaService
                 {
                     string jsonInfo = await response.Content.ReadAsStringAsync();
 
-                    List<Title> titles = JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
+                    List<TitleDto> titles = JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
 
                     return titles;
                 }
@@ -111,7 +110,7 @@ namespace AniMate_app.Services.AnilibriaService
             catch (Exception ex)
             {
                 Debug.WriteLine($"Ошибка: {ex.Message}");
-                return new List<Title>(); 
+                return new List<TitleDto>(); 
             }
         }
 
@@ -134,7 +133,7 @@ namespace AniMate_app.Services.AnilibriaService
             }
         }
 
-        public async Task<List<Title>> GetTitlesByGenre(string genre, int skip = 0, int count = 1)
+        public async Task<List<TitleDto>> GetTitlesByGenre(string genre, int skip = 0, int count = 1)
         {
             try
             {
@@ -148,7 +147,7 @@ namespace AniMate_app.Services.AnilibriaService
             catch (Exception ex)
             {
                 Debug.WriteLine($"Ошибка: {ex.Message}");
-                return new List<Title>(); 
+                return new List<TitleDto>(); 
             }
         }
     }

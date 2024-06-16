@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AniMate_app.ViewModels"
              xmlns:model="clr-namespace:AniMate_app.Model"
-             xmlns:Models="clr-namespace:AniMate_app.Services.AnilibriaService.Models"
+             xmlns:dtos="clr-namespace:AniMate_app.DTOs.Anime"
              x:Class="AniMate_app.Views.SearchPage"
              x:DataType="local:SearchViewModel">
 

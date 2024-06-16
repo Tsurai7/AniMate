@@ -1,5 +1,4 @@
 ﻿using AniMate_app.Services.AccountService;
-using AniMate_app.Services.AccountService.Dtos;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AniMate_app.ViewModels

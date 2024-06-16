@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Application.DTOs;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Persistence.Repositories;
 
 namespace Application.Services;
@@ -13,10 +14,10 @@ public class AccountService
     {
         _userRepository = userRepository;
     }
-
+    
     public async Task<ProfileInfo> GetProfile(HttpContext context)
     {
-        string email = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        string email = context.User.FindFirst(ClaimTypes.Name)?.Value;
             
         var userInDb = (await _userRepository.GetAllAsync()).FirstOrDefault(u => u.Email == email);
 
