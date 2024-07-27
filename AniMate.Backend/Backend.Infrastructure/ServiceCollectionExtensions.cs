@@ -6,9 +6,9 @@ using Persistence.Repositories;
 
 namespace Persistence;
 
-public static class DependencyInjection
+public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<ApplicationContext>(opt =>
             opt.UseNpgsql(configuration.GetConnectionString("DbConnection")));

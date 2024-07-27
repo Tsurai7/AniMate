@@ -1,5 +1,5 @@
 ﻿using AniMate_app.Model;
-using AniMate_app.Services.AnilibriaService;
+using AniMate_app.Services;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;

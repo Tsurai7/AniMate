@@ -4,6 +4,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>Application</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -11,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Infrastructure\Persistence\Persistence.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\Backend.Infrastructure\Backend.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

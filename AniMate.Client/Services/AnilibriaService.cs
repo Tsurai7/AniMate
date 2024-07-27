@@ -2,7 +2,7 @@
 using AniMate_app.DTOs.Anime;
 using Newtonsoft.Json;
 
-namespace AniMate_app.Services.AnilibriaService
+namespace AniMate_app.Services
 {
     public class AnilibriaService
     {

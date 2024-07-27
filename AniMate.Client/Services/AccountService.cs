@@ -4,7 +4,7 @@ using AniMate_app.DTOs.Account;
 using AniMate_app.DTOs.Auth;
 using Newtonsoft.Json;
 
-namespace AniMate_app.Services.AccountService
+namespace AniMate_app.Services
 {
     public class AccountService
     {

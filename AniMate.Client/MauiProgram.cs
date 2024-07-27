@@ -1,5 +1,4 @@
-﻿using AniMate_app.Services.AccountService;
-using AniMate_app.Services.AnilibriaService;
+﻿using AniMate_app.Services;
 using AniMate_app.ViewModels;
 using AniMate_app.Views;
 using CommunityToolkit.Maui;

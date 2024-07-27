@@ -11,8 +11,8 @@ builder.Services.AddSignalR();
 
 builder.Services.AddControllers();
 
-builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddApplication(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 

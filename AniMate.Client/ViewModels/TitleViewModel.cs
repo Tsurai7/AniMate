@@ -1,5 +1,4 @@
-﻿using AniMate_app.Services.AccountService;
-using AniMate_app.Services.AnilibriaService;
+﻿using AniMate_app.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Text.Json;
 using AniMate_app.DTOs.Account;
