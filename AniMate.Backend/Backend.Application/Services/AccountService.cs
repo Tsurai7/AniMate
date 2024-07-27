@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using Application.DTOs;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Persistence.Repositories;
 
 namespace Application.Services;

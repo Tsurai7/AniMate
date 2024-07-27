@@ -7,13 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AniMate.Client", "AniMate.C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AniMate.Backend", "AniMate.Backend", "{85BEB107-84C3-49C5-BD37-B3D14C617285}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Domain", "AniMate.Backend\Core\Backend.Domain\Backend.Domain.csproj", "{1B5D3536-5385-4E9C-A4D0-F87ABDAB8132}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Domain", "AniMate.Backend\Backend.Domain\Backend.Domain.csproj", "{1B5D3536-5385-4E9C-A4D0-F87ABDAB8132}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Application", "AniMate.Backend\Core\Backend.Application\Backend.Application.csproj", "{B8C8BDC9-53B5-483C-A8B0-EABE747FFEBF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Application", "AniMate.Backend\Backend.Application\Backend.Application.csproj", "{B8C8BDC9-53B5-483C-A8B0-EABE747FFEBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Infrastructure", "AniMate.Backend\Infrastructure\Backend.Infrastructure\Backend.Infrastructure.csproj", "{BE8766FB-7B19-460B-87AE-73FC4AAA2798}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Infrastructure", "AniMate.Backend\Backend.Infrastructure\Backend.Infrastructure.csproj", "{BE8766FB-7B19-460B-87AE-73FC4AAA2798}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.API", "AniMate.Backend\Presentation\Backend.API\Backend.API.csproj", "{EEC1E76E-20D9-45EC-BBCB-4D60FCBBAA0E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.API", "AniMate.Backend\Backend.API\Backend.API.csproj", "{EEC1E76E-20D9-45EC-BBCB-4D60FCBBAA0E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AniMate.Adapter", "AniMate.Adapter", "{2E3C0598-F574-4237-B728-16F966C74889}"
 EndProject
@@ -32,6 +32,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.API", "AniMate.Gateway\Gateway.API\Gateway.API.csproj", "{1179990A-EBCB-4A29-AE3E-4F43FB21F5F0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Infrastructure", "AniMate.Adapter\Adapter.Infrastructure\Adapter.Infrastructure\Adapter.Infrastructure.csproj", "{D6716DAE-27D1-4FE9-9018-082879F09B06}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{4BFA1588-A8DF-4FEA-9696-44486EC68536}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,5 +105,6 @@ Global
 		{EEC1E76E-20D9-45EC-BBCB-4D60FCBBAA0E} = {85BEB107-84C3-49C5-BD37-B3D14C617285}
 		{B8C8BDC9-53B5-483C-A8B0-EABE747FFEBF} = {85BEB107-84C3-49C5-BD37-B3D14C617285}
 		{1B5D3536-5385-4E9C-A4D0-F87ABDAB8132} = {85BEB107-84C3-49C5-BD37-B3D14C617285}
+		{4BFA1588-A8DF-4FEA-9696-44486EC68536} = {85BEB107-84C3-49C5-BD37-B3D14C617285}
 	EndGlobalSection
 EndGlobal
