@@ -33,8 +33,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.API", "AniMate.Gate
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Infrastructure", "AniMate.Adapter\Adapter.Infrastructure\Adapter.Infrastructure\Adapter.Infrastructure.csproj", "{D6716DAE-27D1-4FE9-9018-082879F09B06}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{4BFA1588-A8DF-4FEA-9696-44486EC68536}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +103,5 @@ Global
 		{EEC1E76E-20D9-45EC-BBCB-4D60FCBBAA0E} = {85BEB107-84C3-49C5-BD37-B3D14C617285}
 		{B8C8BDC9-53B5-483C-A8B0-EABE747FFEBF} = {85BEB107-84C3-49C5-BD37-B3D14C617285}
 		{1B5D3536-5385-4E9C-A4D0-F87ABDAB8132} = {85BEB107-84C3-49C5-BD37-B3D14C617285}
-		{4BFA1588-A8DF-4FEA-9696-44486EC68536} = {85BEB107-84C3-49C5-BD37-B3D14C617285}
 	EndGlobalSection
 EndGlobal
