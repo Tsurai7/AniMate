@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Persistence.Data;
-using Persistence.Repositories;
+using Backend.Infrastructure.Data;
+using Backend.Infrastructure.Repositories;
 
-namespace Persistence;
+namespace Backend.Infrastructure;
 
 public static class ServiceCollectionExtensions
 {

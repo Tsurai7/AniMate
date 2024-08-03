@@ -1,9 +1,9 @@
 using System.Security.Authentication;
-using Application.DTOs;
-using Domain.Models;
-using Persistence.Repositories;
+using Backend.Application.DTOs;
+using Backend.Domain.Models;
+using Backend.Infrastructure.Repositories;
 
-namespace Application.Services;
+namespace Backend.Application.Services;
 
 public class AuthService
 {

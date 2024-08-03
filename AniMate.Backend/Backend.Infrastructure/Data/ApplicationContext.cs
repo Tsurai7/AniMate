@@ -1,7 +1,7 @@
-using Domain.Models;
+using Backend.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Persistence.Data;
+namespace Backend.Infrastructure.Data;
 
 public sealed class ApplicationContext : DbContext
 {

@@ -1,8 +1,8 @@
-using Application.Services;
+using Backend.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebAPI.Controllers;
+namespace Backend.API.Controllers;
 
 [Authorize]
 [Controller]

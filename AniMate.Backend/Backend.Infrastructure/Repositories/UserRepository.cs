@@ -1,9 +1,9 @@
 using Domain.Interfaces;
-using Domain.Models;
+using Backend.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using Persistence.Data;
+using Backend.Infrastructure.Data;
 
-namespace Persistence.Repositories;
+namespace Backend.Infrastructure.Repositories;
 
 public class UserRepository : IGenericRepository<User>
 {

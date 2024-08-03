@@ -1,9 +1,9 @@
 using System.Security.Authentication;
-using Application.DTOs;
-using Application.Services;
+using Backend.Application.DTOs;
+using Backend.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebAPI.Controllers;
+namespace Backend.API.Controllers;
 
 [Controller]
 [Route("auth")]

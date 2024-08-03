@@ -1,6 +1,6 @@
-using Application;
-using Persistence;
-using WebAPI.Hubs;
+using Backend.Application;
+using Backend.Infrastructure;
+using Backend.API.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 

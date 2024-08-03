@@ -1,9 +1,9 @@
 using System.Security.Claims;
-using Application.DTOs;
+using Backend.Application.DTOs;
 using Microsoft.AspNetCore.Http;
-using Persistence.Repositories;
+using Backend.Infrastructure.Repositories;
 
-namespace Application.Services;
+namespace Backend.Application.Services;
 
 public class AccountService
 {

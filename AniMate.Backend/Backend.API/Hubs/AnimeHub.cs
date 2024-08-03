@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.SignalR;
 
-namespace WebAPI.Hubs;
+namespace Backend.API.Hubs;
 
 public class AnimeHub : Hub
 {

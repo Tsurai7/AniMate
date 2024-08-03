@@ -1,11 +1,11 @@
 using System.Text;
-using Application.Services;
+using Backend.Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Application;
+namespace Backend.Application;
 
 public static class ServiceCollectionExtensions
 {

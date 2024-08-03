@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Application.DTOs;
+namespace Backend.Application.DTOs;
 
 public record SignUpRequest
 (
