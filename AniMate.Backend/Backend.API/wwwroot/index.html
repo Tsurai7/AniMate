@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Аниме Плеер</title>
+    <style>
+        #video-container {
+            width: 640px;
+            margin: 0 auto;
+            float: left;
+        }
+        #request-log {
+            width: 300px;
+            height: 480px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: scroll;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<div id="video-container">
+    <video id="anime-player" width="100%" controls></video>
+</div>
+<div>
+    <input type="text" id="userId" placeholder="Enter User ID" />
+    <button onclick="joinAnimeWatch()">Join</button>
+</div>
+<div id="request-log"></div>
+
+<script src="https://unpkg.com/@microsoft/signalr@latest/dist/browser/signalr.min.js"></script>
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/animeHub")
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+    const videoPlayer = document.getElementById('anime-player');
+    const requestLog = document.getElementById('request-log');
+    const userIdInput = document.getElementById('userId');
+
+    connection.on("UserJoined", (userId) => {
+        console.log(`User joined ${userId} to session`);
+        logRequest(`User joined ${userId} to session`);
+    });
+
+    connection.on("StartAnimeWatch", () => {
+        console.log("Starting watch anime");
+        videoPlayer.play();
+        logRequest("Starting watch anime");
+    });
+
+    connection.on("PauseAnimeWatch", () => {
+        console.log("Pause anime");
+        videoPlayer.pause();
+        logRequest("Pause anime");
+    });
+
+    connection.on("SeekAnimeWatch", (position) => {
+        console.log(`Changing anime timing ${position}`);
+        videoPlayer.currentTime = position;
+        logRequest(`Changing anime timing ${position}`);
+    });
+
+    function logRequest(message) {
+        const logEntry = document.createElement('div');
+        logEntry.textContent = message;
+        requestLog.appendChild(logEntry);
+    }
+
+    async function joinAnimeWatch() {
+        const userId = userIdInput.value;
+        if (!userId) {
+            alert("Please enter a user ID");
+            return;
+        }
+
+        try {
+            await connection.start();
+            console.log("Connected to SignalR");
+            logRequest("Connected to SignalR");
+
+            await connection.invoke("JoinAnimeWatch", userId);
+            console.log(`Joined to the watching group with ID ${userId}`);
+            logRequest(`Joined to the watching group with ID ${userId}`);
+        } catch (err) {
+            console.log(err);
+            logRequest(err);
+        }
+    }
+
+    // Здесь вы можете вызывать другие методы хаба, например:
+    // connection.invoke("StartAnimeWatch", userId);
+    // connection.invoke("PauseAnimeWatch", userId);
+    // connection.invoke("SeekAnimeWatch", userId, 120.5); // Перемотка на позицию 120.5 секунд
+</script>
+</body>
+</html>

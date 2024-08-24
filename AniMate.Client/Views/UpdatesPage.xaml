@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AniMate_app.Views.UpdatesPage"
+             xmlns:local="clr-namespace:AniMate_app.ViewModels"
+             xmlns:dtos="clr-namespace:AniMate_app.DTOs.Anime"
+             x:DataType="local:UpdatesViewModel"
+             Loaded="ContentPage_Loaded">
+
+    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
+        <Grid Padding="10,20,0,0" BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Text="Latest Updates" FontSize="Title"/>
+
+            <CollectionView Grid.Row="1" SelectionMode="Single"
+                            ItemsSource="{Binding Titles.Titles}" 
+                            ItemsUpdatingScrollMode="KeepScrollOffset"
+                            SelectionChanged="TitleSelected"
+                            RemainingItemsThreshold="0"
+                            RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}">
+                
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" SnapPointsType="None"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,10,0,0" ColumnSpacing="10" BackgroundColor="{AppThemeBinding Dark = {StaticResource BackgroundLight}, Light = {StaticResource Gray100}}" VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10" x:DataType="dtos:TitleDto">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal"></VisualState>
+                                    <VisualState Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark = {StaticResource BackgroundLight}, Light = {StaticResource Gray100}}"></Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="120"/>
+                            </Grid.RowDefinitions>
+
+                            <Image Aspect="AspectFit" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
+                                <Image.Source>
+                                    <UriImageSource Uri="{Binding Posters.Small.Url, Mode=OneTime}" CachingEnabled="True" />
+                                </Image.Source>
+                            </Image>
+
+                            <Label Text="{Binding Names.Ru, Mode=OneTime}" FontSize="14" Grid.Column="1" Grid.Row="0"
+                                    LineBreakMode="WordWrap" Margin="0,0,10,0"/>
+
+                            <Label Text="{Binding RuDescription, Mode=OneTime}" FontSize="10" Grid.Column="1" Grid.Row="1"
+                                    LineBreakMode="WordWrap" Margin="0,0,10,10"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.Footer>
+                    <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </CollectionView.Footer>
+            </CollectionView>
+        </Grid>
+    </RefreshView>
+    <ContentPage.Title>
+        <x:Null />
+    </ContentPage.Title>
+</ContentPage>

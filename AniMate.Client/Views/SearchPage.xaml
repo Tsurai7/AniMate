@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AniMate_app.ViewModels"
+             xmlns:model="clr-namespace:AniMate_app.Model"
+             xmlns:dtos="clr-namespace:AniMate_app.DTOs.Anime"
+             x:Class="AniMate_app.Views.SearchPage"
+             x:DataType="local:SearchViewModel">
+
+    <Grid BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackLayout Orientation="Horizontal"
+                     VerticalOptions="Center"
+                     Grid.Row="0">
+            
+            <SearchBar x:Name="searchBar"
+                   Placeholder = "Search in AniMate"
+                   HorizontalOptions="FillAndExpand"
+                   FontSize="18"
+                   IsTextPredictionEnabled="True"
+                   SearchButtonPressed="OnSearch"
+                   TextChanged="SearchBarTextChanged">
+            </SearchBar>
+            
+            <Button x:Name="filterButton" Clicked="OnFiltredButtonClicked">
+                <Button.ImageSource>
+                    <FileImageSource File="{AppThemeBinding Light= dots.svg, Dark= whitedots.svg}" />
+                </Button.ImageSource>
+            </Button>
+        </StackLayout>
+
+        <CollectionView ItemsSource="{Binding TitlesCollection.Titles}" Grid.Row="1" Margin="12, 0, 0, 0"
+                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="0"
+                        SelectionMode="Single" SelectionChanged="TitleSelected" ItemTemplate="{StaticResource TitleTile}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="20" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.EmptyView>
+                <StackLayout>
+                    <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsBusy}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Image Source="nodatafound.svg" WidthRequest="200" HeightRequest="200" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Aspect="AspectFill"/>
+                </StackLayout>
+            </CollectionView.EmptyView>
+                
+            <CollectionView.Footer>
+                <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </CollectionView.Footer>
+        </CollectionView>
+    </Grid>
+    <ContentPage.Title>
+        <x:Null />
+    </ContentPage.Title>
+</ContentPage>
