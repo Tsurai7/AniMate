@@ -1,98 +1,189 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <title>Аниме Плеер</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Совместный просмотр видео</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.4.10/hls.min.js"></script>
     <style>
-        #video-container {
-            width: 640px;
-            margin: 0 auto;
-            float: left;
-        }
-        #request-log {
-            width: 300px;
-            height: 480px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            overflow-y: scroll;
-            float: right;
-        }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        #videoPlayer { width: 100%; max-width: 800px; }
+        #chatMessages { height: 200px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-top: 20px; }
+        #messageInput { width: 70%; }
+        button { margin-top: 10px; }
     </style>
 </head>
 <body>
-<div id="video-container">
-    <video id="anime-player" width="100%" controls></video>
+<h1>Совместный просмотр видео</h1>
+<div>
+    <input type="text" id="roomInput" placeholder="Введите название комнаты">
+    <button onclick="createOrJoinRoom()">Создать/Присоединиться к комнате</button>
 </div>
 <div>
-    <input type="text" id="userId" placeholder="Enter User ID" />
-    <button onclick="joinAnimeWatch()">Join</button>
+    <input type="text" id="videoUrlInput" placeholder="Введите URL видео m3u8">
+    <button onclick="updateVideoUrl()">Обновить URL видео</button>
 </div>
-<div id="request-log"></div>
+<video id="videoPlayer" controls></video>
+<div id="chatMessages"></div>
+<input type="text" id="messageInput" placeholder="Введите сообщение">
+<button onclick="sendMessage()">Отправить</button>
 
-<script src="https://unpkg.com/@microsoft/signalr@latest/dist/browser/signalr.min.js"></script>
 <script>
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl("/animeHub")
-        .configureLogging(signalR.LogLevel.Information)
+        .withUrl("/sharedWatchingHub")
         .build();
 
-    const videoPlayer = document.getElementById('anime-player');
-    const requestLog = document.getElementById('request-log');
-    const userIdInput = document.getElementById('userId');
+    let roomName = '';
+    const video = document.getElementById('videoPlayer');
+    let hls = null;
+    let isLocalSeek = false;
+    let lastReceivedTime = 0;
 
-    connection.on("UserJoined", (userId) => {
-        console.log(`User joined ${userId} to session`);
-        logRequest(`User joined ${userId} to session`);
-    });
+    connection.start().then(() => {
+        console.log("SignalR Connected");
+    }).catch(err => console.error(err));
 
-    connection.on("StartAnimeWatch", () => {
-        console.log("Starting watch anime");
-        videoPlayer.play();
-        logRequest("Starting watch anime");
-    });
+    function createOrJoinRoom() {
+        roomName = document.getElementById('roomInput').value;
+        const videoUrl = document.getElementById('videoUrlInput').value;
 
-    connection.on("PauseAnimeWatch", () => {
-        console.log("Pause anime");
-        videoPlayer.pause();
-        logRequest("Pause anime");
-    });
+        console.log(`Attempting to create or join room: ${roomName}`);
 
-    connection.on("SeekAnimeWatch", (position) => {
-        console.log(`Changing anime timing ${position}`);
-        videoPlayer.currentTime = position;
-        logRequest(`Changing anime timing ${position}`);
-    });
-
-    function logRequest(message) {
-        const logEntry = document.createElement('div');
-        logEntry.textContent = message;
-        requestLog.appendChild(logEntry);
-    }
-
-    async function joinAnimeWatch() {
-        const userId = userIdInput.value;
-        if (!userId) {
-            alert("Please enter a user ID");
-            return;
-        }
-
-        try {
-            await connection.start();
-            console.log("Connected to SignalR");
-            logRequest("Connected to SignalR");
-
-            await connection.invoke("JoinAnimeWatch", userId);
-            console.log(`Joined to the watching group with ID ${userId}`);
-            logRequest(`Joined to the watching group with ID ${userId}`);
-        } catch (err) {
-            console.log(err);
-            logRequest(err);
+        if (videoUrl) {
+            console.log(`Creating room with video URL: ${videoUrl}`);
+            connection.invoke("CreateRoom", roomName, "title", videoUrl)
+                .then(() => console.log(`Successfully created room: ${roomName}`))
+                .catch(err => console.error(`Error creating room: ${err}`));
+        } else {
+            console.log(`Joining existing room: ${roomName}`);
+            connection.invoke("JoinRoom", roomName)
+                .then(() => {
+                    console.log(`Successfully joined room: ${roomName}`);
+                    connection.invoke("SyncStateForNewClient", roomName);
+                })
+                .catch(err => console.error(`Error joining room: ${err}`));
         }
     }
 
-    // Здесь вы можете вызывать другие методы хаба, например:
-    // connection.invoke("StartAnimeWatch", userId);
-    // connection.invoke("PauseAnimeWatch", userId);
-    // connection.invoke("SeekAnimeWatch", userId, 120.5); // Перемотка на позицию 120.5 секунд
+    function updateVideoUrl() {
+        const newUrl = document.getElementById('videoUrlInput').value;
+        connection.invoke("UpdateVideoUrl", roomName, newUrl).catch(err => console.error(err));
+    }
+
+    function loadVideo(url) {
+        console.log(`Loading video from URL: ${url}`);
+        if (Hls.isSupported()) {
+            if (hls) {
+                hls.destroy();
+            }
+            hls = new Hls();
+            hls.loadSource(url);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                console.log("HLS manifest loaded");
+            });
+            hls.on(Hls.Events.ERROR, function(event, data) {
+                console.error("HLS error:", data);
+            });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = url;
+        }
+    }
+
+    function playPause() {
+        if (video.paused) {
+            video.play();
+            connection.invoke("Resume", roomName, video.currentTime).catch(err => console.error(err));
+        } else {
+            video.pause();
+            connection.invoke("Pause", roomName, video.currentTime).catch(err => console.error(err));
+        }
+    }
+
+    function seek(seconds) {
+        isLocalSeek = true;
+        video.currentTime += seconds;
+    }
+
+    function sendMessage() {
+        const message = document.getElementById('messageInput').value;
+        connection.invoke("SendMessage", roomName, message).catch(err => console.error(err));
+        document.getElementById('messageInput').value = '';
+    }
+
+    video.addEventListener('play', () => {
+        connection.invoke("Resume", roomName, video.currentTime).catch(err => console.error(err));
+    });
+
+    video.addEventListener('pause', () => {
+        connection.invoke("Pause", roomName, video.currentTime).catch(err => console.error(err));
+    });
+
+    video.addEventListener('seeked', () => {
+        if (isLocalSeek) {
+            connection.invoke("Seek", roomName, video.currentTime).catch(err => console.error(err));
+            isLocalSeek = false;
+        }
+    });
+
+    connection.on("CreatedRoom", (link, titleCode, episodeUrl) => {
+        console.log(`Room created: ${link}`);
+        loadVideo(episodeUrl);
+    });
+
+    connection.on("VideoUrlUpdated", (newUrl) => {
+        loadVideo(newUrl);
+    });
+
+    connection.on("SyncState", (url, currentTime, isPlaying) => {
+        console.log(`Syncing state: URL=${url}, time=${currentTime}, isPlaying=${isPlaying}`);
+        loadVideo(url);
+        lastReceivedTime = currentTime;
+        video.currentTime = currentTime;
+        if (isPlaying) {
+            video.play().catch(e => console.error("Error playing video:", e));
+        } else {
+            video.pause();
+        }
+    });
+
+    connection.on("Pause", (currentTime) => {
+        console.log(`Received pause event: time=${currentTime}`);
+        if (Math.abs(video.currentTime - currentTime) > 0.5) {
+            lastReceivedTime = currentTime;
+            video.currentTime = currentTime;
+        }
+        video.pause();
+    });
+
+    connection.on("Resume", (currentTime) => {
+        console.log(`Received resume event: time=${currentTime}`);
+        if (Math.abs(video.currentTime - currentTime) > 0.5) {
+            lastReceivedTime = currentTime;
+            video.currentTime = currentTime;
+        }
+        video.play().catch(e => console.error("Error playing video:", e));
+    });
+
+    connection.on("Seek", (newTime) => {
+        console.log(`Received seek event: time=${newTime}`);
+        if (Math.abs(video.currentTime - newTime) > 0.5 && newTime !== lastReceivedTime) {
+            lastReceivedTime = newTime;
+            video.currentTime = newTime;
+        }
+    });
+
+    connection.on("ReceiveMessage", (user, message) => {
+        const chatMessages = document.getElementById('chatMessages');
+        chatMessages.innerHTML += `<p><strong>${user}:</strong> ${message}</p>`;
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    });
+
+    connection.on("Error", (message) => {
+        console.error(`Received error from server: ${message}`);
+        alert(`Error: ${message}`);
+    });
 </script>
 </body>
 </html>

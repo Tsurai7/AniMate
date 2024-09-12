@@ -4,8 +4,8 @@ namespace Adapter.Domain.Interfaces;
 
 public interface IAnimeClient
 {
-    public Task<GetTitleResponse> GetTitleByCode(string code);
-    public Task<GetTitlesResponse> GetTitlesByGenre(string genre);
-    public Task<GetTitlesUpdatesResponse> GetUpdatedTitles();
-    public Task<SearchTitlesResponse> SearchTitlesByName(string name);
+    public Task<Title> GetTitleByCode(string code);
+    public Task<List<Title>> GetTitlesByGenre(string genre, int skip = 0, int count = 1);
+    public Task<List<Title>> GetUpdatedTitles(int skip = 0, int count = 6);
+    public Task<List<Title>> SearchTitlesByName(string name, int skip = 0, int count = 6);
 }

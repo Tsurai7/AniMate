@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Adapter.Communication;
 
-public class AnimeClient : IAnimeClient
+internal class AnimeClient : IAnimeClient
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ILogger<AnimeClient> _logger;
@@ -23,24 +23,59 @@ public class AnimeClient : IAnimeClient
         PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
     };
 
-    public Task<GetTitleResponse> GetTitleByCode(string code)
+    public async Task<Title> GetTitleByCode(string code)
     {
-        throw new NotImplementedException();
+        var httpClient = _httpClientFactory.CreateClient(nameof(AnimeClient));
+        
+        var response = await httpClient.GetAsync($"title?code={code}");
+            
+        var responseJson = await response.Content.ReadAsStringAsync();
+
+        var result = TryDeserialize<Title>(responseJson);
+
+        return result;
     }
 
-    public Task<GetTitlesResponse> GetTitlesByGenre(string genre)
+    public async Task<List<Title>> GetTitlesByGenre(string genre, int skip = 0, int count = 1)
     {
-        throw new NotImplementedException();
+        var httpClient = _httpClientFactory.CreateClient(nameof(AnimeClient));
+
+        var response = await httpClient.GetAsync(
+            $"title/search?genres={genre}&order_by=in_favorites&sort_direction=1{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}");
+        
+        var responseJson = await response.Content.ReadAsStringAsync();
+
+        var result = TryDeserialize<List<Title>>(responseJson);
+
+        return result;
     }
 
-    public Task<GetTitlesUpdatesResponse> GetUpdatedTitles()
+    public async Task<List<Title>> GetUpdatedTitles(int skip = 0, int count = 6)
     {
-        throw new NotImplementedException();
+        var httpClient = _httpClientFactory.CreateClient(nameof(AnimeClient));
+        
+        var response = await httpClient.GetAsync(
+            $"title/updates?{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}");
+        
+        var responseJson = await response.Content.ReadAsStringAsync();
+
+        var result = TryDeserialize<List<Title>>(responseJson);
+
+        return result;
     }
 
-    public Task<SearchTitlesResponse> SearchTitlesByName(string name)
+    public async Task<List<Title>> SearchTitlesByName(string name, int skip = 0, int count = 6)
     {
-        throw new NotImplementedException();
+        var httpClient = _httpClientFactory.CreateClient(nameof(AnimeClient));
+        
+        var response = await httpClient.GetAsync(
+            $"title/search?search={name}&order_by=in_favorites&sort_direction=1&{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}");
+            
+        var responseJson = await response.Content.ReadAsStringAsync();
+
+        var result = TryDeserialize<List<Title>>(responseJson);
+
+        return result;
     }
 
     private static T TryDeserialize<T>(string json) where T : new()
