@@ -1,4 +1,8 @@
-﻿using System.Text.Json;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
 using AniMate_app.DTOs.Anime;
 
 namespace AniMate_app.Services

@@ -1,4 +1,7 @@
-﻿using AniMate_app.ViewModels;
+﻿using System;
+using AniMate_app.ViewModels;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 
 namespace AniMate_app.Views;
 
@@ -55,5 +58,10 @@ public partial class TitlePage : ContentPage
     private async void LikeButtonClicked(object sender, EventArgs e)
     {
         await _viewModel.LikesButtonClicked();
+    }
+
+    private async void WatchTogetherButtonClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new SharedWatchingPage());
     }
 }

@@ -1,4 +1,9 @@
-﻿namespace AniMate_app.Utils
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace AniMate_app.Utils
 {
     public class Command<T>(T parameter, Action<T> action, Func<T, bool> checkFunc)
     {

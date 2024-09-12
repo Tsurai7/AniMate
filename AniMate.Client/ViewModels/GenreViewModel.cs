@@ -1,9 +1,11 @@
-using AniMate_app.DTOs.Anime;
+using System;
+using System.Threading.Tasks;
 using AniMate_app.Model;
 using AniMate_app.Services;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
 
 namespace AniMate_app.ViewModels;
 

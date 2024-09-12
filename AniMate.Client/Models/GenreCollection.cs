@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.Generic;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using AniMate_app.DTOs.Anime;

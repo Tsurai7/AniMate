@@ -1,3 +1,4 @@
+using System;
 using CommunityToolkit.Maui.Views;
 
 namespace AniMate_app.Views.Components;

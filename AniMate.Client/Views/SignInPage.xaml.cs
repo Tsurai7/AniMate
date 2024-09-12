@@ -1,7 +1,13 @@
-﻿using AniMate_app.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using AniMate_app.ViewModels;
 using System.Text.Json;
 using AniMate_app.DTOs.Account;
 using AniMate_app.DTOs.Auth;
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Storage;
 
 namespace AniMate_app.Views;
 

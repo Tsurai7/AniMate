@@ -1,4 +1,5 @@
 ﻿using AniMate_app.Views;
+using Microsoft.Maui.Controls;
 
 namespace AniMate_app
 {

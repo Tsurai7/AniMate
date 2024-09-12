@@ -70,15 +70,17 @@
                 </StackLayout>
                 <StackLayout Orientation="Vertical"
                              Margin="0,0,0,0">
-                    <Button>
+                    <Button
+                        Clicked="WatchTogetherButtonClicked">
                         <Button.ImageSource>
                             <FileImageSource File="{AppThemeBinding Light= download_for_title_page.svg, Dark= download_for_title_page_white.svg}" />
                         </Button.ImageSource>
                     </Button>
-                    <Label Text="Скачать"
+                    <Label Text="Смотреть вместе"
                            FontSize="12"
                            FontAttributes="Bold"
-                           HorizontalTextAlignment="Center">
+                           HorizontalTextAlignment="Center"
+                           >
                     </Label>
                 </StackLayout>
 

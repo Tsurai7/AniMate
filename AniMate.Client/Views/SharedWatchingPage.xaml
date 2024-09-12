@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AniMate_app.Views.SharedWatchingPage"
+             xmlns:local="clr-namespace:AniMate_app.Views"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="local:SharedWatchingPage"
+             BackgroundColor="Black">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <toolkit:MediaElement x:Name="mediaControl"
+                              ShouldAutoPlay="False"
+                              Source="https://cache.libria.fun/videos/media/ts/9000/1/720/e313ea7c883c81fba86547414ec18b5e.m3u8"
+                              Aspect="Center"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center"
+                              BackgroundColor="Black"
+                              Grid.Row="0"
+                              Grid.Column="0"/>
+        
+        <StackLayout Orientation="Vertical"
+                     HorizontalOptions="Center"
+                     VerticalOptions="End"
+                     Grid.Row="1"
+                     Grid.Column="0"
+                     Spacing="10">
+            <Button Text="Play"
+                    Clicked="OnPlayButtonClicked"
+                    WidthRequest="100"
+                    HeightRequest="50"/>
+            <Button Text="Pause"
+                    Clicked="OnPauseButtonClicked"
+                    WidthRequest="100"
+                    HeightRequest="50"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui.Controls;
 using System;
 using System.Globalization;
+using Microsoft.Maui.Graphics;
 
 namespace AniMate_app.Converters
 {
