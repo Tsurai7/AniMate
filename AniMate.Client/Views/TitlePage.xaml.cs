@@ -1,5 +1,4 @@
 ﻿using AniMate_app.ViewModels;
-using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AniMate_app.Views;
 

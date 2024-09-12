@@ -52,7 +52,7 @@ public partial class GenreViewModel : ViewModelBase
 
         TitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
 
-        List<TitleDto> loadedTitles = await AnilibriaService.GetTitlesByGenre(Genre, LoadedTitles, LoadedTitles + _loadMoreResultsOffset);
+        var loadedTitles = await AnilibriaService.GetTitlesByGenre(Genre, LoadedTitles, LoadedTitles + _loadMoreResultsOffset);
 
         if (loadedTitles.Count > 0)
             TitlesCollection.AddTitleList(loadedTitles);

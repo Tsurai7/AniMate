@@ -36,7 +36,11 @@ namespace AniMate_app.Model
         public void AddTitleList(IEnumerable<TitleDto> titles)
         {
             foreach (var title in titles)
-                AddTitle(title);
+            {
+                if (title is not null)
+                      AddTitle(title);
+            }
+            
         }
 
         public void Clear()

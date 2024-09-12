@@ -1,12 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AniMate_app.DTOs.Anime;
-public record NamesDto
-(
-    [JsonProperty("ru")]
-    string Ru,
-
-    [JsonProperty("en")]
-    string En
-);
+public class NamesDto
+{
+    [JsonPropertyName("ru")]
+    public string Ru { get; init; }
+    [JsonPropertyName("en")]
+    public string En { get; init; }
+}
 

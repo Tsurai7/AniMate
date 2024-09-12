@@ -20,7 +20,7 @@ namespace AniMate_app
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitMediaElement();
 
-            ConfigureServices(builder.Services);
+            builder.Services.ConfigureServices();
           
 #if DEBUG
             builder.Logging.AddDebug();
@@ -28,7 +28,7 @@ namespace AniMate_app
             return builder.Build();
         }
 
-        private static void ConfigureServices(IServiceCollection services)
+        private static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
             // Services configuration
             services.AddHttpClient<AnilibriaService>();
@@ -61,6 +61,8 @@ namespace AniMate_app
             
             services.AddTransient<SignUpViewModel>();
             services.AddTransient<SignUpPage>();
+            
+            return services;
         }
     }
 }

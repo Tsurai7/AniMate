@@ -1,6 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Text.Json;
 using AniMate_app.DTOs.Anime;
-using Newtonsoft.Json;
 
 namespace AniMate_app.Services
 {
@@ -8,6 +7,11 @@ namespace AniMate_app.Services
     {
         private readonly HttpClient _httpClient;
 
+        private static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+        };
+        
         private const string _url = "https://api.anilibria.tv/v3/";
 
         public AnilibriaService(HttpClient httpClient)
@@ -17,138 +21,76 @@ namespace AniMate_app.Services
 
         public async Task<TitleDto> GetTitleByCode(string code)
         {
-            try
-            {
-                using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}title?code={code}");
-                
-                string jsonInfo = await response.Content.ReadAsStringAsync();
+            var response = await _httpClient.GetAsync($"{_url}title?code={code}");
+            
+            var jsonInfo = await response.Content.ReadAsStringAsync();
 
-                TitleDto titleDto = JsonConvert.DeserializeObject<TitleDto>(jsonInfo);
+            var titleDto = JsonSerializer.Deserialize<TitleDto>(jsonInfo, SerializerOptions);
 
-                return titleDto;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Ошибка: {ex.Message}");
-                return new TitleDto();
-            }
+            return titleDto;
         }
 
         public async Task<List<TitleDto>> GetTitlesByCode(List<string> codes, int skip = 0, int count = 6)
         {
-            try
+            if (codes == null || !codes.Any())
             {
-                if (codes == null || !codes.Any())
-                {
-                    return new List<TitleDto>();
-                }
-
-                List<TitleDto> titles = new();
-                var codesToProcess = codes.Skip(skip).Take(count).Where(code => code != null).ToList();
-
-                if (!codesToProcess.Any())
-                {
-                    return titles;
-                }
-
-                string codeList = string.Join(",", codesToProcess);
-                using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}title/list?code_list={codeList}");
-
-                string jsonInfo = await response.Content.ReadAsStringAsync();
-
-                titles = JsonConvert.DeserializeObject<List<TitleDto>>(jsonInfo);
-
-                return titles;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Ошибка: {ex.Message}");
                 return new List<TitleDto>();
             }
+
+            List<TitleDto> titles = new();
+            var codesToProcess = codes.Skip(skip).Take(count).Where(code => code != null).ToList();
+
+            if (!codesToProcess.Any())
+            {
+                return titles;
+            }
+
+            string codeList = string.Join(",", codesToProcess);
+            using HttpResponseMessage response = await _httpClient.GetAsync(
+                $"{_url}title/list?code_list={codeList}");
+
+            string jsonInfo = await response.Content.ReadAsStringAsync();
+
+            return JsonSerializer.Deserialize<List<TitleDto>>(jsonInfo, SerializerOptions);
         }
 
         public async Task<List<TitleDto>> GetTitlesByName(string name, int skip = 0, int count = 6)
         {
-            try
-            {
-                using HttpResponseMessage response = await _httpClient.GetAsync(
-                    $"""{_url}title/search?search={name}&order_by=in_favorites&sort_direction=1&{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
-                
-                string jsonInfo = await response.Content.ReadAsStringAsync();
+            var response = await _httpClient.GetAsync(
+                $"""{_url}title/search?search={name}&order_by=in_favorites&sort_direction=1&{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
+            
+            var jsonInfo = await response.Content.ReadAsStringAsync();
 
-                List<TitleDto> titles = JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
-
-                return titles;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Ошибка: {ex.Message}");
-                return new List<TitleDto>(); 
-            }
+            return JsonSerializer.Deserialize<TitlesInfo>(jsonInfo, SerializerOptions).Titles;
         }
 
         public async Task<List<TitleDto>> GetUpdates(int skip = 0, int count = 6)
         {
-            try
-            {
-                using HttpResponseMessage response =
-                    await _httpClient.GetAsync($"""{_url}title/updates?{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
+            var response = await _httpClient.GetAsync(
+                    $"""{_url}title/updates?{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
+            
+            var jsonInfo = await response.Content.ReadAsStringAsync();
 
-                if (response.IsSuccessStatusCode)
-                {
-                    string jsonInfo = await response.Content.ReadAsStringAsync();
-
-                    List<TitleDto> titles = JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
-
-                    return titles;
-                }
-                else
-                {
-                    throw new Exception("Не прошёл запрос");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Ошибка: {ex.Message}");
-                return new List<TitleDto>(); 
-            }
+            return JsonSerializer.Deserialize<TitlesInfo>(jsonInfo, SerializerOptions).Titles;
         }
 
         public async Task<List<string>> GetAllGenres()
         {
-            try
-            {
-                using HttpResponseMessage response = await _httpClient.GetAsync($"{_url}genres");
+            var response = await _httpClient.GetAsync($"{_url}genres");
 
-                string jsonInfo = await response.Content.ReadAsStringAsync();
+            var jsonInfo = await response.Content.ReadAsStringAsync();
 
-                List<string> genres = JsonConvert.DeserializeObject<List<string>>(jsonInfo);
-
-                return genres;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Ошибка: {ex.Message}");
-                return new List<string>(); 
-            }
+            return JsonSerializer.Deserialize<List<string>>(jsonInfo);
         }
 
         public async Task<List<TitleDto>> GetTitlesByGenre(string genre, int skip = 0, int count = 1)
         {
-            try
-            {
-                using HttpResponseMessage response = await _httpClient.GetAsync(
-                    $"""{_url}title/search?genres={genre}&order_by=in_favorites&sort_direction=1{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
+            var response = await _httpClient.GetAsync(
+                $"""{_url}title/search?genres={genre}&order_by=in_favorites&sort_direction=1{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}""");
 
-                string jsonInfo = await response.Content.ReadAsStringAsync();
+            var jsonInfo = await response.Content.ReadAsStringAsync();
 
-                return JsonConvert.DeserializeObject<TitlesInfo>(jsonInfo).Titles;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Ошибка: {ex.Message}");
-                return new List<TitleDto>(); 
-            }
+            return JsonSerializer.Deserialize<TitlesInfo>(jsonInfo, SerializerOptions).Titles;
         }
     }
 }

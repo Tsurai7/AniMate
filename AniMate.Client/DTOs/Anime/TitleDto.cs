@@ -1,41 +1,41 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AniMate_app.DTOs.Anime; 
-public record TitleDto
+public class TitleDto
 {
-    [JsonProperty("id")]
-    public string Id { get; set; }
+    [JsonPropertyName("id")]
+    public int Id { get; set; }
 
-    [JsonProperty("code")]
+    [JsonPropertyName("code")]
     public string Code { get; set; }
 
-    [JsonProperty("names")]
+    [JsonPropertyName("names")]
     public NamesDto Names { get; set; }
 
-    [JsonProperty("franchises")]
+    [JsonPropertyName("franchises")]
     public List<FranchiseDto>? Franchises { get; set; }
 
-    [JsonProperty("status")]
+    [JsonPropertyName("status")]
     public StatusDto Status { get; set; }
 
-    [JsonProperty("posters")]
+    [JsonPropertyName("posters")]
     public PostersDto Posters { get; set; }
 
-    [JsonProperty("type")]
+    [JsonPropertyName("type")]
     public TypeDto? Type { get; set; }
     
-    [JsonProperty("genres")]
+    [JsonPropertyName("genres")]
     public List<string> Genres { get; set; }
 
-    [JsonProperty("season")]
+    [JsonPropertyName("season")]
     public SeasonDto Season { get; set; }
 
-    [JsonProperty("description")]
+    [JsonPropertyName("description")]
     public string RuDescription { get; set; }
 
-    [JsonProperty("in_favorites")]
+    [JsonPropertyName("in_favorites")]
     public long InFavorites { get; set; }
 
-    [JsonProperty("player")]
+    [JsonPropertyName("player")]
     public PlayerDto Player { get; set; }
 }

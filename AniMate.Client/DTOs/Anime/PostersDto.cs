@@ -1,15 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AniMate_app.DTOs.Anime;
 
-public record PostersDto
-(
-    [JsonProperty("small")]
-    PosterSize Small,
-
-    [JsonProperty("medium")]
-    PosterSize Medium,
-
-    [JsonProperty("original")]
-    PosterSize Original
-);
+public class PostersDto
+{
+    [JsonPropertyName("small")]
+    public PosterSize Small { get; init; }
+    [JsonPropertyName("medium")]
+    public PosterSize Medium { get; init; }
+    [JsonPropertyName("original")]
+    public PosterSize Original { get; init; }
+}

@@ -1,18 +1,15 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace AniMate_app.DTOs.Anime;
 
 public record ReleaseDto
-(
-    [JsonProperty("id")]
-    string? Id,
-
-    [JsonProperty("code")]
-    string? Code,
-
-    [JsonProperty("ordinal")]
-    string? Ordinal,
-
-    [JsonProperty("names")]
-    NamesDto? Names
-);
+{
+    [JsonPropertyName("id")]
+    string? Id { get; init; }
+    [JsonPropertyName("code")]
+    string? Code { get; init; }
+    [JsonPropertyName("ordinal")]
+    string? Ordinal { get; init; }
+    [JsonPropertyName("names")]
+    public NamesDto? Names { get; init; }
+}
