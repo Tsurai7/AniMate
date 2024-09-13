@@ -9,7 +9,7 @@ namespace AniMate_app.ViewModels
 {
     public partial class UpdatesViewModel : ViewModelBase
     {
-        private readonly AnilibriaService _anilibriaService;
+        private readonly AnimeService _animeService;
 
         [ObservableProperty]
         private GenreCollection _titles = new("updates");
@@ -20,9 +20,9 @@ namespace AniMate_app.ViewModels
         [ObservableProperty]
         private GenreCollection _resumeWatchList = new("resume");
 
-        public UpdatesViewModel(AnilibriaService anilibriaService)
+        public UpdatesViewModel(AnimeService animeService)
         {
-            _anilibriaService = anilibriaService;
+            _animeService = animeService;
 
             _loadMoreContentOffset = 4;
         }
@@ -39,7 +39,7 @@ namespace AniMate_app.ViewModels
                 return;
 
             IsLoading = true;
-            Titles.AddTitleList(await _anilibriaService.GetUpdates(Titles.TitleCount, _loadMoreContentOffset));
+            Titles.AddTitleList(await _animeService.GetUpdates(Titles.TitleCount, _loadMoreContentOffset));
         
             IsLoading = false;
         }

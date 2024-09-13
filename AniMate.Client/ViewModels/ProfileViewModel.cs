@@ -17,16 +17,16 @@ namespace AniMate_app.ViewModels
     {
         private readonly AccountService _accountService;
 
-        public readonly AnilibriaService _anilibriaService;
+        public readonly AnimeService AnimeService;
 
         [ObservableProperty]
         private ProfileDto _profileInfo;
 
-        public ProfileViewModel(AccountService accountService, AnilibriaService anilibriaService)
+        public ProfileViewModel(AccountService accountService, AnimeService animeService)
         {
             _accountService = accountService;
 
-            _anilibriaService = anilibriaService;
+            AnimeService = animeService;
         }
 
         [ObservableProperty]
@@ -71,14 +71,14 @@ namespace AniMate_app.ViewModels
             ProfileInfo = await _accountService.GetProfileInfo(accessToken);
             if (ProfileInfo != null)
             {
-                var likedTitles = await _anilibriaService.GetTitlesByCode(ProfileInfo.LikedTitles);
+                var likedTitles = await AnimeService.GetTitlesByCode(ProfileInfo.LikedTitles);
                 if (likedTitles != null)
                 {
                     LikedTitlesCollection.AddTitleList(likedTitles);
                     LikedTitlesCollection.TargetTitleCount = _loadMoreResultsOffset;
                 }
 
-                var watchedTitles = await _anilibriaService.GetTitlesByCode(ProfileInfo.WatchedTitles);
+                var watchedTitles = await AnimeService.GetTitlesByCode(ProfileInfo.WatchedTitles);
                 if (watchedTitles != null)
                 {
                     WatchedTitlesCollection.AddTitleList(watchedTitles);
@@ -115,7 +115,7 @@ namespace AniMate_app.ViewModels
 
             IsLoading = true;
 
-            List<TitleDto> loadedTitles = await _anilibriaService.GetTitlesByCode(ProfileInfo.LikedTitles,
+            List<TitleDto> loadedTitles = await AnimeService.GetTitlesByCode(ProfileInfo.LikedTitles,
                 LikedTitlesCollection.TitleCount, LikedTitlesCollection.TargetTitleCount);
             if (loadedTitles.Count > 0)
                 LikedTitlesCollection.AddTitleList(loadedTitles);
@@ -123,7 +123,7 @@ namespace AniMate_app.ViewModels
 
             WatchedTitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
 
-            List<TitleDto> loadedWatchedTitles = await _anilibriaService.GetTitlesByCode(ProfileInfo.WatchedTitles,
+            List<TitleDto> loadedWatchedTitles = await AnimeService.GetTitlesByCode(ProfileInfo.WatchedTitles,
                 WatchedTitlesCollection.TitleCount, WatchedTitlesCollection.TargetTitleCount);
             if (loadedWatchedTitles.Count > 0)
                 WatchedTitlesCollection.AddTitleList(loadedWatchedTitles);

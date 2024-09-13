@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 
 namespace AniMate_app.Services;
 
-public class SignalRService
+public class SharedWatchingService
 {
     private HubConnection _hubConnection;
 

@@ -7,14 +7,14 @@ namespace AniMate_app.Views
 {
     public partial class SharedWatchingPage : ContentPage
     {
-        private readonly SignalRService _signalRService;
+        private readonly SharedWatchingService _signalRService;
         private bool _isSeeking;
 
         public SharedWatchingPage()
         {
             InitializeComponent();
 
-            _signalRService = new SignalRService();
+            _signalRService = new SharedWatchingService();
 
             // Подписываемся на события SignalR
             _signalRService.OnSyncStateReceived += OnSyncStateReceived;

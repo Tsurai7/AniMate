@@ -11,13 +11,13 @@ namespace AniMate_app.ViewModels
     {
         public GenreCollection TitlesCollection { get; private set; }
 
-        private readonly AnilibriaService _anilibriaService;
+        private readonly AnimeService _animeService;
 
         private string _nameToFind;
 
-        public SearchViewModel(AnilibriaService anilibriaService)
+        public SearchViewModel(AnimeService animeService)
         {
-            _anilibriaService = anilibriaService;
+            _animeService = animeService;
 
             TitlesCollection = new("Search");
 
@@ -35,7 +35,7 @@ namespace AniMate_app.ViewModels
 
             _nameToFind = name;
 
-            var result = await _anilibriaService.GetTitlesByName(_nameToFind, 0, _loadMoreContentOffset);
+            var result = await _animeService.GetTitlesByName(_nameToFind, 0, _loadMoreContentOffset);
 
             if (result.Count.Equals(0))
             {
@@ -74,7 +74,7 @@ namespace AniMate_app.ViewModels
 
             TitlesCollection.TargetTitleCount += _loadMoreContentOffset;
 
-            TitlesCollection.AddTitleList(await _anilibriaService.GetTitlesByName(_nameToFind, skip: TitlesCollection.TitleCount, TitlesCollection.TitleCount + _loadMoreContentOffset));
+            TitlesCollection.AddTitleList(await _animeService.GetTitlesByName(_nameToFind, skip: TitlesCollection.TitleCount, TitlesCollection.TitleCount + _loadMoreContentOffset));
 
             IsLoading = false;
         }

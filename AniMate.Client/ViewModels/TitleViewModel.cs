@@ -14,16 +14,16 @@ namespace AniMate_app.ViewModels
     [QueryProperty(nameof(TitleCode), "TitleCode")]
     public partial class TitleViewModel : ObservableObject
     {
-        private readonly AnilibriaService _service;
+        private readonly AnimeService _service;
 
         private readonly AccountService _accountService;
 
         [ObservableProperty]
         private ProfileDto profile = null;
 
-        public TitleViewModel(AnilibriaService anilibriaService, AccountService accountService)
+        public TitleViewModel(AnimeService animeService, AccountService accountService)
         {
-            _service = anilibriaService;
+            _service = animeService;
 
             _accountService = accountService;
 

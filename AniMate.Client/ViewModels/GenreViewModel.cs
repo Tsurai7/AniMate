@@ -10,7 +10,7 @@ using Microsoft.Maui.Controls;
 namespace AniMate_app.ViewModels;
 
 [QueryProperty(nameof(Genre), "GenreName")]
-[QueryProperty(nameof(AnilibriaService), "AnilibriaService")]
+[QueryProperty(nameof(AnimeService), "AnilibriaService")]
 public partial class GenreViewModel : ViewModelBase
 {
     private string _genre;
@@ -27,7 +27,7 @@ public partial class GenreViewModel : ViewModelBase
     private GenreCollection _titlesCollection;
 
     [ObservableProperty]
-    private AnilibriaService _anilibriaService;
+    private AnimeService _animeService;
 
     [ObservableProperty]
     private bool _isLoading = false;
@@ -54,7 +54,7 @@ public partial class GenreViewModel : ViewModelBase
 
         TitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
 
-        var loadedTitles = await AnilibriaService.GetTitlesByGenre(Genre, LoadedTitles, LoadedTitles + _loadMoreResultsOffset);
+        var loadedTitles = await AnimeService.GetTitlesByGenre(Genre, LoadedTitles, LoadedTitles + _loadMoreResultsOffset);
 
         if (loadedTitles.Count > 0)
             TitlesCollection.AddTitleList(loadedTitles);

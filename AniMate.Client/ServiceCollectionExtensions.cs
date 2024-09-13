@@ -1,7 +1,10 @@
+using System;
 using AniMate_app.Services;
 using AniMate_app.ViewModels;
 using AniMate_app.Views;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
+using Polly.Extensions.Http;
 
 namespace AniMate_app;
 
@@ -9,9 +12,17 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection ConfigureServices(this IServiceCollection services)
     {
-        // Services configuration
-        services.AddHttpClient<AnilibriaService>();
-        services.AddHttpClient<AccountService>();
+        services.AddHttpClient<AnimeService>(client =>
+        {
+            client.BaseAddress = new Uri("https://api.anilibria.tv/v3/");
+        });
+        
+        services.AddHttpClient<AccountService>(client =>
+        {
+            client.BaseAddress = new Uri("http://10.0.2.2:10100/");
+        });
+        
+        services.AddSingleton<SharedWatchingService>();
 
         // Pages configuration
         services.AddTransient<TitlePage>();
@@ -40,8 +51,7 @@ public static class ServiceCollectionExtensions
             
         services.AddTransient<SignUpViewModel>();
         services.AddTransient<SignUpPage>();
-            
-        services.AddSingleton<SignalRService>();
+        
         services.AddTransient<SharedWatchingPage>();
             
         return services;

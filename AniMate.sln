@@ -7,13 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AniMate.Client", "AniMate.C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AniMate.AccountService", "AniMate.AccountService", "{85BEB107-84C3-49C5-BD37-B3D14C617285}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountService.Domain", "AniMate.Backend\AccountService.Domain\AccountService.Domain.csproj", "{1B5D3536-5385-4E9C-A4D0-F87ABDAB8132}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountService.Domain", "AccountService.Domain\AccountService.Domain.csproj", "{1B5D3536-5385-4E9C-A4D0-F87ABDAB8132}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountService.Application", "AniMate.Backend\AccountService.Application\AccountService.Application.csproj", "{B8C8BDC9-53B5-483C-A8B0-EABE747FFEBF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountService.Application", "AccountService.Application\AccountService.Application.csproj", "{B8C8BDC9-53B5-483C-A8B0-EABE747FFEBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountService.Infrastructure", "AniMate.Backend\AccountService.Infrastructure\AccountService.Infrastructure.csproj", "{BE8766FB-7B19-460B-87AE-73FC4AAA2798}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountService.Infrastructure", "AccountService.Infrastructure\AccountService.Infrastructure.csproj", "{BE8766FB-7B19-460B-87AE-73FC4AAA2798}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountService.API", "AniMate.Backend\AccountService.API\AccountService.API.csproj", "{EEC1E76E-20D9-45EC-BBCB-4D60FCBBAA0E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountService.API", "AccountService.API\AccountService.API.csproj", "{EEC1E76E-20D9-45EC-BBCB-4D60FCBBAA0E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AniMate.AnimeService", "AniMate.AnimeService", "{2E3C0598-F574-4237-B728-16F966C74889}"
 EndProject

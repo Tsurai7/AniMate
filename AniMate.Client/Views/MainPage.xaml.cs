@@ -63,7 +63,7 @@ namespace AniMate_app.Views
             var navigationParameter = new Dictionary<string, object>
             {
                 {"GenreName", genreCollection.GenreName},
-                {"AnilibriaService",  viewModel._anilibriaService}
+                {"AnilibriaService",  viewModel.AnimeService}
             };
 
             await Shell.Current.GoToAsync($"GenrePage", navigationParameter);

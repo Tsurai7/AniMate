@@ -24,11 +24,11 @@ namespace AniMate_app.ViewModels
 
         private readonly int _loadTitlesCount = 4;
 
-        public readonly AnilibriaService _anilibriaService;
+        public readonly AnimeService AnimeService;
 
-        public MainViewModel(AnilibriaService anilibriaService)
+        public MainViewModel(AnimeService animeService)
         {
-            _anilibriaService = anilibriaService;
+            AnimeService = animeService;
 
             _loadMoreContentOffset = 4;
         }
@@ -39,7 +39,7 @@ namespace AniMate_app.ViewModels
 
             GenreList = new(_loadMoreContentOffset);
 
-            Genres = await _anilibriaService.GetAllGenres();
+            Genres = await AnimeService.GetAllGenres();
 
             await LoadMoreGenres(_loadMoreContentOffset);
 
@@ -95,7 +95,7 @@ namespace AniMate_app.ViewModels
             {
                 GenreCollection genreCollection = new(Genres[i]);
 
-                genreCollection.AddTitleList(await _anilibriaService.GetTitlesByGenre(Genres[i], 0, _loadTitlesCount));
+                genreCollection.AddTitleList(await AnimeService.GetTitlesByGenre(Genres[i], 0, _loadTitlesCount));
 
                 genreCollection.TargetTitleCount = _loadTitlesCount;
 
