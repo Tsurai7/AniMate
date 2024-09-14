@@ -4,26 +4,20 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AniMate_app.DTOs.Anime;
+using AniMate_app.Interfaces;
 
-namespace AniMate_app.Services;
+namespace AniMate_app.Clients;
 
-public class AnimeService
+public class AnimeClient(IHttpClientFactory httpClientFactory) : IAnimeClient
 {
-    private readonly HttpClient _httpClient;
-
     private static readonly JsonSerializerOptions SerializerOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
     };
 
-    public AnimeService(HttpClient httpClient)
-    {
-        _httpClient = httpClient;
-    }
-
     public async Task<TitleDto> GetTitleByCode(string code)
     {
-        var response = await _httpClient.GetAsync($"title?code={code}");
+        var response = await httpClientFactory.CreateClient(nameof(AnimeClient)).GetAsync($"title?code={code}");
 
         var jsonInfo = await response.Content.ReadAsStringAsync();
 
@@ -48,7 +42,7 @@ public class AnimeService
         }
 
         var codeList = string.Join(",", codesToProcess);
-        var response = await _httpClient.GetAsync($"title/list?code_list={codeList}");
+        var response = await httpClientFactory.CreateClient(nameof(AnimeClient)).GetAsync($"title/list?code_list={codeList}");
 
         var jsonInfo = await response.Content.ReadAsStringAsync();
 
@@ -57,7 +51,7 @@ public class AnimeService
 
     public async Task<List<TitleDto>> GetTitlesByName(string name, int skip = 0, int count = 6)
     {
-        var response = await _httpClient.GetAsync(
+        var response = await httpClientFactory.CreateClient(nameof(AnimeClient)).GetAsync(
             $"title/search?search={name}&order_by=in_favorites&sort_direction=1&{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}");
 
         var jsonInfo = await response.Content.ReadAsStringAsync();
@@ -67,7 +61,7 @@ public class AnimeService
 
     public async Task<List<TitleDto>> GetUpdates(int skip = 0, int count = 6)
     {
-        var response = await _httpClient.GetAsync(
+        var response = await httpClientFactory.CreateClient(nameof(AnimeClient)).GetAsync(
             $"title/updates?{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}");
 
         var jsonInfo = await response.Content.ReadAsStringAsync();
@@ -77,7 +71,7 @@ public class AnimeService
 
     public async Task<List<string>> GetAllGenres()
     {
-        var response = await _httpClient.GetAsync($"genres");
+        var response = await httpClientFactory.CreateClient(nameof(AnimeClient)).GetAsync($"genres");
 
         var jsonInfo = await response.Content.ReadAsStringAsync();
 
@@ -86,7 +80,7 @@ public class AnimeService
 
     public async Task<List<TitleDto>> GetTitlesByGenre(string genre, int skip = 0, int count = 1)
     {
-        var response = await _httpClient.GetAsync(
+        var response = await httpClientFactory.CreateClient(nameof(AnimeClient)).GetAsync(
             $"title/search?genres={genre}&order_by=in_favorites&sort_direction=1{(skip > 0 ? $"&after={skip}" : "")}&limit={skip + count}");
 
         var jsonInfo = await response.Content.ReadAsStringAsync();

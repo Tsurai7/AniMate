@@ -1,10 +1,10 @@
 using System;
-using AniMate_app.Services;
+using System.Net.Http;
+using AniMate_app.Clients;
+using AniMate_app.Interfaces;
 using AniMate_app.ViewModels;
 using AniMate_app.Views;
 using Microsoft.Extensions.DependencyInjection;
-using Polly;
-using Polly.Extensions.Http;
 
 namespace AniMate_app;
 
@@ -12,17 +12,23 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection ConfigureServices(this IServiceCollection services)
     {
-        services.AddHttpClient<AnimeService>(client =>
+        services.AddSingleton<IAnimeClient>(sp =>
         {
-            client.BaseAddress = new Uri("https://api.anilibria.tv/v3/");
+            var client = new AnimeClient(sp.GetRequiredService<IHttpClientFactory>());
+            return client;
         });
+        services.AddHttpClient(nameof(AnimeClient),
+            client => client.BaseAddress = new Uri("https://api.anilibria.tv/v3/"));
         
-        services.AddHttpClient<AccountService>(client =>
+        services.AddSingleton<IAccountClient>(sp =>
         {
-            client.BaseAddress = new Uri("http://10.0.2.2:10100/");
+            var client = new AccountClient(sp.GetRequiredService<IHttpClientFactory>());
+            return client;
         });
+        services.AddHttpClient(nameof(AccountClient),
+            client => client.BaseAddress = new Uri("http://10.0.2.2:10100/"));
         
-        services.AddSingleton<SharedWatchingService>();
+        services.AddSingleton<SharedWatchingClient>();
 
         // Pages configuration
         services.AddTransient<TitlePage>();

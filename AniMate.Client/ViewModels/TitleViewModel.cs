@@ -1,10 +1,11 @@
 ﻿using System.Linq;
-using AniMate_app.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Text.Json;
 using System.Threading.Tasks;
+using AniMate_app.Clients;
 using AniMate_app.DTOs.Account;
 using AniMate_app.DTOs.Anime;
+using AniMate_app.Interfaces;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 
@@ -14,20 +15,18 @@ namespace AniMate_app.ViewModels
     [QueryProperty(nameof(TitleCode), "TitleCode")]
     public partial class TitleViewModel : ObservableObject
     {
-        private readonly AnimeService _service;
-
-        private readonly AccountService _accountService;
+        private readonly IAnimeClient _animeClient;
+        private readonly IAccountClient _accountClient;
 
         [ObservableProperty]
         private ProfileDto profile = null;
 
-        public TitleViewModel(AnimeService animeService, AccountService accountService)
+        public TitleViewModel(IAnimeClient animeClient, IAccountClient accountClient)
         {
-            _service = animeService;
+            _animeClient = animeClient;
+            _accountClient = accountClient;
 
-            _accountService = accountService;
-
-            string jsonProfile = Preferences.Default.Get("Profile", string.Empty);
+            var jsonProfile = Preferences.Default.Get("Profile", string.Empty);
 
             if (!string.IsNullOrEmpty(jsonProfile))
             {
@@ -70,7 +69,7 @@ namespace AniMate_app.ViewModels
 
         private async void LoadTitleFromCode(string code)
         {
-            TitleDto = await _service.GetTitleByCode(code);
+            TitleDto = await _animeClient.GetTitleByCode(code);
         }
 
         [ObservableProperty]
@@ -88,7 +87,7 @@ namespace AniMate_app.ViewModels
                 if (Profile.LikedTitles.Contains(titleCode))
                 {
                     Profile.LikedTitles.Remove(titleCode);
-                    bool success = await _accountService.RemoveTitleFromLiked(token, titleCode);
+                    bool success = await _accountClient.RemoveTitleFromLiked(token, titleCode);
 
                     if (success)
                     {
@@ -101,7 +100,7 @@ namespace AniMate_app.ViewModels
                 else
                 {
                     Profile.LikedTitles.Add(titleCode);
-                    bool success = await _accountService.AddTitleToLiked(token, titleCode);
+                    bool success = await _accountClient.AddTitleToLiked(token, titleCode);
 
                     if (success)
                     {
@@ -129,7 +128,7 @@ namespace AniMate_app.ViewModels
                 else
                 {
                     Profile.WatchedTitles.Add(titleCode);
-                    bool success = await _accountService.AddTitleToHistory(token, titleCode);
+                    bool success = await _accountClient.AddTitleToHistory(token, titleCode);
 
                     if (success)
                     {

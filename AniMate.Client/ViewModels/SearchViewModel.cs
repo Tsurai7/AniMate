@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AniMate_app.Interfaces;
 using AniMate_app.Model;
-using AniMate_app.Services;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.Input;
 
@@ -11,13 +11,13 @@ namespace AniMate_app.ViewModels
     {
         public GenreCollection TitlesCollection { get; private set; }
 
-        private readonly AnimeService _animeService;
+        private readonly IAnimeClient _animeClient;
 
         private string _nameToFind;
 
-        public SearchViewModel(AnimeService animeService)
+        public SearchViewModel(IAnimeClient animeClient)
         {
-            _animeService = animeService;
+            _animeClient = animeClient;
 
             TitlesCollection = new("Search");
 
@@ -35,7 +35,7 @@ namespace AniMate_app.ViewModels
 
             _nameToFind = name;
 
-            var result = await _animeService.GetTitlesByName(_nameToFind, 0, _loadMoreContentOffset);
+            var result = await _animeClient.GetTitlesByName(_nameToFind, 0, _loadMoreContentOffset);
 
             if (result.Count.Equals(0))
             {
@@ -74,7 +74,7 @@ namespace AniMate_app.ViewModels
 
             TitlesCollection.TargetTitleCount += _loadMoreContentOffset;
 
-            TitlesCollection.AddTitleList(await _animeService.GetTitlesByName(_nameToFind, skip: TitlesCollection.TitleCount, TitlesCollection.TitleCount + _loadMoreContentOffset));
+            TitlesCollection.AddTitleList(await _animeClient.GetTitlesByName(_nameToFind, skip: TitlesCollection.TitleCount, TitlesCollection.TitleCount + _loadMoreContentOffset));
 
             IsLoading = false;
         }

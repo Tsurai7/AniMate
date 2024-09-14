@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AniMate_app.Interfaces;
 using AniMate_app.Model;
-using AniMate_app.Services;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -24,11 +24,11 @@ namespace AniMate_app.ViewModels
 
         private readonly int _loadTitlesCount = 4;
 
-        public readonly AnimeService AnimeService;
+        public readonly IAnimeClient AnimeClient;
 
-        public MainViewModel(AnimeService animeService)
+        public MainViewModel(IAnimeClient animeClient)
         {
-            AnimeService = animeService;
+            AnimeClient = animeClient;
 
             _loadMoreContentOffset = 4;
         }
@@ -39,7 +39,7 @@ namespace AniMate_app.ViewModels
 
             GenreList = new(_loadMoreContentOffset);
 
-            Genres = await AnimeService.GetAllGenres();
+            Genres = await AnimeClient.GetAllGenres();
 
             await LoadMoreGenres(_loadMoreContentOffset);
 
@@ -95,7 +95,7 @@ namespace AniMate_app.ViewModels
             {
                 GenreCollection genreCollection = new(Genres[i]);
 
-                genreCollection.AddTitleList(await AnimeService.GetTitlesByGenre(Genres[i], 0, _loadTitlesCount));
+                genreCollection.AddTitleList(await AnimeClient.GetTitlesByGenre(Genres[i], 0, _loadTitlesCount));
 
                 genreCollection.TargetTitleCount = _loadTitlesCount;
 

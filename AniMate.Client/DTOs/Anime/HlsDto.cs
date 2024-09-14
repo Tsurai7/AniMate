@@ -4,14 +4,14 @@ namespace AniMate_app.DTOs.Anime;
 
 public class HlsDto
 {
-    private const string BaseAdress = "https://cache.libria.fun";
+    private const string BaseAddress = "https://cache.libria.fun";
 
-    [Newtonsoft.Json.JsonConstructor]
+    [JsonConstructor]
     public HlsDto(string fhd, string hd, string sd)
     {
-        Fhd = $"{BaseAdress}{fhd}";
-        Hd = $"{BaseAdress}{hd}";
-        Sd = $"{BaseAdress}{sd}";
+        Fhd = $"{BaseAddress}{fhd}";
+        Hd = $"{BaseAddress}{hd}";
+        Sd = $"{BaseAddress}{sd}";
     }
 
     [JsonPropertyName("fhd")]

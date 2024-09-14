@@ -1,15 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AniMate_app.DTOs.Anime; 
+
 public class EpisodeDto
 {
-    [JsonProperty("episode")]
-    public string Ordinal { get; init; }
+    [JsonPropertyName("episode")]
+    public int Ordinal { get; init; }
 
-    [JsonProperty("name")]
+    [JsonPropertyName("name")]
     public string? Name { get; init; }
 
-    [JsonProperty("hls")]
+    [JsonPropertyName("hls")]
     public HlsDto HlsUrls { get; init; }
 }
 

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using AniMate_app.Interfaces;
 using AniMate_app.Model;
-using AniMate_app.Services;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -9,8 +9,8 @@ namespace AniMate_app.ViewModels
 {
     public partial class UpdatesViewModel : ViewModelBase
     {
-        private readonly AnimeService _animeService;
-
+        private readonly IAnimeClient _animeClient;
+        
         [ObservableProperty]
         private GenreCollection _titles = new("updates");
 
@@ -20,9 +20,9 @@ namespace AniMate_app.ViewModels
         [ObservableProperty]
         private GenreCollection _resumeWatchList = new("resume");
 
-        public UpdatesViewModel(AnimeService animeService)
+        public UpdatesViewModel(IAnimeClient animeClient)
         {
-            _animeService = animeService;
+            _animeClient = animeClient;
 
             _loadMoreContentOffset = 4;
         }
@@ -39,7 +39,7 @@ namespace AniMate_app.ViewModels
                 return;
 
             IsLoading = true;
-            Titles.AddTitleList(await _animeService.GetUpdates(Titles.TitleCount, _loadMoreContentOffset));
+            Titles.AddTitleList(await _animeClient.GetUpdates(Titles.TitleCount, _loadMoreContentOffset));
         
             IsLoading = false;
         }

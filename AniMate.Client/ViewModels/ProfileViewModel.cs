@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using AniMate_app.Clients;
 using AniMate_app.DTOs.Account;
-using AniMate_app.DTOs.Anime;
+using AniMate_app.Interfaces;
 using AniMate_app.Model;
-using AniMate_app.Services;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -15,20 +14,12 @@ namespace AniMate_app.ViewModels
     [QueryProperty(nameof(ProfileInfo), "Profile")]
     public partial class ProfileViewModel : ViewModelBase
     {
-        private readonly AccountService _accountService;
-
-        public readonly AnimeService AnimeService;
+        private readonly IAccountClient _accountClient;
+        private readonly IAnimeClient _animeClient;
 
         [ObservableProperty]
         private ProfileDto _profileInfo;
-
-        public ProfileViewModel(AccountService accountService, AnimeService animeService)
-        {
-            _accountService = accountService;
-
-            AnimeService = animeService;
-        }
-
+        
         [ObservableProperty]
         private GenreCollection _likedTitlesCollection = new("Likes");
         
@@ -39,8 +30,15 @@ namespace AniMate_app.ViewModels
         private bool _isLoading = false;
 
         private int LoadedTitles => LikedTitlesCollection.TitleCount;
-
+        
         private readonly int _loadMoreResultsOffset = 6;
+        
+        public ProfileViewModel(IAccountClient accountClient, IAnimeClient animeClient)
+        {
+            _accountClient = accountClient;
+            _animeClient = animeClient;
+        }
+
 
 
         [RelayCommand]
@@ -68,17 +66,17 @@ namespace AniMate_app.ViewModels
             string accessToken = Preferences.Default.Get("AccessToken", string.Empty);
             LikedTitlesCollection.Clear();
             WatchedTitlesCollection.Clear();
-            ProfileInfo = await _accountService.GetProfileInfo(accessToken);
+            ProfileInfo = await _accountClient.GetProfileInfo(accessToken);
             if (ProfileInfo != null)
             {
-                var likedTitles = await AnimeService.GetTitlesByCode(ProfileInfo.LikedTitles);
+                var likedTitles = await _animeClient.GetTitlesByCode(ProfileInfo.LikedTitles);
                 if (likedTitles != null)
                 {
                     LikedTitlesCollection.AddTitleList(likedTitles);
                     LikedTitlesCollection.TargetTitleCount = _loadMoreResultsOffset;
                 }
 
-                var watchedTitles = await AnimeService.GetTitlesByCode(ProfileInfo.WatchedTitles);
+                var watchedTitles = await _animeClient.GetTitlesByCode(ProfileInfo.WatchedTitles);
                 if (watchedTitles != null)
                 {
                     WatchedTitlesCollection.AddTitleList(watchedTitles);
@@ -115,7 +113,7 @@ namespace AniMate_app.ViewModels
 
             IsLoading = true;
 
-            List<TitleDto> loadedTitles = await AnimeService.GetTitlesByCode(ProfileInfo.LikedTitles,
+            var loadedTitles = await _animeClient.GetTitlesByCode(ProfileInfo.LikedTitles,
                 LikedTitlesCollection.TitleCount, LikedTitlesCollection.TargetTitleCount);
             if (loadedTitles.Count > 0)
                 LikedTitlesCollection.AddTitleList(loadedTitles);
@@ -123,7 +121,7 @@ namespace AniMate_app.ViewModels
 
             WatchedTitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
 
-            List<TitleDto> loadedWatchedTitles = await AnimeService.GetTitlesByCode(ProfileInfo.WatchedTitles,
+            var loadedWatchedTitles = await _animeClient.GetTitlesByCode(ProfileInfo.WatchedTitles,
                 WatchedTitlesCollection.TitleCount, WatchedTitlesCollection.TargetTitleCount);
             if (loadedWatchedTitles.Count > 0)
                 WatchedTitlesCollection.AddTitleList(loadedWatchedTitles);

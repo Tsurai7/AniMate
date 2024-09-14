@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
+using AniMate_app.Interfaces;
 using AniMate_app.Model;
-using AniMate_app.Services;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -10,7 +10,6 @@ using Microsoft.Maui.Controls;
 namespace AniMate_app.ViewModels;
 
 [QueryProperty(nameof(Genre), "GenreName")]
-[QueryProperty(nameof(AnimeService), "AnilibriaService")]
 public partial class GenreViewModel : ViewModelBase
 {
     private string _genre;
@@ -25,9 +24,8 @@ public partial class GenreViewModel : ViewModelBase
 
     [ObservableProperty]
     private GenreCollection _titlesCollection;
-
-    [ObservableProperty]
-    private AnimeService _animeService;
+    
+    private readonly IAnimeClient _animeClient;
 
     [ObservableProperty]
     private bool _isLoading = false;
@@ -35,6 +33,11 @@ public partial class GenreViewModel : ViewModelBase
     private int LoadedTitles => TitlesCollection.TitleCount;
 
     private readonly int _loadMoreResultsOffset = 6;
+
+    public GenreViewModel(IAnimeClient animeClient)
+    {
+        _animeClient = animeClient;
+    }
 
     public override Task LoadContent()
     {
@@ -54,7 +57,7 @@ public partial class GenreViewModel : ViewModelBase
 
         TitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
 
-        var loadedTitles = await AnimeService.GetTitlesByGenre(Genre, LoadedTitles, LoadedTitles + _loadMoreResultsOffset);
+        var loadedTitles = await _animeClient.GetTitlesByGenre(Genre, LoadedTitles, LoadedTitles + _loadMoreResultsOffset);
 
         if (loadedTitles.Count > 0)
             TitlesCollection.AddTitleList(loadedTitles);

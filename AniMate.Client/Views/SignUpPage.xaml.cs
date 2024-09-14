@@ -78,12 +78,12 @@ public partial class SignUpPage : ContentPage
             return;
         }
         
-        AuthResponse response = await _viewModel._accountService.
+        AuthResponse response = await _viewModel._accountClient.
             SignUp(EmailEntry.Text, UsernameEntry.Text, PasswordEntry.Text);
 
         if (response != null)
         {
-            ProfileDto profileDto = await _viewModel._accountService.GetProfileInfo(response.AccessToken);
+            ProfileDto profileDto = await _viewModel._accountClient.GetProfileInfo(response.AccessToken);
             
             var navigationParameter = new Dictionary<string, object>
             {

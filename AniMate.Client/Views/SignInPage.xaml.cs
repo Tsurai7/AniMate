@@ -29,11 +29,11 @@ public partial class SignInPage : ContentPage
         
         string password = PasswordEntry.Text;
 
-        AuthResponse response = await _viewModel._accountService.SignIn(email, password);
+        AuthResponse response = await _viewModel._accountClient.SignIn(email, password);
 
         if (response is not null)
         {
-            ProfileDto profileDto = await _viewModel._accountService.GetProfileInfo(response.AccessToken);
+            ProfileDto profileDto = await _viewModel._accountClient.GetProfileInfo(response.AccessToken);
             
             var navigationParameter = new Dictionary<string, object>
             {

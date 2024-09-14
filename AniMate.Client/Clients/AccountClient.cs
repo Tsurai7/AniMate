@@ -5,22 +5,22 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using AniMate_app.DTOs.Account;
 using AniMate_app.DTOs.Auth;
-using Newtonsoft.Json;
+using AniMate_app.Interfaces;
 
-namespace AniMate_app.Services;
+namespace AniMate_app.Clients;
 
-public class AccountService
+public class AccountClient : IAccountClient
 {
-    private readonly HttpClient _httpClient;
+    private readonly IHttpClientFactory _httpClientFactory;
 
     private static readonly JsonSerializerOptions SerializerOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
     };
 
-    public AccountService(HttpClient httpClient)
+    public AccountClient(IHttpClientFactory httpClientFactory)
     {
-        _httpClient = httpClient;
+        _httpClientFactory = httpClientFactory;
     }
 
     public async Task<ProfileDto> GetProfileInfo(string token)
@@ -28,9 +28,9 @@ public class AccountService
         var request = new HttpRequestMessage(HttpMethod.Get, $"account/profile");
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        var response = await _httpClient.SendAsync(request);
+        var response = await _httpClientFactory.CreateClient(nameof(AccountClient)).SendAsync(request);
         var jsonInfo = await response.Content.ReadAsStringAsync();
-        var profileDto = JsonConvert.DeserializeObject<ProfileDto>(jsonInfo);
+        var profileDto = JsonSerializer.Deserialize<ProfileDto>(jsonInfo, SerializerOptions);
         
         return profileDto;
     }
@@ -43,7 +43,7 @@ public class AccountService
         request.Content = requestContent;
         requestContent.Headers.Add("titleCode", titleCode);
 
-        var response = await _httpClient.SendAsync(request);
+        var response = await _httpClientFactory.CreateClient(nameof(AccountClient)).SendAsync(request);
         return response.IsSuccessStatusCode;
     }
 
@@ -57,7 +57,7 @@ public class AccountService
         
         requestContent.Headers.Add("titleCode", titleCode);
 
-        var response = await _httpClient.SendAsync(request);
+        var response = await _httpClientFactory.CreateClient(nameof(AccountClient)).SendAsync(request);
         
         return response.IsSuccessStatusCode;
     }
@@ -70,14 +70,14 @@ public class AccountService
             password
         };
 
-        var jsonContent = JsonConvert.SerializeObject(authData);
+        var jsonContent = JsonSerializer.Serialize(authData);
         var requestContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-        var response = await _httpClient.PostAsync($"auth/signIn", requestContent);
+        var response = await _httpClientFactory.CreateClient(nameof(AccountClient)).PostAsync($"auth/signIn", requestContent);
         
         var jsonInfo = await response.Content.ReadAsStringAsync();
         
-        return JsonConvert.DeserializeObject<AuthResponse>(jsonInfo);
+        return JsonSerializer.Deserialize<AuthResponse>(jsonInfo, SerializerOptions);
     }
 
     public async Task<bool> AddTitleToHistory(string token, string titleCode)
@@ -90,7 +90,7 @@ public class AccountService
         
         requestContent.Headers.Add("titleCode", titleCode);
 
-        var response = await _httpClient.SendAsync(request);
+        var response = await _httpClientFactory.CreateClient(nameof(AccountClient)).SendAsync(request);
         
         return response.IsSuccessStatusCode;
     }
@@ -104,14 +104,11 @@ public class AccountService
             password,
         };
 
-        var jsonContent = JsonConvert.SerializeObject(authData);
-        
+        var jsonContent = JsonSerializer.Serialize(authData, SerializerOptions);
         var requestContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-        var response = await _httpClient.PostAsync($"auth/signUp", requestContent);
-        
+        var response = await _httpClientFactory.CreateClient(nameof(AccountClient)).PostAsync($"auth/signUp", requestContent);
         var jsonInfo = await response.Content.ReadAsStringAsync();
         
-        return JsonConvert.DeserializeObject<AuthResponse>(jsonInfo);
+        return JsonSerializer.Deserialize<AuthResponse>(jsonInfo, SerializerOptions);
     }
 }
