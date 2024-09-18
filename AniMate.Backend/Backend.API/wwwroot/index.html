@@ -174,9 +174,9 @@
         }
     });
 
-    connection.on("ReceiveMessage", (user, message) => {
+    connection.on("ReceiveMessage", (message) => {
         const chatMessages = document.getElementById('chatMessages');
-        chatMessages.innerHTML += `<p><strong>${user}:</strong> ${message}</p>`;
+        chatMessages.innerHTML += `<p> ${message}</p>`;
         chatMessages.scrollTop = chatMessages.scrollHeight;
     });
 

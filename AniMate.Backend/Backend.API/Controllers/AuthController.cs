@@ -13,10 +13,12 @@ public class AuthController(AuthService authService) : Controller
     [HttpPost("sign-up")]
     public async Task<IActionResult> SignUp([FromBody] SignUpRequest model)
     {
+        throw new NotImplementedException();
     }
     
     [HttpPost("sign-in")]
     public async Task<IActionResult> SignIn([FromBody] SignInRequest model)
     {
+        throw new NotImplementedException();
     }
 }

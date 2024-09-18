@@ -9,24 +9,29 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/> <!-- Media Element -->
+            <RowDefinition Height="Auto"/> <!-- Episode Picker -->
+            <RowDefinition Height="Auto"/> <!-- Next Episode Picker -->
+            <RowDefinition Height="*"/> <!-- Chat Area -->
+            <RowDefinition Height="Auto"/> <!-- Message Input -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
+        <!-- Media Element for video -->
         <toolkit:MediaElement x:Name="MediaControl"
                               ShouldAutoPlay="False"
                               Source="https://cache.libria.fun/videos/media/ts/9000/1/720/e313ea7c883c81fba86547414ec18b5e.m3u8"
-                              Aspect="Center"
-                              HorizontalOptions="Center"
-                              VerticalOptions="Center"
+                              Aspect="AspectFit"
+                              HorizontalOptions="Fill"
+                              VerticalOptions="Fill"
                               BackgroundColor="Black"
+                              ShouldShowPlaybackControls="True"
                               Grid.Row="0"
                               Grid.Column="0"/>
 
+        <!-- Episode Picker -->
         <Picker x:Name="EpisodePicker"
                 Title="Выберите серию"
                 Grid.Row="1"
@@ -41,11 +46,12 @@
                     <x:String>Серия 1</x:String>
                     <x:String>Серия 2</x:String>
                     <x:String>Серия 3</x:String>
-                    <!-- Добавьте больше серий по необходимости -->
+                    <!-- Add more episodes if needed -->
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
 
+        <!-- Next Episode Picker -->
         <Picker x:Name="NextEpisodePicker"
                 Title="Перейти к следующей серии"
                 Grid.Row="2"
@@ -63,5 +69,34 @@
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
+
+        <!-- Chat Area: ListView to display chat messages -->
+        <ListView x:Name="ChatMessagesListView"
+                  Grid.Row="3"
+                  Grid.Column="0"
+                  ItemsSource="{Binding _chatMessages}"
+                  BackgroundColor="#222222"
+                  HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding}" 
+                              TextColor="White"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
+        <!-- Message Input and Send Button -->
+        <StackLayout Grid.Row="4" Grid.Column="0" Orientation="Horizontal" Padding="10">
+            <Entry x:Name="MessageEntry"
+                   Placeholder="Enter your message..."
+                   TextColor="White"
+                   BackgroundColor="#333333"
+                   HorizontalOptions="FillAndExpand" />
+            <Button Text="Send"
+                    TextColor="White"
+                    BackgroundColor="#444444"
+                    Clicked="OnSendMessageClicked"/>
+        </StackLayout>
     </Grid>
 </ContentPage>

@@ -6,6 +6,12 @@ namespace Backend.API.Hubs
     public class SharedWatchingHub : Hub
     {
         private static readonly ConcurrentDictionary<string, Room> Rooms = new();
+        private readonly ILogger<SharedWatchingHub> _logger;
+
+        public SharedWatchingHub(ILogger<SharedWatchingHub> logger)
+        {
+            _logger = logger;
+        }
         
         public async Task CreateRoom(string link, string titleCode, string episodeUrl)
         {
@@ -22,6 +28,8 @@ namespace Backend.API.Hubs
             await Groups.AddToGroupAsync(Context.ConnectionId, link);
             
             await Clients.Caller.SendAsync("CreatedRoom", link, titleCode, episodeUrl);
+
+            await SendMessage(link, $"Room created with name {link}");
         }
 
         public async Task JoinRoom(string link)
@@ -34,79 +42,58 @@ namespace Backend.API.Hubs
             }
             
             await Clients.Caller.SendAsync("Error", $"Failed to join room: {link}");
+            
+            await SendMessage(link, $"New user joined");
         }
         
         public async Task Pause(string roomName, double currentTiming)
         {
-            try
+            if (Rooms.TryGetValue(roomName, out var room))
             {
-                if (Rooms.TryGetValue(roomName, out var room))
-                {
-                    room.CurrentTiming = TimeSpan.FromSeconds(Math.Max(0, currentTiming));
-                    room.IsPlaying = false;
-                }
-                
-                await Clients.OthersInGroup(roomName).SendAsync("Pause", currentTiming);
+                room.CurrentTiming = TimeSpan.FromSeconds(Math.Max(0, currentTiming));
+                room.IsPlaying = false;
             }
-            catch (Exception ex)
-            {
-                await Clients.Caller.SendAsync("Error", "Failed to pause: " + ex.Message);
-            }
+            
+            await Clients.OthersInGroup(roomName).SendAsync("Pause", currentTiming);
+            
+            await SendMessage(roomName, $"Video paused on timing: {currentTiming}");
         }
         
         public async Task Resume(string roomName, double currentTiming)
         {
-            try
+            if (Rooms.TryGetValue(roomName, out var room))
             {
-                if (Rooms.TryGetValue(roomName, out var room))
-                {
-                    room.CurrentTiming = TimeSpan.FromSeconds(Math.Max(0, currentTiming));
-                    room.IsPlaying = true;
-                }
-                
-                await Clients.OthersInGroup(roomName).SendAsync("Resume", currentTiming);
+                room.CurrentTiming = TimeSpan.FromSeconds(Math.Max(0, currentTiming));
+                room.IsPlaying = true;
             }
-            catch (Exception ex)
-            {
-                await Clients.Caller.SendAsync("Error", "Failed to resume: " + ex.Message);
-            }
+            
+            await Clients.OthersInGroup(roomName).SendAsync("Resume", currentTiming);
+            await SendMessage(roomName, $"Video resumed on timing: {currentTiming}");
         }
         
         public async Task Seek(string roomName, double newTime)
         {
-            try
+            if (Rooms.TryGetValue(roomName, out var room))
             {
-                if (Rooms.TryGetValue(roomName, out var room))
-                {
-                    room.CurrentTiming = TimeSpan.FromSeconds(Math.Max(0, newTime));
-                }
-                
-                await Clients.OthersInGroup(roomName).SendAsync("Seek", newTime);
+                room.CurrentTiming = TimeSpan.FromSeconds(Math.Max(0, newTime));
             }
-            catch (Exception ex)
-            {
-                await Clients.Caller.SendAsync("Error", "Failed to seek: " + ex.Message);
-            }
+            
+            await Clients.OthersInGroup(roomName).SendAsync("Seek", newTime);
+            
+            await SendMessage(roomName, $"Video seeked on timing: {newTime}");
         }
         
         public async Task UpdateVideoUrl(string roomName, string newVideoUrl)
         {
-            try
+            if (Rooms.TryGetValue(roomName, out var room))
             {
-                if (Rooms.TryGetValue(roomName, out var room))
-                {
-                    room.Url = newVideoUrl;
-                    room.CurrentTiming = TimeSpan.Zero;
-                    room.IsPlaying = false; 
-                    
-                    await Clients.Group(roomName).SendAsync("VideoUrlUpdated", newVideoUrl);
-                    
-                    await Clients.Group(roomName).SendAsync("SyncState", newVideoUrl, room.CurrentTiming.TotalSeconds, room.IsPlaying);
-                }
-            }
-            catch (Exception ex)
-            {
-                await Clients.Caller.SendAsync("Error", "Failed to update video URL: " + ex.Message);
+                room.Url = newVideoUrl;
+                room.CurrentTiming = TimeSpan.Zero;
+                room.IsPlaying = false; 
+                
+                await Clients.Group(roomName).SendAsync("VideoUrlUpdated", newVideoUrl);
+                
+                await Clients.Group(roomName).SendAsync("SyncState", newVideoUrl, room.CurrentTiming.TotalSeconds, room.IsPlaying);
             }
         }
         
@@ -120,9 +107,7 @@ namespace Backend.API.Hubs
         
         public async Task SendMessage(string roomName, string message)
         {
-            var user = Context.ConnectionId;
-            
-            await Clients.Group(roomName).SendAsync("ReceiveMessage", user, message);
+            await Clients.Group(roomName).SendAsync("ReceiveMessage", message);
         }
     }
 
