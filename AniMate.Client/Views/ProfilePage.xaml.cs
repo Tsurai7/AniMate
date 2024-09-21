@@ -26,7 +26,7 @@ public partial class ProfilePage : ContentPage
 
         if (collectionView.SelectedItem != null)
         {
-            TitleDto selectedTitleDto = collectionView.SelectedItem as TitleDto;
+            var selectedTitleDto = collectionView.SelectedItem as TitleDto;
 
             collectionView.SelectedItem = null;
 

@@ -78,7 +78,7 @@ namespace AniMate_app.ViewModels
         {
             IsLoading = true;
 
-            List<GenreCollection> newGenres = await LoadGenres(count);
+            var newGenres = await LoadGenres(count);
 
             GenreList.AddRange(newGenres);
 
@@ -87,11 +87,11 @@ namespace AniMate_app.ViewModels
 
         private async Task<List<GenreCollection>> LoadGenres(int count)
         {
-            int newCount = GenresLoaded + count < Genres.Count ? GenresLoaded + count : Genres.Count;
+            var newCount = GenresLoaded + count < Genres.Count ? GenresLoaded + count : Genres.Count;
 
-            List<GenreCollection> list = new();
+            List<GenreCollection> list = [];
 
-            for (int i = GenresLoaded; i < newCount; i++)
+            for (var i = GenresLoaded; i < newCount; i++)
             {
                 GenreCollection genreCollection = new(Genres[i]);
 

@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 
 namespace AniMate_app.DTOs.Anime;
-public record PlayerDto
+public class PlayerDto
 {
     public string? AlternativePlayer { get; init; }
     public string Host { get; init; }

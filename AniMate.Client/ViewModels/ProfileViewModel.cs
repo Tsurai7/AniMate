@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using AniMate_app.Clients;
 using AniMate_app.DTOs.Account;
 using AniMate_app.Interfaces;
 using AniMate_app.Model;
@@ -39,8 +38,6 @@ namespace AniMate_app.ViewModels
             _animeClient = animeClient;
         }
 
-
-
         [RelayCommand]
         public async Task Refresh()
         {
@@ -63,26 +60,25 @@ namespace AniMate_app.ViewModels
         }
         public override async Task LoadContent()
         {
-            string accessToken = Preferences.Default.Get("AccessToken", string.Empty);
+            var accessToken = Preferences.Default.Get("AccessToken", string.Empty);
             LikedTitlesCollection.Clear();
             WatchedTitlesCollection.Clear();
-            ProfileInfo = await _accountClient.GetProfileInfo(accessToken);
-            if (ProfileInfo != null)
+            //ProfileInfo = await _accountClient.GetProfileInfo(accessToken);
+            
+            var likedTitles = await _animeClient.GetTitlesByCode(ProfileInfo.LikedTitles);
+            if (likedTitles != null)
             {
-                var likedTitles = await _animeClient.GetTitlesByCode(ProfileInfo.LikedTitles);
-                if (likedTitles != null)
-                {
-                    LikedTitlesCollection.AddTitleList(likedTitles);
-                    LikedTitlesCollection.TargetTitleCount = _loadMoreResultsOffset;
-                }
-
-                var watchedTitles = await _animeClient.GetTitlesByCode(ProfileInfo.WatchedTitles);
-                if (watchedTitles != null)
-                {
-                    WatchedTitlesCollection.AddTitleList(watchedTitles);
-                    WatchedTitlesCollection.TargetTitleCount = _loadMoreResultsOffset;
-                }
+                LikedTitlesCollection.AddTitleList(likedTitles);
+                LikedTitlesCollection.TargetTitleCount = _loadMoreResultsOffset;
             }
+
+            var watchedTitles = await _animeClient.GetTitlesByCode(ProfileInfo.WatchedTitles);
+            if (watchedTitles != null)
+            {
+                WatchedTitlesCollection.AddTitleList(watchedTitles);
+                WatchedTitlesCollection.TargetTitleCount = _loadMoreResultsOffset;
+            }
+            
         }
 
         [RelayCommand]
