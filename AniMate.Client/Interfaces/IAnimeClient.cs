@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AniMate_app.DTOs.Anime;
 
 namespace AniMate_app.Interfaces;

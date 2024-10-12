@@ -1,10 +1,7 @@
-using System;
-using System.Net.Http;
 using AniMate_app.Clients;
 using AniMate_app.Interfaces;
 using AniMate_app.ViewModels;
 using AniMate_app.Views;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace AniMate_app;
 

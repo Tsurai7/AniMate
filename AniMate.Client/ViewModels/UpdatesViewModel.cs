@@ -1,6 +1,5 @@
-﻿using System.Threading.Tasks;
-using AniMate_app.Interfaces;
-using AniMate_app.Model;
+﻿using AniMate_app.Interfaces;
+using AniMate_app.Models;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;

@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using AniMate_app.DTOs.Account;
 using AniMate_app.DTOs.Auth;
 

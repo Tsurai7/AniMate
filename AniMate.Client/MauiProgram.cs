@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls.Hosting;
-using Microsoft.Maui.Hosting;
 
 namespace AniMate_app;
     public static class MauiProgram
@@ -10,14 +8,16 @@ namespace AniMate_app;
         {
             var builder = MauiApp.CreateBuilder();
 
-            builder.UseMauiApp<App>().ConfigureFonts(fonts =>
+            builder.UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
+                .UseMauiCommunityToolkitMediaElement()
+                .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            })
-            .UseMauiCommunityToolkit()
-            .UseMauiCommunityToolkitMediaElement();
+            });
 
+            builder.Services.ConfigureMauiHandlers(null);
             builder.Services.ConfigureServices();
           
 #if DEBUG

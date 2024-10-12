@@ -1,12 +1,8 @@
-﻿using System.Linq;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Text.Json;
-using System.Threading.Tasks;
 using AniMate_app.DTOs.Account;
 using AniMate_app.DTOs.Anime;                                                 
 using AniMate_app.Interfaces;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Storage;
 
 namespace AniMate_app.ViewModels
 {

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using AniMate_app.ViewModels;
+﻿using AniMate_app.ViewModels;
 using AniMate_app.Views.Components;
 using CommunityToolkit.Maui.Views;
-using Microsoft.Maui.Controls;
 
 namespace AniMate_app.Views;
 

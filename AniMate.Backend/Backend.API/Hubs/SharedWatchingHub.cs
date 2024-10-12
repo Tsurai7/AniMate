@@ -6,12 +6,6 @@ namespace Backend.API.Hubs
     public class SharedWatchingHub : Hub
     {
         private static readonly ConcurrentDictionary<string, Room> Rooms = new();
-        private readonly ILogger<SharedWatchingHub> _logger;
-
-        public SharedWatchingHub(ILogger<SharedWatchingHub> logger)
-        {
-            _logger = logger;
-        }
         
         public async Task CreateRoom(string link, string titleCode, string episodeUrl)
         {

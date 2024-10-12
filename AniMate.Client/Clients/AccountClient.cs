@@ -1,8 +1,6 @@
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using AniMate_app.DTOs.Account;
 using AniMate_app.DTOs.Auth;
 using AniMate_app.Interfaces;

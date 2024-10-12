@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using AniMate_app.DTOs.Anime;
 
-namespace AniMate_app.Model
+namespace AniMate_app.Models
 {
     public class GenreCollection(string name) : ObservableObject
     {

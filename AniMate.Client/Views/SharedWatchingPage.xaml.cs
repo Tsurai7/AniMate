@@ -1,7 +1,4 @@
-using Microsoft.Maui.Controls;
-using System;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using AniMate_app.Clients;
 using CommunityToolkit.Maui.Core.Primitives;
 

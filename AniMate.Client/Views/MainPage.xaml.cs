@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using AniMate_app.Model;
+﻿using AniMate_app.Models;
 using AniMate_app.ViewModels;
-using Microsoft.Maui.Controls;
 
 namespace AniMate_app.Views
 {
