@@ -14,8 +14,8 @@ public partial class ProfilePage : ContentPage
         InitializeComponent();
         
         BindingContext = _viewModel = profileViewModel;
-        _ = _viewModel.LoadContent();
-	}
+        _viewModel.LoadContent();
+    }
 
     private async void TitleSelected(object sender, SelectionChangedEventArgs e)
     {
@@ -33,13 +33,6 @@ public partial class ProfilePage : ContentPage
             };
 
             await Shell.Current.GoToAsync($"TitlePage", navigationParameter);
-
         }
-    }
-
-    private async void OnAppearing(object sender, EventArgs e)
-    {
-        base.OnAppearing();
-        await _viewModel.LoadContent();
     }
 }

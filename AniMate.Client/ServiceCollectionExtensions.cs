@@ -16,6 +16,13 @@ public static class ServiceCollectionExtensions
         });
         services.AddHttpClient(nameof(AnimeClient),
             client => client.BaseAddress = new Uri("https://api.anilibria.tv/v3/"));
+       
+        var accountUrl = string.Empty;
+#if DEBUG
+        accountUrl = "http://10.0.2.2:5002/api/";
+#else
+        accountUrl = "http://178.127.42.25/5002/api/";
+#endif
         
         services.AddSingleton<IAccountClient>(sp =>
         {
@@ -23,7 +30,7 @@ public static class ServiceCollectionExtensions
             return client;
         });
         services.AddHttpClient(nameof(AccountClient),
-            client => client.BaseAddress = new Uri("http://10.0.2.2:10100/"));
+            client => client.BaseAddress = new Uri(accountUrl));
         
         services.AddSingleton<SharedWatchingClient>();
 

@@ -40,6 +40,7 @@ public partial class SignInPage : ContentPage
             };
             
             await Shell.Current.GoToAsync($"ProfilePage", navigationParameter);
+            return;
         }
 
         var response = await _viewModel._accountClient.SignIn(email, password);

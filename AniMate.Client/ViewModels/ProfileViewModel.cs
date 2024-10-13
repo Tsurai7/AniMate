@@ -10,14 +10,16 @@ using Microsoft.Maui.Storage;
 
 namespace AniMate_app.ViewModels
 {
-    [QueryProperty(nameof(ProfileInfo), "Profile")]
+    [QueryProperty(nameof(ProfileDto), "Profile")]
     public partial class ProfileViewModel : ViewModelBase
     {
         private readonly IAccountClient _accountClient;
         private readonly IAnimeClient _animeClient;
 
-        [ObservableProperty]
-        private ProfileDto _profileInfo;
+        [ObservableProperty] 
+        public ProfileDto _profileInfo = new ("Nikita Desuyo",
+            "https://pm1.aminoapps.com/7796/1f2d2bbecb5816f2ed8d540e6f9da0ef900c2fdbr1-736-736v2_uhq.jpg",
+            "nikita@gmail.com", ["nanatsu-no-taizai-kamigami-no-gekirin", "jujutsu-kaisen"], ["jujutsu-kaisen"]);
         
         [ObservableProperty]
         private GenreCollection _likedTitlesCollection = new("Likes");
