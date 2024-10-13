@@ -11,12 +11,5 @@ namespace AniMate_app
 
             MainPage = new AppShell();
         }
-
-        protected override async void OnAppLinkRequestReceived(Uri uri)
-        {
-            base.OnAppLinkRequestReceived(uri);
-
-            await Shell.Current.GoToAsync($"TitlePage?TitleCode={uri.Segments[1]}");
-        }
     }
 }

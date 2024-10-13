@@ -1,22 +1,21 @@
-using System.Collections.ObjectModel;
 using AniMate_app.Clients;
+using AniMate_app.ViewModels;
 using CommunityToolkit.Maui.Core.Primitives;
 
 namespace AniMate_app.Views;
 
 public partial class SharedWatchingPage : ContentPage
 {
-    private SharedWatchingClient _sharedWatchingService;
-    public ObservableCollection<string> _chatMessages { get; set; }
-
-    public SharedWatchingPage()
+    private readonly SharedWatchingClient _sharedWatchingService;
+    
+    private readonly SharedWatchingViewModel _viewModel;
+    
+    public SharedWatchingPage(SharedWatchingViewModel viewModel, SharedWatchingClient sharedWatchingService)
     {
         InitializeComponent();
         
-        _chatMessages = [];
-        ChatMessagesListView.ItemsSource = _chatMessages;
-
-        _sharedWatchingService = new SharedWatchingClient();
+        BindingContext = _viewModel = viewModel;
+        _sharedWatchingService = sharedWatchingService;
         
         _sharedWatchingService.SyncState += OnSyncState;
         _sharedWatchingService.Paused += OnPaused;
@@ -30,6 +29,9 @@ public partial class SharedWatchingPage : ContentPage
         
         Task.Run(async () => await _sharedWatchingService.ConnectAsync());
         Task.Run(async () => await _sharedWatchingService.JoinRoom("123"));
+        
+        _viewModel._chatMessages = [];
+        ChatMessagesListView.ItemsSource = _viewModel._chatMessages;
     }
 
     private async void OnMediaElementStateChanged(object sender, MediaStateChangedEventArgs e)
@@ -84,15 +86,6 @@ public partial class SharedWatchingPage : ContentPage
         }
     }
 
-    private async void OnNextEpisodeSelected(object sender, EventArgs e)
-    {
-        var selectedEpisode = NextEpisodePicker.SelectedItem?.ToString();
-        if (selectedEpisode != null)
-        {
-            await _sharedWatchingService.UpdateVideoUrl("123", selectedEpisode);
-        }
-    }
-
     private void OnVideoUrlUpdated(string newUrl) 
         => MediaControl.Source = newUrl;
 
@@ -114,7 +107,7 @@ public partial class SharedWatchingPage : ContentPage
     
     private void OnMessageReceived(string message)
     {
-        _chatMessages.Add(message);
-        ChatMessagesListView.ScrollTo(_chatMessages[^1], ScrollToPosition.End, true);
+        _viewModel._chatMessages.Add(message);
+        ChatMessagesListView.ScrollTo(_viewModel._chatMessages[^1], ScrollToPosition.End, true);
     }
 }

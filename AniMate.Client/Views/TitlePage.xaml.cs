@@ -1,7 +1,4 @@
-﻿using System;
-using AniMate_app.ViewModels;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
+﻿using AniMate_app.ViewModels;
 
 namespace AniMate_app.Views;
 
@@ -13,22 +10,18 @@ public partial class TitlePage : ContentPage
 
     private bool inLikes = false;
 
-    public TitlePage(TitleViewModel titleViewModel)
+    public TitlePage(TitleViewModel viewModel)
     {
         InitializeComponent();
 
-        BindingContext = _viewModel = titleViewModel;
-
-        inLikes = _viewModel.IsTitleInLikes;
+        BindingContext = _viewModel = viewModel;
     }
 
     private async void OnWatchButtonClicked(object sender, EventArgs e)
     {
         if (sender is Button button && button.CommandParameter is string hlsUrl)
         {
-            await _viewModel.WatchButtonClicked();
-            await Shell.Current.GoToAsync($"PlayerPage?mediaurl={hlsUrl}");
-
+            await Shell.Current.GoToAsync(nameof(PlayerPage));
         }
     }
 
@@ -62,6 +55,12 @@ public partial class TitlePage : ContentPage
 
     private async void WatchTogetherButtonClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new SharedWatchingPage());
+        var navigationParameter = new Dictionary<string, object>
+        {
+            {"Title", _viewModel.TitleDto},
+            {"Url", _viewModel.TitleDto.Player.Episodes.FirstOrDefault().Value.HlsUrls.Sd }
+        };
+        
+        await Shell.Current.GoToAsync("SharedWatchingPage", navigationParameter);
     }
 }

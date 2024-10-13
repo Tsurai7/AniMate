@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AniMate_app.Views.SharedWatchingPage"
-             xmlns:local="clr-namespace:AniMate_app.Views"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:DataType="local:SharedWatchingPage"
+             xmlns:viewModels="clr-namespace:AniMate_app.ViewModels"
+             x:DataType="viewModels:SharedWatchingViewModel"
              BackgroundColor="Black">
     
     <Grid>
@@ -22,7 +22,7 @@
         <!-- Media Element for video -->
         <toolkit:MediaElement x:Name="MediaControl"
                               ShouldAutoPlay="False"
-                              Source="https://cache.libria.fun/videos/media/ts/9000/1/720/e313ea7c883c81fba86547414ec18b5e.m3u8"
+                              Source="{Binding MediaUrl}"
                               Aspect="AspectFit"
                               HorizontalOptions="Fill"
                               VerticalOptions="Fill"
@@ -31,7 +31,6 @@
                               Grid.Row="0"
                               Grid.Column="0"/>
 
-        <!-- Episode Picker -->
         <Picker x:Name="EpisodePicker"
                 Title="Выберите серию"
                 Grid.Row="1"
@@ -40,37 +39,14 @@
                 BackgroundColor="#333333"
                 TextColor="White"
                 TitleColor="LightGray"
+                ItemsSource="{Binding TitleDto.Player.Episodes.Values}"
                 SelectedIndexChanged="OnEpisodeSelected">
-            <Picker.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Серия 1</x:String>
-                    <x:String>Серия 2</x:String>
-                    <x:String>Серия 3</x:String>
-                    <!-- Add more episodes if needed -->
-                </x:Array>
-            </Picker.ItemsSource>
+            <Picker.ItemDisplayBinding>
+                <Binding Path="." StringFormat="Серия {0}" />
+            </Picker.ItemDisplayBinding>
         </Picker>
 
-        <!-- Next Episode Picker -->
-        <Picker x:Name="NextEpisodePicker"
-                Title="Перейти к следующей серии"
-                Grid.Row="2"
-                Grid.Column="0"
-                Margin="10"
-                BackgroundColor="#333333"
-                TextColor="White"
-                TitleColor="LightGray"
-                SelectedIndexChanged="OnNextEpisodeSelected">
-            <Picker.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Следующая серия</x:String>
-                    <x:String>Через одну серию</x:String>
-                    <x:String>Через две серии</x:String>
-                </x:Array>
-            </Picker.ItemsSource>
-        </Picker>
 
-        <!-- Chat Area: ListView to display chat messages -->
         <ListView x:Name="ChatMessagesListView"
                   Grid.Row="3"
                   Grid.Column="0"

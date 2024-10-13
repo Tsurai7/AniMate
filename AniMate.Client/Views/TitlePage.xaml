@@ -155,7 +155,7 @@
                     <DataTemplate x:DataType="dtos:EpisodeDto">
                         <Button Text="{Binding Ordinal, StringFormat='Серия {0}'}"
                                 Clicked="OnWatchButtonClicked"
-                                CommandParameter="{Binding HlsUrls.Fhd}"
+                                CommandParameter="{Binding HlsUrls.Hd}"
                                 BackgroundColor= "Grey"
                                 CornerRadius="10"
                                 Margin="5,5,5,5"

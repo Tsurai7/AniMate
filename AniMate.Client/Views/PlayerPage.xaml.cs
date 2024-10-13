@@ -1,20 +1,19 @@
 using AniMate_app.ViewModels;
-using Microsoft.Maui.Controls;
 
 namespace AniMate_app.Views;
 
 public partial class PlayerPage : ContentPage
 {
-	private readonly PlayerViewModel viewModel;
+	private readonly PlayerViewModel _viewModel;
 
 	public PlayerPage()
 	{
 		InitializeComponent();
         
-        AppShell.SetNavBarIsVisible(this, true);
-        AppShell.SetTabBarIsVisible(this, false);
+        Shell.SetNavBarIsVisible(this, true);
+        Shell.SetTabBarIsVisible(this, false);
         
-        BindingContext = viewModel = new PlayerViewModel();
+        BindingContext = _viewModel = new PlayerViewModel();
     }
 
     protected override void OnDisappearing()
@@ -25,7 +24,7 @@ public partial class PlayerPage : ContentPage
 
     private void PauseVideo()
     {
-        mediaControl.Pause();
-        mediaControl.Handler?.DisconnectHandler();
+        MediaControl.Pause();
+        MediaControl.Handler?.DisconnectHandler();
     }
 }

@@ -61,9 +61,10 @@ public static class ServiceCollectionExtensions
             
         services.AddTransient<SignUpViewModel>();
         services.AddTransient<SignUpPage>();
-        
+
+        services.AddTransient<SharedWatchingViewModel>();
         services.AddTransient<SharedWatchingPage>();
-            
+        
         return services;
     }
 }
