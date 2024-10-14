@@ -6,14 +6,14 @@ public partial class PlayerPage : ContentPage
 {
 	private readonly PlayerViewModel _viewModel;
 
-	public PlayerPage()
+	public PlayerPage(PlayerViewModel viewModel)
 	{
 		InitializeComponent();
         
         Shell.SetNavBarIsVisible(this, true);
         Shell.SetTabBarIsVisible(this, false);
         
-        BindingContext = _viewModel = new PlayerViewModel();
+        BindingContext = _viewModel = viewModel;
     }
 
     protected override void OnDisappearing()

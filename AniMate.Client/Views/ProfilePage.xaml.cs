@@ -9,7 +9,7 @@ public partial class ProfilePage : ContentPage
 
 	public ProfilePage(ProfileViewModel profileViewModel)
 	{
-        AppShell.SetNavBarIsVisible(this, false);
+        Shell.SetNavBarIsVisible(this, false);
         
         InitializeComponent();
         

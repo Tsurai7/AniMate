@@ -6,7 +6,7 @@ namespace AniMate_app.Views;
 
 public partial class SearchPage : ContentPage
 {
-    private readonly SearchViewModel viewModel;
+    private readonly SearchViewModel _viewModel;
 
     private string _searchText = string.Empty; 
 
@@ -14,7 +14,7 @@ public partial class SearchPage : ContentPage
 	{
         InitializeComponent();
 
-        BindingContext = viewModel = searchViewModel;
+        BindingContext = _viewModel = searchViewModel;
     }
 
     private async void TitleSelected(object sender, SelectionChangedEventArgs e)
@@ -40,7 +40,7 @@ public partial class SearchPage : ContentPage
 
         searchBar.Unfocus();
 
-        await viewModel.FindTitles(_searchText);
+        await _viewModel.FindTitles(_searchText);
     }
 
     void OnFiltredButtonClicked(object sender, EventArgs args)
@@ -54,7 +54,7 @@ public partial class SearchPage : ContentPage
         {
             searchBar.Text = string.Empty;
 
-            viewModel.ClearSearchData();
+            _viewModel.ClearSearchData();
         }
     }
 }

@@ -11,6 +11,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/> <!-- Media Element -->
             <RowDefinition Height="Auto"/> <!-- Episode Picker -->
+            <RowDefinition Height="Auto"/> <!-- Room Code and Copy Button -->
             <RowDefinition Height="Auto"/> <!-- Next Episode Picker -->
             <RowDefinition Height="*"/> <!-- Chat Area -->
             <RowDefinition Height="Auto"/> <!-- Message Input -->
@@ -45,10 +46,21 @@
                 <Binding Path="." StringFormat="Серия {0}" />
             </Picker.ItemDisplayBinding>
         </Picker>
-
+        
+        <StackLayout Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Padding="10" Spacing="10">
+            <Label x:Name="RoomCodeLabel"
+                   Text="{Binding RoomCode, StringFormat='Код комнаты: {0}'}"
+                   TextColor="White"
+                   FontSize="Small"
+                   VerticalOptions="Center"
+                   HorizontalOptions="End"/>
+            <Button Text="Копировать"
+                    TextColor="White"
+                    Clicked="OnCopyRoomCodeClicked"/>
+        </StackLayout>
 
         <ListView x:Name="ChatMessagesListView"
-                  Grid.Row="3"
+                  Grid.Row="4"
                   Grid.Column="0"
                   ItemsSource="{Binding _chatMessages}"
                   BackgroundColor="#222222"
@@ -61,9 +73,8 @@
             </ListView.ItemTemplate>
         </ListView>
 
-
         <!-- Message Input and Send Button -->
-        <StackLayout Grid.Row="4" Grid.Column="0" Orientation="Horizontal" Padding="10">
+        <StackLayout Grid.Row="5" Grid.Column="0" Orientation="Horizontal" Padding="10">
             <Entry x:Name="MessageEntry"
                    Placeholder="Enter your message..."
                    TextColor="White"

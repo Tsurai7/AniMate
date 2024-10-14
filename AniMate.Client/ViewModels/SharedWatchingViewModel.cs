@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using AniMate_app.Clients;
 using AniMate_app.DTOs.Anime;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -13,6 +14,16 @@ public partial class SharedWatchingViewModel : ObservableObject
     
     [ObservableProperty]
     private string _mediaUrl = string.Empty;
+
+    [ObservableProperty]
+    private string _roomCode = "123";
     
     public ObservableCollection<string> _chatMessages { get; set; }
+    
+    public readonly SharedWatchingClient _client;
+
+    public SharedWatchingViewModel(SharedWatchingClient client)
+    {
+        _client = client;
+    }
 }

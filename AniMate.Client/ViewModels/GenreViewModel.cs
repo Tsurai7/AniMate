@@ -1,27 +1,16 @@
-using System;
-using System.Threading.Tasks;
 using AniMate_app.Interfaces;
 using AniMate_app.Models;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.Controls;
-
 
 namespace AniMate_app.ViewModels;
 
 [QueryProperty(nameof(Genre), "GenreName")]
 public partial class GenreViewModel : ViewModelBase
 {
+    [ObservableProperty]
     private string _genre;
-    public string Genre { get => _genre;
-        set
-        {
-            _genre = value;
-            TitlesCollection = new(Genre);
-            OnPropertyChanged(nameof(Genre));
-        }
-    }
 
     [ObservableProperty]
     private GenreCollection _titlesCollection;

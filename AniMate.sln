@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Domain", "AniMate.B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AniMate.Mobile", "AniMate.Mobile\AniMate.Mobile.csproj", "{0DCCED66-516B-4C33-BA80-55589E18E318}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.AnilibriaWorker", "AniMate.Backend\Backend.AnilibriaWorker\Backend.AnilibriaWorker.csproj", "{B976F0B6-DD6E-43E4-84C6-6415386A1202}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{0DCCED66-516B-4C33-BA80-55589E18E318}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DCCED66-516B-4C33-BA80-55589E18E318}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DCCED66-516B-4C33-BA80-55589E18E318}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B976F0B6-DD6E-43E4-84C6-6415386A1202}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B976F0B6-DD6E-43E4-84C6-6415386A1202}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B976F0B6-DD6E-43E4-84C6-6415386A1202}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B976F0B6-DD6E-43E4-84C6-6415386A1202}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

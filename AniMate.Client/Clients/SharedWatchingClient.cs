@@ -7,9 +7,9 @@ public class SharedWatchingClient
     private HubConnection _hubConnection;
     
 #if DEBUG
-    private const string HubUrl = "http://10.0.2.2:5002/sharedWatchingHub";
+    private const string HubUrl = "http://192.168.8.7:5002/sharedWatchingHub";
 #else
-    private const string HubUrl = = "http://178.127.42.25/5002/sharedWatchingHub";
+    private const string HubUrl = "http://192.168.8.7:5002/sharedWatchingHub";
 #endif
     
     public event Action<string, string, string> RoomCreated;

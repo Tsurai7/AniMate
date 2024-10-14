@@ -38,9 +38,9 @@ public partial class UpdatesPage : ContentPage
         _isOpeningPlayer = true;
 
         var navigationParameter = new Dictionary<string, object>
-            {
-                {"TheTitle", collection.SelectedItem}
-            };
+        {
+            {"TheTitle", collection.SelectedItem}
+        };
 
         await Shell.Current.GoToAsync($"TitlePage", navigationParameter);
 
