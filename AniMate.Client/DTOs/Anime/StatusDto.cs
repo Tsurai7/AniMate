@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AniMate_app.DTOs.Anime;
-public record StatusDto
-(
-    [JsonProperty("string")]
-    string? Status,
 
-    [JsonProperty("code")]
-    string? Code
-);
+public class StatusDto
+{
+    [JsonPropertyName("string")] 
+    public string? Status { get; init; }
+    [JsonPropertyName("code")] 
+    public int Code { get; init; }
+}

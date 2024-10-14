@@ -1,5 +1,5 @@
-﻿using AniMate_app.Model;
-using AniMate_app.Services;
+﻿using AniMate_app.Interfaces;
+using AniMate_app.Models;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -22,11 +22,11 @@ namespace AniMate_app.ViewModels
 
         private readonly int _loadTitlesCount = 4;
 
-        public readonly AnilibriaService _anilibriaService;
+        public readonly IAnimeClient AnimeClient;
 
-        public MainViewModel(AnilibriaService anilibriaService)
+        public MainViewModel(IAnimeClient animeClient)
         {
-            _anilibriaService = anilibriaService;
+            AnimeClient = animeClient;
 
             _loadMoreContentOffset = 4;
         }
@@ -37,7 +37,7 @@ namespace AniMate_app.ViewModels
 
             GenreList = new(_loadMoreContentOffset);
 
-            Genres = await _anilibriaService.GetAllGenres();
+            Genres = await AnimeClient.GetAllGenres();
 
             await LoadMoreGenres(_loadMoreContentOffset);
 
@@ -76,7 +76,7 @@ namespace AniMate_app.ViewModels
         {
             IsLoading = true;
 
-            List<GenreCollection> newGenres = await LoadGenres(count);
+            var newGenres = await LoadGenres(count);
 
             GenreList.AddRange(newGenres);
 
@@ -85,15 +85,15 @@ namespace AniMate_app.ViewModels
 
         private async Task<List<GenreCollection>> LoadGenres(int count)
         {
-            int newCount = GenresLoaded + count < Genres.Count ? GenresLoaded + count : Genres.Count;
+            var newCount = GenresLoaded + count < Genres.Count ? GenresLoaded + count : Genres.Count;
 
-            List<GenreCollection> list = new();
+            List<GenreCollection> list = [];
 
-            for (int i = GenresLoaded; i < newCount; i++)
+            for (var i = GenresLoaded; i < newCount; i++)
             {
                 GenreCollection genreCollection = new(Genres[i]);
 
-                genreCollection.AddTitleList(await _anilibriaService.GetTitlesByGenre(Genres[i], 0, _loadTitlesCount));
+                genreCollection.AddTitleList(await AnimeClient.GetTitlesByGenre(Genres[i], 0, _loadTitlesCount));
 
                 genreCollection.TargetTitleCount = _loadTitlesCount;
 

@@ -13,14 +13,14 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <toolkit:MediaElement x:Name="mediaControl"
+        <toolkit:MediaElement x:Name="MediaControl"
                               ShouldAutoPlay="False"
                               Source="{Binding MediaUrl}"
                               Aspect="Center"
                               HorizontalOptions="Center"
                               VerticalOptions="Center"
                               BackgroundColor="Black"
-                              >
+        >
         </toolkit:MediaElement>
     </Grid>
 </ContentPage>

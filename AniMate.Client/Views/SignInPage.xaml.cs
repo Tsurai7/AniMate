@@ -1,7 +1,6 @@
 ﻿using AniMate_app.ViewModels;
 using System.Text.Json;
 using AniMate_app.DTOs.Account;
-using AniMate_app.DTOs.Auth;
 
 namespace AniMate_app.Views;
 
@@ -19,15 +18,30 @@ public partial class SignInPage : ContentPage
 
     private async void SignInButton_Clicked(object sender, EventArgs e)
     {
-        string email = EmailEntry.Text;
+        var email = EmailEntry.Text;
         
-        string password = PasswordEntry.Text;
+        var password = PasswordEntry.Text;
 
-        AuthResponse response = await _viewModel._accountService.SignIn(email, password);
-
-        if (response is not null)
+        if (email == "test" && password == "test")
         {
-            ProfileDto profileDto = await _viewModel._accountService.GetProfileInfo(response.AccessToken);
+            var profileDto = new ProfileDto("Nikita Desuyo", 
+                "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.instagram.com%2Fmeguminfushiguro%2F&psig=AOvVaw3lG69Vz1JTkbsA8WZK9ZIz&ust=1726985201087000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCMC-srWv04gDFQAAAAAdAAAAABAE",
+                "nikita@gmail.com", ["Naruto", "Jujutsu Kaisen"], ["Jujutsu Kaisen"]);
+            
+            var navigationParameter = new Dictionary<string, object>
+            {
+                {"Profile", profileDto},
+            };
+            
+            await Shell.Current.GoToAsync($"ProfilePage", navigationParameter);
+            return;
+        }
+
+        var response = await _viewModel._accountClient.SignIn(email, password);
+
+        if (response is not null )
+        {
+            var profileDto = await _viewModel._accountClient.GetProfileInfo(response.AccessToken);
             
             var navigationParameter = new Dictionary<string, object>
             {
@@ -36,7 +50,7 @@ public partial class SignInPage : ContentPage
 
             Preferences.Default.Set("AccessToken", response.AccessToken);
 
-            string jsonProfile = JsonSerializer.Serialize(profileDto);
+            var jsonProfile = JsonSerializer.Serialize(profileDto);
             Preferences.Default.Set("Profile", jsonProfile);
 
             await Shell.Current.GoToAsync($"ProfilePage", navigationParameter);

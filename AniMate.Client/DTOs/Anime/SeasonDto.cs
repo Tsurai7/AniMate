@@ -1,15 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AniMate_app.DTOs.Anime;
-public record SeasonDto
-(
-    [JsonProperty("string")]
-    string? Season,
 
-    [JsonProperty("code")]
-    string? Code,
-
-    [JsonProperty("year")]
-    string? Year
-);
+public class SeasonDto
+{
+    [JsonPropertyName("string")] 
+    public string? Season { get; init; }
+    
+    public int Code { get; init; }
+    
+    public int Year { get; init; }
+}
 

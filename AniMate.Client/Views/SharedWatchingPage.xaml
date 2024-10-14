@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AniMate_app.Views.SharedWatchingPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewModels="clr-namespace:AniMate_app.ViewModels"
+             x:DataType="viewModels:SharedWatchingViewModel"
+             BackgroundColor="Black">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/> <!-- Media Element -->
+            <RowDefinition Height="Auto"/> <!-- Episode Picker -->
+            <RowDefinition Height="Auto"/> <!-- Room Code and Copy Button -->
+            <RowDefinition Height="Auto"/> <!-- Next Episode Picker -->
+            <RowDefinition Height="*"/> <!-- Chat Area -->
+            <RowDefinition Height="Auto"/> <!-- Message Input -->
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- Media Element for video -->
+        <toolkit:MediaElement x:Name="MediaControl"
+                              ShouldAutoPlay="False"
+                              Source="{Binding MediaUrl}"
+                              Aspect="AspectFit"
+                              HorizontalOptions="Fill"
+                              VerticalOptions="Fill"
+                              BackgroundColor="Black"
+                              ShouldShowPlaybackControls="True"
+                              Grid.Row="0"
+                              Grid.Column="0"/>
+
+        <Picker x:Name="EpisodePicker"
+                Title="Выберите серию"
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="10"
+                BackgroundColor="#333333"
+                TextColor="White"
+                TitleColor="LightGray"
+                ItemsSource="{Binding TitleDto.Player.Episodes.Values}"
+                SelectedIndexChanged="OnEpisodeSelected">
+            <Picker.ItemDisplayBinding>
+                <Binding Path="." StringFormat="Серия {0}" />
+            </Picker.ItemDisplayBinding>
+        </Picker>
+        
+        <StackLayout Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Padding="10" Spacing="10">
+            <Label x:Name="RoomCodeLabel"
+                   Text="{Binding RoomCode, StringFormat='Код комнаты: {0}'}"
+                   TextColor="White"
+                   FontSize="Small"
+                   VerticalOptions="Center"
+                   HorizontalOptions="End"/>
+            <Button Text="Копировать"
+                    TextColor="White"
+                    Clicked="OnCopyRoomCodeClicked"/>
+        </StackLayout>
+
+        <ListView x:Name="ChatMessagesListView"
+                  Grid.Row="4"
+                  Grid.Column="0"
+                  ItemsSource="{Binding _chatMessages}"
+                  BackgroundColor="#222222"
+                  HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding}" 
+                              TextColor="White"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Message Input and Send Button -->
+        <StackLayout Grid.Row="5" Grid.Column="0" Orientation="Horizontal" Padding="10">
+            <Entry x:Name="MessageEntry"
+                   Placeholder="Enter your message..."
+                   TextColor="White"
+                   BackgroundColor="#333333"
+                   HorizontalOptions="FillAndExpand" />
+            <Button Text="Send"
+                    TextColor="White"
+                    BackgroundColor="#444444"
+                    Clicked="OnSendMessageClicked"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>

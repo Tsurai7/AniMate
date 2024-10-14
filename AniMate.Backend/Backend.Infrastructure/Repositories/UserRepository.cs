@@ -1,41 +1,41 @@
-using Domain.Interfaces;
 using Backend.Domain.Models;
-using Microsoft.EntityFrameworkCore;
-using Backend.Infrastructure.Data;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace Backend.Infrastructure.Repositories;
 
-public class UserRepository : IGenericRepository<User>
+public class UserRepository : IMongoRepository<User>
 {
-    private readonly ApplicationContext _context;
-
-    public UserRepository(ApplicationContext context)
+    private readonly IMongoCollection<User> _collection;
+    public UserRepository(
+        IMongoClient client,
+        string databaseName,
+        string collectionName)
     {
-        _context = context;
+        var database = client.GetDatabase(databaseName);
+        _collection = database.GetCollection<User>(collectionName);
     }
 
-    public async Task<IList<User>> GetAllAsync() =>
-        await _context.Users.ToListAsync();
-
-    public async Task<User?> GetByEmail(string email) =>
-        await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-    
-    public async Task<User> AddAsync(User user)
+    public async Task<User> GetByIdAsync(string id)
     {
-        await _context.AddAsync(user);
-        await _context.SaveChangesAsync();
-        return user;
+        var filter = Builders<User>.Filter.Eq("_id", ObjectId.Parse(id));
+        return await _collection.Find(filter).FirstOrDefaultAsync();
     }
 
-    public async Task<User> UpdateAsync(User user)
+    public async Task AddAsync(User entity)
     {
-        _context.Update(user);
-        await _context.SaveChangesAsync();
-        return user;
+        await _collection.InsertOneAsync(entity);
     }
 
-    public Task<User> DeleteAsync(long id)
+    public async Task UpdateAsync(string id, User updatedUser)
     {
-        throw new NotImplementedException();
+        var filter = Builders<User>.Filter.Eq("_id", ObjectId.Parse(id));
+        await _collection.ReplaceOneAsync(filter, updatedUser);
+    }
+
+    public async Task DeleteAsync(string id)
+    {
+        var filter = Builders<User>.Filter.Eq("_id", ObjectId.Parse(id));
+        await _collection.DeleteOneAsync(filter);
     }
 }

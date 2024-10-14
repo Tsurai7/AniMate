@@ -1,12 +1,10 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace AniMate_app.DTOs.Anime;
 
 public class PosterSize
 {
     private const string BaseAdress = "https://www.anilibria.tv";
-
-    [JsonProperty("url")]
     public string Url { get; set; }
 
     [JsonConstructor]

@@ -1,19 +1,11 @@
-﻿namespace AniMate_app
+﻿namespace AniMate_app;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    public App()
     {
-        public App()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            MainPage = new AppShell();
-        }
-
-        protected override async void OnAppLinkRequestReceived(Uri uri)
-        {
-            base.OnAppLinkRequestReceived(uri);
-
-            await Shell.Current.GoToAsync($"TitlePage?TitleCode={uri.Segments[1]}");
-        }
+        MainPage = new AppShell();
     }
 }

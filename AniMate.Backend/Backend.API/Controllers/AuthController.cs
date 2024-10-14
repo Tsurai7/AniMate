@@ -1,58 +1,22 @@
-using System.Security.Authentication;
-using Backend.Application.DTOs;
-using Backend.Application.Services;
+using Backend.Application.DTOs.Requests;
+using Backend.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.API.Controllers;
 
-[Controller]
-[Route("auth")]
-public class AuthController : ControllerBase
+[ApiController]
+[Route("api/[controller]")]
+public class AuthController : Controller
 {
-    private readonly AuthService _authService;
-
-    public AuthController(AuthService authService)
+    [HttpPost("sign-up")]
+    public async Task<IActionResult> SignUp([FromBody] SignUpRequest request)
     {
-        _authService = authService;
+
     }
-
-    [HttpPost("signIn")]
-    public async Task<IActionResult> SignIn([FromBody] SignInRequest signInRequest)
+    
+    [HttpPost("sign-in")]
+    public async Task<IActionResult> SignIn([FromBody] SignInRequest request)
     {
-        try
-        {
-            var authResponse = await _authService.SignIn(signInRequest);
-            return Ok(authResponse);
-        }
-        
-        catch (InvalidCredentialException ex)
-        {
-            return Unauthorized(ex.Message);
-        }
-        
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-    }
 
-    [HttpPost("signUp")]
-    public async Task<IActionResult> SignUp([FromBody] SignUpRequest signUpRequest)
-    {
-        try
-        {
-            var authResponse = await _authService.SignUp(signUpRequest);
-            return Ok(authResponse);
-        }
-        
-        catch (ArgumentException ex)
-        {
-            return BadRequest(ex.Message);
-        }
-        
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
     }
 }

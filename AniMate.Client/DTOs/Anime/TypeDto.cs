@@ -1,18 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AniMate_app.DTOs.Anime;
 
-public record TypeDto
-(
-    [JsonProperty("full_string")]
-    string? FullInfo,
-
-    [JsonProperty("string")]
-    string? Type,
-
-    [JsonProperty("series")]
-    string? Series,
-
-    [JsonProperty("length")]
-    string? Length
-);
+public class TypeDto
+{
+    [JsonPropertyName("full_string")] 
+    public string? FullInfo { get; init; }
+    [JsonPropertyName("string")] 
+    public string? Type { get; init; }
+    [JsonPropertyName("episodes")] 
+    public int? Series { get; init; } 
+}
