@@ -1,4 +1,4 @@
-﻿namespace Backend.AnilibriaWorker.Models; 
+﻿namespace Backend.Domain.Models.Anime; 
 
 public class FranchiseDto
 {

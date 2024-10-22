@@ -32,7 +32,7 @@ namespace AniMate_app
 
             ProcessIntent(Intent);
 
-            System.Threading.Thread.Sleep(1000);
+            Thread.Sleep(1000);
         }
 
         private void ProcessIntent(Intent intent)

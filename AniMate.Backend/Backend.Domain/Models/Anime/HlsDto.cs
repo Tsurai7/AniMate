@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Backend.AnilibriaWorker.Models; 
+namespace Backend.Domain.Models.Anime; 
 
 public class HlsDto
 {
