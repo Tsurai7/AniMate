@@ -12,7 +12,12 @@ public static class ServiceCollectionExtensions
     {
         Env.Load();
         
-        var connectionString = "mongodb+srv://tsurai:yCWmLgoVdcwWRodU@cluster0.hielo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+        var connectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING");
+        
+        if (string.IsNullOrEmpty(connectionString))
+        {
+            throw new InvalidOperationException("No environment variable MONGO_CONNECTION_STRING");
+        }
         
         services.AddSingleton<IMongoClient, MongoClient>(_ =>
             new MongoClient(connectionString));
