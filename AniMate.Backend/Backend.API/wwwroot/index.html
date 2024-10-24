@@ -60,10 +60,13 @@
             connection.invoke("JoinRoom", roomName)
                 .then(() => {
                     console.log(`Successfully joined room: ${roomName}`);
-                    connection.invoke("SyncStateForNewClient", roomName);
+                    // Синхронизация состояния после присоединения к комнате
+                    connection.invoke("SyncStateForNewClient", roomName)
+                        .catch(err => console.error(`Error syncing state: ${err}`));
                 })
                 .catch(err => console.error(`Error joining room: ${err}`));
         }
+
     }
 
     function updateVideoUrl() {

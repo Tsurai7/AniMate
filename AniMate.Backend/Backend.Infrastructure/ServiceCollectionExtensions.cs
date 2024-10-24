@@ -12,15 +12,36 @@ public static class ServiceCollectionExtensions
     {
         Env.Load();
         
-        services.AddSingleton<IMongoClient, MongoClient>(sp =>
-            new MongoClient("MONGO_CONNECTION_STRING"));
+        var connectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING");
+        
+        if (string.IsNullOrEmpty(connectionString))
+        {
+            throw new InvalidOperationException("No environment variable MONGO_CONNECTION_STRING");
+        }
+        
+        services.AddSingleton<IMongoClient, MongoClient>(_ =>
+            new MongoClient(connectionString));
 
         services.AddScoped<IMongoRepository<User>>(sp =>
             new UserRepository(
                 sp.GetRequiredService<IMongoClient>(),
-                "AniMate", 
-                "Accounts"
+                "animate", 
+                "accounts"
             ));
+        
+        services.AddSingleton<AnimeRepository>(sp =>
+            new AnimeRepository(
+                sp.GetRequiredService<IMongoClient>(),
+                "animate", 
+                "titles"
+            ));
+        
+        services.AddHostedService<AnimeWorker>();
+        services.AddSingleton<AnilibriaClient>();
+        services.AddHttpClient(nameof(AnilibriaClient), client =>
+        {
+            client.BaseAddress = new Uri("https://api.anilibria.tv/v3/");
+        });
         
         return services;
     }

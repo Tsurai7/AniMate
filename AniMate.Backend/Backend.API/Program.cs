@@ -1,33 +1,19 @@
-using System.Text;
 using Backend.API.Hubs;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+using Backend.Application;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseUrls("http://0.0.0.0:5002");
 
+builder.Services.AddApplication();
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 
 builder.Services.AddControllers();
-builder.Services.AddAuthorization();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-.AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidIssuer = AuthOptions.ISSUER,
-        ValidateAudience = true,
-        ValidAudience = AuthOptions.AUDIENCE,
-        ValidateLifetime = true,
-        IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-        ValidateIssuerSigningKey = true
-    };
-});
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -88,12 +74,3 @@ app.MapHub<SharedWatchingHub>("/sharedWatchingHub");
 app.UseStaticFiles();
 
 app.Run();
-
-public class AuthOptions
-{
-    public const string ISSUER = "MyAuthServer"; // издатель токена
-    public const string AUDIENCE = "MyAuthClient"; // потребитель токена
-    const string KEY = "mysupersecret_secretsecretsecretkey!123";   // ключ для шифрации
-    public static SymmetricSecurityKey GetSymmetricSecurityKey() => 
-        new (Encoding.UTF8.GetBytes(KEY));
-}

@@ -1,7 +1,7 @@
-using Backend.AnilibriaWorker.Models;
+using Backend.Domain.Models.Anime;
 using MongoDB.Driver;
 
-namespace Backend.AnilibriaWorker;
+namespace Backend.Infrastructure.Repositories;
 
 public class AnimeRepository
 {
@@ -15,7 +15,7 @@ public class AnimeRepository
     public async Task Add(TitleDto title) =>
         await _collection.InsertOneAsync(title);
 
-    public async Task AddMany(IEnumerable<TitleDto> titles)
+    public async Task AddMany(List<TitleDto> titles)
     {
         if (titles == null)
         {

@@ -6,24 +6,23 @@ namespace AniMate_app.Views;
 public partial class SharedWatchingPage : ContentPage
 {
     private readonly SharedWatchingViewModel _viewModel;
-    
+
     public SharedWatchingPage(SharedWatchingViewModel viewModel)
     {
         InitializeComponent();
-        
+
         BindingContext = _viewModel = viewModel;
-        
+
         _viewModel._client.SyncState += OnSyncState;
         _viewModel._client.Paused += OnPaused;
         _viewModel._client.Resumed += OnResumed;
         _viewModel._client.Seeked += OnSeeked;
         _viewModel._client.VideoUrlUpdated += OnVideoUrlUpdated;
         _viewModel._client.MessageReceived += OnMessageReceived;
-        
+
         MediaControl.SeekCompleted += OnSeekCompleted;
         MediaControl.StateChanged += OnMediaElementStateChanged;
         
-        _viewModel._chatMessages = [];
         ChatMessagesListView.ItemsSource = _viewModel._chatMessages;
     }
 
@@ -32,10 +31,16 @@ public partial class SharedWatchingPage : ContentPage
         switch (e.NewState)
         {
             case MediaElementState.Playing:
-                await _viewModel._client.Resume(_viewModel.RoomCode, MediaControl.Position.TotalSeconds);
+                if (_viewModel._client != null)
+                {
+                    await _viewModel._client.Resume(_viewModel.RoomCode, MediaControl.Position.TotalSeconds);
+                }
                 break;
             case MediaElementState.Paused:
-                await _viewModel._client.Pause(_viewModel.RoomCode, MediaControl.Position.TotalSeconds);
+                if (_viewModel._client != null)
+                {
+                    await _viewModel._client.Pause(_viewModel.RoomCode, MediaControl.Position.TotalSeconds);
+                }
                 break;
         }
     }
@@ -60,16 +65,24 @@ public partial class SharedWatchingPage : ContentPage
         });
     }
 
+    private void OnPaused(string roomName, double timing)
+    {
+        Dispatcher.Dispatch(() =>
+        {
+            MediaControl.Pause();
+        });
+    }
 
-    private void OnPaused(string roomName, double timing) 
-        => MediaControl.Pause();
-    
-    private void OnResumed(string roomName, double timing) 
-        => MediaControl.Play();
+    private void OnResumed(string roomName, double timing)
+    {
+        Dispatcher.Dispatch(() =>
+        {
+            MediaControl.Play();
+        });
+    }
 
     private void OnSeeked(string roomName, double newTime) 
         => MediaControl.SeekTo(TimeSpan.FromSeconds(newTime));
-
 
     private async void OnEpisodeSelected(object sender, EventArgs e)
     {
@@ -88,30 +101,29 @@ public partial class SharedWatchingPage : ContentPage
         base.OnDisappearing();
         await _viewModel._client.DisconnectAsync();
     }
-    
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
         await _viewModel._client.ConnectAsync();
         await _viewModel._client.CreateRoom(_viewModel.RoomCode, "test", _viewModel.MediaUrl);
     }
-    
+
     private async void OnSendMessageClicked(object sender, EventArgs e)
     {
         if (!string.IsNullOrWhiteSpace(MessageEntry.Text))
         {
             await _viewModel._client.SendMessage(_viewModel.RoomCode, MessageEntry.Text); 
-            
             MessageEntry.Text = string.Empty;
         }
     }
-    
+
     private void OnMessageReceived(string message)
     {
         _viewModel._chatMessages.Add(message);
         ChatMessagesListView.ScrollTo(_viewModel._chatMessages[^1], ScrollToPosition.End, true);
     }
-    
+
     private async void OnCopyRoomCodeClicked(object sender, EventArgs e)
     {
         if (!string.IsNullOrEmpty(RoomCodeLabel.Text))
