@@ -13,7 +13,16 @@
         {
             base.OnAppLinkRequestReceived(uri);
 
-            await Shell.Current.GoToAsync($"TitlePage?TitleCode={uri.Segments[1]}");
+            var action = uri.Segments[1];
+
+            if (action.Equals("anime"))
+            {
+                await Shell.Current.GoToAsync($"TitlePage?TitleCode={uri.Segments[1]}");
+            }
+            else if (action.Equals("room"))
+            {
+                await Shell.Current.GoToAsync($"TitlePage?TitleCode={uri.Segments[1]}");
+            }
         }
     }
 }
