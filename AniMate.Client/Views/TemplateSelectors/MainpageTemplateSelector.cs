@@ -1,4 +1,6 @@
-﻿namespace AniMate_app.View.TemplateSelectors
+﻿using Microsoft.Maui.Controls;
+
+namespace AniMate_app.View.TemplateSelectors
 {
     class MainpageTemplateSelector : DataTemplateSelector
     {

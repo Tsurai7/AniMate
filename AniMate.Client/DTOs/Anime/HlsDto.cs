@@ -1,25 +1,25 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace AniMate_app.DTOs.Anime;
 
-public record HlsDto
+public class HlsDto
 {
-    private const string BaseAdress = "https://cache.libria.fun";
+    private const string BaseAddress = "https://cache.libria.fun";
 
     [JsonConstructor]
     public HlsDto(string fhd, string hd, string sd)
     {
-        Fhd = $"{BaseAdress}{fhd}";
-        Hd = $"{BaseAdress}{hd}";
-        Sd = $"{BaseAdress}{sd}";
+        Fhd = $"{BaseAddress}{fhd}";
+        Hd = $"{BaseAddress}{hd}";
+        Sd = $"{BaseAddress}{sd}";
     }
 
-    [JsonProperty("fhd")]
-    public string Fhd { get; set; }
+    [JsonPropertyName("fhd")]
+    public string Fhd { get; init; }
 
-    [JsonProperty("hd")]
-    public string Hd { get; set; }
+    [JsonPropertyName("hd")]
+    public string Hd { get; init; }
 
-    [JsonProperty("sd")]
-    public string Sd { get; set; }
+    [JsonPropertyName("sd")]
+    public string Sd { get; init; }
 }

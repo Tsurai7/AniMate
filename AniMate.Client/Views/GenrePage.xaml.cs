@@ -4,15 +4,15 @@ namespace AniMate_app.Views;
 
 public partial class GenrePage : ContentPage
 {
-    private readonly GenreViewModel viewModel;
+    private readonly GenreViewModel _viewModel;
 
     private bool _isOpeningPlayer = false;
 
-    public GenrePage()
+    public GenrePage(GenreViewModel viewModel)
     {
         InitializeComponent();
 
-        BindingContext = viewModel = new GenreViewModel();
+        BindingContext = _viewModel = viewModel;
     }
 
     private async void TitleSelected(object sender, SelectionChangedEventArgs e)
@@ -45,6 +45,6 @@ public partial class GenrePage : ContentPage
 
     private async void OnAppearing(object sender, EventArgs e)
     {
-        await viewModel.LoadMoreContent();
+        await _viewModel.LoadMoreContent();
     }
 }

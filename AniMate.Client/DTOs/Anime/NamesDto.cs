@@ -1,12 +1,8 @@
-﻿using Newtonsoft.Json;
-
-namespace AniMate_app.DTOs.Anime;
-public record NamesDto
-(
-    [JsonProperty("ru")]
-    string Ru,
-
-    [JsonProperty("en")]
-    string En
-);
+﻿namespace AniMate_app.DTOs.Anime;
+public class NamesDto
+{
+    public string Ru { get; init; }
+    
+    public string En { get; init; }
+}
 

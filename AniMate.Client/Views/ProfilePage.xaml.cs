@@ -1,5 +1,6 @@
 using AniMate_app.DTOs.Anime;
 using AniMate_app.ViewModels;
+
 namespace AniMate_app.Views;
 
 public partial class ProfilePage : ContentPage
@@ -8,13 +9,13 @@ public partial class ProfilePage : ContentPage
 
 	public ProfilePage(ProfileViewModel profileViewModel)
 	{
-        AppShell.SetNavBarIsVisible(this, false);
+        Shell.SetNavBarIsVisible(this, false);
         
         InitializeComponent();
         
         BindingContext = _viewModel = profileViewModel;
-        _ = _viewModel.LoadContent();
-	}
+        _viewModel.LoadContent();
+    }
 
     private async void TitleSelected(object sender, SelectionChangedEventArgs e)
     {
@@ -22,7 +23,7 @@ public partial class ProfilePage : ContentPage
 
         if (collectionView.SelectedItem != null)
         {
-            TitleDto selectedTitleDto = collectionView.SelectedItem as TitleDto;
+            var selectedTitleDto = collectionView.SelectedItem as TitleDto;
 
             collectionView.SelectedItem = null;
 
@@ -32,13 +33,6 @@ public partial class ProfilePage : ContentPage
             };
 
             await Shell.Current.GoToAsync($"TitlePage", navigationParameter);
-
         }
-    }
-
-    private async void OnAppearing(object sender, EventArgs e)
-    {
-        base.OnAppearing();
-        await _viewModel.LoadContent();
     }
 }

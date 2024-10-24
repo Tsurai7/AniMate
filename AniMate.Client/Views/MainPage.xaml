@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:AniMate_app.ViewModels"
-    xmlns:model="clr-namespace:AniMate_app.Model"
+    xmlns:model="clr-namespace:AniMate_app.Models"
     x:Class="AniMate_app.Views.MainPage"
     x:DataType="local:MainViewModel"
     Loaded="LoadContent">

@@ -1,15 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
 
 namespace AniMate_app.DTOs.Anime;
 
 public class FranchiseDto
-(
-    [JsonProperty("id")]
-    string? Id,
-
-    [JsonProperty("name")]
-    string? Name,
-
-    [JsonProperty("releases")]
-    List<ReleaseDto>? Releases
-);
+{
+    public string? Id { get; init; }
+    
+    public string? Name { get; init; }
+    
+    public List<ReleaseDto>? Releases { get; init; }
+}

@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AniMate_app.ViewModels"
-             xmlns:model="clr-namespace:AniMate_app.Model"
+             xmlns:model="clr-namespace:AniMate_app.Models"
              xmlns:dtos="clr-namespace:AniMate_app.DTOs.Anime"
              x:Class="AniMate_app.Views.SearchPage"
              x:DataType="local:SearchViewModel">

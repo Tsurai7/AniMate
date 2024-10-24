@@ -1,4 +1,4 @@
-﻿namespace AniMate_app
+namespace AniMate_app
 {
     public partial class App : Application
     {

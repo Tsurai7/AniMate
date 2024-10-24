@@ -1,14 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace AniMate_app.DTOs.Anime;
-public record PlayerDto
-(
-    [JsonProperty("alternative_player")]
-    string? AlternativePlayer,
-
-    [JsonProperty("host")]
-    string Host,
-    
-    [JsonProperty("list")]
-    Dictionary<string, EpisodeDto> Episodes
-);
+public class PlayerDto
+{
+    public string? AlternativePlayer { get; init; }
+    public string Host { get; init; }
+    [JsonPropertyName("list")]
+    public Dictionary<string, EpisodeDto> Episodes { get; init; }
+}
