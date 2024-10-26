@@ -12,14 +12,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 
-
 builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
-            
-    // Add JWT authentication scheme to Swagger
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Animate", Version = "v1" });
+    
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -27,10 +25,9 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer abc123\""
+        Description = "Enter your token in the text input below."
     });
-
-    // Add security requirement to ensure authentication for the endpoints
+    
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {

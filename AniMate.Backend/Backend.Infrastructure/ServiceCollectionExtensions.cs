@@ -1,4 +1,3 @@
-using Backend.Domain.Models;
 using Backend.Infrastructure.Repositories;
 using DotNetEnv;
 using Microsoft.Extensions.DependencyInjection;

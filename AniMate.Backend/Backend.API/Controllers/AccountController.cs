@@ -2,6 +2,7 @@ using Backend.API.Controllers.Models.Account;
 using Backend.Application.Handlers;
 using Backend.Domain.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.API.Controllers;
@@ -11,6 +12,7 @@ namespace Backend.API.Controllers;
 public class AccountController : Controller
 {
     private readonly IMediator _mediator;
+    
     public AccountController(IMediator mediator)
     {
         _mediator = mediator;
@@ -40,9 +42,29 @@ public class AccountController : Controller
         return await _mediator.Send(command, token);
     }
     
-
+    [Authorize]
+    [HttpGet("profile")]
+    public async Task<GetProfileResponse> GetProfile(CancellationToken token)
+    {
+        var command = new GetProfileRequest();
+        
+        return await _mediator.Send(command, token);
+    }
+    
+    [HttpPut("titles/watched/{code}")]
+    public async Task<ActionResult> AddToWatchedAsync(int code, CancellationToken token)
+    {
+        return Ok();
+    }
+    
     [HttpPut("titles/liked/{code}")]
     public async Task<ActionResult> AddToLikedAsync(int code, CancellationToken token)
+    {
+        return Ok();
+    }
+        
+    [HttpPut("titles/liked/{code}")]
+    public async Task<ActionResult> RemoveFromWatched(int code, CancellationToken token)
     {
         return Ok();
     }

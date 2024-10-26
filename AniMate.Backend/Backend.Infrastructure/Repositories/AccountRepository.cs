@@ -24,7 +24,7 @@ public class AccountRepository : IMongoRepository<Account>
     
     public async Task<Account?> GetByEmailAsync(string email)
     {
-        var filter = Builders<Account>.Filter.Eq("email", email);
+        var filter = Builders<Account>.Filter.Eq(account => account.Email, email);
         return await _collection.Find(filter).SingleOrDefaultAsync();
     }
 

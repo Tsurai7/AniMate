@@ -22,11 +22,11 @@ public class SignInAccountHandler : IRequestHandler<SignInAccountCommand, AuthTo
         _accountRepository = accountRepository;
     }
     
-    public Task<AuthToken> Handle(SignInAccountCommand request, CancellationToken cancellationToken)
+    public async Task<AuthToken> Handle(SignInAccountCommand request, CancellationToken cancellationToken)
     {
-        var existingAccount = _accountRepository.GetByEmailAsync(request.Email);
+        var existingAccount = await _accountRepository.GetByEmailAsync(request.Email);
 
-        if (existingAccount == null)
+        if (existingAccount is null)
         {
             throw new InvalidOperationException("No account found. Try to sign up.");
         }
@@ -43,10 +43,10 @@ public class SignInAccountHandler : IRequestHandler<SignInAccountCommand, AuthTo
             expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30)),
             signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
-        return Task.FromResult(new AuthToken
+        return new AuthToken
         {
             Token = new JwtSecurityTokenHandler().WriteToken(jwt),
             Expiration = DateTime.UtcNow.AddMinutes(30)
-        });
+        };
     }
 }

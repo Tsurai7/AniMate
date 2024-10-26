@@ -16,6 +16,7 @@ public static class ServiceCollectionExtensions
         {
             cfg.RegisterServicesFromAssembly(typeof(SignUpAccountHandler).Assembly);
             cfg.RegisterServicesFromAssembly(typeof(SignInAccountHandler).Assembly);
+            cfg.RegisterServicesFromAssembly(typeof(GetProfileHandler).Assembly);
         });
         
         services.AddAuthorization();
