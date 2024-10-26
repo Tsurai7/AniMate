@@ -1,3 +1,4 @@
+using Backend.Application.Handlers;
 using Backend.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,12 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddInfrastructure();
+        
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssembly(typeof(SignUpAccountHandler).Assembly);
+            cfg.RegisterServicesFromAssembly(typeof(SignInAccountHandler).Assembly);
+        });
         
         services.AddAuthorization();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

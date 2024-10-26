@@ -1,6 +1,12 @@
-namespace Backend.API.Controllers.Models.Account.Responses;
+using MediatR;
 
-public record ProfileDto
+namespace Backend.Application.Handlers;
+
+public class MyEmptyRequest : IRequest
+{
+}
+
+public record ProfileResponse
 (
     string Username,
     string ProfileImage,

@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Backend.Domain.Models;
+using Backend.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.IdentityModel.Tokens;
 
@@ -14,8 +15,22 @@ public class SignInAccountCommand : IRequest<AuthToken>
 
 public class SignInAccountHandler : IRequestHandler<SignInAccountCommand, AuthToken>
 {
+    private readonly AccountRepository _accountRepository;
+    
+    public SignInAccountHandler(AccountRepository accountRepository)
+    {
+        _accountRepository = accountRepository;
+    }
+    
     public Task<AuthToken> Handle(SignInAccountCommand request, CancellationToken cancellationToken)
     {
+        var existingAccount = _accountRepository.GetByEmailAsync(request.Email);
+
+        if (existingAccount == null)
+        {
+            throw new InvalidOperationException("No account found. Try to sign up.");
+        }
+        
         var claims = new List<Claim>
         {
             new(ClaimTypes.Name, request.Email)

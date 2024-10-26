@@ -1,5 +1,4 @@
 using Backend.API.Controllers.Models.Account;
-using Backend.API.Controllers.Models.Account.Responses;
 using Backend.Application.Handlers;
 using Backend.Domain.Models;
 using MediatR;
@@ -11,16 +10,14 @@ namespace Backend.API.Controllers;
 [Route("api/account")]
 public class AccountController : Controller
 {
-    private readonly Mediator _mediator;
-    public AccountController(Mediator mediator)
+    private readonly IMediator _mediator;
+    public AccountController(IMediator mediator)
     {
         _mediator = mediator;
     }
     
     [HttpPost("sign-up")]
-    public async Task<AuthToken> SignUp(
-        [FromBody] SignUpRequest request,
-        CancellationToken token)
+    public async Task<AuthToken> SignUpAsync([FromBody] SignUpRequest request, CancellationToken token)
     {
         var command = new SignUpAccountCommand
         {
@@ -32,9 +29,7 @@ public class AccountController : Controller
     }
     
     [HttpPost("sign-in")]
-    public async Task<AuthToken> SignIn(
-        [FromBody] SignInRequest request,
-        CancellationToken token)
+    public async Task<AuthToken> SignInAsync([FromBody] SignInRequest request, CancellationToken token)
     {
         var command = new SignInAccountCommand
         {
@@ -45,11 +40,10 @@ public class AccountController : Controller
         return await _mediator.Send(command, token);
     }
     
-    [HttpGet("profile")]
-    public async Task<ProfileDto> GetProfile()
+
+    [HttpPut("titles/liked/{code}")]
+    public async Task<ActionResult> AddToLikedAsync(int code, CancellationToken token)
     {
-        return new ProfileDto("Nikita Desuyo", 
-            "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.instagram.com%2Fmeguminfushiguro%2F&psig=AOvVaw3lG69Vz1JTkbsA8WZK9ZIz&ust=1726985201087000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCMC-srWv04gDFQAAAAAdAAAAABAE",
-            "nikita@gmail.com", ["Naruto", "Jujutsu Kaisen"], ["Jujutsu Kaisen"]);
+        return Ok();
     }
 }

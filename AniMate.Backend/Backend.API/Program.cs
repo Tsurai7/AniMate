@@ -8,10 +8,10 @@ builder.WebHost.UseUrls("http://0.0.0.0:5002");
 
 builder.Services.AddApplication();
 
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
+
 
 builder.Services.AddControllers();
 
