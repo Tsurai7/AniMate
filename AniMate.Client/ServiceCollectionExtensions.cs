@@ -55,6 +55,9 @@ public static class ServiceCollectionExtensions
 
         services.AddTransient<ProfileViewModel>();
         services.AddTransient<ProfilePage>();
+        
+        services.AddTransient<EditProfileViewModel>();
+        services.AddTransient<EditProfilePage>();
             
         services.AddTransient<SignInViewModel>();
         services.AddTransient<SignInPage>();
