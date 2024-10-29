@@ -53,7 +53,11 @@
         if (videoUrl) {
             console.log(`Creating room with video URL: ${videoUrl}`);
             connection.invoke("CreateRoom", roomName, "title", videoUrl)
-                .then(() => console.log(`Successfully created room: ${roomName}`))
+                .then(() => {
+                    console.log(`Successfully created room: ${roomName}`);
+                    // Логируем создание комнаты
+                    console.log(`Room ${roomName} created with URL: ${videoUrl}`);
+                })
                 .catch(err => console.error(`Error creating room: ${err}`));
         } else {
             console.log(`Joining existing room: ${roomName}`);
@@ -63,15 +67,20 @@
                     // Синхронизация состояния после присоединения к комнате
                     connection.invoke("SyncStateForNewClient", roomName)
                         .catch(err => console.error(`Error syncing state: ${err}`));
+                    console.log(`User joined room: ${roomName}`);
                 })
                 .catch(err => console.error(`Error joining room: ${err}`));
-        }
 
+        }
     }
 
     function updateVideoUrl() {
         const newUrl = document.getElementById('videoUrlInput').value;
-        connection.invoke("UpdateVideoUrl", roomName, newUrl).catch(err => console.error(err));
+        connection.invoke("UpdateVideoUrl", roomName, newUrl)
+            .then(() => {
+                console.log(`Updated video URL to: ${newUrl}`);
+            })
+            .catch(err => console.error(err));
     }
 
     function loadVideo(url) {
@@ -97,21 +106,30 @@
     function playPause() {
         if (video.paused) {
             video.play();
-            connection.invoke("Resume", roomName, video.currentTime).catch(err => console.error(err));
+            connection.invoke("Resume", roomName, video.currentTime)
+                .then(() => console.log(`Video resumed at: ${video.currentTime}`))
+                .catch(err => console.error(err));
         } else {
             video.pause();
-            connection.invoke("Pause", roomName, video.currentTime).catch(err => console.error(err));
+            connection.invoke("Pause", roomName, video.currentTime)
+                .then(() => console.log(`Video paused at: ${video.currentTime}`))
+                .catch(err => console.error(err));
         }
     }
 
     function seek(seconds) {
         isLocalSeek = true;
         video.currentTime += seconds;
+        console.log(`Seeking video by: ${seconds} seconds`);
     }
 
     function sendMessage() {
         const message = document.getElementById('messageInput').value;
-        connection.invoke("SendMessage", roomName, message).catch(err => console.error(err));
+        connection.invoke("SendMessage", roomName, message)
+            .then(() => {
+                console.log(`Message sent: ${message}`);
+            })
+            .catch(err => console.error(err));
         document.getElementById('messageInput').value = '';
     }
 
@@ -179,7 +197,14 @@
 
     connection.on("ReceiveMessage", (message) => {
         const chatMessages = document.getElementById('chatMessages');
-        chatMessages.innerHTML += `<p> ${message}</p>`;
+        chatMessages.innerHTML += `<p>${message}</p>`;
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        console.log(`Message received: ${message}`);
+    });
+
+    connection.on("UserJoined", (username) => {
+        const chatMessages = document.getElementById('chatMessages');
+        chatMessages.innerHTML += `<p>${username} присоединился к чату</p>`;
         chatMessages.scrollTop = chatMessages.scrollHeight;
     });
 

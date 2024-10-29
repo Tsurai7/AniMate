@@ -10,9 +10,8 @@ public partial class SharedWatchingPage : ContentPage
     public SharedWatchingPage(SharedWatchingViewModel viewModel)
     {
         InitializeComponent();
-
         BindingContext = _viewModel = viewModel;
-
+        
         _viewModel._client.SyncState += OnSyncState;
         _viewModel._client.Paused += OnPaused;
         _viewModel._client.Resumed += OnResumed;
@@ -106,6 +105,8 @@ public partial class SharedWatchingPage : ContentPage
     {
         base.OnAppearing();
         await _viewModel._client.ConnectAsync();
+        await _viewModel._client.JoinRoom("1000");
+        await _viewModel._client.SyncStateForNewClient("1000");
         //await _viewModel._client.CreateRoom(_viewModel.RoomCode, "test", _viewModel.MediaUrl);
     }
 

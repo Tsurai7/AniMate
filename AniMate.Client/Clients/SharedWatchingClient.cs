@@ -9,7 +9,7 @@ public class SharedWatchingClient
 #if DEBUG
     private const string HubUrl = "http://10.0.2.2:5002/sharedWatchingHub";
 #else
-    private const string HubUrl = "http://192.168.105.95:5002/sharedWatchingHub";
+    private const string HubUrl = "http://192.168.97.95:5002/sharedWatchingHub";
 #endif
     
     public event Action<string, string, string> RoomCreated;
@@ -55,16 +55,6 @@ public class SharedWatchingClient
         _hubConnection.On<string>("VideoUrlUpdated", (newUrl) =>
         {
             VideoUrlUpdated?.Invoke(newUrl);
-        });
-
-        _hubConnection.On<string, double, bool>("SyncStateForNewClient", (url, time, isPlaying) =>
-        {
-            VideoUrlUpdated?.Invoke(url);
-            Seeked?.Invoke("Seeked", time);
-            if (isPlaying)
-                Resumed?.Invoke("Resumed", time);
-            else
-                Paused?.Invoke("Paused", time);
         });
 
         _hubConnection.On<string>("ReceiveMessage", (message) =>
