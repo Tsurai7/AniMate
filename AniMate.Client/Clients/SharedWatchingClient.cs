@@ -57,6 +57,16 @@ public class SharedWatchingClient
             VideoUrlUpdated?.Invoke(newUrl);
         });
 
+        _hubConnection.On<string, double, bool>("SyncStateForNewClient", (url, time, isPlaying) =>
+        {
+            VideoUrlUpdated?.Invoke(url);
+            Seeked?.Invoke("Seeked", time);
+            if (isPlaying)
+                Resumed?.Invoke("Resumed", time);
+            else
+                Paused?.Invoke("Paused", time);
+        });
+
         _hubConnection.On<string>("ReceiveMessage", (message) =>
         {
             MessageReceived?.Invoke(message);
