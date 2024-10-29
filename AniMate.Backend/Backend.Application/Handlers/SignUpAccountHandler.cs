@@ -1,9 +1,7 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+using Backend.Application.Services;
 using Backend.Domain.Models;
 using Backend.Infrastructure.Repositories;
 using MediatR;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Backend.Application.Handlers;
 
@@ -17,10 +15,14 @@ public class SignUpAccountCommand : IRequest<AuthToken>
 public class SignUpAccountHandler : IRequestHandler<SignUpAccountCommand, AuthToken>
 {
     private readonly AccountRepository _accountRepository;
+    private readonly TokenService _tokenService;
     
-    public SignUpAccountHandler(AccountRepository accountRepository)
+    public SignUpAccountHandler(
+        AccountRepository accountRepository,
+        TokenService tokenService)
     {
         _accountRepository = accountRepository;
+        _tokenService = tokenService;
     }
     
     public async Task<AuthToken> Handle(SignUpAccountCommand request, CancellationToken cancellationToken)
@@ -44,19 +46,6 @@ public class SignUpAccountHandler : IRequestHandler<SignUpAccountCommand, AuthTo
         
         await _accountRepository.AddAsync(newAccount);
         
-        var claims = new List<Claim> {new(ClaimTypes.Name, request.Email) };
-
-        var jwt = new JwtSecurityToken(
-            issuer: AuthOptions.Issuer,
-            audience: AuthOptions.Audience,
-            claims: claims,
-            expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
-            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-
-        return new AuthToken
-        {
-            Token = new JwtSecurityTokenHandler().WriteToken(jwt),
-            Expiration = DateTime.UtcNow.AddMinutes(30)
-        };
+        return _tokenService.GenerateToken(request.Email);
     }
 }

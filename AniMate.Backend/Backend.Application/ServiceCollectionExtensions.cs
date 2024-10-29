@@ -1,4 +1,5 @@
 using Backend.Application.Handlers;
+using Backend.Application.Services;
 using Backend.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,9 +17,11 @@ public static class ServiceCollectionExtensions
         {
             cfg.RegisterServicesFromAssembly(typeof(SignUpAccountHandler).Assembly);
             cfg.RegisterServicesFromAssembly(typeof(SignInAccountHandler).Assembly);
-            cfg.RegisterServicesFromAssembly(typeof(GetProfileHandler).Assembly);
+            cfg.RegisterServicesFromAssembly(typeof(GetAccountHandler).Assembly);
             cfg.RegisterServicesFromAssembly(typeof(UpdateAccountHandler).Assembly);
         });
+
+        services.AddSingleton<TokenService>();
 
         services.AddHttpContextAccessor();
         

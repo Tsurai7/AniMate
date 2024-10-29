@@ -27,9 +27,9 @@ public class AccountController : Controller
     
     [Authorize]
     [HttpGet]
-    public async Task<GetProfileResponse> GetProfile(CancellationToken token)
+    public async Task<GetAccountResponse> GetAccount(CancellationToken token)
     {
-        var command = new GetProfileRequest();
+        var command = new GetAccountRequest();
         
         return await _mediator.Send(command, token);
     }

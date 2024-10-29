@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace Backend.Application.Handlers;
 
-public class GetProfileRequest : IRequest<GetProfileResponse>;
+public class GetAccountRequest : IRequest<GetAccountResponse>;
 
-public record GetProfileResponse
+public record GetAccountResponse
 (
     string Username,
     string ProfileImage,
@@ -15,18 +15,18 @@ public record GetProfileResponse
     List<string> LikedTitles
 );
 
-public class GetProfileHandler : IRequestHandler<GetProfileRequest, GetProfileResponse>
+public class GetAccountHandler : IRequestHandler<GetAccountRequest, GetAccountResponse>
 {
     private readonly AccountRepository _accountRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public GetProfileHandler(AccountRepository accountRepository, IHttpContextAccessor httpContextAccessor)
+    public GetAccountHandler(AccountRepository accountRepository, IHttpContextAccessor httpContextAccessor)
     {
         _accountRepository = accountRepository;
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<GetProfileResponse> Handle(GetProfileRequest request, CancellationToken cancellationToken)
+    public async Task<GetAccountResponse> Handle(GetAccountRequest request, CancellationToken cancellationToken)
     {
         var email = _httpContextAccessor.HttpContext?.User.Identity?.Name;
 
@@ -42,6 +42,6 @@ public class GetProfileHandler : IRequestHandler<GetProfileRequest, GetProfileRe
             throw new InvalidOperationException("Account not found.");
         }
 
-        return new GetProfileResponse(account.Username, account.ImageUrl, account.Email, account.WatchedTitles, account.LikedTitles);
+        return new GetAccountResponse(account.Username, account.ImageUrl, account.Email, account.WatchedTitles, account.LikedTitles);
     }
 }
