@@ -10,9 +10,8 @@ public partial class SharedWatchingPage : ContentPage
     public SharedWatchingPage(SharedWatchingViewModel viewModel)
     {
         InitializeComponent();
-
         BindingContext = _viewModel = viewModel;
-
+        
         _viewModel._client.SyncState += OnSyncState;
         _viewModel._client.Paused += OnPaused;
         _viewModel._client.Resumed += OnResumed;
@@ -33,20 +32,20 @@ public partial class SharedWatchingPage : ContentPage
             case MediaElementState.Playing:
                 if (_viewModel._client != null)
                 {
-                    await _viewModel._client.Resume(_viewModel.RoomCode, MediaControl.Position.TotalSeconds);
+                    await _viewModel._client.Resume(_viewModel.RoomId, MediaControl.Position.TotalSeconds);
                 }
                 break;
             case MediaElementState.Paused:
                 if (_viewModel._client != null)
                 {
-                    await _viewModel._client.Pause(_viewModel.RoomCode, MediaControl.Position.TotalSeconds);
+                    await _viewModel._client.Pause(_viewModel.RoomId, MediaControl.Position.TotalSeconds);
                 }
                 break;
         }
     }
 
     private async void OnSeekCompleted(object sender, EventArgs e) =>
-        await _viewModel._client.Seek(_viewModel.RoomCode, MediaControl.Position.TotalSeconds);
+        await _viewModel._client.Seek(_viewModel.RoomId, MediaControl.Position.TotalSeconds);
 
     private void OnSyncState(string url, double timing, bool isPlaying)
     {
@@ -89,7 +88,7 @@ public partial class SharedWatchingPage : ContentPage
         var selectedEpisode = EpisodePicker.SelectedItem?.ToString();
         if (selectedEpisode != null)
         {
-            await _viewModel._client.UpdateVideoUrl(_viewModel.RoomCode, selectedEpisode);
+            await _viewModel._client.UpdateVideoUrl(_viewModel.RoomId, selectedEpisode);
         }
     }
 
@@ -106,14 +105,16 @@ public partial class SharedWatchingPage : ContentPage
     {
         base.OnAppearing();
         await _viewModel._client.ConnectAsync();
-        await _viewModel._client.CreateRoom(_viewModel.RoomCode, "test", _viewModel.MediaUrl);
+        await _viewModel._client.JoinRoom("1000");
+        await _viewModel._client.SyncStateForNewClient("1000");
+        //await _viewModel._client.CreateRoom(_viewModel.RoomCode, "test", _viewModel.MediaUrl);
     }
 
     private async void OnSendMessageClicked(object sender, EventArgs e)
     {
         if (!string.IsNullOrWhiteSpace(MessageEntry.Text))
         {
-            await _viewModel._client.SendMessage(_viewModel.RoomCode, MessageEntry.Text); 
+            await _viewModel._client.SendMessage(_viewModel.RoomId, MessageEntry.Text); 
             MessageEntry.Text = string.Empty;
         }
     }

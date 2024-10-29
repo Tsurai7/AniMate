@@ -49,7 +49,7 @@
         
         <StackLayout Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Padding="10" Spacing="10">
             <Label x:Name="RoomCodeLabel"
-                   Text="{Binding RoomCode, StringFormat='Код комнаты: {0}'}"
+                   Text="{Binding RoomId, StringFormat='Код комнаты: {0}'}"
                    TextColor="White"
                    FontSize="Small"
                    VerticalOptions="Center"

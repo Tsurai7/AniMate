@@ -15,13 +15,13 @@ namespace AniMate_app
 
             var action = uri.Segments[1];
 
-            if (action.Equals("anime"))
+            if (action.Equals("anime/"))
             {
-                await Shell.Current.GoToAsync($"TitlePage?TitleCode={uri.Segments[1]}");
+                await Shell.Current.GoToAsync($"TitlePage?TitleCode={uri.Segments[2]}");
             }
-            else if (action.Equals("room"))
+            else if (action.Equals("room/"))
             {
-                await Shell.Current.GoToAsync($"TitlePage?TitleCode={uri.Segments[1]}");
+                await Shell.Current.GoToAsync($"SharedWatchingPage?RoomId={uri.Segments[2]}");
             }
         }
     }
