@@ -17,7 +17,10 @@ public static class ServiceCollectionExtensions
             cfg.RegisterServicesFromAssembly(typeof(SignUpAccountHandler).Assembly);
             cfg.RegisterServicesFromAssembly(typeof(SignInAccountHandler).Assembly);
             cfg.RegisterServicesFromAssembly(typeof(GetProfileHandler).Assembly);
+            cfg.RegisterServicesFromAssembly(typeof(UpdateAccountHandler).Assembly);
         });
+
+        services.AddHttpContextAccessor();
         
         services.AddAuthorization();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -34,6 +37,7 @@ public static class ServiceCollectionExtensions
                     ValidateIssuerSigningKey = true
                 };
             });
+        
         
         return services;
     }

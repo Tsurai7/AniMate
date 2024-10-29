@@ -5,14 +5,13 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseUrls("http://0.0.0.0:5002");
-
 builder.Services.AddApplication();
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();;
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -44,16 +43,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(builder =>
-    {
-        builder.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader();
-    });
-});
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -63,11 +52,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors();
-
 app.MapControllers();
 app.MapHub<SharedWatchingHub>("/sharedWatchingHub");
-
 app.UseStaticFiles();
-
 app.Run();

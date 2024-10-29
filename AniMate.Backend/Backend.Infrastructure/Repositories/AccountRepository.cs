@@ -33,9 +33,9 @@ public class AccountRepository : IMongoRepository<Account>
         await _collection.InsertOneAsync(entity);
     }
 
-    public async Task UpdateAsync(string id, Account updatedAccount)
+    public async Task UpdateOneAsync(Account updatedAccount)
     {
-        var filter = Builders<Account>.Filter.Eq("_id", ObjectId.Parse(id));
+        var filter = Builders<Account>.Filter.Eq(account => account.Email, updatedAccount.Email);
         await _collection.ReplaceOneAsync(filter, updatedAccount);
     }
 
