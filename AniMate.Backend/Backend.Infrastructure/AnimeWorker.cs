@@ -26,8 +26,6 @@ public class AnimeWorker : BackgroundService
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-
             foreach (var genre in genres)
             {
                 _logger.LogInformation($"Fetching data for genre: {genre}");

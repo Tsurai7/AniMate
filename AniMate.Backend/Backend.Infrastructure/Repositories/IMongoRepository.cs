@@ -4,6 +4,6 @@ public interface IMongoRepository<T>
 {
     Task<T> GetByIdAsync(string id);
     Task AddAsync(T entity);
-    Task UpdateAsync(string id, T entity);
+    Task UpdateOneAsync(T entity);
     Task DeleteAsync(string id);
 }

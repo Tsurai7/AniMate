@@ -1,34 +1,51 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+using Backend.Application.Services;
 using Backend.Domain.Models;
+using Backend.Infrastructure.Repositories;
 using MediatR;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Backend.Application.Handlers;
 
 public class SignUpAccountCommand : IRequest<AuthToken>
 {
-    public string Email { get; set; }
-    public string Password { get; set; }
+    public string Username { get; init; }
+    public string Email { get; init; }
+    public string Password { get; init; }
 }
 
 public class SignUpAccountHandler : IRequestHandler<SignUpAccountCommand, AuthToken>
 {
-    public Task<AuthToken> Handle(SignUpAccountCommand request, CancellationToken cancellationToken)
+    private readonly AccountRepository _accountRepository;
+    private readonly TokenService _tokenService;
+    
+    public SignUpAccountHandler(
+        AccountRepository accountRepository,
+        TokenService tokenService)
     {
-        var claims = new List<Claim> {new(ClaimTypes.Name, request.Email) };
+        _accountRepository = accountRepository;
+        _tokenService = tokenService;
+    }
+    
+    public async Task<AuthToken> Handle(SignUpAccountCommand request, CancellationToken cancellationToken)
+    {
+        var existingAccount = await _accountRepository.GetByEmailAsync(request.Email);
 
-        var jwt = new JwtSecurityToken(
-            issuer: AuthOptions.Issuer,
-            audience: AuthOptions.Audience,
-            claims: claims,
-            expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
-            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-
-        return Task.FromResult(new AuthToken
+        if (existingAccount != null)
         {
-            Token = new JwtSecurityTokenHandler().WriteToken(jwt),
-            Expiration = DateTime.UtcNow.AddMinutes(30)
-        });
+            throw new InvalidOperationException("Account already exists. Try to sign in");
+        }
+
+        var newAccount = new Account
+        {
+            Username = request.Username,
+            Email = request.Email,
+            ImageUrl = string.Empty,
+            Password = request.Password,
+            WatchedTitles = new List<string>(),
+            LikedTitles = new List<string>()
+        };
+        
+        await _accountRepository.AddAsync(newAccount);
+        
+        return _tokenService.GenerateToken(request.Email);
     }
 }

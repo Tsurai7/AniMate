@@ -1,8 +1,7 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+using Backend.Application.Services;
 using Backend.Domain.Models;
+using Backend.Infrastructure.Repositories;
 using MediatR;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Backend.Application.Handlers;
 
@@ -14,24 +13,26 @@ public class SignInAccountCommand : IRequest<AuthToken>
 
 public class SignInAccountHandler : IRequestHandler<SignInAccountCommand, AuthToken>
 {
-    public Task<AuthToken> Handle(SignInAccountCommand request, CancellationToken cancellationToken)
+    private readonly AccountRepository _accountRepository;
+    private readonly TokenService _tokenService;
+    
+    public SignInAccountHandler(
+        AccountRepository accountRepository,
+        TokenService tokenService)
     {
-        var claims = new List<Claim>
-        {
-            new(ClaimTypes.Name, request.Email)
-        };
+        _accountRepository = accountRepository;
+        _tokenService = tokenService;
+    }
+    
+    public async Task<AuthToken> Handle(SignInAccountCommand request, CancellationToken cancellationToken)
+    {
+        var existingAccount = await _accountRepository.GetByEmailAsync(request.Email);
 
-        var jwt = new JwtSecurityToken(
-            issuer: AuthOptions.Issuer,
-            audience: AuthOptions.Audience,
-            claims: claims,
-            expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30)),
-            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-
-        return Task.FromResult(new AuthToken
+        if (existingAccount is null)
         {
-            Token = new JwtSecurityTokenHandler().WriteToken(jwt),
-            Expiration = DateTime.UtcNow.AddMinutes(30)
-        });
+            throw new InvalidOperationException("No account found. Try to sign up.");
+        }
+        
+        return _tokenService.GenerateToken(request.Email);
     }
 }

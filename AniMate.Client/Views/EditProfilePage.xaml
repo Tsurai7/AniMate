@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AniMate_app.Views.EditProfilePage">
+    <StackLayout Padding="20">
+        <Label Text="Edit Profile"
+               FontSize="30"
+               HorizontalOptions="Center"
+               Margin="0, 20, 0, 20" />
+        
+        <Frame CornerRadius="100"
+               WidthRequest="120"
+               HeightRequest="120"
+               Padding="0"
+               HasShadow="True"
+               HorizontalOptions="Center">
+            <Image Source="{Binding ProfileImage}" 
+                   Aspect="AspectFill" 
+                   WidthRequest="120" 
+                   HeightRequest="120" />
+        </Frame>
+
+        <Button Text="Change Profile Image"
+                Command="{Binding ChangeImageCommand}"
+                HorizontalOptions="Center"
+                Margin="0, 10, 0, 20" />
+
+        <Entry Placeholder="Username"
+               Text="{Binding Username}"
+               Margin="0, 10" />
+               
+        <Entry Placeholder="Email"
+               Text="{Binding Email}"
+               Keyboard="Email"
+               Margin="0, 10" />
+        
+        <Button Text="Save"
+                Command="{Binding SaveCommand}" 
+                HorizontalOptions="Center"
+                Margin="0, 20, 0, 0" />
+    </StackLayout>
+</ContentPage>

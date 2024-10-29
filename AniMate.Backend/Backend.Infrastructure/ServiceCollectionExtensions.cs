@@ -1,4 +1,3 @@
-using Backend.Domain.Models;
 using Backend.Infrastructure.Repositories;
 using DotNetEnv;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,10 +21,10 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IMongoClient, MongoClient>(_ =>
             new MongoClient(connectionString));
 
-        services.AddScoped<IMongoRepository<User>>(sp =>
-            new UserRepository(
+        services.AddSingleton<AccountRepository>(sp =>
+            new AccountRepository(
                 sp.GetRequiredService<IMongoClient>(),
-                "animate", 
+                "animate",
                 "accounts"
             ));
         
@@ -36,7 +35,7 @@ public static class ServiceCollectionExtensions
                 "titles"
             ));
         
-        services.AddHostedService<AnimeWorker>();
+        //services.AddHostedService<AnimeWorker>();
         services.AddSingleton<AnilibriaClient>();
         services.AddHttpClient(nameof(AnilibriaClient), client =>
         {

@@ -35,4 +35,9 @@ public partial class ProfilePage : ContentPage
             await Shell.Current.GoToAsync($"TitlePage", navigationParameter);
         }
     }
+    
+    private async void OnSettingsButtonClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new EditProfilePage());
+    }
 }

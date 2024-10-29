@@ -1,3 +1,5 @@
+using Backend.Application.Handlers;
+using Backend.Application.Services;
 using Backend.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +12,18 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddInfrastructure();
+        
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssembly(typeof(SignUpAccountHandler).Assembly);
+            cfg.RegisterServicesFromAssembly(typeof(SignInAccountHandler).Assembly);
+            cfg.RegisterServicesFromAssembly(typeof(GetAccountHandler).Assembly);
+            cfg.RegisterServicesFromAssembly(typeof(UpdateAccountHandler).Assembly);
+        });
+
+        services.AddSingleton<TokenService>();
+
+        services.AddHttpContextAccessor();
         
         services.AddAuthorization();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -26,6 +40,7 @@ public static class ServiceCollectionExtensions
                     ValidateIssuerSigningKey = true
                 };
             });
+        
         
         return services;
     }

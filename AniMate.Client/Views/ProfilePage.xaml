@@ -17,7 +17,7 @@
                     <RowDefinition Height="320" />
                 </Grid.RowDefinitions>
 
-                <Button Grid.Row="0" VerticalOptions="Start" HorizontalOptions="End">
+                <Button Grid.Row="0" VerticalOptions="Start" HorizontalOptions="End" Clicked="OnSettingsButtonClicked">
                     <Button.ImageSource>
                         <FileImageSource File="{AppThemeBinding Light= settings.svg, Dark= settingswhite.svg}" />
                     </Button.ImageSource>
