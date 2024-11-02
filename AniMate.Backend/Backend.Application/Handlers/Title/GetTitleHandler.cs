@@ -1,15 +1,11 @@
+using Backend.Application.Models.Title;
 using Backend.Domain.Models.Anime;
 using Backend.Infrastructure.Repositories;
 using MediatR;
 
-namespace Backend.Application.Handlers;
+namespace Backend.Application.Handlers.Title;
 
-public class GetTitleCommand : IRequest<TitleDto>
-{
-    public string Code { get; set; }
-}
-
-public class GetTitleHandler : IRequestHandler<GetTitleCommand, TitleDto>
+public class GetTitleHandler : IRequestHandler<GetTitleQueryParams, TitleDto>
 {
     private readonly AnimeRepository _animeRepository;
 
@@ -18,7 +14,7 @@ public class GetTitleHandler : IRequestHandler<GetTitleCommand, TitleDto>
         _animeRepository = animeRepository;
     }
     
-    public async Task<TitleDto> Handle(GetTitleCommand request, CancellationToken cancellationToken)
+    public async Task<TitleDto> Handle(GetTitleQueryParams request, CancellationToken cancellationToken)
     {
         var title = await _animeRepository.GetTitleByCodeAsync(request.Code, cancellationToken);
 

@@ -5,7 +5,7 @@ namespace Backend.API.Hubs
 {
     public class SharedWatchingHub : Hub
     {
-        private static readonly ConcurrentDictionary<string, Room> Rooms = new();
+        private static readonly ConcurrentDictionary<string, Room> Rooms = [];
         
         public async Task CreateRoom(string link, string titleCode, string episodeUrl)
         {

@@ -1,10 +1,9 @@
+using Backend.Application.Models.Account;
 using Backend.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace Backend.Application.Handlers;
-
-public class GetAccountRequest : IRequest<GetAccountResponse>;
+namespace Backend.Application.Handlers.Account;
 
 public record GetAccountResponse
 (

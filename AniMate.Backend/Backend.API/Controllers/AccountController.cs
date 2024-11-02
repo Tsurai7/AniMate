@@ -1,7 +1,6 @@
 using AutoMapper;
-using Backend.API.Controllers.Models.Account;
-using Backend.Application.Handlers;
-using Backend.Application.Models;
+using Backend.Application.Handlers.Account;
+using Backend.Application.Models.Account;
 using Backend.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -58,7 +57,7 @@ public class AccountController : Controller
 
         try
         {
-            var command = new SignUpAccountCommand
+            var command = new SignUpRequest
             {
                 Username = request.Username,
                 Email = request.Email,
@@ -85,7 +84,7 @@ public class AccountController : Controller
 
         try
         {
-            var command = new SignInAccountCommand
+            var command = new SignInRequest
             {
                 Email = request.Email,
                 Password = request.Password

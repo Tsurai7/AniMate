@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Backend.Application.Models;
+namespace Backend.Application.Models.Account;
 
 public class UpdateAccountRequest
 {

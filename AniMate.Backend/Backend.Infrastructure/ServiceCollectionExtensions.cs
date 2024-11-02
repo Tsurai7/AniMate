@@ -36,7 +36,7 @@ public static class ServiceCollectionExtensions
                 "titles"
             ));
         
-        //services.AddHostedService<AnimeWorker>();
+        services.AddHostedService<AnimeWorker>();
         services.AddSingleton<AnilibriaClient>();
         services.AddHttpClient(nameof(AnilibriaClient), client =>
         {

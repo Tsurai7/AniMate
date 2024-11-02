@@ -1,18 +1,12 @@
+using Backend.Application.Models.Account;
 using Backend.Application.Services;
 using Backend.Domain.Models;
 using Backend.Infrastructure.Repositories;
 using MediatR;
 
-namespace Backend.Application.Handlers;
+namespace Backend.Application.Handlers.Account;
 
-public class SignUpAccountCommand : IRequest<AuthToken>
-{
-    public string Username { get; init; }
-    public string Email { get; init; }
-    public string Password { get; init; }
-}
-
-public class SignUpAccountHandler : IRequestHandler<SignUpAccountCommand, AuthToken>
+public class SignUpAccountHandler : IRequestHandler<SignUpRequest, AuthToken>
 {
     private readonly AccountRepository _accountRepository;
     private readonly TokenService _tokenService;
@@ -25,7 +19,7 @@ public class SignUpAccountHandler : IRequestHandler<SignUpAccountCommand, AuthTo
         _tokenService = tokenService;
     }
     
-    public async Task<AuthToken> Handle(SignUpAccountCommand request, CancellationToken cancellationToken)
+    public async Task<AuthToken> Handle(SignUpRequest request, CancellationToken cancellationToken)
     {
         var existingAccount = await _accountRepository.GetByEmailAsync(request.Email);
 
@@ -34,7 +28,7 @@ public class SignUpAccountHandler : IRequestHandler<SignUpAccountCommand, AuthTo
             throw new InvalidOperationException("Account already exists. Try to sign in");
         }
 
-        var newAccount = new Account
+        var newAccount = new Domain.Models.Account
         {
             Username = request.Username,
             Email = request.Email,

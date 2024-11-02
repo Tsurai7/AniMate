@@ -68,7 +68,6 @@ public class SharedWatchingClient
         try
         {
             await _hubConnection.StartAsync();
-            Console.WriteLine("Connected to SignalR hub.");
         }
         catch (Exception ex)
         {
