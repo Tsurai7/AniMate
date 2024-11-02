@@ -7,23 +7,27 @@ namespace AniMate_app.ViewModels;
 
 [QueryProperty(nameof(TitleDto), "Title")]
 [QueryProperty(nameof(MediaUrl), "Url")]
+[QueryProperty(nameof(RoomId), "RoomId")]
 public partial class SharedWatchingViewModel : ObservableObject
 {
     [ObservableProperty]
     private TitleDto _titleDto;
-    
+
     [ObservableProperty]
     private string _mediaUrl = string.Empty;
 
-    [ObservableProperty]
-    private string _roomCode = "123";
-    
-    public ObservableCollection<string> _chatMessages { get; set; }
-    
-    public readonly SharedWatchingClient _client;
+    private string _roomId = string.Empty;
 
-    public SharedWatchingViewModel(SharedWatchingClient client)
+    public ObservableCollection<string> _chatMessages { get; set; } = new();
+
+    public SharedWatchingClient _client = new();
+
+    public string RoomId
     {
-        _client = client;
+        get => _roomId;
+        set
+        {
+            _roomId = value;
+        }
     }
 }
