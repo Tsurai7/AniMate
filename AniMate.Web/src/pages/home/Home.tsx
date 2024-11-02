@@ -1,10 +1,17 @@
 import React from 'react';
+import Navigation from "../../components/navigation/Navigation";
 
 class Home extends React.Component {
+
 	render() {
 		return (
 			<div className="wrapper">
-				<h1>Home</h1>
+				<div className="home">
+					<Navigation/>
+					<div className="container">
+						<h1>Home</h1>
+					</div>
+				</div>
 			</div>
 		);
 	}
