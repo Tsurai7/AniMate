@@ -1,7 +1,7 @@
 using AutoMapper;
 using Backend.API.Controllers.Models.Account;
-using Backend.Application;
 using Backend.Application.Handlers;
+using Backend.Application.Models;
 using Backend.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -113,6 +113,7 @@ public class AccountController : Controller
 
         try
         {
+            
             var command = new UpdateAccountCommand
             {
                 Email = email,

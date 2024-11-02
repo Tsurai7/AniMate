@@ -1,3 +1,4 @@
+using Backend.Application.Models;
 using Backend.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.JsonPatch;

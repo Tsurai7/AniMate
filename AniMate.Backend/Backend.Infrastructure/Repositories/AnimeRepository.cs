@@ -12,6 +12,12 @@ public class AnimeRepository
         _collection = database.GetCollection<TitleDto>(collectionName);
     }
 
+    public async Task<TitleDto> GetTitleByCodeAsync(string code, CancellationToken cancellationToken = default)
+    {
+        var filter = Builders<TitleDto>.Filter.Eq(account => account.Code, code);
+        return await _collection.Find(filter).SingleOrDefaultAsync();
+    }
+
     public async Task Add(TitleDto title) =>
         await _collection.InsertOneAsync(title);
 

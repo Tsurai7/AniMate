@@ -20,7 +20,9 @@ public class GetAccountHandler : IRequestHandler<GetAccountRequest, GetAccountRe
     private readonly AccountRepository _accountRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public GetAccountHandler(AccountRepository accountRepository, IHttpContextAccessor httpContextAccessor)
+    public GetAccountHandler(
+        AccountRepository accountRepository,
+        IHttpContextAccessor httpContextAccessor)
     {
         _accountRepository = accountRepository;
         _httpContextAccessor = httpContextAccessor;
