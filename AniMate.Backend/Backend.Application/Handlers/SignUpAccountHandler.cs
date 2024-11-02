@@ -38,10 +38,7 @@ public class SignUpAccountHandler : IRequestHandler<SignUpAccountCommand, AuthTo
         {
             Username = request.Username,
             Email = request.Email,
-            ImageUrl = string.Empty,
-            Password = request.Password,
-            WatchedTitles = new List<string>(),
-            LikedTitles = new List<string>()
+            Password = request.Password
         };
         
         await _accountRepository.AddAsync(newAccount);

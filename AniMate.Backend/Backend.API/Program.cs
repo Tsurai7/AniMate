@@ -16,6 +16,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapControllers();
+
+app.UseCors(builder => builder
+    .WithOrigins("https://localhost:3000")
+    .AllowAnyHeader()
+    .AllowAnyMethod());
+
 app.MapHub<SharedWatchingHub>("/sharedWatchingHub");
 app.UseStaticFiles();
 app.Run();

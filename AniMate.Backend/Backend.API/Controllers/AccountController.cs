@@ -16,50 +16,90 @@ public class AccountController : Controller
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
+    private readonly ILogger<AccountController> _logger;
     
     public AccountController(
         IMediator mediator,
-        IMapper mapper)
+        IMapper mapper, 
+        ILogger<AccountController> logger)
     {
         _mediator = mediator;
         _mapper = mapper;
+        _logger = logger;
     }
     
     [Authorize]
     [HttpGet]
-    public async Task<GetAccountResponse> GetAccount(CancellationToken token)
+    public async Task<ActionResult<GetAccountResponse>> GetAccount(CancellationToken token)
     {
-        var command = new GetAccountRequest();
-        
-        return await _mediator.Send(command, token);
+        _logger.LogInformation("Fetching account details for user {email}", User.Identity?.Name);
+
+        try
+        {
+            var command = new GetAccountRequest();
+            var response = await _mediator.Send(command, token);
+            
+            _logger.LogInformation("Successfully fetched account details for user {email}", User.Identity?.Name);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching account details for user {email}", User.Identity?.Name);
+            return Problem();
+        }
     }
     
     [HttpPost("sign-up")]
-    public async Task<AuthToken> SignUpAsync(
+    public async Task<ActionResult<AuthToken>> SignUpAsync(
         [FromBody] SignUpRequest request,
         CancellationToken token)
     {
-        var command = new SignUpAccountCommand
+        _logger.LogInformation("Attempting sign-up for email {email}", request.Email);
+
+        try
         {
-            Email = request.Email,
-            Password = request.Password
-        };
-        
-        return await _mediator.Send(command, token);
+            var command = new SignUpAccountCommand
+            {
+                Username = request.Username,
+                Email = request.Email,
+                Password = request.Password
+            };
+            
+            var tokenResponse = await _mediator.Send(command, token);
+            _logger.LogInformation("Successfully signed up user with email {email}", request.Email);
+            return Ok(tokenResponse);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during sign-up for email {email}", request.Email);
+            return Problem();
+        }
     }
     
     [HttpPost("sign-in")]
-    public async Task<AuthToken> SignInAsync(
+    public async Task<ActionResult<AuthToken>> SignInAsync(
         [FromBody] SignInRequest request,
         CancellationToken token)
     {
-        var command = new SignInAccountCommand
+        _logger.LogInformation("Attempting sign-in for email {email}", request.Email);
+
+        try
         {
-            Email = request.Email,
-            Password = request.Password
-        };
-        
-        return await _mediator.Send(command, token);
+            var command = new SignInAccountCommand
+            {
+                Email = request.Email,
+                Password = request.Password
+            };
+            
+            var tokenResponse = await _mediator.Send(command, token);
+            _logger.LogInformation("Successfully signed in user with email {email}", request.Email);
+            return Ok(tokenResponse);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during sign-in for email {email}", request.Email);
+            return Problem();
+        }
     }
     
     [Authorize]
@@ -69,14 +109,25 @@ public class AccountController : Controller
         [FromBody] JsonPatchDocument<UpdateAccountRequest> patchDocument,
         CancellationToken token)
     {
-        var command = new UpdateAccountCommand
-        {
-            Email = email,
-            PatchDocument = patchDocument
-        };
+        _logger.LogInformation("Attempting to update profile for email {email}", email);
 
-        await _mediator.Send(command, token);
-        
-        return NoContent();
+        try
+        {
+            var command = new UpdateAccountCommand
+            {
+                Email = email,
+                PatchDocument = patchDocument
+            };
+
+            await _mediator.Send(command, token);
+            
+            _logger.LogInformation("Successfully updated profile for email {email}", email);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating profile for email {email}", email);
+            return Problem();
+        }
     }
 }
