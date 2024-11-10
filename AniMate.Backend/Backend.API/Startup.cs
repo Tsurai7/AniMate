@@ -8,6 +8,7 @@ public static class Startup
     public static IServiceCollection ConfigureServices(this IServiceCollection services)
     {
         services.AddApplication();
+        services.AddMemoryCache();
         services.AddSignalR();
         services.AddAutoMapper(typeof(Program).Assembly);
 

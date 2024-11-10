@@ -13,14 +13,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
 app.MapControllers();
-
-app.UseCors(builder => builder
-    .WithOrigins("https://localhost:3000")
-    .AllowAnyHeader()
-    .AllowAnyMethod());
 
 app.MapHub<SharedWatchingHub>("/sharedWatchingHub");
 app.UseStaticFiles();
