@@ -18,6 +18,7 @@ public partial class SharedWatchingPage : ContentPage
         _viewModel._client.Seeked += OnSeeked;
         _viewModel._client.VideoUrlUpdated += OnVideoUrlUpdated;
         _viewModel._client.MessageReceived += OnMessageReceived;
+        _viewModel._client.RoomCreated += OnRoomCreated;
 
         MediaControl.SeekCompleted += OnSeekCompleted;
         MediaControl.StateChanged += OnMediaElementStateChanged;
@@ -43,7 +44,12 @@ public partial class SharedWatchingPage : ContentPage
                 break;
         }
     }
-
+    
+    private void OnRoomCreated(string roomId, string titleCode, string episodeUrl)
+    {
+        _viewModel.RoomId = roomId;
+    }
+    
     private async void OnSeekCompleted(object sender, EventArgs e) =>
         await _viewModel._client.Seek(_viewModel.RoomId, MediaControl.Position.TotalSeconds);
 
@@ -85,13 +91,24 @@ public partial class SharedWatchingPage : ContentPage
 
     private async void OnEpisodeSelected(object sender, EventArgs e)
     {
-        var selectedEpisode = EpisodePicker.SelectedItem?.ToString();
-        if (selectedEpisode != null)
+        var selectedEpisodeText = EpisodePicker.SelectedItem?.ToString();
+    
+        if (selectedEpisodeText != null)
         {
-            await _viewModel._client.UpdateVideoUrl(_viewModel.RoomId, selectedEpisode);
+            var episodeOrdinal = int.Parse(selectedEpisodeText.Split(':')[0].Replace("Серия", "").Trim());
+            
+            var selectedEpisode = _viewModel.TitleDto.Player.Episodes.Values
+                .FirstOrDefault(e => e.Ordinal == episodeOrdinal);
+
+            if (selectedEpisode != null)
+            {
+                var episodeUrl = selectedEpisode.HlsUrls.Hd;
+                
+                await _viewModel._client.UpdateVideoUrl(_viewModel.RoomId, episodeUrl);
+            }
         }
     }
-
+    
     private void OnVideoUrlUpdated(string newUrl) 
         => MediaControl.Source = newUrl;
 
@@ -105,9 +122,21 @@ public partial class SharedWatchingPage : ContentPage
     {
         base.OnAppearing();
         await _viewModel._client.ConnectAsync();
-        await _viewModel._client.JoinRoom("1000");
-        await _viewModel._client.SyncStateForNewClient("1000");
-        //await _viewModel._client.CreateRoom(_viewModel.RoomCode, "test", _viewModel.MediaUrl);
+
+        if (_viewModel.RoomId != string.Empty)
+        {
+            await _viewModel._client.JoinRoom(_viewModel.RoomId);
+            await _viewModel._client.SyncStateForNewClient(_viewModel.RoomId);
+        }
+        else
+        {
+            await _viewModel._client.CreateRoom( _viewModel.TitleDto.Code, _viewModel.MediaUrl);
+        }
+        
+        foreach (var episode in _viewModel.TitleDto.Player.Episodes.Values)
+        {
+            EpisodePicker.Items.Add($"Серия {episode.Ordinal}: {episode.Name}");
+        }
     }
 
     private async void OnSendMessageClicked(object sender, EventArgs e)

@@ -12,22 +12,11 @@ public partial class SharedWatchingViewModel : ObservableObject
 {
     [ObservableProperty]
     private TitleDto _titleDto;
-
     [ObservableProperty]
     private string _mediaUrl = string.Empty;
-
+    [ObservableProperty]
     private string _roomId = string.Empty;
-
+    
     public ObservableCollection<string> _chatMessages { get; set; } = new();
-
     public SharedWatchingClient _client = new();
-
-    public string RoomId
-    {
-        get => _roomId;
-        set
-        {
-            _roomId = value;
-        }
-    }
 }
