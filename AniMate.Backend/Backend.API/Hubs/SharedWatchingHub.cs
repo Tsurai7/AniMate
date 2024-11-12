@@ -46,7 +46,7 @@ public class SharedWatchingHub : Hub
             await Groups.AddToGroupAsync(Context.ConnectionId, roomId);
             await Clients.OthersInGroup(roomId).SendAsync("SyncState", roomToJoin.MediaUrl, roomToJoin.CurrentTiming.TotalSeconds, roomToJoin.IsPlaying);
             
-            await SendMessage(roomId, $"New user joined");
+            await SendMessage(roomId, "New user joined");
             return;
         }
 
@@ -115,7 +115,7 @@ public class SharedWatchingHub : Hub
 
     public async Task SendMessage(string roomId, string message)
     {
-        await Clients.Group(roomId).SendAsync("ReceiveMessage", message);
+        await Clients.OthersInGroup(roomId).SendAsync("ReceiveMessage", message);
     }
     
     private string GenerateRoomId() 

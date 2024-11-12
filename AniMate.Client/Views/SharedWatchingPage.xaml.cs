@@ -57,18 +57,22 @@ public partial class SharedWatchingPage : ContentPage
     {
         Dispatcher.Dispatch(() =>
         {
-            MediaControl.Source = url;
-            MediaControl.SeekTo(TimeSpan.FromSeconds(timing));
-            if (isPlaying)
+            if (MediaControl.Source?.ToString() != url)
             {
-                MediaControl.Play();
+                MediaControl.Source = url;
             }
-            else
+
+            MediaControl.Pause();
+            MediaControl.SeekTo(TimeSpan.FromSeconds(timing));
+            MediaControl.Play(); 
+        
+            if (!isPlaying)
             {
                 MediaControl.Pause();
             }
         });
     }
+
 
     private void OnPaused(string roomName, double timing)
     {
@@ -102,15 +106,17 @@ public partial class SharedWatchingPage : ContentPage
 
             if (selectedEpisode != null)
             {
-                var episodeUrl = selectedEpisode.HlsUrls.Hd;
+                var episodeUrl = selectedEpisode.HlsUrls.Fhd;
                 
                 await _viewModel._client.UpdateVideoUrl(_viewModel.RoomId, episodeUrl);
             }
         }
     }
-    
-    private void OnVideoUrlUpdated(string newUrl) 
-        => MediaControl.Source = newUrl;
+
+    private void OnVideoUrlUpdated(string newUrl)
+    {
+        Dispatcher.Dispatch(() => { MediaControl.Source = newUrl; });
+    }
 
     protected override async void OnDisappearing()
     {
@@ -137,6 +143,11 @@ public partial class SharedWatchingPage : ContentPage
         {
             EpisodePicker.Items.Add($"Серия {episode.Ordinal}: {episode.Name}");
         }
+        
+        if (EpisodePicker.Items.Count > 0)
+        {
+            EpisodePicker.SelectedIndex = 0;
+        }
     }
 
     private async void OnSendMessageClicked(object sender, EventArgs e)
@@ -150,8 +161,12 @@ public partial class SharedWatchingPage : ContentPage
 
     private void OnMessageReceived(string message)
     {
-        _viewModel._chatMessages.Add(message);
-        ChatMessagesListView.ScrollTo(_viewModel._chatMessages[^1], ScrollToPosition.End, true);
+        // TODO: Fix message duplication
+        if (_viewModel._chatMessages.Count == 0 || _viewModel._chatMessages.Last() != message)
+        {
+            _viewModel._chatMessages.Add(message);
+            ChatMessagesListView.ScrollTo(_viewModel._chatMessages[^1], ScrollToPosition.End, true);
+        }
     }
 
     private async void OnCopyRoomCodeClicked(object sender, EventArgs e)
@@ -159,7 +174,6 @@ public partial class SharedWatchingPage : ContentPage
         if (!string.IsNullOrEmpty(RoomCodeLabel.Text))
         {
             await Clipboard.SetTextAsync(RoomCodeLabel.Text);
-            await DisplayAlert("Скопировано", "Код комнаты скопирован в буфер обмена.", "OK");
         }
     }
 }
