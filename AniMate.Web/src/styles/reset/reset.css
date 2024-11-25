@@ -1,20 +1,21 @@
 /* Reset and base styles  */
 * {
-    padding: 0;
-    margin: 0;
-    border: none;
+  padding: 0;
+  margin: 0;
+  border: none;
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 /* Links */
 
 a, a:link, a:visited  {
-    text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  text-decoration: none;
 }
 
 /* Reset styles for links */
@@ -23,87 +24,96 @@ a:link,
 a:visited,
 a:hover,
 a:active {
-    text-decoration: none;
-    color: inherit;
-    background-color: transparent;
-    outline: none;
-    border: none;
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  text-decoration: none;
+  color: inherit;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
 }
 
 li {
-    list-style-type: none;
+  font-family: "Roboto", sans-serif;
+  list-style-type: none;
 }
 
 a:hover  {
-    text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  text-decoration: none;
 }
 
 /* Common */
 
 aside, nav, footer, header, section, main {
-    display: block;
+  display: block;
 }
 
 h1, h2, h3, h4, h5, h6, p {
-    font-size: inherit;
-    font-weight: inherit;
+  font-family: "Roboto", sans-serif;
+  font-size: inherit;
+  font-weight: inherit;
 }
 
 ul, ul li {
-    list-style: none;
+  font-family: "Roboto", sans-serif;
+  list-style: none;
 }
 
 img {
-    vertical-align: top;
+  vertical-align: top;
 }
 
 img, svg {
-    max-width: 100%;
-    height: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 address {
-    font-style: normal;
+  font-style: normal;
 }
 
 /* Form */
 
 input, textarea, button, select {
-    font-family: inherit;
-    font-size: inherit;
-    color: inherit;
-    background-color: transparent;
+  font-family: "Roboto", sans-serif;
+  font-size: inherit;
+  color: inherit;
+  background-color: transparent;
 }
 
 input::-ms-clear {
-    display: none;
+  display: none;
 }
 
 button, input[type="submit"] {
-    display: inline-block;
-    box-shadow: none;
-    background-color: transparent;
-    background: none;
-    cursor: pointer;
+  display: inline-block;
+  box-shadow: none;
+  background-color: transparent;
+  background: none;
+  cursor: pointer;
 }
 
 input:focus, input:active,
 button:focus, button:active {
-    outline: none;
+  font-family: "Roboto", sans-serif;
+  outline: none;
 }
 
 button::-moz-focus-inner {
-    padding: 0;
-    border: 0;
+  font-family: "Roboto", sans-serif;
+  padding: 0;
+  border: 0;
 }
 
 label {
-    cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  cursor: pointer;
 }
 
 legend {
-    display: block;
+  font-family: "Roboto", sans-serif;
+  display: block;
 }

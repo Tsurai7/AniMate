@@ -1,10 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap')
+
 @import "./styles/main/main.sass"
-@import "./styles/components/navigation/navigation.sass"
-@import "./styles/pages/home/home.sass"
+@import "./components/navigation/navigation.sass"
+@import "./pages/home/home"
+@import "./components/footer/footer"
+
+html, body
+  background-color: #000
 
 .wrapper
+  height: 100vh
+  background-color: #000000
   margin: 0 auto
 
 .container
-  width: 1170px
+  width: 1400px
   margin: 0 auto
+
+@media (max-width: 1200px)
+.container
+  padding: 15px
+
+@media (max-width: 992px)
+.container
+  padding: 10px
+  max-width: 900px
+
+@media (max-width: 768px)
+.container
+  padding: 5px
+  max-width: 100%
+
+@media (max-width: 576px)
+.container
+  padding: 0

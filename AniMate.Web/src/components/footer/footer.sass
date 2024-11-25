@@ -1,0 +1,62 @@
+.footer
+  padding: 20px 0
+  border-top: 1px solid #111111
+  &_container
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: space-between
+
+  // Left
+  &_left
+    display: flex
+    min-width: 200px
+    flex-direction: column
+    align-items: center
+    &_logo
+      display: flex
+      align-items: center
+      &_title
+        font-weight: 500
+        font-size: 24px
+        color: #fd517a
+        padding-bottom: 8px
+    &_date
+      padding-bottom: 12px
+      &_title
+        color: #333
+    &_button
+      padding-bottom: 12px
+      div
+        border-radius: 16px
+        padding: 8px 16px
+        background-color: #333
+        p
+          color: #fff
+
+  // Center
+  &_center
+    padding: 0 64px
+    margin-bottom: 14px
+    &_line
+      display: flex
+      flex-wrap: wrap
+      align-items: center
+      justify-content: center
+      p
+        font-size: 16px
+        font-weight: 600
+        margin-left: 12px
+        color: #333
+      img
+        margin-bottom: 12px
+        margin-left: 14px
+        width: 24px
+        height: 24px
+
+  // Right
+  &_right
+    min-width: 200px
+    img
+      min-width: 200px
+      max-width: 200px
