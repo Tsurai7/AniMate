@@ -42,14 +42,11 @@
                 TitleColor="LightGray"
                 ItemsSource="{Binding TitleDto.Player.Episodes.Values}"
                 SelectedIndexChanged="OnEpisodeSelected">
-            <Picker.ItemDisplayBinding>
-                <Binding Path="." StringFormat="Серия {0}" />
-            </Picker.ItemDisplayBinding>
         </Picker>
         
         <StackLayout Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Padding="10" Spacing="10">
             <Label x:Name="RoomCodeLabel"
-                   Text="{Binding RoomId, StringFormat='Код комнаты: {0}'}"
+                   Text="{Binding RoomId, StringFormat='Код комнаты: https://animate/room/{0}'}"
                    TextColor="White"
                    FontSize="Small"
                    VerticalOptions="Center"
@@ -58,6 +55,7 @@
                     TextColor="White"
                     Clicked="OnCopyRoomCodeClicked"/>
         </StackLayout>
+
 
         <ListView x:Name="ChatMessagesListView"
                   Grid.Row="4"

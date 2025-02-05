@@ -3,18 +3,25 @@ using Microsoft.OpenApi.Models;
 
 namespace Backend.API;
 
-public static class StartUp
+public static class Startup
 {
     public static IServiceCollection ConfigureServices(this IServiceCollection services)
     {
         services.AddApplication();
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddMemoryCache();
         services.AddSignalR();
         services.AddAutoMapper(typeof(Program).Assembly);
 
-        services.AddControllers().AddNewtonsoftJson();;
+        services.ConfigureSwagger();
+        services.AddControllers().AddNewtonsoftJson();
+        return services;
+    }
 
+    private static IServiceCollection ConfigureSwagger(this IServiceCollection services)
+    {
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
+        
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Animate", Version = "v1" });

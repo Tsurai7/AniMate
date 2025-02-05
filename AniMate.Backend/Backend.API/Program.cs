@@ -13,9 +13,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
 app.MapControllers();
+
 app.MapHub<SharedWatchingHub>("/sharedWatchingHub");
 app.UseStaticFiles();
 app.Run();

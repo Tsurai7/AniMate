@@ -1,8 +1,9 @@
+using Backend.Application.Models.Account;
 using Backend.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
 
-namespace Backend.Application.Handlers;
+namespace Backend.Application.Handlers.Account;
 
 public class UpdateAccountCommand : IRequest<Unit>
 {

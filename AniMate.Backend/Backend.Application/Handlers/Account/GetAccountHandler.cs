@@ -1,10 +1,9 @@
+using Backend.Application.Models.Account;
 using Backend.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace Backend.Application.Handlers;
-
-public class GetAccountRequest : IRequest<GetAccountResponse>;
+namespace Backend.Application.Handlers.Account;
 
 public record GetAccountResponse
 (
@@ -20,7 +19,9 @@ public class GetAccountHandler : IRequestHandler<GetAccountRequest, GetAccountRe
     private readonly AccountRepository _accountRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public GetAccountHandler(AccountRepository accountRepository, IHttpContextAccessor httpContextAccessor)
+    public GetAccountHandler(
+        AccountRepository accountRepository,
+        IHttpContextAccessor httpContextAccessor)
     {
         _accountRepository = accountRepository;
         _httpContextAccessor = httpContextAccessor;

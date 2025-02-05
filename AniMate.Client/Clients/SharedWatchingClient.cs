@@ -27,9 +27,9 @@ public class SharedWatchingClient
             .WithAutomaticReconnect()
             .Build();
         
-        _hubConnection.On<string, string, string>("CreatedRoom", (link, titleCode, episodeUrl) =>
+        _hubConnection.On<string, string, string>("CreatedRoom", (roomId, titleCode, episodeUrl) =>
         {
-            RoomCreated?.Invoke(link, titleCode, episodeUrl);
+            RoomCreated?.Invoke(roomId, titleCode, episodeUrl);
         });
 
         _hubConnection.On<string, double, bool>("SyncState", (url, timing, isPlaying) =>
@@ -68,7 +68,6 @@ public class SharedWatchingClient
         try
         {
             await _hubConnection.StartAsync();
-            Console.WriteLine("Connected to SignalR hub.");
         }
         catch (Exception ex)
         {
@@ -81,9 +80,9 @@ public class SharedWatchingClient
         await _hubConnection.StopAsync();
     }
 
-    public async Task CreateRoom(string link, string titleCode, string episodeUrl)
+    public async Task CreateRoom(string titleCode, string episodeUrl)
     {
-        await _hubConnection.InvokeAsync("CreateRoom", link, titleCode, episodeUrl);
+        await _hubConnection.InvokeAsync("CreateRoom", titleCode, episodeUrl);
     }
 
     public async Task JoinRoom(string link)

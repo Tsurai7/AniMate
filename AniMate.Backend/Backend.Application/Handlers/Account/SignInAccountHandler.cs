@@ -1,17 +1,12 @@
+using Backend.Application.Models.Account;
 using Backend.Application.Services;
 using Backend.Domain.Models;
 using Backend.Infrastructure.Repositories;
 using MediatR;
 
-namespace Backend.Application.Handlers;
+namespace Backend.Application.Handlers.Account;
 
-public class SignInAccountCommand : IRequest<AuthToken>
-{
-    public string Email { get; set; }
-    public string Password { get; set; }
-}
-
-public class SignInAccountHandler : IRequestHandler<SignInAccountCommand, AuthToken>
+public class SignInAccountHandler : IRequestHandler<SignInRequest, AuthToken>
 {
     private readonly AccountRepository _accountRepository;
     private readonly TokenService _tokenService;
@@ -24,7 +19,7 @@ public class SignInAccountHandler : IRequestHandler<SignInAccountCommand, AuthTo
         _tokenService = tokenService;
     }
     
-    public async Task<AuthToken> Handle(SignInAccountCommand request, CancellationToken cancellationToken)
+    public async Task<AuthToken> Handle(SignInRequest request, CancellationToken cancellationToken)
     {
         var existingAccount = await _accountRepository.GetByEmailAsync(request.Email);
 
