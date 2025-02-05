@@ -13,7 +13,7 @@
           BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
         
         <CollectionView ItemsSource="{Binding TitlesCollection.Titles}" SelectionMode="Single" SelectionChanged= "TitleSelected"
-                          RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="0">
+                          RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="1">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
                      Span="2" />

@@ -15,7 +15,7 @@
                 ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" SelectionMode="None" 
                 ItemsSource="{Binding GenreList}"
                 RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" 
-                RemainingItemsThreshold="0">
+                RemainingItemsThreshold="1">
 
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" SnapPointsType="None"/>

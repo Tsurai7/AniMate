@@ -51,7 +51,7 @@
                     </Button.ImageSource>
                 </Button>
                 <CollectionView ItemsSource="{Binding LikedTitlesCollection.Titles}" SelectionMode="Single" SelectionChanged= "TitleSelected"
-                      RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="0" Grid.Row="3">
+                      RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="1" Grid.Row="3">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Horizontal"
                  Span="1" />
@@ -110,7 +110,7 @@
                 </Button>
 
                 <CollectionView ItemsSource="{Binding WatchedTitlesCollection.Titles}" SelectionMode="Single" SelectionChanged= "TitleSelected"
-                      RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="0" Grid.Row="5" >
+                      RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="1" Grid.Row="5" >
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Horizontal"
                  Span="1" />

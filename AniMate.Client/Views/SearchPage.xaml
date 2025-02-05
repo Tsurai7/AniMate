@@ -34,7 +34,7 @@
         </StackLayout>
 
         <CollectionView ItemsSource="{Binding TitlesCollection.Titles}" Grid.Row="1" Margin="12, 0, 0, 0"
-                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="0"
+                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="1"
                         SelectionMode="Single" SelectionChanged="TitleSelected" ItemTemplate="{StaticResource TitleTile}">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="20" />
