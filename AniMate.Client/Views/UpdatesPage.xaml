@@ -21,7 +21,7 @@
                             ItemsSource="{Binding Titles.Titles}" 
                             ItemsUpdatingScrollMode="KeepScrollOffset"
                             SelectionChanged="TitleSelected"
-                            RemainingItemsThreshold="0"
+                            RemainingItemsThreshold="1"
                             RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}">
                 
                 <CollectionView.ItemsLayout>
