@@ -5,7 +5,7 @@ using Android.OS;
 
 namespace AniMate_app
 {
-    [Activity(Theme = "@style/AppTheme.Starting", ResizeableActivity = true, LaunchMode = LaunchMode.SingleTask, MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
+    [Activity(Theme = "@style/AppTheme.Starting", LaunchMode = LaunchMode.SingleTask, MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
     [IntentFilter(
         [Intent.ActionView],
         Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
