@@ -5,7 +5,7 @@ namespace AniMate_app.DTOs.Anime;
 public class EpisodeDto
 {
     [JsonPropertyName("episode")]
-    public int Ordinal { get; init; }
+    public double Ordinal { get; init; }
 
     [JsonPropertyName("name")]
     public string? Name { get; init; }

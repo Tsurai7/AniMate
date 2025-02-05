@@ -1,6 +1,6 @@
-﻿using System.Text.Json;
-using AniMate_app.DTOs.Anime;
+﻿using AniMate_app.DTOs.Anime;
 using AniMate_app.Interfaces;
+using System.Text.Json;
 
 namespace AniMate_app.Clients;
 

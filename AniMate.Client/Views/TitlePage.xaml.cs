@@ -21,7 +21,12 @@ public partial class TitlePage : ContentPage
     {
         if (sender is Button button && button.CommandParameter is string hlsUrl)
         {
-            await Shell.Current.GoToAsync(nameof(PlayerPage));
+            var navigationParameter = new Dictionary<string, object>
+            {
+                {"mediaurl", _viewModel.TitleDto.Player.Episodes.FirstOrDefault().Value.HlsUrls.Sd }
+            };
+
+            await Shell.Current.GoToAsync(nameof(PlayerPage), navigationParameter);
         }
     }
 
