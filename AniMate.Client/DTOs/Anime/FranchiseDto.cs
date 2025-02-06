@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace AniMate_app.DTOs.Anime;
+﻿namespace AniMate_app.DTOs.Anime;
 
 public class FranchiseDto
 {

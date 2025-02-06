@@ -9,8 +9,18 @@ namespace AniMate_app.ViewModels;
 [QueryProperty(nameof(Genre), "GenreName")]
 public partial class GenreViewModel : ViewModelBase
 {
-    [ObservableProperty]
     private string _genre;
+
+    public string Genre
+    {
+        get => _genre;
+        set
+        {
+            _genre = value;
+            TitlesCollection = new(_genre);
+            OnPropertyChanged(nameof(_genre));
+        }
+    }
 
     [ObservableProperty]
     private GenreCollection _titlesCollection;

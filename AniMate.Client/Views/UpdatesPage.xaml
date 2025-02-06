@@ -11,11 +11,11 @@
         <Grid Padding="10,20,0,0" BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
             
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Text="Latest Updates" FontSize="Title"/>
+            <Label Grid.Row="0" Text="Latest Updates" VerticalTextAlignment="Start" HorizontalTextAlignment="Center" FontSize="Title"/>
 
             <CollectionView Grid.Row="1" SelectionMode="Single"
                             ItemsSource="{Binding Titles.Titles}" 
