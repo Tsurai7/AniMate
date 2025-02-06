@@ -129,6 +129,16 @@ public partial class SharedWatchingPage : ContentPage
         base.OnAppearing();
         await _viewModel._client.ConnectAsync();
 
+        foreach (var episode in _viewModel.TitleDto.Player.Episodes.Values)
+        {
+            EpisodePicker.Items.Add($"Серия {episode.Ordinal}: {episode.Name}");
+        }
+
+        if (EpisodePicker.Items.Count > 0)
+        {
+            EpisodePicker.SelectedIndex = 0;
+        }
+
         if (_viewModel.RoomId != string.Empty)
         {
             await _viewModel._client.JoinRoom(_viewModel.RoomId);
@@ -137,17 +147,7 @@ public partial class SharedWatchingPage : ContentPage
         else
         {
             await _viewModel._client.CreateRoom( _viewModel.TitleDto.Code, _viewModel.MediaUrl);
-        }
-        
-        foreach (var episode in _viewModel.TitleDto.Player.Episodes.Values)
-        {
-            EpisodePicker.Items.Add($"Серия {episode.Ordinal}: {episode.Name}");
-        }
-        
-        if (EpisodePicker.Items.Count > 0)
-        {
-            EpisodePicker.SelectedIndex = 0;
-        }
+        } 
     }
 
     private async void OnSendMessageClicked(object sender, EventArgs e)

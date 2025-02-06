@@ -18,5 +18,6 @@ public partial class SharedWatchingViewModel : ObservableObject
     private string _roomId = string.Empty;
     
     public ObservableCollection<string> _chatMessages { get; set; } = new();
+
     public SharedWatchingClient _client = new();
 }
