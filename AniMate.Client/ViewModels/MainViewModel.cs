@@ -35,11 +35,15 @@ namespace AniMate_app.ViewModels
         {
             IsBusy = true;
 
+            IsLoading = true;
+
             GenreList = new(_loadMoreContentOffset);
 
             Genres = await AnimeClient.GetAllGenres();
 
             await LoadMoreGenres(_loadMoreContentOffset);
+
+            IsLoading = false;
 
             IsBusy = false;
         }
@@ -55,6 +59,8 @@ namespace AniMate_app.ViewModels
             }
 
             IsBusy = true;
+
+            IsRefreshing = true;
 
             GenresLoaded = 0;
 
