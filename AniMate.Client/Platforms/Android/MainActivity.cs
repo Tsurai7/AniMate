@@ -17,18 +17,30 @@ namespace AniMate_app
     ]
     public class MainActivity : MauiAppCompatActivity
     {
-        protected override void OnNewIntent(Intent intent)
+        protected override void OnNewIntent(Intent? intent)
         {
             base.OnNewIntent(intent);
+
+            if (intent == null)
+                return;
 
             ProcessIntent(intent);
         }
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override void OnCreate(Bundle? savedInstanceState)
         {
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.P)
+            {
+                Window.Attributes.LayoutInDisplayCutoutMode = Android.Views.LayoutInDisplayCutoutMode.ShortEdges;
+                Window.SetStatusBarColor(Android.Graphics.Color.ParseColor("#1d2333"));
+            }
+
             AndroidX.Core.SplashScreen.SplashScreen.InstallSplashScreen(this);
 
             base.OnCreate(savedInstanceState);
+
+            if(Intent == null)
+                return;
 
             ProcessIntent(Intent);
 
@@ -42,7 +54,7 @@ namespace AniMate_app
             if (string.IsNullOrEmpty(url))
                 return;
 
-            Microsoft.Maui.Controls.Application.Current.SendOnAppLinkRequestReceived(new Uri(url));
+            Microsoft.Maui.Controls.Application.Current?.SendOnAppLinkRequestReceived(new Uri(url));
         }
     }
 }
