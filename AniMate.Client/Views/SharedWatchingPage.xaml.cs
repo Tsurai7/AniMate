@@ -121,6 +121,16 @@ public partial class SharedWatchingPage : ContentPage
     protected override async void OnDisappearing()
     {
         base.OnDisappearing();
+
+        Dispatcher.Dispatch(() =>
+        {
+            MediaControl.Stop();
+
+            MediaControl.Handler?.DisconnectHandler();
+
+            MediaControl.Source = null;
+        });
+
         await _viewModel._client.DisconnectAsync();
     }
 

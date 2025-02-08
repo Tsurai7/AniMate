@@ -24,7 +24,7 @@ public partial class PlayerPage : ContentPage
 
     private void PauseVideo()
     {
-        MediaControl.Pause();
+        MediaControl.Stop();
         MediaControl.Handler?.DisconnectHandler();
     }
 }
