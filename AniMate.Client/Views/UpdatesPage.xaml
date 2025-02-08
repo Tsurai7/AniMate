@@ -30,7 +30,7 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="0,0,0,10" ColumnSpacing="10" BackgroundColor="{AppThemeBinding Dark = {StaticResource BackgroundLight}, Light = {StaticResource Gray100}}" VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10" x:DataType="dtos:TitleDto">
+                        <Grid Margin="0,0,0,10" ColumnSpacing="5" BackgroundColor="{AppThemeBinding Dark = {StaticResource BackgroundLight}, Light = {StaticResource Gray100}}" VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10" x:DataType="dtos:TitleDto">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup Name="CommonStates">
                                     <VisualState Name="Normal"></VisualState>
@@ -59,7 +59,7 @@
                             <Label Text="{Binding Names.Ru, Mode=OneTime}" FontSize="14" Grid.Column="1" Grid.Row="0"
                                     LineBreakMode="WordWrap" Margin="0,0,10,0"/>
 
-                            <Label Text="{Binding RuDescription, Mode=OneTime}" FontSize="10" Grid.Column="1" Grid.Row="1"
+                            <Label Text="{Binding RuDescription, Mode=OneTime}" MinimumWidthRequest="250" FontSize="10" Grid.Column="1" Grid.Row="1"
                                     LineBreakMode="WordWrap" Margin="0,0,10,10"/>
                         </Grid>
                     </DataTemplate>

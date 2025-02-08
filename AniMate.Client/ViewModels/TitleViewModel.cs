@@ -6,7 +6,7 @@ using AniMate_app.Interfaces;
 
 namespace AniMate_app.ViewModels;
 
-[QueryProperty(nameof(TitleDto), "TheTitle")]
+[QueryProperty(nameof(Title), "TheTitle")]
 public partial class TitleViewModel : ObservableObject
 {
     private readonly IAccountClient _accountClient;
@@ -33,8 +33,22 @@ public partial class TitleViewModel : ObservableObject
         set => SetProperty(ref _isTitleInLikes, value);
     }
 
-    [ObservableProperty]
-    private TitleDto _titleDto;
+    private TitleDto _title;
+    public TitleDto Title
+    {
+        get => _title;
+        set
+        {
+            _title = value;
+            Genres = string.Join(", ", _title.Genres);
+            ShortDescription = string.Join(" ", _title.RuDescription.Split(' ').Take(7));
+            OnPropertyChanged(nameof(Title));
+            if (Profile != null)
+            {
+                IsTitleInLikes = Profile?.LikedTitles?.Any(likedTitle => likedTitle == _title.Code) ?? false;
+            }
+        }
+    }
 
     [ObservableProperty]
     private string _genres;
@@ -46,7 +60,7 @@ public partial class TitleViewModel : ObservableObject
     {
         if (Profile != null)
         {
-            var titleCode = TitleDto.Code;
+            var titleCode = Title.Code;
             var token = Preferences.Default.Get("AccessToken", string.Empty);
             if (Profile.LikedTitles.Contains(titleCode))
             {

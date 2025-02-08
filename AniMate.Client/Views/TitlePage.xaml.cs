@@ -23,7 +23,7 @@ public partial class TitlePage : ContentPage
         {
             var navigationParameter = new Dictionary<string, object>
             {
-                {"mediaurl", _viewModel.TitleDto.Player.Episodes.FirstOrDefault().Value.HlsUrls.Sd }
+                {"mediaurl", _viewModel.Title.Player.Episodes.FirstOrDefault().Value.HlsUrls.Sd }
             };
 
             await Shell.Current.GoToAsync(nameof(PlayerPage), navigationParameter);
@@ -32,11 +32,18 @@ public partial class TitlePage : ContentPage
 
     private void OnTextRecognizerTap(object sender, TappedEventArgs e)
     {
+        UpdateTitleDescription();
+
+        isFullDescriptionOpen = !isFullDescriptionOpen;
+    }
+
+    private void UpdateTitleDescription()
+    {
         FormattedString formattedString = new();
 
         formattedString.Spans.Add(new Span
         {
-            Text = isFullDescriptionOpen ? _viewModel.ShortDescription : _viewModel.TitleDto.RuDescription,
+            Text = isFullDescriptionOpen ? _viewModel.ShortDescription : _viewModel.Title.RuDescription,
         });
 
         if (isFullDescriptionOpen)
@@ -49,8 +56,6 @@ public partial class TitlePage : ContentPage
         }
 
         descriptionLabel.FormattedText = formattedString;
-
-        isFullDescriptionOpen = !isFullDescriptionOpen;
     }
 
     private async void LikeButtonClicked(object sender, EventArgs e)
@@ -62,8 +67,8 @@ public partial class TitlePage : ContentPage
     {
         var navigationParameter = new Dictionary<string, object>
         {
-            {"Title", _viewModel.TitleDto},
-            {"Url", _viewModel.TitleDto.Player.Episodes.FirstOrDefault().Value.HlsUrls.Sd }
+            {"Title", _viewModel.Title},
+            {"Url", _viewModel.Title.Player.Episodes.FirstOrDefault().Value.HlsUrls.Sd }
         };
         
         await Shell.Current.GoToAsync("SharedWatchingPage", navigationParameter);
