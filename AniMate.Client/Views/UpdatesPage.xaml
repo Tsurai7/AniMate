@@ -7,6 +7,14 @@
              x:DataType="local:UpdatesViewModel"
              Loaded="ContentPage_Loaded">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <FileImageSource x:Key="Random" File="random.svg"/>
+            <FileImageSource x:Key="RandomWhite" File="random_white.svg"/>
+        </ResourceDictionary>
+
+    </ContentPage.Resources>
+
     <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
         <Grid Padding="10,0,10,0" BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
 
@@ -18,11 +26,11 @@
             <Label Grid.Row="0" Text="Latest Updates" VerticalTextAlignment="Start" HorizontalTextAlignment="Center" FontSize="Title"/>
 
             <CollectionView Grid.Row="1" SelectionMode="Single"
-                                ItemsSource="{Binding Titles.Titles}" 
-                                ItemsUpdatingScrollMode="KeepScrollOffset"
-                                SelectionChanged="TitleSelected"
+                            ItemsSource="{Binding Titles.Titles}" 
+                            ItemsUpdatingScrollMode="KeepScrollOffset"
+                            SelectionChanged="TitleSelected"
                             RemainingItemsThreshold="1"
-                                RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}">
+                            RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}">
 
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" SnapPointsType="None"/>
@@ -66,11 +74,11 @@
                 </CollectionView.ItemTemplate>
 
                 <CollectionView.Footer>
-                    <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Start"/>
+                    <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="30" HorizontalOptions="Center" VerticalOptions="Start"/>
                 </CollectionView.Footer>
             </CollectionView>
 
-            <Button Grid.Row="1" x:Name="randomButton" IsVisible="False" 
+            <Button Grid.Row="1" x:Name="randomButton" IsVisible="False"
                 BackgroundColor="{AppThemeBinding Dark = {StaticResource Background}, Light = {StaticResource Gray100}}"
                 TextColor="White"
                 CornerRadius="30"
@@ -81,7 +89,7 @@
                 Margin="0,0,10,10"
                 Clicked="RandomTitleButtonClicked">
                 <Button.ImageSource>
-                    <FileImageSource File="{AppThemeBinding Light=random.svg, Dark=random_white.svg}"/>
+                    <FileImageSource File="{AppThemeBinding Light={StaticResource Random}, Dark={StaticResource RandomWhite}}"/>
                 </Button.ImageSource>
             </Button>
         </Grid>

@@ -19,9 +19,11 @@ public partial class UpdatesPage : ContentPage
     private async void ContentPage_Loaded(object sender, EventArgs e)
     {
         if (_isFirstLoad)
+        {
             await _viewModel.LoadContent();
 
-        randomButton.IsVisible = true;
+            randomButton.IsVisible = true;
+        }
 
         _isFirstLoad = false;
     }

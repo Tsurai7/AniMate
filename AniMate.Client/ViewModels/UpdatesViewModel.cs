@@ -23,8 +23,6 @@ public partial class UpdatesViewModel : ViewModelBase
     public UpdatesViewModel(IAnimeClient animeClient)
     {
         _animeClient = animeClient;
-
-        _loadMoreContentOffset = 4;
     }
 
     public override async Task LoadContent()
@@ -40,7 +38,9 @@ public partial class UpdatesViewModel : ViewModelBase
 
         IsLoading = true;
 
-        Titles.AddTitleList(await _animeClient.GetUpdates(Titles.TitleCount, _loadMoreContentOffset));
+        var newTitles = await _animeClient.GetUpdates(Titles.TitleCount, _loadMoreContentOffset);
+
+        Titles.AddTitleList(newTitles);
     
         IsLoading = false;
     }
@@ -48,7 +48,7 @@ public partial class UpdatesViewModel : ViewModelBase
     [RelayCommand]
     public async Task Refresh()
     {
-        IsBusy = IsRefreshing = true;
+        IsRefreshing = true;
 
         Titles.Clear();
 
@@ -56,7 +56,7 @@ public partial class UpdatesViewModel : ViewModelBase
 
         await LoadMoreContent();
 
-        IsBusy = IsRefreshing = false;
+        IsRefreshing = false;
     }
 
     public async Task<TitleDto> GetRandomTitle()
