@@ -23,6 +23,8 @@ public partial class UpdatesViewModel : ViewModelBase
     public UpdatesViewModel(IAnimeClient animeClient)
     {
         _animeClient = animeClient;
+
+        _loadMoreContentOffset = 3;
     }
 
     public override async Task LoadContent()

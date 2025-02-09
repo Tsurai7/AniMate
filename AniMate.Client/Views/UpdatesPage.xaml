@@ -38,7 +38,7 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="0,0,0,10" ColumnSpacing="5" BackgroundColor="{AppThemeBinding Dark = {StaticResource BackgroundLight}, Light = {StaticResource Gray100}}" VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10" x:DataType="dtos:TitleDto">
+                        <Grid Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark = {StaticResource BackgroundLight}, Light = {StaticResource Gray100}}" VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10" x:DataType="dtos:TitleDto">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup Name="CommonStates">
                                     <VisualState Name="Normal"></VisualState>
@@ -55,7 +55,7 @@
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="40"/>
-                                <RowDefinition Height="120"/>
+                                <RowDefinition Height="130"/>
                             </Grid.RowDefinitions>
 
                             <Image Aspect="AspectFit" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
@@ -65,16 +65,16 @@
                             </Image>
 
                             <Label Text="{Binding Names.Ru, Mode=OneTime}" FontSize="14" Grid.Column="1" Grid.Row="0"
-                                        LineBreakMode="WordWrap" Margin="0,0,10,0"/>
+                                        LineBreakMode="WordWrap" Margin="5,0,10,0"/>
 
                             <Label Text="{Binding RuDescription, Mode=OneTime}" MinimumWidthRequest="250" FontSize="10" Grid.Column="1" Grid.Row="1"
-                                        LineBreakMode="WordWrap" Margin="0,0,10,10"/>
+                                        LineBreakMode="WordWrap" Margin="5,0,10,10"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
 
                 <CollectionView.Footer>
-                    <ActivityIndicator IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="30" HorizontalOptions="Center" VerticalOptions="Start"/>
+                    <ActivityIndicator Margin="0,0,0,10" IsRunning="True" Color="SlateBlue" IsVisible="{Binding IsLoading}" HeightRequest="30" HorizontalOptions="Center" VerticalOptions="Start"/>
                 </CollectionView.Footer>
             </CollectionView>
 

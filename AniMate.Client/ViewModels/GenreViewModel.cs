@@ -32,11 +32,11 @@ public partial class GenreViewModel : ViewModelBase
 
     private int LoadedTitles => TitlesCollection.TitleCount;
 
-    private readonly int _loadMoreResultsOffset = 6;
-
     public GenreViewModel(IAnimeClient animeClient)
     {
         _animeClient = animeClient;
+
+        _loadMoreContentOffset = 4;
     }
 
     public override Task LoadContent()
@@ -55,9 +55,9 @@ public partial class GenreViewModel : ViewModelBase
 
         IsLoading = true;
 
-        TitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
+        TitlesCollection.TargetTitleCount += _loadMoreContentOffset;
 
-        var loadedTitles = await _animeClient.GetTitlesByGenre(Genre, LoadedTitles, LoadedTitles + _loadMoreResultsOffset);
+        var loadedTitles = await _animeClient.GetTitlesByGenre(Genre, LoadedTitles, LoadedTitles + _loadMoreContentOffset);
 
         if (loadedTitles.Count > 0)
             TitlesCollection.AddTitleList(loadedTitles);
