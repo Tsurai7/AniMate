@@ -16,7 +16,7 @@
         <toolkit:MediaElement x:Name="MediaControl"
                               ShouldAutoPlay="False"
                               Source="{Binding MediaUrl}"
-                              Aspect="Center"
+                              Aspect="Center" ShouldShowPlaybackControls="True"
                               HorizontalOptions="Center"
                               VerticalOptions="Center"
                               BackgroundColor="Black"

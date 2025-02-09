@@ -18,7 +18,7 @@
         <CollectionView ItemsSource="{Binding TitlesCollection.Titles}" SelectionMode="Single" SelectionChanged= "TitleSelected"
                           RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="1">
             <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5"
+                <GridItemsLayout Orientation="Vertical"
                      Span="2" />
             </CollectionView.ItemsLayout>
 

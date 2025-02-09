@@ -43,7 +43,7 @@ public partial class UpdatesViewModel : ViewModelBase
         var newTitles = await _animeClient.GetUpdates(Titles.TitleCount, _loadMoreContentOffset);
 
         Titles.AddTitleList(newTitles);
-    
+
         IsLoading = false;
     }
 

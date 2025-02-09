@@ -50,6 +50,12 @@ public static class ServiceCollectionExtensions
         services.AddTransient<GenreViewModel>();
         services.AddTransient<GenrePage>();
 
+#if ANDROID
+        services.AddSingleton<IFullScreenService, AniMate_app.AndroidFullScreenService>();
+#endif
+//#elif IOS
+        //services.AddSingleton<IFullScreenService, YourAppNamespace.Platforms.iOS.FullScreenService>();
+
         services.AddTransient<PlayerViewModel>();
         services.AddTransient<PlayerPage>();
 

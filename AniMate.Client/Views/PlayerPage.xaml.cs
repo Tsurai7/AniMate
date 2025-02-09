@@ -1,4 +1,6 @@
 using AniMate_app.ViewModels;
+using CommunityToolkit.Maui.Core.Primitives;
+using static AniMate_app.ViewModels.PlayerViewModel;
 
 namespace AniMate_app.Views;
 
@@ -16,10 +18,20 @@ public partial class PlayerPage : ContentPage
         BindingContext = _viewModel = viewModel;
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        _viewModel.ToFullScreen();
+    }
+
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
+
         PauseVideo();
+
+        _viewModel.RestoreOrientation();
     }
 
     private void PauseVideo()
