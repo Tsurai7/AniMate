@@ -1,4 +1,5 @@
-﻿using AniMate_app.Interfaces;
+﻿using AniMate_app.DTOs.Anime;
+using AniMate_app.Interfaces;
 using AniMate_app.Models;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -38,6 +39,7 @@ public partial class UpdatesViewModel : ViewModelBase
             return;
 
         IsLoading = true;
+
         Titles.AddTitleList(await _animeClient.GetUpdates(Titles.TitleCount, _loadMoreContentOffset));
     
         IsLoading = false;
@@ -54,9 +56,14 @@ public partial class UpdatesViewModel : ViewModelBase
 
         await LoadMoreContent();
 
-        //await LoadSavedData();
-
         IsBusy = IsRefreshing = false;
+    }
+
+    public async Task<TitleDto> GetRandomTitle()
+    {
+        TitleDto title = await _animeClient.GetRandomTitle();
+
+        return title;
     }
 
     //public async Task LoadSavedData()

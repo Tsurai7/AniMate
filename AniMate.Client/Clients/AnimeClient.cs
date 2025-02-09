@@ -29,6 +29,17 @@ public class AnimeClient : IAnimeClient
         return titleDto;
     }
 
+    public async Task<TitleDto> GetRandomTitle()
+    {
+        var response = await _httpClientFactory.CreateClient(nameof(AnimeClient)).GetAsync($"title/random");
+
+        var jsonInfo = await response.Content.ReadAsStringAsync();
+
+        var titleDto = JsonSerializer.Deserialize<TitleDto>(jsonInfo, SerializerOptions);
+
+        return titleDto;
+    }
+
     public async Task<List<TitleDto>> GetTitlesByCode(List<string> codes, int skip = 0, int count = 6)
     {
         if (codes == null || !codes.Any())

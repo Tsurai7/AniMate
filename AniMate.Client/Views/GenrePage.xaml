@@ -9,7 +9,7 @@
 
     <Grid VerticalOptions="CenterAndExpand"
           HorizontalOptions="FillAndExpand"
-          BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
+          BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource BackgroundLight}}">
         
         <CollectionView ItemsSource="{Binding TitlesCollection.Titles}" SelectionMode="Single" SelectionChanged= "TitleSelected"
                           RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" RemainingItemsThreshold="1">

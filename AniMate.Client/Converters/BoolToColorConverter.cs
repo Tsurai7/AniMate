@@ -9,7 +9,7 @@ namespace AniMate_app.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool isInLikes && isInLikes)
+            if (value is bool valueTrue && valueTrue)
             {
                 return Colors.Red;
             }
