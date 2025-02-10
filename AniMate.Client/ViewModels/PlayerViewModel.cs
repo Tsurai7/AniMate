@@ -12,20 +12,20 @@ public partial class PlayerViewModel : ObservableObject
     [ObservableProperty]
     private bool _isFullScreen;
 
-    private IFullScreenService _fullscreenService;
+    private IScreenOrientationService _fullscreenService;
 
-    public PlayerViewModel(IFullScreenService fullScreenService)
+    public PlayerViewModel(IScreenOrientationService fullScreenService)
     {
         _fullscreenService = fullScreenService;
     }
 
     public void ToFullScreen()
     {
-        _fullscreenService.EnterFullScreen();
+        _fullscreenService.AllowFullScreen();
     }
 
     public void RestoreOrientation()
     {
-        _fullscreenService.RestoreOriginal();
+        _fullscreenService.RestrictFullScreen();
     }
 }

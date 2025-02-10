@@ -2,10 +2,11 @@
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using Android.Views;
 
 namespace AniMate_app
 {
-    [Activity(Theme = "@style/AppTheme.Starting", ResizeableActivity = true, LaunchMode = LaunchMode.SingleTask, MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
+    [Activity(ScreenOrientation = ScreenOrientation.Portrait, Theme = "@style/AppTheme.Starting", ResizeableActivity = true, LaunchMode = LaunchMode.SingleTask, MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
     [IntentFilter(
         [Intent.ActionView],
         Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
@@ -29,9 +30,14 @@ namespace AniMate_app
 
         protected override void OnCreate(Bundle? savedInstanceState)
         {
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.R)
+            {
+                Window.SetDecorFitsSystemWindows(false);
+            }
+
             if (Build.VERSION.SdkInt >= BuildVersionCodes.P)
             {
-                Window.Attributes.LayoutInDisplayCutoutMode = Android.Views.LayoutInDisplayCutoutMode.ShortEdges;
+                Window.Attributes.LayoutInDisplayCutoutMode = LayoutInDisplayCutoutMode.Always;
                 Window.SetStatusBarColor(Android.Graphics.Color.ParseColor("#1d2333"));
             }
 

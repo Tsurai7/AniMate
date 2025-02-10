@@ -6,17 +6,22 @@ using AniMate_app.Interfaces;
 
 namespace AniMate_app.ViewModels;
 
+[QueryProperty(nameof(TitleCode), "TitleCode")]
 [QueryProperty(nameof(Title), "TheTitle")]
 public partial class TitleViewModel : ObservableObject
 {
     private readonly IAccountClient _accountClient;
 
+    private readonly IAnimeClient _animeClient;
+
     [ObservableProperty] 
     private ProfileDto profile;
 
-    public TitleViewModel(IAccountClient accountClient)
+    public TitleViewModel(IAccountClient accountClient, IAnimeClient animeClient)
     {
         _accountClient = accountClient;
+
+        _animeClient = animeClient;
 
         var jsonProfile = Preferences.Default.Get("Profile", string.Empty);
 
@@ -48,6 +53,19 @@ public partial class TitleViewModel : ObservableObject
                 IsTitleInLikes = Profile?.LikedTitles?.Any(likedTitle => likedTitle == _title.Code) ?? false;
             }
         }
+    }
+
+    public string TitleCode
+    {
+        set
+        {
+            LoadTitleFromCode(value);
+        }
+    }
+
+    private async void LoadTitleFromCode(string code)
+    {
+        Title = await _animeClient.GetTitleByCode(code);
     }
 
     [ObservableProperty]
