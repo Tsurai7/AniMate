@@ -23,9 +23,13 @@ namespace AniMate_app
             if (activity == null)
                 return;
 
-            activity.Window.DecorView.SystemUiFlags = navigationVisible ? SystemUiFlags.Visible :
-                    SystemUiFlags.HideNavigation |
-                    SystemUiFlags.ImmersiveSticky;
+            activity.Window.DecorView.SystemUiFlags = navigationVisible ? SystemUiFlags.Visible | SystemUiFlags.LayoutFullscreen :
+                    SystemUiFlags.HideNavigation | SystemUiFlags.LayoutFullscreen;
+
+            //if (orientation == ScreenOrientation.Unspecified)
+            //    activity.Window.AddFlags(WindowManagerFlags.LayoutInScreen);
+            //else
+            //    activity.Window.ClearFlags(WindowManagerFlags.LayoutInScreen);
 
             activity.RequestedOrientation = orientation;
         }
