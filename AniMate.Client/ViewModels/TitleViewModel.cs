@@ -14,14 +14,18 @@ public partial class TitleViewModel : ObservableObject
 
     private readonly IAnimeClient _animeClient;
 
+    private readonly IApplicationLinkService _linkService;
+
     [ObservableProperty] 
     private ProfileDto profile;
 
-    public TitleViewModel(IAccountClient accountClient, IAnimeClient animeClient)
+    public TitleViewModel(IAccountClient accountClient, IAnimeClient animeClient, IApplicationLinkService linkService)
     {
         _accountClient = accountClient;
 
         _animeClient = animeClient;
+
+        _linkService = linkService;
 
         var jsonProfile = Preferences.Default.Get("Profile", string.Empty);
 
@@ -110,5 +114,11 @@ public partial class TitleViewModel : ObservableObject
 
         return false;
     }
-}
 
+    public async void ShareTitleUrl()
+    {
+        var link = _linkService.CreateTitleLink(Title);
+
+        await _linkService.ShareText(link);
+    }
+}

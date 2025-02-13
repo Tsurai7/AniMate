@@ -12,9 +12,9 @@ public class SharedWatchingClient
     private const string HubUrl = "http://192.168.97.95:5002/sharedWatchingHub";
 #endif
 
-    private bool HasConnection => _hubConnection != null && _hubConnection.State.Equals(HubConnectionState.Connected);
+    public bool HasConnection => _hubConnection != null && _hubConnection.State.Equals(HubConnectionState.Connected);
 
-    public event Action<string, string, string> RoomCreated;
+    public event Action<string> RoomCreated;
     public event Action<string, double, bool> SyncState;
     public event Action<string, double> Paused;
     public event Action<string, double> Resumed;
@@ -29,9 +29,9 @@ public class SharedWatchingClient
             .WithAutomaticReconnect()
             .Build();
         
-        _hubConnection.On<string, string, string>("CreatedRoom", (roomId, titleCode, episodeUrl) =>
+        _hubConnection.On<string>("CreatedRoom", (roomId) =>
         {
-            RoomCreated?.Invoke(roomId, titleCode, episodeUrl);
+            RoomCreated?.Invoke(roomId);
         });
 
         _hubConnection.On<string, double, bool>("SyncState", (url, timing, isPlaying) =>
@@ -98,7 +98,7 @@ public class SharedWatchingClient
         await _hubConnection.InvokeAsync("JoinRoom", link);
     }
 
-    public async Task Pause(string roomName, double currentTiming)
+    public async void Pause(string roomName, double currentTiming)
     {
         if (!HasConnection)
             return;
@@ -106,7 +106,7 @@ public class SharedWatchingClient
         await _hubConnection.InvokeAsync("Pause", roomName, currentTiming);
     }
 
-    public async Task Resume(string roomName, double currentTiming)
+    public async void Resume(string roomName, double currentTiming)
     {
         if (!HasConnection)
             return;
@@ -114,7 +114,7 @@ public class SharedWatchingClient
         await _hubConnection.InvokeAsync("Resume", roomName, currentTiming);
     }
 
-    public async Task Seek(string roomName, double newTime)
+    public async void Seek(string roomName, double newTime)
     {
         if (!HasConnection)
             return;
@@ -122,7 +122,7 @@ public class SharedWatchingClient
         await _hubConnection.InvokeAsync("Seek", roomName, newTime);
     }
 
-    public async Task UpdateVideoUrl(string roomName, string newVideoUrl)
+    public async void UpdateVideoUrl(string roomName, string newVideoUrl)
     {
         if (!HasConnection)
             return;
@@ -130,7 +130,7 @@ public class SharedWatchingClient
         await _hubConnection.InvokeAsync("UpdateVideoUrl", roomName, newVideoUrl);
     }
 
-    public async Task SendMessage(string roomName, string message)
+    public async void SendMessage(string roomName, string message)
     {
         if (!HasConnection)
             return;
@@ -138,11 +138,11 @@ public class SharedWatchingClient
         await _hubConnection.InvokeAsync("SendMessage", roomName, message);
     }
 
-    public async Task SyncStateForNewClient(string roomName)
-    {
-        if (!HasConnection)
-            return;
+    //public async void SyncStateForNewClient(string roomName)
+    //{
+    //    if (!HasConnection)
+    //        return;
 
-        await _hubConnection.InvokeAsync("SyncStateForNewClient", roomName);
-    }
+    //    await _hubConnection.InvokeAsync("SyncStateForNewClient", roomName);
+    //}
 }

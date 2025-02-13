@@ -21,7 +21,7 @@
         </Grid.ColumnDefinitions>
         
         <!-- Media Element for video -->
-        <toolkit:MediaElement x:Name="MediaControl"
+        <toolkit:MediaElement x:Name="MediaControl" SeekCompleted="OnSeekCompleted" StateChanged="OnMediaElementStateChanged"
                               ShouldAutoPlay="False"
                               Source="{Binding MediaUrl}"
                               Aspect="AspectFit"
@@ -40,7 +40,7 @@
                 BackgroundColor="#333333"
                 TextColor="White"
                 TitleColor="LightGray"
-                ItemsSource="{Binding TitleDto.Player.Episodes.Values}"
+                ItemsSource="{Binding Title.Player.Episodes.Values}"
                 SelectedIndexChanged="OnEpisodeSelected">
         </Picker>
         
@@ -53,7 +53,7 @@
                    HorizontalOptions="End"/>
             <Button Text="Копировать"
                     TextColor="White"
-                    Clicked="OnCopyRoomCodeClicked"/>
+                    Clicked="ShareRoomLinkButtonClicked"/>
         </StackLayout>
 
 

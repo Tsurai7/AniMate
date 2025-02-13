@@ -1,5 +1,6 @@
 using AniMate_app.Clients;
 using AniMate_app.Interfaces;
+using AniMate_app.Services;
 using AniMate_app.ViewModels;
 using AniMate_app.Views;
 
@@ -33,6 +34,8 @@ public static class ServiceCollectionExtensions
             client => client.BaseAddress = new Uri(accountUrl));
         
         services.AddSingleton<SharedWatchingClient>();
+
+        services.AddSingleton<IApplicationLinkService, ApplicationLinkService>();
 
         // Pages configuration
         services.AddTransient<TitlePage>();

@@ -27,64 +27,76 @@
                    HorizontalTextAlignment="Center"
                    Margin="20,5,0,0"/>
 
-            <StackLayout Orientation="Horizontal"
-                         HorizontalOptions="Center"
-                         Margin="20,20,0,0"
->
-                <StackLayout Orientation="Vertical"
-                             Margin="0,0,60,0">
-                    <Button Clicked="LikeButtonClicked"
-                            TextColor="{Binding IsTitleInLikes, Converter={StaticResource BoolToColorConverter}}"
-                            >
-                        <Button.ImageSource>
-                            <FileImageSource File="{AppThemeBinding Light=favourite_for_title_page.svg, Dark=favourite_for_title_page_white.svg}"/>
-                        </Button.ImageSource>
-                        <Button.Triggers>
-                            <DataTrigger TargetType="Button" Binding="{Binding IsTitleInLikes}" Value="true">
-                                <Setter Property="ImageSource" Value="{StaticResource FavouriteImageSelected}"/>
-                            </DataTrigger>
-                            <DataTrigger TargetType="Button" Binding="{Binding IsTitleInLikes}" Value="false">
-                                <Setter Property="ImageSource" Value="{StaticResource FavouriteImage}"/>
-                            </DataTrigger>
-                        </Button.Triggers>
-                    </Button>
-                    <Label Text="В избранное"
-                           FontSize="12"
-                           FontAttributes="Bold"
-                           HorizontalTextAlignment="Center"
-                           TextColor="{Binding IsTitleInLikes, Converter={StaticResource BoolToColorConverter}}">
-                    </Label>
-                </StackLayout>
-                <StackLayout Orientation="Vertical"
-                             Margin="0,0,60,0">
-                    <Button>
-                        <Button.ImageSource>
-                            <FileImageSource File="{AppThemeBinding Light= star_for_title_page.svg, Dark= star_for_title_page_white.svg}" />
-                        </Button.ImageSource>
-                    </Button>
-                    <Label Text="Оценить"
-                           FontSize="12"
-                           FontAttributes="Bold"
-                           HorizontalTextAlignment="Center">
-                    </Label>
-                </StackLayout>
-                <StackLayout Orientation="Vertical"
-                             Margin="0,0,0,0">
-                    <Button
-                        Clicked="WatchTogetherButtonClicked">
-                        <Button.ImageSource>
-                            <FileImageSource File="{AppThemeBinding Light= download_for_title_page.svg, Dark= download_for_title_page_white.svg}" />
-                        </Button.ImageSource>
-                    </Button>
-                    <Label Text="Смотреть вместе"
-                           FontSize="12"
-                           FontAttributes="Bold"
-                           HorizontalTextAlignment="Center"
-                           >
-                    </Label>
-                </StackLayout>
+            <Grid Margin="0,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="17"/>
+                </Grid.RowDefinitions>
 
-            </StackLayout>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Row="0" Grid.Column="0" Clicked="LikeButtonClicked" TextColor="{Binding IsTitleInLikes, Converter={StaticResource BoolToColorConverter}}">
+                    <Button.ImageSource>
+                        <FileImageSource File="{AppThemeBinding Light=favourite_for_title_page.svg, Dark=favourite_for_title_page_white.svg}"/>
+                    </Button.ImageSource>
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsTitleInLikes}" Value="true">
+                            <Setter Property="ImageSource" Value="{StaticResource FavouriteImageSelected}"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsTitleInLikes}" Value="false">
+                            <Setter Property="ImageSource" Value="{StaticResource FavouriteImage}"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Label Grid.Row="1" Grid.Column="0" Text="В избранное"
+                   FontSize="12"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   TextColor="{Binding IsTitleInLikes, Converter={StaticResource BoolToColorConverter}}">
+                </Label>
+
+                <Button Grid.Row="0" Grid.Column="1">
+                    <Button.ImageSource>
+                        <FileImageSource File="{AppThemeBinding Light= star_for_title_page.svg, Dark= star_for_title_page_white.svg}" />
+                    </Button.ImageSource>
+                </Button>
+                <Label Grid.Row="1" Grid.Column="1" Text="Оценить"
+                   FontSize="12"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center">
+                </Label>
+
+                <Button Grid.Row="0" Grid.Column="2"
+                    Clicked="WatchTogetherButtonClicked">
+                    <Button.ImageSource>
+                        <FileImageSource File="{AppThemeBinding Light= download_for_title_page.svg, Dark= download_for_title_page_white.svg}" />
+                    </Button.ImageSource>
+                </Button>
+                <Label Grid.Row="1" Grid.Column="2" Text="Смотреть вместе"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       >
+                </Label>
+
+                <Button Grid.Row="0" Grid.Column="3"
+                    Clicked="ShareLinkButtonClicked">
+                    <Button.ImageSource>
+                        <FileImageSource File="{AppThemeBinding Light= download_for_title_page.svg, Dark= download_for_title_page_white.svg}" />
+                    </Button.ImageSource>
+                </Button>
+                <Label Grid.Row="1" Grid.Column="3" Text="Отправить"
+                   FontSize="12"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   >
+                </Label>
+            </Grid>
 
             <!--<StackLayout Orientation="Horizontal"
                          Margin="0,20,0,0"

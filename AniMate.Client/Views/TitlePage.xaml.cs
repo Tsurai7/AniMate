@@ -1,4 +1,5 @@
 ﻿using AniMate_app.ViewModels;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AniMate_app.Views;
 
@@ -72,5 +73,10 @@ public partial class TitlePage : ContentPage
         };
         
         await Shell.Current.GoToAsync("SharedWatchingPage", navigationParameter);
+    }
+
+    private async void ShareLinkButtonClicked(object sender, EventArgs e)
+    {
+        _viewModel.ShareTitleUrl();
     }
 }

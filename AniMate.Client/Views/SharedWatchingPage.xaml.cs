@@ -7,6 +7,12 @@ public partial class SharedWatchingPage : ContentPage
 {
     private readonly SharedWatchingViewModel _viewModel;
 
+    private bool _innerPauseRequest = false;
+
+    private bool _innerResumeRequest = false;
+
+    private bool _innerSeekRequest = false;
+
     public SharedWatchingPage(SharedWatchingViewModel viewModel)
     {
         InitializeComponent();
@@ -19,111 +25,172 @@ public partial class SharedWatchingPage : ContentPage
         _viewModel._client.VideoUrlUpdated += OnVideoUrlUpdated;
         _viewModel._client.MessageReceived += OnMessageReceived;
         _viewModel._client.RoomCreated += OnRoomCreated;
-
-        MediaControl.SeekCompleted += OnSeekCompleted;
-        MediaControl.StateChanged += OnMediaElementStateChanged;
         
         ChatMessagesListView.ItemsSource = _viewModel._chatMessages;
     }
 
-    private async void OnMediaElementStateChanged(object sender, MediaStateChangedEventArgs e)
+    private void OnMediaElementStateChanged(object sender, MediaStateChangedEventArgs e)
     {
-        switch (e.NewState)
+        if (_viewModel.HasConnection)
         {
-            case MediaElementState.Playing:
-                if (_viewModel._client != null)
+            Dispatcher.Dispatch(() =>
+            {
+                switch (e.NewState)
                 {
-                    await _viewModel._client.Resume(_viewModel.RoomId, MediaControl.Position.TotalSeconds);
+                    case MediaElementState.Playing:
+                        if(!_innerResumeRequest)
+                            _viewModel.Resume(_viewModel.RoomId, MediaControl.Position.TotalSeconds);
+
+                        _innerResumeRequest = false;
+
+                        break;
+                    case MediaElementState.Paused:
+                        if(!_innerPauseRequest)
+                            _viewModel.Pause(_viewModel.RoomId, MediaControl.Position.TotalSeconds);
+
+                            _innerPauseRequest = false;
+                        
+                        break;
                 }
-                break;
-            case MediaElementState.Paused:
-                if (_viewModel._client != null)
-                {
-                    await _viewModel._client.Pause(_viewModel.RoomId, MediaControl.Position.TotalSeconds);
-                }
-                break;
+            });
         }
     }
     
-    private void OnRoomCreated(string roomId, string titleCode, string episodeUrl)
+    private void OnRoomCreated(string roomId)
     {
         _viewModel.RoomId = roomId;
     }
     
-    private async void OnSeekCompleted(object sender, EventArgs e) =>
-        await _viewModel._client.Seek(_viewModel.RoomId, MediaControl.Position.TotalSeconds);
+    private void OnSeekCompleted(object sender, EventArgs e)
+    {
+        if (!_innerSeekRequest)
+            _viewModel.Seek(MediaControl.Position.TotalSeconds);
+
+        _innerSeekRequest = false;
+    }
 
     private void OnSyncState(string url, double timing, bool isPlaying)
     {
-        Dispatcher.Dispatch(() =>
-        {
-            if (MediaControl.Source?.ToString() != url)
-            {
-                MediaControl.Source = url;
-            }
+        //Dispatcher.Dispatch(async () =>
+        //{
+        //    if (MediaControl.Source?.ToString() != url)
+        //    {
+        //        OnVideoUrlUpdated(url);
+        //    }
 
-            MediaControl.Pause();
-            MediaControl.SeekTo(TimeSpan.FromSeconds(timing));
-            MediaControl.Play(); 
-        
-            if (!isPlaying)
+        //    _innerSeekRequest = true;
+
+        //    await MediaControl.SeekTo(TimeSpan.FromSeconds(timing));
+        //} );
+
+        Dispatcher?.Dispatch(() =>
+        {
+            if (isPlaying)
             {
+                _innerResumeRequest = true;
+
+                MediaControl.Play();
+            }
+            else
+            {
+                _innerPauseRequest = true;
+
                 MediaControl.Pause();
             }
         });
     }
 
-
     private void OnPaused(string roomName, double timing)
     {
-        Dispatcher.Dispatch(() =>
+        Dispatcher?.Dispatch(() =>
         {
+            _innerPauseRequest = true;
+
             MediaControl.Pause();
         });
+
+        Dispatcher?.Dispatch(() =>
+        {
+            var newTiming = TimeSpan.FromSeconds(timing);
+
+            if (!MediaControl.Position.Equals(newTiming))
+            {
+                _innerSeekRequest = true;
+
+                MediaControl.SeekTo(newTiming);
+            }
+        }); 
     }
 
     private void OnResumed(string roomName, double timing)
     {
-        Dispatcher.Dispatch(() =>
+        Dispatcher?.Dispatch(() =>
         {
+            _innerResumeRequest = true;
+
             MediaControl.Play();
+        });
+
+        Dispatcher?.Dispatch(() =>
+        {
+            var newTiming = TimeSpan.FromSeconds(timing);
+
+            if (!MediaControl.Position.Equals(newTiming))
+            {
+                _innerSeekRequest = true;
+
+                MediaControl.SeekTo(newTiming);
+            }
+        }); 
+    }
+
+    private void OnSeeked(string roomName, double newTime)
+    {
+        Dispatcher?.Dispatch(async () =>
+        {
+            _innerSeekRequest = true;
+
+            await MediaControl.SeekTo(TimeSpan.FromSeconds(newTime));
         });
     }
 
-    private void OnSeeked(string roomName, double newTime) 
-        => MediaControl.SeekTo(TimeSpan.FromSeconds(newTime));
-
-    private async void OnEpisodeSelected(object sender, EventArgs e)
+    private void OnEpisodeSelected(object sender, EventArgs e)
     {
         var selectedEpisodeText = EpisodePicker.SelectedItem?.ToString();
-    
+
         if (selectedEpisodeText != null)
         {
             var episodeOrdinal = int.Parse(selectedEpisodeText.Split(':')[0].Replace("Серия", "").Trim());
-            
-            var selectedEpisode = _viewModel.TitleDto.Player.Episodes.Values
+
+            var selectedEpisode = _viewModel.Title.Player.Episodes.Values
                 .FirstOrDefault(e => e.Ordinal == episodeOrdinal);
 
             if (selectedEpisode != null)
             {
                 var episodeUrl = selectedEpisode.HlsUrls.Fhd;
-                
-                await _viewModel._client.UpdateVideoUrl(_viewModel.RoomId, episodeUrl);
+
+                _viewModel.ChangeVideoUrl(episodeUrl);
             }
         }
     }
 
     private void OnVideoUrlUpdated(string newUrl)
     {
-        Dispatcher.Dispatch(() => { MediaControl.Source = newUrl; });
+        Dispatcher.Dispatch(() =>
+        {
+            _innerPauseRequest = true;
+
+            MediaControl.Source = newUrl;
+        });
     }
 
     protected override async void OnDisappearing()
     {
         base.OnDisappearing();
 
-        Dispatcher.Dispatch(() =>
+        Dispatcher?.Dispatch(() =>
         {
+
             MediaControl.Stop();
 
             MediaControl.Handler?.DisconnectHandler();
@@ -131,15 +198,19 @@ public partial class SharedWatchingPage : ContentPage
             MediaControl.Source = null;
         });
 
-        await _viewModel._client.DisconnectAsync();
+        await _viewModel.Disconnect();
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await _viewModel._client.ConnectAsync();
 
-        foreach (var episode in _viewModel.TitleDto.Player.Episodes.Values)
+        await _viewModel.Connect();
+
+        if (_viewModel.Title == null)
+            return;
+
+        foreach (var episode in _viewModel.Title.Player.Episodes.Values)
         {
             EpisodePicker.Items.Add($"Серия {episode.Ordinal}: {episode.Name}");
         }
@@ -148,23 +219,14 @@ public partial class SharedWatchingPage : ContentPage
         {
             EpisodePicker.SelectedIndex = 0;
         }
-
-        if (_viewModel.RoomId != string.Empty)
-        {
-            await _viewModel._client.JoinRoom(_viewModel.RoomId);
-            await _viewModel._client.SyncStateForNewClient(_viewModel.RoomId);
-        }
-        else
-        {
-            await _viewModel._client.CreateRoom( _viewModel.TitleDto.Code, _viewModel.MediaUrl);
-        } 
     }
 
-    private async void OnSendMessageClicked(object sender, EventArgs e)
+    private void OnSendMessageClicked(object sender, EventArgs e)
     {
         if (!string.IsNullOrWhiteSpace(MessageEntry.Text))
         {
-            await _viewModel._client.SendMessage(_viewModel.RoomId, MessageEntry.Text); 
+            _viewModel.SendMessage(MessageEntry.Text);
+
             MessageEntry.Text = string.Empty;
         }
     }
@@ -174,16 +236,14 @@ public partial class SharedWatchingPage : ContentPage
         // TODO: Fix message duplication
         if (_viewModel._chatMessages.Count == 0 || _viewModel._chatMessages.Last() != message)
         {
-            _viewModel._chatMessages.Add(message);
+            _viewModel.AddMessage(message);
+
             ChatMessagesListView.ScrollTo(_viewModel._chatMessages[^1], ScrollToPosition.End, true);
         }
     }
 
-    private async void OnCopyRoomCodeClicked(object sender, EventArgs e)
+    private void ShareRoomLinkButtonClicked(object sender, EventArgs e)
     {
-        if (!string.IsNullOrEmpty(RoomCodeLabel.Text))
-        {
-            await Clipboard.SetTextAsync(RoomCodeLabel.Text);
-        }
+        _viewModel.ShareRoomLink();
     }
 }
