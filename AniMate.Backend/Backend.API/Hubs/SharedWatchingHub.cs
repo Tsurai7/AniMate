@@ -1,9 +1,6 @@
+using Backend.Domain.Models;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
-using Backend.Domain.Models;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 
 namespace Backend.API.Hubs;
 
@@ -46,6 +43,7 @@ public class SharedWatchingHub : Hub
     {
         if (_cache.TryGetValue(roomId, out Room roomToJoin))
         {
+            Console.WriteLine($"Join : {Context.ConnectionId}");
             await Groups.AddToGroupAsync(Context.ConnectionId, roomId);
             await SendMessage(roomId, "New user joined");
             await Clients.Caller.SendAsync("SyncState", roomToJoin.MediaUrl, roomToJoin.CurrentTiming.TotalSeconds, roomToJoin.IsPlaying);
@@ -60,7 +58,7 @@ public class SharedWatchingHub : Hub
     {
         if (_cache.TryGetValue(roomId, out Room room))
         {
-            Console.WriteLine(Context.ConnectionId);
+            Console.WriteLine($"Pause : {Context.ConnectionId}");
             room.CurrentTiming = TimeSpan.FromSeconds(Math.Max(0, currentTiming));
             room.IsPlaying = false;
             _cache.Set(roomId, room);
@@ -74,6 +72,7 @@ public class SharedWatchingHub : Hub
     {
         if (_cache.TryGetValue(roomId, out Room room))
         {
+            Console.WriteLine($"Resume : {Context.ConnectionId}");
             room.CurrentTiming = TimeSpan.FromSeconds(Math.Max(0, currentTiming));
             room.IsPlaying = true;
             _cache.Set(roomId, room);
@@ -87,6 +86,7 @@ public class SharedWatchingHub : Hub
     {
         if (_cache.TryGetValue(roomId, out Room room))
         {
+            Console.WriteLine($"Seek : {Context.ConnectionId}");
             room.CurrentTiming = TimeSpan.FromSeconds(Math.Max(0, newTime));
 
             _cache.Set(roomId, room);
@@ -101,13 +101,14 @@ public class SharedWatchingHub : Hub
     {
         if (_cache.TryGetValue(roomId, out Room room))
         {
+            Console.WriteLine($"Sync : {Context.ConnectionId}");
             room.MediaUrl = newVideoUrl;
             room.CurrentTiming = TimeSpan.Zero;
             room.IsPlaying = false;
             _cache.Set(roomId, room);
 
-            //await Clients.OthersInGroup(roomId).SendAsync("VideoUrlUpdated", newVideoUrl);
-            await Clients.OthersInGroup(roomId).SendAsync("SyncState", newVideoUrl, room.CurrentTiming.TotalSeconds, room.IsPlaying);
+            await Clients.Group(roomId).SendAsync("VideoUrlUpdated", newVideoUrl);
+            await Clients.Group(roomId).SendAsync("SyncState", newVideoUrl, room.CurrentTiming.TotalSeconds, room.IsPlaying);
         }
     }
 

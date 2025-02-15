@@ -15,7 +15,7 @@
         
     </ContentPage.Resources>
     
-    <ScrollView BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
+    <ScrollView VerticalScrollBarVisibility="Never" BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
         <StackLayout Orientation="Vertical" Margin="5,0,10,10">
 
             <Image Source="{Binding Title.Posters.Small.Url}" Margin="30,10,20,10"/>

@@ -23,12 +23,24 @@
 				<data android:scheme="animate" android:host="open" />
 			</intent-filter>
 		</activity>
+
+		<service android:name="communityToolkit.maui.media.services" android:stopWithTask="true" android:exported="false" android:enabled="true" android:foregroundServiceType="mediaPlayback">
+			<intent-filter>
+				<action android:name="androidx.media3.session.MediaSessionService"/>
+			</intent-filter>
+		</service>
 	</application>
 
 	<!-- Разрешения -->
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+	<uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 
 	<!-- Поддержка SDK -->
-	<uses-sdk android:minSdkVersion="31" android:targetSdkVersion="34" />
+	<uses-sdk android:minSdkVersion="31" android:targetSdkVersion="35" />
 </manifest>

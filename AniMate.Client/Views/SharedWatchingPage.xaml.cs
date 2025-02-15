@@ -63,10 +63,11 @@ public partial class SharedWatchingPage : ContentPage
     
     private void OnSeekCompleted(object sender, EventArgs e)
     {
-        if (!_innerSeekRequest)
-            _viewModel.Seek(MediaControl.Position.TotalSeconds);
+        var t = 10;
+        //if (!_innerSeekRequest)
+        //    _viewModel.Seek(MediaControl.Position.TotalSeconds);
 
-        _innerSeekRequest = false;
+        //_innerSeekRequest = false;
     }
 
     private void OnSyncState(string url, double timing, bool isPlaying)

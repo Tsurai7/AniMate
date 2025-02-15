@@ -19,8 +19,7 @@
                               Aspect="Center" ShouldShowPlaybackControls="True"
                               HorizontalOptions="Center"
                               VerticalOptions="Center"
-                              BackgroundColor="Black"
-        >
+                              BackgroundColor="Black">
         </toolkit:MediaElement>
     </Grid>
 </ContentPage>

@@ -11,7 +11,7 @@
     <Grid Padding="10, 20, 0, 0" BackgroundColor="{AppThemeBinding Light = White, Dark = {StaticResource Background}}">
         
         <RefreshView Grid.Row="0" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
-            <CollectionView 
+            <CollectionView HorizontalScrollBarVisibility="Never"
                 ItemsUpdatingScrollMode="KeepItemsInView" x:Name="GenreList" SelectionMode="None" 
                 ItemsSource="{Binding GenreList}"
                 RemainingItemsThresholdReachedCommand="{Binding LoadMoreContentCommand}" 
