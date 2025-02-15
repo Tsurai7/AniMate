@@ -1,5 +1,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
 
+ARG MONGO_CONNECTION_STRING
+ENV MONGO_CONNECTION_STRING=$MONGO_CONNECTION_STRING
+
 WORKDIR /app
 
 COPY ["AniMate.Backend/Backend.API/Backend.API.csproj", "Backend.API/"]
