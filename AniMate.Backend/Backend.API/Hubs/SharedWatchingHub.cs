@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
 using Backend.Domain.Models;
+using SignalRSwaggerGen.Attributes;
 
 namespace Backend.API.Hubs;
 
+[SignalRHub("sharedWatchingHub")]
 public class SharedWatchingHub : Hub
 {
     private readonly IMemoryCache _cache;
