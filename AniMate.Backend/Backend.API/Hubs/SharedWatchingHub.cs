@@ -34,7 +34,7 @@ public class SharedWatchingHub : Hub
 
         await Groups.AddToGroupAsync(Context.ConnectionId, roomId);
 
-        await Clients.Caller.SendAsync("CreatedRoom", roomId, titleCode, episodeUrl);
+        await Clients.Caller.SendAsync("CreatedRoom", roomId);
 
         await SendMessage(roomId, $"Room created with name {roomId}");
     }
