@@ -53,17 +53,17 @@ public partial class SharedWatchingViewModel : ObservableObject
 
         await _client.JoinRoom(RoomId);
 
-        //_client.SyncStateForNewClient(RoomId);
+        await _client.SyncStateForNewClient(RoomId);
     }
 
-    public void ChangeVideoUrl(string episodeUrl)
+    public async Task ChangeVideoUrl(string episodeUrl)
     {
-        _client.UpdateVideoUrl(RoomId, episodeUrl);
+        await _client.UpdateVideoUrl(RoomId, episodeUrl);
     }
 
-    public void SendMessage(string text)
+    public async Task SendMessage(string text)
     {
-        _client.SendMessage(RoomId, text);
+        await _client.SendMessage(RoomId, text);
     }
 
     public void AddMessage(string message)
@@ -76,18 +76,18 @@ public partial class SharedWatchingViewModel : ObservableObject
         await _client.DisconnectAsync();
     }
 
-    public void Seek(double totalSeconds)
+    public async Task Seek(double totalSeconds)
     {
-        _client.Seek(RoomId, totalSeconds);
+        await _client.Seek(RoomId, totalSeconds);
     }
 
-    public void Resume(string roomId, double totalSeconds)
+    public async Task Resume(string roomId, double totalSeconds)
     {
-        _client.Resume(roomId, totalSeconds);
+        await _client.Resume(roomId, totalSeconds);
     }
 
-    public void Pause(string roomId, double totalSeconds)
+    public async Task Pause(string roomId, double totalSeconds)
     {
-        _client.Pause(roomId, totalSeconds);
+        await _client.Pause(roomId, totalSeconds);
     }
 }

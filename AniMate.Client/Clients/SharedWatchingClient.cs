@@ -98,7 +98,7 @@ public class SharedWatchingClient
         await _hubConnection.InvokeAsync("JoinRoom", link);
     }
 
-    public async void Pause(string roomName, double currentTiming)
+    public async Task Pause(string roomName, double currentTiming)
     {
         if (!HasConnection)
             return;
@@ -106,7 +106,7 @@ public class SharedWatchingClient
         await _hubConnection.InvokeAsync("Pause", roomName, currentTiming);
     }
 
-    public async void Resume(string roomName, double currentTiming)
+    public async Task Resume(string roomName, double currentTiming)
     {
         if (!HasConnection)
             return;
@@ -114,7 +114,7 @@ public class SharedWatchingClient
         await _hubConnection.InvokeAsync("Resume", roomName, currentTiming);
     }
 
-    public async void Seek(string roomName, double newTime)
+    public async Task Seek(string roomName, double newTime)
     {
         if (!HasConnection)
             return;
@@ -122,7 +122,7 @@ public class SharedWatchingClient
         await _hubConnection.InvokeAsync("Seek", roomName, newTime);
     }
 
-    public async void UpdateVideoUrl(string roomName, string newVideoUrl)
+    public async Task UpdateVideoUrl(string roomName, string newVideoUrl)
     {
         if (!HasConnection)
             return;
@@ -130,7 +130,7 @@ public class SharedWatchingClient
         await _hubConnection.InvokeAsync("UpdateVideoUrl", roomName, newVideoUrl);
     }
 
-    public async void SendMessage(string roomName, string message)
+    public async Task SendMessage(string roomName, string message)
     {
         if (!HasConnection)
             return;
@@ -138,11 +138,8 @@ public class SharedWatchingClient
         await _hubConnection.InvokeAsync("SendMessage", roomName, message);
     }
 
-    //public async void SyncStateForNewClient(string roomName)
-    //{
-    //    if (!HasConnection)
-    //        return;
-
-    //    await _hubConnection.InvokeAsync("SyncStateForNewClient", roomName);
-    //}
+    public async Task SyncStateForNewClient(string roomName)
+    {
+        await _hubConnection.InvokeAsync("SyncStateForNewClient", roomName);
+    }
 }
