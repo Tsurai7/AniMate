@@ -7,7 +7,7 @@ public class SharedWatchingClient
     private readonly HubConnection _hubConnection;
     
 #if DEBUG
-        private const string HubUrl = "http://10.0.2.2:5002/sharedWatchingHub";
+    private const string HubUrl = "http://10.0.2.2:5002/sharedWatchingHub";
 #else
     private const string HubUrl = "https://tsurai7-animate-910d.twc1.net/sharedWatchingHub";
 #endif
