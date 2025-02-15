@@ -1,8 +1,5 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
 
-ARG MONGO_CONNECTION_STRING
-ENV MONGO_CONNECTION_STRING=$MONGO_CONNECTION_STRING
-
 WORKDIR /app
 
 COPY ["AniMate.Backend/Backend.API/Backend.API.csproj", "Backend.API/"]
@@ -18,7 +15,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS final
 
 WORKDIR /app
 COPY --from=build /app/publish .
-COPY AniMate.Backend/Backend.API/.env .
 
 EXPOSE 8080
 ENTRYPOINT ["dotnet", "Backend.API.dll"]
