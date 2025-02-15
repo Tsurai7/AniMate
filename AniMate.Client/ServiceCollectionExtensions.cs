@@ -22,7 +22,7 @@ public static class ServiceCollectionExtensions
 #if DEBUG
         accountUrl = "http://10.0.2.2:5002/api/";
 #else
-        accountUrl = "http://192.168.105.95:5002/api/";
+        accountUrl = "https://tsurai7-animate-910d.twc1.net/api/";
 #endif
         
         services.AddSingleton<IAccountClient>(sp =>

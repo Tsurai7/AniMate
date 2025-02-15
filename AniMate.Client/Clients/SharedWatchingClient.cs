@@ -9,7 +9,7 @@ public class SharedWatchingClient
 #if DEBUG
     private const string HubUrl = "http://10.0.2.2:5002/sharedWatchingHub";
 #else
-    private const string HubUrl = "http://192.168.97.95:5002/sharedWatchingHub";
+    private const string HubUrl = "https://tsurai7-animate-910d.twc1.net/sharedWatchingHub";
 #endif
 
     public bool HasConnection => _hubConnection != null && _hubConnection.State.Equals(HubConnectionState.Connected);
