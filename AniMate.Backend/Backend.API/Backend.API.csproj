@@ -8,10 +8,20 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="9.0.0" />
+        <PackageReference Include="AspNetCore.HealthChecks.UI" Version="9.0.0" />
         <PackageReference Include="AutoMapper" Version="13.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="9.0.2" />
+        <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.11.1" />
+        <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.11.1" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.11.0" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.11.0" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.11.0" />
+        <PackageReference Include="prometheus-net.AspNetCore" Version="8.2.1" />
+        <PackageReference Include="SignalRSwaggerGen" Version="4.7.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="7.1.0" />
     </ItemGroup>
 

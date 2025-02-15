@@ -48,6 +48,7 @@ public static class Startup
                     Array.Empty<string>()
                 }
             });
+            c.AddSignalRSwaggerGen();
         });
         
         return services;
