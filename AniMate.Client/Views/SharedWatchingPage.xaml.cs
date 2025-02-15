@@ -63,26 +63,25 @@ public partial class SharedWatchingPage : ContentPage
     
     private void OnSeekCompleted(object sender, EventArgs e)
     {
-        var t = 10;
-        //if (!_innerSeekRequest)
-        //    _viewModel.Seek(MediaControl.Position.TotalSeconds);
+        if (!_innerSeekRequest)
+            _viewModel.Seek(MediaControl.Position.TotalSeconds);
 
-        //_innerSeekRequest = false;
+        _innerSeekRequest = false;
     }
 
     private void OnSyncState(string url, double timing, bool isPlaying)
     {
-        //Dispatcher.Dispatch(async () =>
-        //{
-        //    if (MediaControl.Source?.ToString() != url)
-        //    {
-        //        OnVideoUrlUpdated(url);
-        //    }
+        Dispatcher.Dispatch(async () =>
+        {
+            if (MediaControl.Source?.ToString() != url)
+            {
+                OnVideoUrlUpdated(url);
+            }
 
-        //    _innerSeekRequest = true;
+            _innerSeekRequest = true;
 
-        //    await MediaControl.SeekTo(TimeSpan.FromSeconds(timing));
-        //} );
+            await MediaControl.SeekTo(TimeSpan.FromSeconds(timing));
+        });
 
         Dispatcher?.Dispatch(() =>
         {
