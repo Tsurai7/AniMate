@@ -26,7 +26,7 @@ public partial class SharedWatchingPage : ContentPage
         ChatMessagesListView.ItemsSource = _viewModel._chatMessages;
     }
 
-    private async void OnMediaElementStateChanged(object sender, MediaStateChangedEventArgs e)
+    private void OnMediaElementStateChanged(object sender, MediaStateChangedEventArgs e)
     {
         if (!_viewModel.HasConnection)
             return;
@@ -34,11 +34,16 @@ public partial class SharedWatchingPage : ContentPage
         switch (e.NewState)
         {
             case MediaElementState.Playing:
-                await _viewModel.Resume(_viewModel.RoomId, MediaControl.Position.TotalSeconds);
+                Dispatcher?.Dispatch(async () => {
+                    await _viewModel.Resume(_viewModel.RoomId, MediaControl.Position.TotalSeconds);
+                });
                 break;
 
             case MediaElementState.Paused:
-                await _viewModel.Pause(_viewModel.RoomId, MediaControl.Position.TotalSeconds);
+                Dispatcher?.Dispatch(async () =>
+                {
+                    await _viewModel.Pause(_viewModel.RoomId, MediaControl.Position.TotalSeconds);
+                });
                 break;
         }
     }
@@ -48,8 +53,14 @@ public partial class SharedWatchingPage : ContentPage
         _viewModel.RoomId = roomId;
     }
 
-    private async void OnSeekCompleted(object sender, EventArgs e) =>
-        await _viewModel.Seek(MediaControl.Position.TotalSeconds);
+    private void OnSeekCompleted(object sender, EventArgs e)
+    {
+        Dispatcher?.Dispatch(async () =>
+        {
+            await _viewModel.Seek(MediaControl.Position.TotalSeconds);
+        });
+    }
+        
 
     private void OnSyncState(string url, double timing, bool isPlaying)
     {
@@ -89,7 +100,12 @@ public partial class SharedWatchingPage : ContentPage
     }
 
     private void OnSeeked(string roomName, double newTime)
-        => MediaControl.SeekTo(TimeSpan.FromSeconds(newTime));
+    {
+        Dispatcher?.Dispatch(async () =>
+        {
+            await MediaControl.SeekTo(TimeSpan.FromSeconds(newTime));
+        });
+    }
 
     private async void OnEpisodeSelected(object sender, EventArgs e)
     {

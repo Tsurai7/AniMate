@@ -53,7 +53,7 @@ public partial class SharedWatchingViewModel : ObservableObject
 
         await _client.JoinRoom(RoomId);
 
-        await _client.SyncStateForNewClient(RoomId);
+        //await _client.SyncStateForNewClient(RoomId);
     }
 
     public async Task ChangeVideoUrl(string episodeUrl)
