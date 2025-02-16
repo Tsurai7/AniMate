@@ -45,7 +45,7 @@ public class AnimeWorker : BackgroundService
                 } while (moreDataAvailable);
             }
 
-            await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
+            await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
         }
     }
 }

@@ -1,14 +1,18 @@
-﻿using AniMate_app.Interfaces;
+﻿using AniMate_app.Clients;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AniMate_app.ViewModels;
 
 public class SignUpViewModel : ObservableObject
 {
-    public readonly IAccountClient _accountClient;
+    public readonly AuthClient _authClient;
+    public readonly AccountClient _accountClient;
 
-    public SignUpViewModel(IAccountClient accountClient)
+    public SignUpViewModel(
+        AuthClient authClient,
+        AccountClient accountClient)
     {
+        _authClient = authClient;
         _accountClient = accountClient;
     }
 }

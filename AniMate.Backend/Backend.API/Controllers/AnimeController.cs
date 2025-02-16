@@ -72,6 +72,32 @@ public class AnimeController : Controller
         }
     }
     
+    [HttpGet("latest")]
+    public async Task<ActionResult<List<TitleDto>>> GetLatest(
+        [FromQuery] GetTitleListQueryParams queryParams,
+        CancellationToken token)
+    {
+        _logger.LogInformation("Attempting to get title list");
+        
+        try
+        {
+            var command = new GetTitleListQueryParams
+            {
+                // Здесь можно добавить параметры, если они есть
+            };
+            
+            var response = await _mediator.Send(command, token);
+            _logger.LogInformation("Successfully retrieved title list.");
+            
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving title list");
+            return Problem();
+        }
+    }
+    
     [HttpGet("search")]
     public async Task<ActionResult<List<TitleDto>>> SearchTitles(
         [FromQuery] SearchTitlesQueryParams queryParams,

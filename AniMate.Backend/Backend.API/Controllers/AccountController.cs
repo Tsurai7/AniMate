@@ -1,7 +1,6 @@
 using AutoMapper;
 using Backend.Application.Handlers.Account;
 using Backend.Application.Models.Account;
-using Backend.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
@@ -28,7 +27,7 @@ public class AccountController : Controller
     }
     
     [Authorize]
-    [HttpGet]
+    [HttpGet("profile")]
     public async Task<ActionResult<GetAccountResponse>> GetAccount(CancellationToken token)
     {
         _logger.LogInformation("Fetching account details for user {email}", User.Identity?.Name);
@@ -43,60 +42,7 @@ public class AccountController : Controller
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error fetching account details for user {email}", User.Identity?.Name);
-            return Problem();
-        }
-    }
-    
-    [HttpPost("sign-up")]
-    public async Task<ActionResult<AuthToken>> SignUpAsync(
-        [FromBody] SignUpRequest request,
-        CancellationToken token)
-    {
-        _logger.LogInformation("Attempting sign-up for email {email}", request.Email);
-
-        try
-        {
-            var command = new SignUpRequest
-            {
-                Username = request.Username,
-                Email = request.Email,
-                Password = request.Password
-            };
-            
-            var tokenResponse = await _mediator.Send(command, token);
-            _logger.LogInformation("Successfully signed up user with email {email}", request.Email);
-            return Ok(tokenResponse);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error during sign-up for email {email}", request.Email);
-            return Problem();
-        }
-    }
-    
-    [HttpPost("sign-in")]
-    public async Task<ActionResult<AuthToken>> SignInAsync(
-        [FromBody] SignInRequest request,
-        CancellationToken token)
-    {
-        _logger.LogInformation("Attempting sign-in for email {email}", request.Email);
-
-        try
-        {
-            var command = new SignInRequest
-            {
-                Email = request.Email,
-                Password = request.Password
-            };
-            
-            var tokenResponse = await _mediator.Send(command, token);
-            _logger.LogInformation("Successfully signed in user with email {email}", request.Email);
-            return Ok(tokenResponse);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error during sign-in for email {email}", request.Email);
+            _logger.LogWarning(ex, "Error fetching account details for user {email}", User.Identity?.Name);
             return Problem();
         }
     }
@@ -112,7 +58,6 @@ public class AccountController : Controller
 
         try
         {
-            
             var command = new UpdateAccountCommand
             {
                 Email = email,

@@ -30,9 +30,9 @@ public class SignUpAccountHandler : IRequestHandler<SignUpRequest, AuthToken>
 
         var newAccount = new Domain.Models.Account
         {
-            Username = request.Username,
+            UserName = request.Username,
             Email = request.Email,
-            Password = request.Password
+            PasswordHash = request.Password
         };
         
         await _accountRepository.AddAsync(newAccount);

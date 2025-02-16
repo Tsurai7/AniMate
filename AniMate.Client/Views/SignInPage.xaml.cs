@@ -1,6 +1,8 @@
 ﻿using AniMate_app.ViewModels;
 using System.Text.Json;
+using AniMate_app.Clients;
 using AniMate_app.DTOs.Account;
+using AniMate_app.Interfaces;
 
 namespace AniMate_app.Views;
 
@@ -37,23 +39,19 @@ public partial class SignInPage : ContentPage
             return;
         }
 
-        var response = await _viewModel._accountClient.SignIn(email, password);
+        var response = await _viewModel._authClient.SignIn(email, password);
 
-        if (response is not null )
+        if (response.Token is not null)
         {
-            var profileDto = await _viewModel._accountClient.GetProfileInfo(response.AccessToken);
+            var userProfile = await _viewModel._accountClient.GetProfileInfo(response.Token);
             
-            var navigationParameter = new Dictionary<string, object>
-            {
-                {"Profile", profileDto},
-            };
-
-            Preferences.Default.Set("AccessToken", response.AccessToken);
-
-            var jsonProfile = JsonSerializer.Serialize(profileDto);
-            Preferences.Default.Set("Profile", jsonProfile);
-
-            await Shell.Current.GoToAsync($"ProfilePage", navigationParameter);
+            Preferences.Default.Set("AccessToken", response.Token);
+            
+            await Navigation.PushAsync(
+                new ProfilePage(new ProfileViewModel(
+                    DependencyService.Get<AccountClient>(), 
+                    DependencyService.Get<IAnimeClient>(),
+                    userProfile)));
         }
 
         else

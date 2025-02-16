@@ -2,6 +2,7 @@ using System.Text.Json;
 using Backend.API;
 using Backend.API.Hubs;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using OpenTelemetry.Metrics;
 using Prometheus;
@@ -14,7 +15,13 @@ builder.Services.AddHealthChecks().AddCheck("Memory Usage", () =>
     var memoryUsed = GC.GetTotalMemory(false);
     return memoryUsed < 500_000_000
         ? HealthCheckResult.Healthy($"Memory usage: {memoryUsed / 1024 / 1024} MB")
-        : HealthCheckResult.Degraded($"High memory usage: {memoryUsed / 1024 / 1024} MB");
+        : HealthCheckResult.Unhealthy($"High memory usage: {memoryUsed / 1024 / 1024} MB");
+});
+
+builder.Services.AddResponseCompression(options =>
+{
+    options.Providers.Add<BrotliCompressionProvider>();
+    options.EnableForHttps = true;
 });
 
 builder.Services.AddOpenTelemetry()
@@ -50,5 +57,7 @@ app.MapHealthChecks("/health", new HealthCheckOptions
 });
 
 app.UseMetricServer();
+app.UseHttpsRedirection();
+app.UseResponseCompression();
 app.UseStaticFiles();
 app.Run();

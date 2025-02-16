@@ -43,6 +43,6 @@ public class GetAccountHandler : IRequestHandler<GetAccountRequest, GetAccountRe
             throw new InvalidOperationException("Account not found.");
         }
 
-        return new GetAccountResponse(account.Username, account.ImageUrl, account.Email, account.WatchedTitles, account.LikedTitles);
+        return new GetAccountResponse(account.UserName, account.ImageUrl, account.Email, account.WatchedTitles, account.LikedTitles);
     }
 }

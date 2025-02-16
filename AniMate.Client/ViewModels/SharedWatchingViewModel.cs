@@ -13,8 +13,10 @@ public partial class SharedWatchingViewModel : ObservableObject
 {
     [ObservableProperty]
     private TitleDto _title;
-    [ObservableProperty]
+
+    [ObservableProperty] 
     private string _mediaUrl = string.Empty;
+
     [ObservableProperty]
     private string _roomId = string.Empty;
     

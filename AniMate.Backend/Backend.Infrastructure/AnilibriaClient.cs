@@ -32,9 +32,9 @@ public class AnilibriaClient
         {
             var response = await _httpClient.GetAsync(
                 $"title/search?genres={genre}&page={page}");
-        
+    
             var jsonInfo = await response.Content.ReadAsStringAsync();
-        
+    
             var result = JsonSerializer.Deserialize<TitlesInfo>(jsonInfo, SerializerOptions).Titles;
             return result;
         }

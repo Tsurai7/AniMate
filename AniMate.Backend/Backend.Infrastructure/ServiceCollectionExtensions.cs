@@ -11,14 +11,14 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     { 
         var connectionString 
-            = "mongodb+srv://tsurai:yCWmLgoVdcwWRodU@cluster0.hielo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+            = "mongodb://localhost:27017";
 
         services
             .AddHealthChecks().AddMongoDb(
                 clientFactory: x => x.GetRequiredService<IMongoClient>(),
                 databaseNameFactory: _ => "animate",
                 name: "mongo",
-                failureStatus: HealthStatus.Degraded,
+                failureStatus: HealthStatus.Unhealthy,
                 timeout: TimeSpan.FromSeconds(30));
         
         if (string.IsNullOrEmpty(connectionString))

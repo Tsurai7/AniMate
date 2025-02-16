@@ -1,5 +1,5 @@
-using AniMate_app.DTOs.Account;
-using AniMate_app.DTOs.Auth;
+using AniMate_app.Clients;
+using AniMate_app.Interfaces;
 using AniMate_app.ViewModels;
 
 namespace AniMate_app.Views;
@@ -72,21 +72,20 @@ public partial class SignUpPage : ContentPage
             return;
         }
         
-        AuthResponse response = await _viewModel._accountClient.
+        var response = await _viewModel._authClient.
             SignUp(EmailEntry.Text, UsernameEntry.Text, PasswordEntry.Text);
 
-        if (response != null)
+        if (response.Token != null)
         {
-            ProfileDto profileDto = await _viewModel._accountClient.GetProfileInfo(response.AccessToken);
+            var userProfile = await _viewModel._accountClient.GetProfileInfo(response.Token);
             
-            var navigationParameter = new Dictionary<string, object>
-            {
-                {"Profile", profileDto},
-            };
-            
-            Preferences.Default.Set("AccessToken", response.AccessToken);
+            Preferences.Default.Set("AccessToken", response.Token);
         
-            await Shell.Current.GoToAsync($"ProfilePage", navigationParameter);
+            await Navigation.PushAsync(
+                new ProfilePage(new ProfileViewModel(
+                    DependencyService.Get<AccountClient>(), 
+                    DependencyService.Get<IAnimeClient>(), 
+                    userProfile)));
         }
         else
         {
