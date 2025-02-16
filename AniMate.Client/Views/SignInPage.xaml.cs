@@ -39,21 +39,21 @@ public partial class SignInPage : ContentPage
 
         var response = await _viewModel._accountClient.SignIn(email, password);
 
-        if (response is not null )
+        if (response.Token is not null)
         {
-            var profileDto = await _viewModel._accountClient.GetProfileInfo(response.AccessToken);
+            var profileDto = await _viewModel._accountClient.GetProfileInfo(response.Token);
             
             var navigationParameter = new Dictionary<string, object>
             {
                 {"Profile", profileDto},
             };
 
-            Preferences.Default.Set("AccessToken", response.AccessToken);
+            Preferences.Default.Set("AccessToken", response.Token);
 
             var jsonProfile = JsonSerializer.Serialize(profileDto);
             Preferences.Default.Set("Profile", jsonProfile);
 
-            await Shell.Current.GoToAsync($"ProfilePage", navigationParameter);
+            await Shell.Current.GoToAsync("ProfilePage", navigationParameter);
         }
 
         else

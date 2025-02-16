@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace AniMate_app.DTOs.Account;
 
 public record ProfileDto

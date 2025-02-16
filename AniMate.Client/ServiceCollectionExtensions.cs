@@ -20,7 +20,7 @@ public static class ServiceCollectionExtensions
        
         var accountUrl = string.Empty;
 #if DEBUG
-        accountUrl = "https://tsurai7-animate-910d.twc1.net/api/";
+        accountUrl = "http://10.0.2.2:5002/api/";
 #else
         accountUrl = "https://tsurai7-animate-910d.twc1.net/api/";
 #endif

@@ -5,14 +5,16 @@ using Microsoft.AspNetCore.Http;
 
 namespace Backend.Application.Handlers.Account;
 
-public record GetAccountResponse
-(
-    string Username,
-    string ProfileImage,
-    string Email,
-    List<string> WatchedTitles,
-    List<string> LikedTitles
-);
+public class GetAccountResponse
+{
+    public string UserName { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string? ProfileImageUrl { get; set; }
+    public List<string> LikedTitles { get; set; } = [];
+    public List<string> WatchedTitles { get; set; } = [];
+}
 
 public class GetAccountHandler : IRequestHandler<GetAccountRequest, GetAccountResponse>
 {
@@ -43,6 +45,15 @@ public class GetAccountHandler : IRequestHandler<GetAccountRequest, GetAccountRe
             throw new InvalidOperationException("Account not found.");
         }
 
-        return new GetAccountResponse(account.Username, account.ImageUrl, account.Email, account.WatchedTitles, account.LikedTitles);
+        return new GetAccountResponse
+        {
+            UserName = account.UserName,
+            Email = account.Email,
+            FirstName = account.FirstName,
+            LastName = account.LastName,
+            ProfileImageUrl = account.ImageUrl,
+            LikedTitles = account.LikedTitles,
+            WatchedTitles = account.WatchedTitles
+        };
     }
 }

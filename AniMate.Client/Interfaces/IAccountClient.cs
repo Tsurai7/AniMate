@@ -1,11 +1,11 @@
-using AniMate_app.DTOs.Account;
 using AniMate_app.DTOs.Auth;
+using AniMate_app.Models;
 
 namespace AniMate_app.Interfaces;
 
 public interface IAccountClient
 {
-    Task<ProfileDto> GetProfileInfo(string token);
+    Task<Profile> GetProfileInfo(string token);
     Task<bool> AddTitleToLiked(string token, string titleCode);
     Task<bool> RemoveTitleFromLiked(string token, string titleCode);
     Task<AuthResponse> SignIn(string email, string password);

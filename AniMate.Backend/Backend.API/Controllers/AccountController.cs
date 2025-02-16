@@ -28,7 +28,7 @@ public class AccountController : Controller
     }
     
     [Authorize]
-    [HttpGet]
+    [HttpGet("profile")]
     public async Task<ActionResult<GetAccountResponse>> GetAccount(CancellationToken token)
     {
         _logger.LogInformation("Fetching account details for user {email}", User.Identity?.Name);
@@ -43,12 +43,14 @@ public class AccountController : Controller
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error fetching account details for user {email}", User.Identity?.Name);
+            _logger.LogWarning(ex, "Error fetching account details for user {email}", User.Identity?.Name);
             return Problem();
         }
     }
     
     [HttpPost("sign-up")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<AuthToken>> SignUpAsync(
         [FromBody] SignUpRequest request,
         CancellationToken token)
@@ -70,12 +72,14 @@ public class AccountController : Controller
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error during sign-up for email {email}", request.Email);
-            return Problem();
+            _logger.LogWarning(ex, "Error during sign-up for email {email}", request.Email);
+            return Conflict(new { message = "An account with this email already exists." });
         }
     }
     
     [HttpPost("sign-in")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<AuthToken>> SignInAsync(
         [FromBody] SignInRequest request,
         CancellationToken token)
@@ -97,7 +101,7 @@ public class AccountController : Controller
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error during sign-in for email {email}", request.Email);
-            return Problem();
+            return Unauthorized(new { message = "Invalid credentials." });
         }
     }
     
@@ -112,7 +116,6 @@ public class AccountController : Controller
 
         try
         {
-            
             var command = new UpdateAccountCommand
             {
                 Email = email,
