@@ -64,23 +64,6 @@ public partial class ProfileViewModel : ViewModelBase
     
     public override async Task LoadContent()
     {
-        LikedTitlesCollection.Clear();
-        WatchedTitlesCollection.Clear();
-        
-        var likedTitles = await _animeClient.GetTitlesByCode(Profile.LikedTitles);
-        if (likedTitles != null)
-        {
-            LikedTitlesCollection.AddTitleList(likedTitles);
-            LikedTitlesCollection.TargetTitleCount = _loadMoreResultsOffset;
-        }
-
-        var watchedTitles = await _animeClient.GetTitlesByCode(Profile.WatchedTitles);
-        if (watchedTitles != null)
-        {
-            WatchedTitlesCollection.AddTitleList(watchedTitles);
-            WatchedTitlesCollection.TargetTitleCount = _loadMoreResultsOffset;
-        }
-        
     }
 
     [RelayCommand]

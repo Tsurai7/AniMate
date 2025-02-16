@@ -42,7 +42,7 @@ public class AnimeClient : IAnimeClient
 
     public async Task<List<TitleDto>> GetTitlesByCode(List<string> codes, int skip = 0, int count = 6)
     {
-        if (codes == null || !codes.Any())
+        if (!codes.Any())
         {
             return new List<TitleDto>();
         }
