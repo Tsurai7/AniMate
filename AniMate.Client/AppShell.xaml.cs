@@ -1,4 +1,5 @@
 ﻿using AniMate_app.Views;
+using System;
 
 namespace AniMate_app;
 
@@ -19,5 +20,15 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("SignInPage", typeof(SignInPage));
         Routing.RegisterRoute("UpdatesPage", typeof(UpdatesPage));
         Routing.RegisterRoute("SharedWatchingPage", typeof(SharedWatchingPage));
+    }
+
+    private async void JoinRoomButtonClicked(object sender, EventArgs e)
+    {
+        string? result = await DisplayPromptAsync("Enter Code", "Share watch room code");
+
+        if (string.IsNullOrEmpty(result) || string.IsNullOrWhiteSpace(result))
+            return;
+
+        await Shell.Current.GoToAsync($"SharedWatchingPage?RoomId={result}");
     }
 }

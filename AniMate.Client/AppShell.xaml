@@ -4,18 +4,30 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:AniMate_app.Views">
-    
-      <Shell.TitleView>
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <FileImageSource x:Key="ShareWatch" File="sharewatch.svg"/>
+            <FileImageSource x:Key="ShareWatchWhite" File="sharewatchwhite.svg"/>
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <Shell.ToolbarItems>
+        <ToolbarItem Clicked="JoinRoomButtonClicked"
+                 IconImageSource="{AppThemeBinding Light={StaticResource ShareWatch}, Dark={StaticResource ShareWatchWhite}}" />
+    </Shell.ToolbarItems>
+
+    <Shell.TitleView>
             <Grid
                   Padding="0,5,15,5"
                   HeightRequest="50"
                   ColumnSpacing="25"
-                  ColumnDefinitions="auto,*,auto,auto">
-                  <Image
+                  ColumnDefinitions="auto,*">
+                <Image
                         Grid.Column="0"
                         HeightRequest="25"
                         Source="logowhite.svg"/>
-            </Grid>
+        </Grid>
       </Shell.TitleView>
       
     <TabBar>
