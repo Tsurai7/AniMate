@@ -21,6 +21,7 @@ public class SharedWatchingClient
     public event Action<string, double> Seeked;
     public event Action<string> VideoUrlUpdated;
     public event Action<string> MessageReceived;
+    public event Action<string> Error;
 
     public SharedWatchingClient()
     {
@@ -63,12 +64,20 @@ public class SharedWatchingClient
         {
             MessageReceived?.Invoke(message);
         });
+        
+        _hubConnection.On<string>("Error", (message) =>
+        {
+            Error?.Invoke(message);
+        });
     }
     
     public async Task ConnectAsync()
     {
         try
         {
+            if (_hubConnection is null)
+                return;
+
             await _hubConnection.StartAsync();
         }
         catch (Exception ex)
@@ -79,6 +88,9 @@ public class SharedWatchingClient
 
     public async Task DisconnectAsync()
     {
+        if (!HasConnection)
+            return;
+
         await _hubConnection.StopAsync();
     }
 
@@ -140,6 +152,9 @@ public class SharedWatchingClient
 
     public async Task SyncStateForNewClient(string roomName)
     {
+        if (!HasConnection)
+            return;
+
         await _hubConnection.InvokeAsync("SyncStateForNewClient", roomName);
     }
 }

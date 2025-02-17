@@ -65,7 +65,7 @@ namespace AniMate_app.ViewModels
             if(IsLoading)
                 return;
 
-            if(TitlesCollection.TargetTitleCount > TitlesCollection.TitleCount)
+            if(TitlesCollection.TargetTitleCount >= TitlesCollection.TitleCount)
                 return;
 
             IsLoading = true;

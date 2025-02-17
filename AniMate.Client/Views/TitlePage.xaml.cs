@@ -79,4 +79,9 @@ public partial class TitlePage : ContentPage
     {
         _viewModel.ShareTitleUrl();
     }
+
+    private void StopButtonLoad(object sender, EventArgs e)
+    {
+        _viewModel.StopButtonLoad();
+    }
 }

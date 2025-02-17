@@ -19,6 +19,7 @@ public partial class SharedWatchingPage : ContentPage
         _viewModel._client.VideoUrlUpdated += OnVideoUrlUpdated;
         _viewModel._client.MessageReceived += OnMessageReceived;
         _viewModel._client.RoomCreated += OnRoomCreated;
+        _viewModel._client.Error += OnError;
 
         MediaControl.SeekCompleted += OnSeekCompleted;
         MediaControl.StateChanged += OnMediaElementStateChanged;
@@ -188,5 +189,10 @@ public partial class SharedWatchingPage : ContentPage
     private void ShareRoomLinkButtonClicked(object sender, EventArgs e)
     {
         _viewModel.ShareRoomLink();
+    }
+
+    private void OnError(string message)
+    {
+        //Shell.Current.GoToAsync(nameof(MainPage));
     }
 }

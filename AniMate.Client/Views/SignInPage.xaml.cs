@@ -12,7 +12,9 @@ public partial class SignInPage : ContentPage
     public SignInPage(SignInViewModel viewModel)
 	{
 		InitializeComponent();
-        
+
+        Shell.SetNavBarIsVisible(this, false);
+
         BindingContext = _viewModel = viewModel;
 	}
 

@@ -7,13 +7,13 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace AniMate_app.ViewModels
 {
-    [QueryProperty(nameof(ProfileDto), "Profile")]
+    [QueryProperty(nameof(ProfileInfo), "Profile")]
     public partial class ProfileViewModel : ViewModelBase
     {
         private readonly IAccountClient _accountClient;
         private readonly IAnimeClient _animeClient;
 
-        [ObservableProperty] 
+        [ObservableProperty]
         public ProfileDto _profileInfo = new ("Nikita Desuyo",
             "https://pm1.aminoapps.com/7796/1f2d2bbecb5816f2ed8d540e6f9da0ef900c2fdbr1-736-736v2_uhq.jpg",
             "nikita@gmail.com", ["nanatsu-no-taizai-kamigami-no-gekirin", "jujutsu-kaisen"], ["jujutsu-kaisen"]);
@@ -63,7 +63,10 @@ namespace AniMate_app.ViewModels
             LikedTitlesCollection.Clear();
             WatchedTitlesCollection.Clear();
             //ProfileInfo = await _accountClient.GetProfileInfo(accessToken);
-            
+
+            if (ProfileInfo is null)
+                return;
+
             var likedTitles = await _animeClient.GetTitlesByCode(ProfileInfo.LikedTitles);
             if (likedTitles != null)
             {
@@ -92,6 +95,9 @@ namespace AniMate_app.ViewModels
             if (WatchedTitlesCollection.TargetTitleCount > WatchedTitlesCollection.TitleCount)
                 return;
 
+            if (ProfileInfo is null)
+                return;
+
             LikedTitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
 
             WatchedTitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
@@ -112,7 +118,6 @@ namespace AniMate_app.ViewModels
                 LikedTitlesCollection.TitleCount, LikedTitlesCollection.TargetTitleCount);
             if (loadedTitles.Count > 0)
                 LikedTitlesCollection.AddTitleList(loadedTitles);
-
 
             WatchedTitlesCollection.TargetTitleCount += _loadMoreResultsOffset;
 

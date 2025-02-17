@@ -4,7 +4,7 @@
              xmlns:dtos="clr-namespace:AniMate_app.DTOs.Anime"
              xmlns:converters="clr-namespace:AniMate_app.Converters"
              x:DataType="local:TitleViewModel"
-             x:Class="AniMate_app.Views.TitlePage">
+             x:Class="AniMate_app.Views.TitlePage" Disappearing="StopButtonLoad">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -161,7 +161,7 @@
                VerticalOptions="Center"
                Margin="0,10,0,0"/>
 
-            <CollectionView ItemsSource="{Binding Title.Player.Episodes.Values}" MinimumHeightRequest="30">
+            <CollectionView ItemsSource="{Binding Episodes}" MinimumHeightRequest="30">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="4" />
                 </CollectionView.ItemsLayout>

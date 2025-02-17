@@ -3,6 +3,7 @@ using System.Text.Json;
 using AniMate_app.DTOs.Account;
 using AniMate_app.DTOs.Anime;                                                 
 using AniMate_app.Interfaces;
+using System.Collections.ObjectModel;
 
 namespace AniMate_app.ViewModels;
 
@@ -18,6 +19,8 @@ public partial class TitleViewModel : ObservableObject
 
     [ObservableProperty] 
     private ProfileDto profile;
+
+    private CancellationTokenSource _tokenSource = new();
 
     public TitleViewModel(IAccountClient accountClient, IAnimeClient animeClient, IApplicationLinkService linkService)
     {
@@ -56,8 +59,27 @@ public partial class TitleViewModel : ObservableObject
             {
                 IsTitleInLikes = Profile?.LikedTitles?.Any(likedTitle => likedTitle == _title.Code) ?? false;
             }
+            Task.Factory.StartNew(LoadEpisodes, _tokenSource.Token);
         }
     }
+
+    private async void LoadEpisodes()
+    {
+        for(int i = 0; i < Title.Player.Episodes.Count; i+=20)
+        {
+            for(int j = i; j < i + 20; j++)
+            {
+                if (j >= Title.Player.Episodes.Count)
+                    return;
+
+                Episodes.Add(Title.Player.Episodes.Values.ElementAt(j));
+            }
+
+            await Task.Delay(1500);
+        }
+    }
+
+    public ObservableCollection<EpisodeDto> Episodes { get; private set; } = new();
 
     public string TitleCode
     {
@@ -120,5 +142,10 @@ public partial class TitleViewModel : ObservableObject
         var link = _linkService.CreateTitleLink(Title);
 
         await _linkService.ShareText(link);
+    }
+
+    public void StopButtonLoad()
+    {
+        _tokenSource.Cancel();
     }
 }
