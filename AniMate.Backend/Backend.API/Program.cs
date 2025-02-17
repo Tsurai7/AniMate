@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 if (builder.Environment.IsDevelopment())
 {
-    builder.WebHost.UseUrls("http://0.0.0.0:5002");
+    builder.WebHost.UseUrls("http://0.0.0.0:8080");
 }
 
 builder.Services.AddResponseCompression(options =>

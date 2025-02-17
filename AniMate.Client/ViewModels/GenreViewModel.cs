@@ -35,7 +35,6 @@ public partial class GenreViewModel : ViewModelBase
     public GenreViewModel(IAnimeClient animeClient)
     {
         _animeClient = animeClient;
-
         _loadMoreContentOffset = 4;
     }
 

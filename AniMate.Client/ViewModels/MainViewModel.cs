@@ -4,111 +4,110 @@ using AniMate_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace AniMate_app.ViewModels
+namespace AniMate_app.ViewModels;
+
+public partial class MainViewModel : ViewModelBase
 {
-    public partial class MainViewModel : ViewModelBase
+    [ObservableProperty]
+    private List<GenreCollection> _genreList;
+
+    public List<string> Genres { get; private set; }
+
+    public int GenresLoaded { get; private set; } = 0;
+
+    public bool AllGenresLoaded => GenresLoaded.Equals(Genres.Count);
+
+    [ObservableProperty]
+    private bool _isLoadingTitles = false;
+
+    private readonly int _loadTitlesCount = 4;
+
+    public readonly IAnimeClient AnimeClient;
+
+    public MainViewModel(IAnimeClient animeClient)
     {
-        [ObservableProperty]
-        private List<GenreCollection> _genreList;
+        AnimeClient = animeClient;
 
-        public List<string> Genres { get; private set; }
+        _loadMoreContentOffset = 4;
+    }
 
-        public int GenresLoaded { get; private set; } = 0;
+    public override async Task LoadContent()
+    {
+        IsBusy = true;
 
-        public bool AllGenresLoaded => GenresLoaded.Equals(Genres.Count);
+        IsLoading = true;
 
-        [ObservableProperty]
-        private bool _isLoadingTitles = false;
+        GenreList = new(_loadMoreContentOffset);
 
-        private readonly int _loadTitlesCount = 4;
+        Genres = await AnimeClient.GetAllGenres();
 
-        public readonly IAnimeClient AnimeClient;
+        await LoadMoreGenres(_loadMoreContentOffset);
 
-        public MainViewModel(IAnimeClient animeClient)
+        IsLoading = false;
+
+        IsBusy = false;
+    }
+
+    [RelayCommand]
+    public async Task Refresh()
+    {
+        if (IsBusy)
         {
-            AnimeClient = animeClient;
-
-            _loadMoreContentOffset = 4;
-        }
-
-        public override async Task LoadContent()
-        {
-            IsBusy = true;
-
-            IsLoading = true;
-
-            GenreList = new(_loadMoreContentOffset);
-
-            Genres = await AnimeClient.GetAllGenres();
-
-            await LoadMoreGenres(_loadMoreContentOffset);
-
-            IsLoading = false;
-
-            IsBusy = false;
-        }
-
-        [RelayCommand]
-        public async Task Refresh()
-        {
-            if (IsBusy)
-            {
-                IsRefreshing = false;
-
-                return;
-            }
-
-            IsBusy = true;
-
-            IsRefreshing = true;
-
-            GenresLoaded = 0;
-
-            await LoadContent();
-
             IsRefreshing = false;
 
-            IsBusy = false;
+            return;
         }
 
-        [RelayCommand]
-        public override async Task LoadMoreContent()
+        IsBusy = true;
+
+        IsRefreshing = true;
+
+        GenresLoaded = 0;
+
+        await LoadContent();
+
+        IsRefreshing = false;
+
+        IsBusy = false;
+    }
+
+    [RelayCommand]
+    public override async Task LoadMoreContent()
+    {
+        if (!IsBusy && !IsLoading && !AllGenresLoaded)
+            await LoadMoreGenres(_loadMoreContentOffset);
+    }
+
+    private async Task LoadMoreGenres(int count)
+    {
+        IsLoading = true;
+
+        var newGenres = await LoadGenres(count);
+
+        GenreList.AddRange(newGenres);
+
+        IsLoading = false;
+    }
+
+    private async Task<List<GenreCollection>> LoadGenres(int count)
+    {
+        var newCount = GenresLoaded + count < Genres.Count ? GenresLoaded + count : Genres.Count;
+
+        List<GenreCollection> list = [];
+
+        for (var i = GenresLoaded; i < newCount; i++)
         {
-            if (!IsBusy && !IsLoading && !AllGenresLoaded)
-                await LoadMoreGenres(_loadMoreContentOffset);
+            GenreCollection genreCollection = new(Genres[i]);
+
+            genreCollection.AddTitleList(await AnimeClient.GetTitlesByGenre(Genres[i], 0, _loadTitlesCount));
+
+            genreCollection.TargetTitleCount = _loadTitlesCount;
+
+            list.Add(genreCollection);
+
+            GenresLoaded++;
         }
 
-        private async Task LoadMoreGenres(int count)
-        {
-            IsLoading = true;
-
-            var newGenres = await LoadGenres(count);
-
-            GenreList.AddRange(newGenres);
-
-            IsLoading = false;
-        }
-
-        private async Task<List<GenreCollection>> LoadGenres(int count)
-        {
-            var newCount = GenresLoaded + count < Genres.Count ? GenresLoaded + count : Genres.Count;
-
-            List<GenreCollection> list = [];
-
-            for (var i = GenresLoaded; i < newCount; i++)
-            {
-                GenreCollection genreCollection = new(Genres[i]);
-
-                genreCollection.AddTitleList(await AnimeClient.GetTitlesByGenre(Genres[i], 0, _loadTitlesCount));
-
-                genreCollection.TargetTitleCount = _loadTitlesCount;
-
-                list.Add(genreCollection);
-
-                GenresLoaded++;
-            }
-
-            return list;
-        }
+        return list;
     }
 }

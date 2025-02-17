@@ -28,9 +28,6 @@ public partial class SharedWatchingPage : ContentPage
 
     private void OnMediaElementStateChanged(object sender, MediaStateChangedEventArgs e)
     {
-        if (!_viewModel.HasConnection)
-            return;
-
         switch (e.NewState)
         {
             case MediaElementState.Playing:
@@ -60,7 +57,6 @@ public partial class SharedWatchingPage : ContentPage
             await _viewModel.Seek(MediaControl.Position.TotalSeconds);
         });
     }
-        
 
     private void OnSyncState(string url, double timing, bool isPlaying)
     {
@@ -81,8 +77,7 @@ public partial class SharedWatchingPage : ContentPage
             }
         });
     }
-
-
+    
     private void OnPaused(string roomName, double timing)
     {
         Dispatcher.Dispatch(() =>

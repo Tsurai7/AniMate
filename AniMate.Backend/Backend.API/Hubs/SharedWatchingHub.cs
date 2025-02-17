@@ -89,9 +89,6 @@ public class SharedWatchingHub : Hub
     {
         if (_cache.TryGetValue(roomId, out Room room))
         {
-            if (room.CurrentTiming.TotalSeconds == newTime)
-                return;
-            
             room.CurrentTiming = TimeSpan.FromSeconds(Math.Max(0, newTime));
             _cache.Set(roomId, room);
         }

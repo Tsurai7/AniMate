@@ -14,7 +14,6 @@ public partial class TitlePage : ContentPage
     public TitlePage(TitleViewModel viewModel)
     {
         InitializeComponent();
-
         BindingContext = _viewModel = viewModel;
     }
 

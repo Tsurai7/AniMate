@@ -12,7 +12,6 @@ public partial class UpdatesPage : ContentPage
     public UpdatesPage(UpdatesViewModel viewModel)
     {
         InitializeComponent();
-
         BindingContext = _viewModel = viewModel;
     }
 

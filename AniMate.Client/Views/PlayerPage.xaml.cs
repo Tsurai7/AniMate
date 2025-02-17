@@ -1,6 +1,4 @@
 using AniMate_app.ViewModels;
-using CommunityToolkit.Maui.Core.Primitives;
-using static AniMate_app.ViewModels.PlayerViewModel;
 
 namespace AniMate_app.Views;
 
@@ -11,10 +9,8 @@ public partial class PlayerPage : ContentPage
 	public PlayerPage(PlayerViewModel viewModel)
 	{
 		InitializeComponent();
-        
         Shell.SetNavBarIsVisible(this, true);
         Shell.SetTabBarIsVisible(this, false);
-        
         BindingContext = _viewModel = viewModel;
     }
 
