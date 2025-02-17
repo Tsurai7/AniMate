@@ -7,8 +7,8 @@
 
     <Shell.Resources>
         <ResourceDictionary>
-            <FileImageSource x:Key="ShareWatch" File="sharewatch.svg"/>
-            <FileImageSource x:Key="ShareWatchWhite" File="sharewatchwhite.svg"/>
+            <FileImageSource x:Key="ShareWatch" File="{OnPlatform Android='Resources/Images/sharewatch.svg'}"/>
+            <FileImageSource x:Key="ShareWatchWhite" File="{OnPlatform Android='Resources/Images/sharewatchwhite.svg'}"/>
         </ResourceDictionary>
     </Shell.Resources>
 
@@ -26,28 +26,28 @@
                 <Image
                         Grid.Column="0"
                         HeightRequest="25"
-                        Source="logowhite.svg"/>
+                        Source="{OnPlatform Android='Resources/Images/logowhite.svg'}"/>
         </Grid>
       </Shell.TitleView>
       
     <TabBar>
         <ShellContent Title="Home"
-              Icon="home.svg"
+              Icon="{OnPlatform Android='Resources/Images/home.svg'}"
               Route="UpdatesPage"
               ContentTemplate="{DataTemplate local:UpdatesPage}"/>
         
         <ShellContent Title="Genre"
-              Icon="genre.svg"
+              Icon="{OnPlatform Android='Resources/Images/genre.svg'}"
               Route="MainPage"
               ContentTemplate="{DataTemplate local:MainPage}"/>
         
         <ShellContent Title="Search"
-              Icon="search.svg"
+              Icon="{OnPlatform Android='Resources/Images/search.svg'}"
               ContentTemplate="{DataTemplate local:SearchPage}"
               Route="SearchPage"/>
         
         <ShellContent Title="Profile"
-              Icon="user.svg"
+              Icon="{OnPlatform Android='Resources/Images/user.svg'}"
               Route="SignInPage"
               ContentTemplate="{DataTemplate local:SignInPage}"/>
     </TabBar>

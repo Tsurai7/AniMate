@@ -9,8 +9,8 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <FileImageSource x:Key="Random" File="random.svg"/>
-            <FileImageSource x:Key="RandomWhite" File="random_white.svg"/>
+            <FileImageSource x:Key="Random" File="{OnPlatform Android='Resources/Images/random.svg'}"/>
+            <FileImageSource x:Key="RandomWhite" File="{OnPlatform Android='Resources/Images/random_white.svg'}"/>
         </ResourceDictionary>
 
     </ContentPage.Resources>

@@ -74,7 +74,6 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -85,16 +84,6 @@
 
 	<ItemGroup>
 	  <AndroidResource Remove="Platforms\Android\Resources\values\colors.xml" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="Resources\Images\dots.svg" />
-	  <None Remove="Resources\Images\home.svg" />
-	  <None Remove="Resources\AppIcon\animateicon.svg" />
-	  <None Remove="Resources\Images\logo.svg" />
-	  <None Remove="Resources\Images\ring.svg" />
-	  <None Remove="Resources\Images\search.svg" />
-	  <None Remove="Resources\Images\user.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
