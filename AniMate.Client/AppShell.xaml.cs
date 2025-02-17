@@ -24,11 +24,16 @@ public partial class AppShell : Shell
 
     private async void JoinRoomButtonClicked(object sender, EventArgs e)
     {
-        string? result = await DisplayPromptAsync("Enter Code", "Share watch room code");
+        var result = await DisplayPromptAsync("Enter Code", "Share watch room code");
 
         if (string.IsNullOrEmpty(result) || string.IsNullOrWhiteSpace(result))
             return;
-
-        await Shell.Current.GoToAsync($"SharedWatchingPage?RoomId={result}");
+        
+        var roomId = result?.Substring(result.LastIndexOf('/') + 1);
+        
+        if (!string.IsNullOrEmpty(roomId))
+        {
+            await Current.GoToAsync($"SharedWatchingPage?RoomId={roomId}");
+        }
     }
 }

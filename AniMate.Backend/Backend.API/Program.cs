@@ -2,11 +2,23 @@ using System.Text.Json;
 using Backend.API;
 using Backend.API.Hubs;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using OpenTelemetry.Metrics;
 using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.WebHost.UseUrls("http://0.0.0.0:5002");
+}
+
+builder.Services.AddResponseCompression(options =>
+    {
+        options.Providers.Add<BrotliCompressionProvider>();
+        options.EnableForHttps = true;
+    });
 
 builder.Services.ConfigureServices();
 builder.Services.AddHealthChecks().AddCheck("Memory Usage", () =>
@@ -49,6 +61,8 @@ app.MapHealthChecks("/health", new HealthCheckOptions
     }
 });
 
+app.UseResponseCompression();
+app.UseHttpsRedirection();
 app.UseMetricServer();
 app.UseStaticFiles();
 app.Run();

@@ -26,11 +26,12 @@ public partial class SharedWatchingViewModel : ObservableObject
 
     public bool HasConnection => _client.HasConnection;
 
-    public SharedWatchingViewModel(IApplicationLinkService linkService)
+    public SharedWatchingViewModel(
+        IApplicationLinkService linkService,
+        SharedWatchingClient client)
     {
         _linkService = linkService;
-
-        _client = new();
+        _client = client;
     }
 
     public async void ShareRoomLink()
@@ -53,7 +54,7 @@ public partial class SharedWatchingViewModel : ObservableObject
 
         await _client.JoinRoom(RoomId);
 
-        //await _client.SyncStateForNewClient(RoomId);
+        await _client.SyncStateForNewClient(RoomId);
     }
 
     public async Task ChangeVideoUrl(string episodeUrl)

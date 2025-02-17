@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
 using Backend.Domain.Models;
-using SignalRSwaggerGen.Attributes;
 
 namespace Backend.API.Hubs;
 
-[SignalRHub("sharedWatchingHub")]
 public class SharedWatchingHub : Hub
 {
     private readonly IMemoryCache _cache;
@@ -59,6 +57,9 @@ public class SharedWatchingHub : Hub
     {
         if (_cache.TryGetValue(roomId, out Room room))
         {
+            if (!room.IsPlaying)
+                return;
+            
             room.CurrentTiming = TimeSpan.FromSeconds(Math.Max(0, currentTiming));
             room.IsPlaying = false;
             _cache.Set(roomId, room);
@@ -72,6 +73,9 @@ public class SharedWatchingHub : Hub
     {
         if (_cache.TryGetValue(roomId, out Room room))
         {
+            if (room.IsPlaying)
+                return;
+            
             room.CurrentTiming = TimeSpan.FromSeconds(Math.Max(0, currentTiming));
             room.IsPlaying = true;
             _cache.Set(roomId, room);
@@ -85,6 +89,9 @@ public class SharedWatchingHub : Hub
     {
         if (_cache.TryGetValue(roomId, out Room room))
         {
+            if (room.CurrentTiming.TotalSeconds == newTime)
+                return;
+            
             room.CurrentTiming = TimeSpan.FromSeconds(Math.Max(0, newTime));
             _cache.Set(roomId, room);
         }
@@ -120,6 +127,6 @@ public class SharedWatchingHub : Hub
         await Clients.OthersInGroup(roomId).SendAsync("ReceiveMessage", message);
     }
 
-    private string GenerateRoomId()
+    private static string GenerateRoomId()
         => Guid.NewGuid().ToString()[..8];
 }

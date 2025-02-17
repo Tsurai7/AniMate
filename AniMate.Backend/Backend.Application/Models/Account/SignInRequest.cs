@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Backend.Domain.Models;
 using MediatR;
 
