@@ -1,7 +1,6 @@
 using AutoMapper;
 using Backend.Application.Handlers.Account;
 using Backend.Application.Models.Account;
-using Backend.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
@@ -11,7 +10,7 @@ namespace Backend.API.Controllers;
 
 [ApiController]
 [Route("api/account")]
-public class AccountController : Controller
+public class AccountController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
@@ -45,63 +44,6 @@ public class AccountController : Controller
         {
             _logger.LogWarning(ex, "Error fetching account details for user {email}", User.Identity?.Name);
             return Problem();
-        }
-    }
-    
-    [HttpPost("sign-up")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<AuthToken>> SignUpAsync(
-        [FromBody] SignUpRequest request,
-        CancellationToken token)
-    {
-        _logger.LogInformation("Attempting sign-up for email {email}", request.Email);
-
-        try
-        {
-            var command = new SignUpRequest
-            {
-                Username = request.Username,
-                Email = request.Email,
-                Password = request.Password
-            };
-            
-            var tokenResponse = await _mediator.Send(command, token);
-            _logger.LogInformation("Successfully signed up user with email {email}", request.Email);
-            return Ok(tokenResponse);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogWarning(ex, "Error during sign-up for email {email}", request.Email);
-            return Conflict(new { message = "An account with this email already exists." });
-        }
-    }
-    
-    [HttpPost("sign-in")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<ActionResult<AuthToken>> SignInAsync(
-        [FromBody] SignInRequest request,
-        CancellationToken token)
-    {
-        _logger.LogInformation("Attempting sign-in for email {email}", request.Email);
-
-        try
-        {
-            var command = new SignInRequest
-            {
-                Email = request.Email,
-                Password = request.Password
-            };
-            
-            var tokenResponse = await _mediator.Send(command, token);
-            _logger.LogInformation("Successfully signed in user with email {email}", request.Email);
-            return Ok(tokenResponse);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error during sign-in for email {email}", request.Email);
-            return Unauthorized(new { message = "Invalid credentials." });
         }
     }
     

@@ -1,3 +1,4 @@
+using AniMate_app.Models.Auth;
 using AniMate_app.ViewModels;
 
 namespace AniMate_app.Views;
@@ -11,9 +12,7 @@ public partial class SignUpPage : ContentPage
     public SignUpPage(SignUpViewModel viewModel)
 	{
 		InitializeComponent();
-        
         BindingContext = _viewModel = viewModel;
-        
         AppShell.SetNavBarIsVisible(this, false);
     }
 
@@ -69,26 +68,26 @@ public partial class SignUpPage : ContentPage
             await DisplayAlert("Error", "Wrong passwords", "OK");
             return;
         }
-        
-        var response = await _viewModel._accountClient.
-            SignUp(EmailEntry.Text, UsernameEntry.Text, PasswordEntry.Text);
 
-        if (response.Token != null)
+        var signUpRequest = new SignUpRequest()
         {
-            var profileDto = await _viewModel._accountClient.GetProfileInfo(response.Token);
-            
+            UserName = UsernameEntry.Text,
+            Email = EmailEntry.Text,
+            Password = PasswordEntry.Text
+        };
+
+        try
+        {
+            var profile = await _viewModel.SignUp(signUpRequest, CancellationToken.None);
             var navigationParameter = new Dictionary<string, object>
             {
-                {"Profile", profileDto},
+                {"Profile", profile},
             };
-            
-            Preferences.Default.Set("AccessToken", response.Token);
-        
             await Shell.Current.GoToAsync($"ProfilePage", navigationParameter);
         }
-        else
+        catch (Exception ex)
         {
-            await DisplayAlert("Error", "Unable to sign up", "OK");
+            await DisplayAlert("Error", $"Unable to sign up: {ex.Message}", "OK");
         }
     }
 }

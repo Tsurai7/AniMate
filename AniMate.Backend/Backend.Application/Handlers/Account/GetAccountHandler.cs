@@ -11,7 +11,7 @@ public class GetAccountResponse
     public string Email { get; set; } = string.Empty;
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
-    public string? ProfileImageUrl { get; set; }
+    public string? ImageUrl { get; set; }
     public List<string> LikedTitles { get; set; } = [];
     public List<string> WatchedTitles { get; set; } = [];
 }
@@ -51,7 +51,7 @@ public class GetAccountHandler : IRequestHandler<GetAccountRequest, GetAccountRe
             Email = account.Email,
             FirstName = account.FirstName,
             LastName = account.LastName,
-            ProfileImageUrl = account.ImageUrl,
+            ImageUrl = account.ImageUrl,
             LikedTitles = account.LikedTitles,
             WatchedTitles = account.WatchedTitles
         };

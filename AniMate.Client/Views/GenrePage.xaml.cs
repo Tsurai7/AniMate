@@ -11,7 +11,6 @@ public partial class GenrePage : ContentPage
     public GenrePage(GenreViewModel viewModel)
     {
         InitializeComponent();
-
         BindingContext = _viewModel = viewModel;
     }
 

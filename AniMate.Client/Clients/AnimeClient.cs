@@ -6,12 +6,12 @@ namespace AniMate_app.Clients;
 
 public class AnimeClient : IAnimeClient
 {
-    private readonly IHttpClientFactory _httpClientFactory;
-    
     private static readonly JsonSerializerOptions SerializerOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
     };
+    
+    private readonly IHttpClientFactory _httpClientFactory;
 
     public AnimeClient(IHttpClientFactory httpClientFactory)
     {

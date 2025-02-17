@@ -30,7 +30,7 @@ public class SignUpAccountHandler : IRequestHandler<SignUpRequest, AuthToken>
 
         var newAccount = new Domain.Models.Account
         {
-            UserName = request.Username,
+            UserName = request.UserName,
             Email = request.Email,
             PasswordHash = request.Password
         };

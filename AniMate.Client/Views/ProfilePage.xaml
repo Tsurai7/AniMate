@@ -32,16 +32,15 @@
                    HeightRequest="120"
                    Padding="0"
                    HasShadow="False">
-                        <Image Source="{Binding ProfileInfo.ProfileImage}"
+                        <Image Source="{Binding ProfileInfo.ImageUrl}"
                        Aspect="AspectFill"/>
                     </Frame>
 
-                    <Label Text="{Binding ProfileInfo.Username}"
+                    <Label Text="{Binding ProfileInfo.UserName}"
                    VerticalOptions="CenterAndExpand"
                    FontAttributes="Bold"
                    FontSize="18"/>
                 </StackLayout>
-
 
                 <Button Text="Favourite"
                 FontAttributes="Bold"

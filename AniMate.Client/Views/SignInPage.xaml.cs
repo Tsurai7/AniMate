@@ -1,6 +1,5 @@
 ﻿using AniMate_app.ViewModels;
-using System.Text.Json;
-using AniMate_app.DTOs.Account;
+using AniMate_app.Models.Auth;
 
 namespace AniMate_app.Views;
 
@@ -12,55 +11,30 @@ public partial class SignInPage : ContentPage
     public SignInPage(SignInViewModel viewModel)
 	{
 		InitializeComponent();
-
         Shell.SetNavBarIsVisible(this, false);
-
         BindingContext = _viewModel = viewModel;
 	}
 
     private async void SignInButton_Clicked(object sender, EventArgs e)
     {
-        var email = EmailEntry.Text;
-        
-        var password = PasswordEntry.Text;
-
-        if (email == "test" && password == "test")
+        var signInRequest = new SignInRequest()
         {
-            var profileDto = new ProfileDto("Nikita Desuyo", 
-                "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.instagram.com%2Fmeguminfushiguro%2F&psig=AOvVaw3lG69Vz1JTkbsA8WZK9ZIz&ust=1726985201087000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCMC-srWv04gDFQAAAAAdAAAAABAE",
-                "nikita@gmail.com", ["Naruto", "Jujutsu Kaisen"], ["Jujutsu Kaisen"]);
-            
+            Email = EmailEntry.Text,
+            Password = PasswordEntry.Text
+        };
+
+        try
+        {
+            var profile = await _viewModel.SignIn(signInRequest, CancellationToken.None);
             var navigationParameter = new Dictionary<string, object>
             {
-                {"Profile", profileDto},
+                {"Profile", profile},
             };
-            
             await Shell.Current.GoToAsync($"ProfilePage", navigationParameter);
-            return;
         }
-
-        var response = await _viewModel._accountClient.SignIn(email, password);
-
-        if (response.Token is not null)
+        catch (Exception ex)
         {
-            var profileDto = await _viewModel._accountClient.GetProfileInfo(response.Token);
-            
-            var navigationParameter = new Dictionary<string, object>
-            {
-                {"Profile", profileDto},
-            };
-
-            Preferences.Default.Set("AccessToken", response.Token);
-
-            var jsonProfile = JsonSerializer.Serialize(profileDto);
-            Preferences.Default.Set("Profile", jsonProfile);
-
-            await Shell.Current.GoToAsync("ProfilePage", navigationParameter);
-        }
-
-        else
-        {
-            await DisplayAlert("Error", "Wrong credentials", "OK");
+            await DisplayAlert("Error", $"Unable to sign in: {ex.Message}", "OK");
         }
     }
 

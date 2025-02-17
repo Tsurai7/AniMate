@@ -7,7 +7,7 @@ namespace Backend.API.Controllers;
 
 [ApiController]
 [Route("api/anime")]
-public class AnimeController : Controller
+public class AnimeController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly ILogger<AnimeController> _logger;

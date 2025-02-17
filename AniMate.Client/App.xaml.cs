@@ -1,28 +1,27 @@
-namespace AniMate_app
+namespace AniMate_app;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    public App()
     {
-        public App()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            MainPage = new AppShell();
+        MainPage = new AppShell();
+    }
+
+    protected override async void OnAppLinkRequestReceived(Uri uri)
+    {
+        base.OnAppLinkRequestReceived(uri);
+
+        var action = uri.Segments[1];
+
+        if (action.Equals("anime/"))
+        {
+            await Shell.Current.GoToAsync($"TitlePage?TitleCode={uri.Segments[2]}");
         }
-
-        protected override async void OnAppLinkRequestReceived(Uri uri)
+        else if (action.Equals("room/"))
         {
-            base.OnAppLinkRequestReceived(uri);
-
-            var action = uri.Segments[1];
-
-            if (action.Equals("anime/"))
-            {
-                await Shell.Current.GoToAsync($"TitlePage?TitleCode={uri.Segments[2]}");
-            }
-            else if (action.Equals("room/"))
-            {
-                await Shell.Current.GoToAsync($"SharedWatchingPage?RoomId={uri.Segments[2]}");
-            }
+            await Shell.Current.GoToAsync($"SharedWatchingPage?RoomId={uri.Segments[2]}");
         }
     }
 }

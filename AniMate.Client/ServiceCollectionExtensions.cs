@@ -18,20 +18,28 @@ public static class ServiceCollectionExtensions
         services.AddHttpClient(nameof(AnimeClient),
             client => client.BaseAddress = new Uri("https://api.anilibria.tv/v3/"));
        
-        var accountUrl = string.Empty;
+        var animateBackendUrl = string.Empty;
 #if DEBUG
-        accountUrl = "http://10.0.2.2:5002/api/";
+        animateBackendUrl = "http://10.0.2.2:8080/api/";
 #else
-        accountUrl = "https://tsurai7-animate-910d.twc1.net/api/";
+        animateBackendUrl = "https://tsurai7-animate-910d.twc1.net/api/";
 #endif
         
-        services.AddSingleton<IAccountClient>(sp =>
+        services.AddSingleton<AccountClient>(sp =>
         {
             var client = new AccountClient(sp.GetRequiredService<IHttpClientFactory>());
             return client;
         });
         services.AddHttpClient(nameof(AccountClient),
-            client => client.BaseAddress = new Uri(accountUrl));
+            client => client.BaseAddress = new Uri(animateBackendUrl));
+        
+        services.AddSingleton<AuthClient>(sp =>
+        {
+            var client = new AuthClient(sp.GetRequiredService<IHttpClientFactory>());
+            return client;
+        });
+        services.AddHttpClient(nameof(AccountClient),
+            client => client.BaseAddress = new Uri(animateBackendUrl));
         
         services.AddSingleton<SharedWatchingClient>();
 

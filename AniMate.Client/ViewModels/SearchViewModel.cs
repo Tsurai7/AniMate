@@ -3,78 +3,75 @@ using AniMate_app.Models;
 using AniMate_app.Views;
 using CommunityToolkit.Mvvm.Input;
 
-namespace AniMate_app.ViewModels
+namespace AniMate_app.ViewModels;
+
+public partial class SearchViewModel : ViewModelBase
 {
-    public partial class SearchViewModel : ViewModelBase
+    public GenreCollection TitlesCollection { get; private set; }
+
+    private readonly IAnimeClient _animeClient;
+
+    private string _nameToFind;
+
+    public SearchViewModel(IAnimeClient animeClient)
     {
-        public GenreCollection TitlesCollection { get; private set; }
+        _animeClient = animeClient;
+        TitlesCollection = new("Search");
+        _loadMoreContentOffset = 12;
+    }
 
-        private readonly IAnimeClient _animeClient;
+    public async Task FindTitles(string name)
+    {
+        ClearSearchData();
 
-        private string _nameToFind;
+        if (string.IsNullOrEmpty(name))
+            return;
 
-        public SearchViewModel(IAnimeClient animeClient)
+        IsBusy = true;
+
+        _nameToFind = name;
+
+        var result = await _animeClient.GetTitlesByName(_nameToFind, 0, _loadMoreContentOffset);
+
+        if (result.Count.Equals(0))
         {
-            _animeClient = animeClient;
-
-            TitlesCollection = new("Search");
-
-            _loadMoreContentOffset = 12;
-        }
-
-        public async Task FindTitles(string name)
-        {
-            ClearSearchData();
-
-            if (string.IsNullOrEmpty(name))
-                return;
-
-            IsBusy = true;
-
-            _nameToFind = name;
-
-            var result = await _animeClient.GetTitlesByName(_nameToFind, 0, _loadMoreContentOffset);
-
-            if (result.Count.Equals(0))
-            {
-                IsBusy = false;
-
-                return;
-            }  
-
-            TitlesCollection.TargetTitleCount = result.Count > _loadMoreContentOffset ? _loadMoreContentOffset : result.Count;
-
             IsBusy = false;
 
-            TitlesCollection.AddTitleList(result);
-        }
+            return;
+        }  
 
-        public void ClearSearchData()
-        {
-            TitlesCollection.Clear();
-        }
+        TitlesCollection.TargetTitleCount = result.Count > _loadMoreContentOffset ? _loadMoreContentOffset : result.Count;
 
-        public override Task LoadContent()
-        {
-            throw new NotImplementedException();
-        }
+        IsBusy = false;
 
-        [RelayCommand]
-        public override async Task LoadMoreContent()
-        {
-            if(IsLoading)
-                return;
+        TitlesCollection.AddTitleList(result);
+    }
 
-            if(TitlesCollection.TargetTitleCount >= TitlesCollection.TitleCount)
-                return;
+    public void ClearSearchData()
+    {
+        TitlesCollection.Clear();
+    }
 
-            IsLoading = true;
+    public override Task LoadContent()
+    {
+        throw new NotImplementedException();
+    }
 
-            TitlesCollection.TargetTitleCount += _loadMoreContentOffset;
+    [RelayCommand]
+    public override async Task LoadMoreContent()
+    {
+        if(IsLoading)
+            return;
 
-            TitlesCollection.AddTitleList(await _animeClient.GetTitlesByName(_nameToFind, skip: TitlesCollection.TitleCount, TitlesCollection.TitleCount + _loadMoreContentOffset));
+        if(TitlesCollection.TargetTitleCount >= TitlesCollection.TitleCount)
+            return;
 
-            IsLoading = false;
-        }
+        IsLoading = true;
+
+        TitlesCollection.TargetTitleCount += _loadMoreContentOffset;
+
+        TitlesCollection.AddTitleList(await _animeClient.GetTitlesByName(_nameToFind, skip: TitlesCollection.TitleCount, TitlesCollection.TitleCount + _loadMoreContentOffset));
+
+        IsLoading = false;
     }
 }

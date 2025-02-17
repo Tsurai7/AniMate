@@ -1,5 +1,4 @@
 ﻿using AniMate_app.Views;
-using System;
 
 namespace AniMate_app;
 

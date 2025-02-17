@@ -11,10 +11,8 @@ public partial class PlayerPage : ContentPage
 	public PlayerPage(PlayerViewModel viewModel)
 	{
 		InitializeComponent();
-        
         Shell.SetNavBarIsVisible(this, true);
         Shell.SetTabBarIsVisible(this, false);
-        
         BindingContext = _viewModel = viewModel;
     }
 
