@@ -7,7 +7,7 @@ public partial class UpdatesPage : ContentPage
     private UpdatesViewModel _viewModel;
 
     private bool _isFirstLoad = true;
-    private bool _isOpeningPlayer;
+    private bool _isOpeningPage;
 
     public UpdatesPage(UpdatesViewModel viewModel)
     {
@@ -34,14 +34,14 @@ public partial class UpdatesPage : ContentPage
 
         var collection = sender as CollectionView;
 
-        if (_isOpeningPlayer)
+        if (_isOpeningPage)
         {
             collection.SelectedItem = null;
 
             return;
         }
 
-        _isOpeningPlayer = true;
+        _isOpeningPage = true;
 
         var navigationParameter = new Dictionary<string, object>
         {
@@ -52,14 +52,14 @@ public partial class UpdatesPage : ContentPage
 
         collection.SelectedItem = null;
 
-        _isOpeningPlayer = false;
+        _isOpeningPage = false;
     }
 
     private async void RandomTitleButtonClicked(object sender, EventArgs e)
     {
-        if(_viewModel.IsBusy) return;
+        if(_isOpeningPage) return;
 
-        _viewModel.IsBusy = true;
+        _isOpeningPage = true;
 
         var tokenSource = new CancellationTokenSource();
 
@@ -81,13 +81,13 @@ public partial class UpdatesPage : ContentPage
 
         tokenSource.Dispose();
 
-        _viewModel.IsBusy = false;
-
         var navigationParameter = new Dictionary<string, object>
         {
             {"TheTitle", title}
         };
 
         await Shell.Current.GoToAsync($"TitlePage", navigationParameter);
+
+        _isOpeningPage = false;
     }
 }
