@@ -38,4 +38,9 @@ public partial class ProfilePage : ContentPage
     {
         await Navigation.PushAsync(new EditProfilePage());
     }
+
+    protected override bool OnBackButtonPressed()
+    {
+        return true;
+    }
 }
