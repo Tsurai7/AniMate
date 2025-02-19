@@ -1,9 +1,6 @@
-using System.Security.Claims;
 using Backend.Application.Models.Account;
-using Backend.Application.Services;
 using Backend.Domain.Models;
 using MediatR;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.API.Controllers;
@@ -79,29 +76,4 @@ public class AuthController : ControllerBase
             return Unauthorized(new { message = "Invalid credentials." });
         }
     }
-    
-    [HttpPost("sign-in/google")]
-    public IActionResult GoogleSignIn()
-    {
-        var redirectUrl = Url.Action("GoogleResponse", "Auth");
-        var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
-        return Challenge(properties, "Google");
-    }
-
-    [HttpGet("sign-in/google-response")]
-    public async Task<IActionResult> GoogleResponse()
-    {
-        var authenticateResult = await HttpContext.AuthenticateAsync("Google");
-
-        if (!authenticateResult.Succeeded)
-            return BadRequest();
-        
-        var googleClaims = authenticateResult.Principal;
-        var email = googleClaims?.FindFirst(ClaimTypes.Email)?.Value;
-        
-        var jwtToken = TokenService.GenerateToken(email);
-
-        return Ok(new { Token = jwtToken });
-    }
-
 }

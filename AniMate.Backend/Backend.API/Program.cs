@@ -1,11 +1,9 @@
 using System.Text.Json;
 using Backend.API;
 using Backend.API.Hubs;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.IdentityModel.Tokens;
 using OpenTelemetry.Metrics;
 using Prometheus;
 
@@ -30,25 +28,6 @@ builder.Services.AddHealthChecks().AddCheck("Memory Usage", () =>
         ? HealthCheckResult.Healthy($"Memory usage: {memoryUsed / 1024 / 1024} MB")
         : HealthCheckResult.Degraded($"High memory usage: {memoryUsed / 1024 / 1024} MB");
 });
-
-builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
-    .AddJwtBearer(options =>
-    {
-        options.Authority = "https://accounts.google.com";
-        options.Audience = "your-client-id"; // ID клиента, полученный из Google Cloud Console
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidIssuer = "https://accounts.google.com",
-            ValidAudience = "your-client-id"
-        };
-    });
 
 builder.Services.AddOpenTelemetry()
     .WithMetrics(metrics =>
@@ -81,7 +60,6 @@ app.MapHealthChecks("/health", new HealthCheckOptions
         await context.Response.WriteAsync(result);
     }
 });
-
 
 app.UseResponseCompression();
 app.UseMetricServer();

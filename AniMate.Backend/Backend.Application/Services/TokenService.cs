@@ -7,7 +7,7 @@ namespace Backend.Application.Services;
 
 public class TokenService
 {
-    public static AuthToken GenerateToken(string email)
+    public AuthToken GenerateToken(string email)
     {
         var claims = new List<Claim> {new(ClaimTypes.Name, email) };
 
