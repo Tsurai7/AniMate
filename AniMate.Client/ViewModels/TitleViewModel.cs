@@ -1,9 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Text.Json;
-using AniMate_app.DTOs.Anime;                                                 
+﻿using AniMate_app.Clients;
+using AniMate_app.DTOs.Anime;
 using AniMate_app.Interfaces;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
-using AniMate_app.Clients;
+using System.Text;
 
 namespace AniMate_app.ViewModels;
 
@@ -11,6 +11,8 @@ namespace AniMate_app.ViewModels;
 [QueryProperty(nameof(Title), "TheTitle")]
 public partial class TitleViewModel : ObservableObject
 {
+    private const string SHOW_MORE_TEXT = "... ещё";
+
     private readonly AccountClient _accountClient;
 
     private readonly IAnimeClient _animeClient;
@@ -18,6 +20,8 @@ public partial class TitleViewModel : ObservableObject
     private readonly IApplicationLinkService _linkService;
 
     private CancellationTokenSource _tokenSource = new();
+
+    private bool _isShortDescriptionOpen = true;
 
     public TitleViewModel(
         AccountClient accountClient,
@@ -44,7 +48,7 @@ public partial class TitleViewModel : ObservableObject
         {
             _title = value;
             Genres = string.Join(", ", _title.Genres);
-            ShortDescription = string.Join(" ", _title.RuDescription.Split(' ').Take(7));
+            ShortDescription = string.Join(" ", _title.RuDescription?.Split(' ').Take(7)) ?? "Нет описания";
             OnPropertyChanged(nameof(Title));
             Task.Factory.StartNew(LoadEpisodes, _tokenSource.Token);
         }
@@ -85,7 +89,13 @@ public partial class TitleViewModel : ObservableObject
     private string _genres;
 
     [ObservableProperty]
-    private string _shortDescription;
+    private string _shortDescription = string.Empty;
+
+    [ObservableProperty]
+    private string _descriptionEnding = SHOW_MORE_TEXT;
+
+    [ObservableProperty]
+    private string _titleDescription;
 
     public async Task<bool> LikesButtonClicked()
     {
@@ -102,5 +112,16 @@ public partial class TitleViewModel : ObservableObject
     public void StopButtonLoad()
     {
         _tokenSource.Cancel();
+    }
+
+    public void ToggleDescription()
+    {
+        string description = (_isShortDescriptionOpen ? ShortDescription : Title.RuDescription) ?? "Нет описания";
+
+        TitleDescription = description;
+
+        DescriptionEnding = _isShortDescriptionOpen ? SHOW_MORE_TEXT : string.Empty;
+
+        _isShortDescriptionOpen = !_isShortDescriptionOpen;
     }
 }

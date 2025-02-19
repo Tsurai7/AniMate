@@ -1,13 +1,10 @@
 ﻿using AniMate_app.ViewModels;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace AniMate_app.Views;
 
 public partial class TitlePage : ContentPage
 {
     private readonly TitleViewModel _viewModel;
-
-    private bool isFullDescriptionOpen = false;
 
     private bool inLikes = false;
 
@@ -32,30 +29,7 @@ public partial class TitlePage : ContentPage
 
     private void OnTextRecognizerTap(object sender, TappedEventArgs e)
     {
-        UpdateTitleDescription();
-
-        isFullDescriptionOpen = !isFullDescriptionOpen;
-    }
-
-    private void UpdateTitleDescription()
-    {
-        FormattedString formattedString = new();
-
-        formattedString.Spans.Add(new Span
-        {
-            Text = isFullDescriptionOpen ? _viewModel.ShortDescription : _viewModel.Title.RuDescription,
-        });
-
-        if (isFullDescriptionOpen)
-        {
-            formattedString.Spans.Add(new Span
-            {
-                Text = "... ещё",
-                TextColor = Colors.Grey,
-            });
-        }
-
-        descriptionLabel.FormattedText = formattedString;
+        _viewModel.ToggleDescription();
     }
 
     private async void LikeButtonClicked(object sender, EventArgs e)
@@ -82,5 +56,10 @@ public partial class TitlePage : ContentPage
     private void StopButtonLoad(object sender, EventArgs e)
     {
         _viewModel.StopButtonLoad();
+    }
+
+    private void UpdateDescription(object sender, EventArgs e)
+    {
+        _viewModel.ToggleDescription();
     }
 }

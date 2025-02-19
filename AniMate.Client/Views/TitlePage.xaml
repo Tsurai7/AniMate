@@ -4,7 +4,7 @@
              xmlns:dtos="clr-namespace:AniMate_app.DTOs.Anime"
              xmlns:converters="clr-namespace:AniMate_app.Converters"
              x:DataType="local:TitleViewModel"
-             x:Class="AniMate_app.Views.TitlePage" Disappearing="StopButtonLoad">
+             x:Class="AniMate_app.Views.TitlePage" Appearing="UpdateDescription" Disappearing="StopButtonLoad">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -136,7 +136,7 @@
 
             <StackLayout Orientation="Vertical"
                          Margin="0,20,0,0">
-                <Label Text="{Binding ShortDescription, StringFormat='{0}... ещё'}"
+                <Label
                        FontSize="15"
                        FontAttributes="Bold"
                        Margin="20,0,0,0"
@@ -144,8 +144,8 @@
                        >
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="{Binding ShortDescription}" />
-                            <Span Text="... ещё"
+                            <Span Text="{Binding TitleDescription}" />
+                            <Span Text="{Binding DescriptionEnding}"
                                   TextColor="Grey" />
                         </FormattedString>
                     </Label.FormattedText>
