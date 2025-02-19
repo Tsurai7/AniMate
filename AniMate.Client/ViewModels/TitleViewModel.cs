@@ -13,6 +13,8 @@ public partial class TitleViewModel : ObservableObject
 {
     private const string SHOW_MORE_TEXT = "... ещё";
 
+    private const string NO_DESCRIPTION_TEXT = "Нет описания";
+
     private readonly AccountClient _accountClient;
 
     private readonly IAnimeClient _animeClient;
@@ -48,7 +50,7 @@ public partial class TitleViewModel : ObservableObject
         {
             _title = value;
             Genres = string.Join(", ", _title.Genres);
-            ShortDescription = string.Join(" ", _title.RuDescription?.Split(' ').Take(7)) ?? "Нет описания";
+            ShortDescription = string.Join(" ", _title.RuDescription?.Split(' ').Take(7)) ?? NO_DESCRIPTION_TEXT;
             OnPropertyChanged(nameof(Title));
             Task.Factory.StartNew(LoadEpisodes, _tokenSource.Token);
         }
@@ -116,7 +118,7 @@ public partial class TitleViewModel : ObservableObject
 
     public void ToggleDescription()
     {
-        string description = (_isShortDescriptionOpen ? ShortDescription : Title.RuDescription) ?? "Нет описания";
+        string description = (_isShortDescriptionOpen ? ShortDescription : Title.RuDescription) ?? NO_DESCRIPTION_TEXT;
 
         TitleDescription = description;
 
