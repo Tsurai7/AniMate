@@ -44,7 +44,11 @@ public static class ServiceCollectionExtensions
                     IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
                     ValidateIssuerSigningKey = true
                 };
-            });
+            }).AddGoogle(options =>
+            {
+                options.ClientId = "524044807337-d73ak967utq6llo2jo7oorgi1rv93mvr.apps.googleusercontent.com";
+                options.ClientSecret = "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";
+            } );
         
         
         return services;
