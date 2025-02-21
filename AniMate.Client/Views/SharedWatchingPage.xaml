@@ -21,7 +21,7 @@
         </Grid.ColumnDefinitions>
         
         <!-- Media Element for video -->
-        <toolkit:MediaElement x:Name="MediaControl" SeekCompleted="OnSeekCompleted" StateChanged="OnMediaElementStateChanged"
+        <toolkit:MediaElement x:Name="MediaControl" StateChanged="OnMediaElementStateChanged"
                               ShouldAutoPlay="False"
                               Source="{Binding MediaUrl}"
                               Aspect="AspectFit"
