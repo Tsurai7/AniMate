@@ -39,7 +39,7 @@ public partial class SharedWatchingPage : ContentPage
 
         if (!_viewModel.HasConnection)
             return;
-        Debug.WriteLine(Enum.GetName(typeof(MediaElementState), e.NewState));
+
         switch (e.NewState)
         {
             case MediaElementState.Playing:
