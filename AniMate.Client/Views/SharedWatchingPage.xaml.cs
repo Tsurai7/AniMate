@@ -1,11 +1,14 @@
 using AniMate_app.ViewModels;
 using CommunityToolkit.Maui.Core.Primitives;
+using System.Diagnostics;
 
 namespace AniMate_app.Views;
 
 public partial class SharedWatchingPage : ContentPage
 {
     private readonly SharedWatchingViewModel _viewModel;
+
+    private int _eventSkipCount = 0;
 
     public SharedWatchingPage(SharedWatchingViewModel viewModel)
     {
@@ -21,7 +24,6 @@ public partial class SharedWatchingPage : ContentPage
         _viewModel._client.RoomCreated += OnRoomCreated;
         _viewModel._client.Error += OnError;
 
-        MediaControl.SeekCompleted += OnSeekCompleted;
         MediaControl.StateChanged += OnMediaElementStateChanged;
 
         ChatMessagesListView.ItemsSource = _viewModel._chatMessages;
@@ -29,9 +31,15 @@ public partial class SharedWatchingPage : ContentPage
 
     private void OnMediaElementStateChanged(object sender, MediaStateChangedEventArgs e)
     {
+        if (_eventSkipCount > 0)
+        {
+            _eventSkipCount--;
+            return;
+        }
+
         if (!_viewModel.HasConnection)
             return;
-
+        Debug.WriteLine(Enum.GetName(typeof(MediaElementState), e.NewState));
         switch (e.NewState)
         {
             case MediaElementState.Playing:
@@ -53,15 +61,6 @@ public partial class SharedWatchingPage : ContentPage
     {
         _viewModel.RoomId = roomId;
     }
-
-    private void OnSeekCompleted(object sender, EventArgs e)
-    {
-        Dispatcher?.Dispatch(async () =>
-        {
-            await _viewModel.Seek(MediaControl.Position.TotalSeconds);
-        });
-    }
-        
 
     private void OnSyncState(string url, double timing, bool isPlaying)
     {
@@ -88,6 +87,13 @@ public partial class SharedWatchingPage : ContentPage
     {
         Dispatcher.Dispatch(() =>
         {
+            
+            var newTiming = TimeSpan.FromSeconds(timing);
+            if (!MediaControl.Position.Equals(newTiming))
+            {
+                _eventSkipCount += 4;
+                MediaControl.SeekTo(newTiming);
+            }
             MediaControl.Pause();
         });
     }
@@ -96,6 +102,12 @@ public partial class SharedWatchingPage : ContentPage
     {
         Dispatcher.Dispatch(() =>
         {
+            var newTiming = TimeSpan.FromSeconds(timing);
+            if (!MediaControl.Position.Equals(newTiming))
+            {
+                _eventSkipCount += 4;
+                MediaControl.SeekTo(newTiming);
+            }
             MediaControl.Play();
         });
     }
