@@ -28,4 +28,15 @@ public class AnimateClient
         
         return titles;
     }
+    
+    public async Task<TitleDto> GetRandomTitle()
+    {
+        var response = await _httpClientFactory.CreateClient(nameof(AnimateClient)).GetAsync($"title/random");
+
+        var jsonInfo = await response.Content.ReadAsStringAsync();
+
+        var title = JsonSerializer.Deserialize<TitleDto>(jsonInfo, SerializerOptions);
+
+        return title;
+    }
 }
