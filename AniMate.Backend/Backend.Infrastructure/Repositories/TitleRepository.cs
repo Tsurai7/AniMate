@@ -11,8 +11,17 @@ public class TitleRepository
         var database = client.GetDatabase(databaseName);
         _collection = database.GetCollection<TitleDto>(collectionName);
     }
+    
+    public async Task<TitleDto> GetRandomTitle(CancellationToken ctx = default)
+    {
+        var randomTitle = await _collection.Aggregate()
+            .Sample(1)
+            .FirstOrDefaultAsync(ctx);
 
-    public async Task<List<TitleDto>> GetTitles(int limit, int offset, CancellationToken ctx)
+        return randomTitle;
+    }
+    
+    public async Task<List<TitleDto>> GetTitles(int limit, int offset, CancellationToken ctx = default)
     {
         return await _collection
             .Find(Builders<TitleDto>.Filter.Empty)
@@ -21,14 +30,40 @@ public class TitleRepository
             .ToListAsync(ctx);
     }
     
-    public async Task<TitleDto> GetTitleByCodeAsync(string code, CancellationToken cancellationToken = default)
+    public async Task<List<TitleDto>> SearchTitles(
+        int Skip,
+        List<string>? genres,
+        string OrderBy,
+        bool SortDirection,
+        int Limit)
     {
-        var filter = Builders<TitleDto>.Filter.Eq(account => account.Code, code);
-        return await _collection.Find(filter).SingleOrDefaultAsync();
-    }
+        var filterBuilder = Builders<TitleDto>.Filter;
+        var filter = filterBuilder.Empty;
+        
+        if (genres != null)
+        {
+            filter &= filterBuilder.ElemMatch(t => t.Genres, genre => genres.Contains(genre));
+        }
+        
+        var sortBuilder = Builders<TitleDto>.Sort;
+        var sortField = OrderBy ?? "Title";
 
-    public async Task Add(TitleDto title) =>
-        await _collection.InsertOneAsync(title);
+        var sort = SortDirection ? sortBuilder.Ascending(sortField) : sortBuilder.Descending(sortField);
+
+        return await _collection
+            .Find(filter)
+            .Sort(sort)
+            .Skip(Skip)
+            .Limit(Limit)
+            .ToListAsync();
+    }
+    
+    public async Task<TitleDto> GetTitleByCode(string code, CancellationToken ctx = default)
+    {
+        return await _collection
+            .Find(Builders<TitleDto>.Filter.Eq(account => account.Code, code))
+            .SingleOrDefaultAsync(ctx);
+    }
 
     public async Task AddMany(List<TitleDto> titles)
     {

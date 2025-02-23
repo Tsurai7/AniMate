@@ -21,8 +21,8 @@ public static class ApplicationCollectionExtensions
             cfg.RegisterServicesFromAssembly(typeof(GetAccountHandler).Assembly);
             cfg.RegisterServicesFromAssembly(typeof(UpdateAccountHandler).Assembly);
             
-            cfg.RegisterServicesFromAssembly(typeof(GetTitleHandler).Assembly);
-            cfg.RegisterServicesFromAssembly(typeof(GetTitleListHandler).Assembly);
+            cfg.RegisterServicesFromAssembly(typeof(GetRandomTitleHandler).Assembly);
+            cfg.RegisterServicesFromAssembly(typeof(GetTitlesUpdatesHandler).Assembly);
             cfg.RegisterServicesFromAssembly(typeof(SearchTitlesHandler).Assembly);
         });
 

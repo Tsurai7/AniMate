@@ -4,6 +4,6 @@ namespace Backend.Domain.Models.Anime;
 
 public class TitlesInfo
 {
-    [JsonPropertyName("list")] 
+    [JsonPropertyName("list")]
     public List<TitleDto> Titles { get; init; }
 }

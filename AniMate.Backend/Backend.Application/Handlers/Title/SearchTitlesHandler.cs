@@ -1,13 +1,28 @@
-using Backend.Application.Models.Title;
 using Backend.Domain.Models.Anime;
+using Backend.Infrastructure.Repositories;
 using MediatR;
 
 namespace Backend.Application.Handlers.Title;
 
-public class SearchTitlesHandler : IRequestHandler<GetTitleListQueryParams, List<TitleDto>>
+public record SearchTitleListQueryParams(
+    int Skip,
+    List<string>? genres,
+    string OrderBy,
+    int SortDirection,
+    int Limit) : IRequest<List<TitleDto>>;
+
+public class SearchTitlesHandler : IRequestHandler<SearchTitleListQueryParams, List<TitleDto>>
 {
-    public Task<List<TitleDto>> Handle(GetTitleListQueryParams request, CancellationToken cancellationToken)
+    private readonly TitleRepository _titleRepository;
+    
+    public SearchTitlesHandler(TitleRepository titleRepository)
     {
-        throw new NotImplementedException();
+        _titleRepository = titleRepository;
+    }
+    
+    public async Task<List<TitleDto>> Handle(SearchTitleListQueryParams request, CancellationToken cancellationToken)
+    {
+        return await _titleRepository.SearchTitles(request.Skip, request.genres, request.OrderBy, true,
+            request.Limit);
     }
 }
