@@ -1,4 +1,5 @@
-﻿using AniMate_app.DTOs.Anime;
+﻿using AniMate_app.Clients;
+using AniMate_app.DTOs.Anime;
 using AniMate_app.Interfaces;
 using AniMate_app.Models;
 using AniMate_app.Views;
@@ -9,6 +10,7 @@ namespace AniMate_app.ViewModels;
 
 public partial class UpdatesViewModel : ViewModelBase
 {
+    private readonly AnimateClient _animateClient;
     private readonly IAnimeClient _animeClient;
     
     [ObservableProperty]
@@ -20,10 +22,10 @@ public partial class UpdatesViewModel : ViewModelBase
     [ObservableProperty]
     private GenreCollection _resumeWatchList = new("resume");
 
-    public UpdatesViewModel(IAnimeClient animeClient)
+    public UpdatesViewModel(AnimateClient animateClient, IAnimeClient animeClient)
     {
+        _animateClient = animateClient;
         _animeClient = animeClient;
-
         _loadMoreContentOffset = 3;
     }
 
@@ -40,7 +42,7 @@ public partial class UpdatesViewModel : ViewModelBase
 
         IsLoading = true;
 
-        var newTitles = await _animeClient.GetUpdates(Titles.TitleCount, _loadMoreContentOffset);
+        var newTitles = await _animateClient.GetUpdates(Titles.TitleCount, _loadMoreContentOffset);
 
         Titles.AddTitleList(newTitles);
 
@@ -63,7 +65,7 @@ public partial class UpdatesViewModel : ViewModelBase
 
     public async Task<TitleDto> GetRandomTitle()
     {
-        TitleDto title = await _animeClient.GetRandomTitle();
+        var title = await _animeClient.GetRandomTitle();
 
         return title;
     }

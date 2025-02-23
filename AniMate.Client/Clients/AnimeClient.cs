@@ -73,6 +73,7 @@ public class AnimeClient : IAnimeClient
         return JsonSerializer.Deserialize<TitlesInfo>(jsonInfo, SerializerOptions).Titles;
     }
 
+    /*
     public async Task<List<TitleDto>> GetUpdates(int skip = 0, int count = 6)
     {
         var response = await _httpClientFactory.CreateClient(nameof(AnimeClient)).GetAsync(
@@ -81,7 +82,8 @@ public class AnimeClient : IAnimeClient
         var jsonInfo = await response.Content.ReadAsStringAsync();
 
         return JsonSerializer.Deserialize<TitlesInfo>(jsonInfo, SerializerOptions).Titles;
-    }
+    } 
+    */
 
     public async Task<List<string>> GetAllGenres()
     {

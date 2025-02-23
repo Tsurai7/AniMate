@@ -31,7 +31,7 @@ public class TitleDto
     [JsonPropertyName("season")]
     public SeasonDto Season { get; set; }
 
-    [JsonPropertyName("description")]
+    [JsonPropertyName("ruDescription")]
     public string RuDescription { get; set; }
 
     [JsonPropertyName("in_favorites")]

@@ -20,7 +20,7 @@ public static class ServiceCollectionExtensions
        
         var animateBackendUrl = string.Empty;
 #if DEBUG
-        animateBackendUrl = "http://10.0.2.2:8080/api/";
+        animateBackendUrl = "https://tsurai7-animate-910d.twc1.net/api/";
 #else
         animateBackendUrl = "https://tsurai7-animate-910d.twc1.net/api/";
 #endif
@@ -31,6 +31,14 @@ public static class ServiceCollectionExtensions
             return client;
         });
         services.AddHttpClient(nameof(AccountClient),
+            client => client.BaseAddress = new Uri(animateBackendUrl));
+        
+        services.AddSingleton<AnimateClient>(sp =>
+        {
+            var client = new AnimateClient(sp.GetRequiredService<IHttpClientFactory>());
+            return client;
+        });
+        services.AddHttpClient(nameof(AnimateClient),
             client => client.BaseAddress = new Uri(animateBackendUrl));
         
         services.AddSingleton<AuthClient>(sp =>

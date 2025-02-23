@@ -17,7 +17,7 @@ public partial class SignInPage : ContentPage
 
     private async void SignInButton_Clicked(object sender, EventArgs e)
     {
-        var signInRequest = new SignInRequest()
+        var signInRequest = new SignInRequest
         {
             Email = EmailEntry.Text,
             Password = PasswordEntry.Text
@@ -63,5 +63,19 @@ public partial class SignInPage : ContentPage
         await Shell.Current.GoToAsync($"SignUpPage");
         //NavigationPage.SetHasNavigationBar(new RegistrationPage(), true);
         //await Navigation.PushModalAsync(new RegistrationPage());
+    }
+
+    protected override async void OnAppearing()
+    {
+        var token = await SecureStorage.GetAsync("AccessToken");
+
+        if (string.IsNullOrEmpty(token))
+        {
+            await Shell.Current.GoToAsync("SignInPage");
+        }
+        else
+        {
+            await Shell.Current.GoToAsync("ProfilePage"); 
+        }
     }
 }

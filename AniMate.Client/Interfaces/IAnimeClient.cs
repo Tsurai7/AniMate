@@ -8,7 +8,6 @@ public interface IAnimeClient
     Task<TitleDto> GetRandomTitle();
     Task<List<TitleDto>> GetTitlesByCode(List<string> codes, int skip = 0, int count = 6);
     Task<List<TitleDto>> GetTitlesByName(string name, int skip = 0, int count = 6);
-    Task<List<TitleDto>> GetUpdates(int skip = 0, int count = 6);
     Task<List<string>> GetAllGenres();
     Task<List<TitleDto>> GetTitlesByGenre(string genre, int skip = 0, int count = 1);
 }

@@ -69,7 +69,7 @@ public partial class SignUpPage : ContentPage
             return;
         }
 
-        var signUpRequest = new SignUpRequest()
+        var signUpRequest = new SignUpRequest
         {
             UserName = UsernameEntry.Text,
             Email = EmailEntry.Text,
