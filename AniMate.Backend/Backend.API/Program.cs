@@ -62,6 +62,7 @@ app.MapHealthChecks("/health", new HealthCheckOptions
 });
 
 app.UseResponseCompression();
+app.UseResponseCaching();
 app.UseMetricServer();
 app.UseStaticFiles();
 app.Run();

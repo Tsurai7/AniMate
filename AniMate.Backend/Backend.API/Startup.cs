@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Backend.Application;
 using Microsoft.OpenApi.Models;
 
@@ -13,7 +14,10 @@ public static class Startup
         services.AddAutoMapper(typeof(Program).Assembly);
 
         services.ConfigureSwagger();
-        services.AddControllers().AddNewtonsoftJson();
+        services.AddControllers().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        } );
         return services;
     }
 
