@@ -3,7 +3,4 @@ using MediatR;
 
 namespace Backend.Application.Models.Title;
 
-public class GetTitleListQueryParams : IRequest<List<TitleDto>>
-{
-    
-}
+public record GetTitleListQueryParams(int Skip, int Limit) : IRequest<List<TitleDto>>;

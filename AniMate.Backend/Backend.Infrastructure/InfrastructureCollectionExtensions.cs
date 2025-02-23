@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace Backend.Infrastructure;
 
-public static class ServiceCollectionExtensions
+public static class InfrastructureCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     { 
@@ -36,14 +36,14 @@ public static class ServiceCollectionExtensions
                 "accounts"
             ));
         
-        services.AddSingleton<AnimeRepository>(sp =>
-            new AnimeRepository(
+        services.AddSingleton<TitleRepository>(sp =>
+            new TitleRepository(
                 sp.GetRequiredService<IMongoClient>(),
                 "animate", 
                 "titles"
             ));
         
-        //services.AddHostedService<AnimeWorker>();
+        // services.AddHostedService<AnimeWorker>();
         services.AddSingleton<AnilibriaClient>();
         services.AddHttpClient(nameof(AnilibriaClient), client =>
         {

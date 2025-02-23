@@ -3,15 +3,24 @@ using MongoDB.Driver;
 
 namespace Backend.Infrastructure.Repositories;
 
-public class AnimeRepository
+public class TitleRepository
 {
     private readonly IMongoCollection<TitleDto> _collection;
-    public AnimeRepository(IMongoClient client, string databaseName, string collectionName)
+    public TitleRepository(IMongoClient client, string databaseName, string collectionName)
     {
         var database = client.GetDatabase(databaseName);
         _collection = database.GetCollection<TitleDto>(collectionName);
     }
 
+    public async Task<List<TitleDto>> GetTitles(int limit, int offset, CancellationToken ctx)
+    {
+        return await _collection
+            .Find(Builders<TitleDto>.Filter.Empty)
+            .Skip(offset)
+            .Limit(limit)
+            .ToListAsync(ctx);
+    }
+    
     public async Task<TitleDto> GetTitleByCodeAsync(string code, CancellationToken cancellationToken = default)
     {
         var filter = Builders<TitleDto>.Filter.Eq(account => account.Code, code);

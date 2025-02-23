@@ -7,17 +7,16 @@ namespace Backend.Application.Handlers.Title;
 
 public class GetTitleHandler : IRequestHandler<GetTitleQueryParams, TitleDto>
 {
-    private readonly AnimeRepository _animeRepository;
+    private readonly TitleRepository _titleRepository;
 
-    public GetTitleHandler(AnimeRepository animeRepository)
+    public GetTitleHandler(TitleRepository titleRepository)
     {
-        _animeRepository = animeRepository;
+        _titleRepository = titleRepository;
     }
     
-    public async Task<TitleDto> Handle(GetTitleQueryParams request, CancellationToken cancellationToken)
+    public async Task<TitleDto> Handle(GetTitleQueryParams request, CancellationToken ctx)
     {
-        var title = await _animeRepository.GetTitleByCodeAsync(request.Code, cancellationToken);
-
+        var title = await _titleRepository.GetTitleByCodeAsync(request.Code, ctx);
         return title;
     }
 }

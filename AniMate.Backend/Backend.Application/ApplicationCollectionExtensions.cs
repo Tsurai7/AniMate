@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Backend.Application;
 
-public static class ServiceCollectionExtensions
+public static class ApplicationCollectionExtensions
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {

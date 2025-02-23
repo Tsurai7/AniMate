@@ -8,16 +8,16 @@ public class AnimeWorker : BackgroundService
 {
     private readonly ILogger<AnimeWorker> _logger;
     private readonly AnilibriaClient _anilibriaClient;
-    private readonly AnimeRepository _animeRepository;
+    private readonly TitleRepository _titleRepository;
 
     public AnimeWorker(
         ILogger<AnimeWorker> logger,
         AnilibriaClient anilibriaClient,
-        AnimeRepository animeRepository)
+        TitleRepository titleRepository)
     {
         _logger = logger;
         _anilibriaClient = anilibriaClient;
-        _animeRepository = animeRepository;
+        _titleRepository = titleRepository;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -39,7 +39,7 @@ public class AnimeWorker : BackgroundService
 
                     _logger.LogInformation($"{response.Count} titles fetched for genre: {genre}");
 
-                    await _animeRepository.AddMany(response);
+                    await _titleRepository.AddMany(response);
 
                     _logger.LogInformation("Successfully saved to mongo");
                 } while (moreDataAvailable);
