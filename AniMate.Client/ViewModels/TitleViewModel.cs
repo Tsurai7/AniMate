@@ -3,11 +3,9 @@ using AniMate_app.DTOs.Anime;
 using AniMate_app.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
-using System.Text;
 
 namespace AniMate_app.ViewModels;
 
-[QueryProperty(nameof(TitleCode), "TitleCode")]
 [QueryProperty(nameof(Title), "TheTitle")]
 public partial class TitleViewModel : ObservableObject
 {
@@ -17,8 +15,6 @@ public partial class TitleViewModel : ObservableObject
 
     private readonly AccountClient _accountClient;
 
-    private readonly IAnimeClient _animeClient;
-
     private readonly IApplicationLinkService _linkService;
 
     private CancellationTokenSource _tokenSource = new();
@@ -27,11 +23,9 @@ public partial class TitleViewModel : ObservableObject
 
     public TitleViewModel(
         AccountClient accountClient,
-        IAnimeClient animeClient,
         IApplicationLinkService linkService)
     {
         _accountClient = accountClient;
-        _animeClient = animeClient;
         _linkService = linkService;
     }
 
@@ -73,19 +67,6 @@ public partial class TitleViewModel : ObservableObject
     }
 
     public ObservableCollection<EpisodeDto> Episodes { get; private set; } = new();
-
-    public string TitleCode
-    {
-        set
-        {
-            LoadTitleFromCode(value);
-        }
-    }
-
-    private async void LoadTitleFromCode(string code)
-    {
-        Title = await _animeClient.GetTitleByCode(code);
-    }
 
     [ObservableProperty]
     private string _genres;

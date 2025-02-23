@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace AniMate_app.DTOs.Anime; 
 public class TitleDto
@@ -31,7 +30,7 @@ public class TitleDto
     [JsonPropertyName("season")]
     public SeasonDto Season { get; set; }
 
-    [JsonPropertyName("ruDescription")]
+    [JsonPropertyName("description")]
     public string RuDescription { get; set; }
 
     [JsonPropertyName("in_favorites")]
