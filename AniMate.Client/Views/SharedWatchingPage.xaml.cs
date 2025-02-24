@@ -26,7 +26,7 @@ public partial class SharedWatchingPage : ContentPage
 
         MediaControl.StateChanged += OnMediaElementStateChanged;
 
-        ChatMessagesListView.ItemsSource = _viewModel._chatMessages;
+        ChatMessagesListView.ItemsSource = _viewModel.ChatMessages;
     }
 
     private void OnMediaElementStateChanged(object sender, MediaStateChangedEventArgs e)
@@ -183,18 +183,10 @@ public partial class SharedWatchingPage : ContentPage
     private void OnMessageReceived(string message)
     {
         // TODO: Fix message duplication
-        if (_viewModel._chatMessages.Count == 0 || _viewModel._chatMessages.Last() != message)
+        if (_viewModel.ChatMessages.Count == 0 || _viewModel.ChatMessages.Last() != message)
         {
-            _viewModel._chatMessages.Add(message);
-            ChatMessagesListView.ScrollTo(_viewModel._chatMessages[^1], ScrollToPosition.End, true);
-        }
-    }
-
-    private async void OnCopyRoomCodeClicked(object sender, EventArgs e)
-    {
-        if (!string.IsNullOrEmpty(RoomCodeLabel.Text))
-        {
-            await Clipboard.SetTextAsync(RoomCodeLabel.Text);
+            _viewModel.ChatMessages.Add(message);
+            ChatMessagesListView.ScrollTo(_viewModel.ChatMessages[^1], ScrollToPosition.End, true);
         }
     }
 

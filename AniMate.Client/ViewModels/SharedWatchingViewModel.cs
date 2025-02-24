@@ -18,7 +18,7 @@ public partial class SharedWatchingViewModel : ObservableObject
     [ObservableProperty]
     private string _roomId = string.Empty;
     
-    public ObservableCollection<string> _chatMessages { get; set; } = new();
+    public ObservableCollection<string> ChatMessages { get; set; } = new();
 
     public SharedWatchingClient _client;
 
@@ -69,7 +69,7 @@ public partial class SharedWatchingViewModel : ObservableObject
 
     public void AddMessage(string message)
     {
-        _chatMessages.Add(message);
+        ChatMessages.Add(message);
     }
 
     public async Task Disconnect()

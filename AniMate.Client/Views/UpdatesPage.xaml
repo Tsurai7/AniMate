@@ -12,7 +12,6 @@
             <FileImageSource x:Key="Random" File="random.svg"/>
             <FileImageSource x:Key="RandomWhite" File="random_white.svg"/>
         </ResourceDictionary>
-
     </ContentPage.Resources>
 
     <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" RefreshColor="SlateBlue">
