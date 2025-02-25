@@ -71,14 +71,16 @@ public partial class SharedWatchingPage : ContentPage
                 MediaControl.Source = url;
             }
 
-            MediaControl.Pause();
-            MediaControl.SeekTo(TimeSpan.FromSeconds(timing));
-            MediaControl.Play();
+            _eventSkipCount += 4;
 
+            MediaControl.SeekTo(TimeSpan.FromSeconds(timing));
+        });
+
+        Dispatcher.Dispatch(() =>
+        {
             if (!isPlaying)
-            {
                 MediaControl.Pause();
-            }
+            else MediaControl.Play();
         });
     }
 
@@ -148,6 +150,7 @@ public partial class SharedWatchingPage : ContentPage
     protected override async void OnDisappearing()
     {
         base.OnDisappearing();
+        Dispatcher?.Dispatch(() => { MediaControl.Stop(); MediaControl.Handler.DisconnectHandler(); });
         await _viewModel.Disconnect();
     }
 

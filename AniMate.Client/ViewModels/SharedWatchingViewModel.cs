@@ -81,14 +81,20 @@ public partial class SharedWatchingViewModel : ObservableObject
     {
         await _client.Seek(RoomId, totalSeconds);
     }
-
+    
     public async Task Resume(string roomId, double totalSeconds)
     {
+        if (string.IsNullOrEmpty(roomId))
+            return;
+
         await _client.Resume(roomId, totalSeconds);
     }
 
     public async Task Pause(string roomId, double totalSeconds)
     {
+        if (string.IsNullOrEmpty(roomId))
+            return;
+
         await _client.Pause(roomId, totalSeconds);
     }
 }
