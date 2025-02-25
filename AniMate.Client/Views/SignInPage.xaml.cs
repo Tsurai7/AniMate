@@ -69,11 +69,7 @@ public partial class SignInPage : ContentPage
     {
         var token = await SecureStorage.GetAsync("AccessToken");
 
-        if (string.IsNullOrEmpty(token))
-        {
-            await Shell.Current.GoToAsync("SignInPage");
-        }
-        else
+        if (!string.IsNullOrEmpty(token))
         {
             await Shell.Current.GoToAsync("ProfilePage"); 
         }
