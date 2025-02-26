@@ -123,7 +123,7 @@ public class SharedWatchingClient
         if (!HasConnection)
             return;
 
-        await _hubConnection.InvokeAsync("Resume", roomName, currentTiming, true);
+        await _hubConnection.InvokeAsync("Resume", roomName, currentTiming);
     }
 
     public async Task Seek(string roomName, double newTime)
