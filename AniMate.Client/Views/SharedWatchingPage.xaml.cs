@@ -29,7 +29,7 @@ public partial class SharedWatchingPage : ContentPage
         ChatMessagesListView.ItemsSource = _viewModel.ChatMessages;
     }
 
-    private void OnMediaElementStateChanged(object sender, MediaStateChangedEventArgs e)
+    private void OnMediaElementStateChanged(object? sender, MediaStateChangedEventArgs e)
     {
         if (_eventSkipCount > 0)
         {
@@ -64,7 +64,7 @@ public partial class SharedWatchingPage : ContentPage
 
     private void OnSyncState(string url, double timing, bool isPlaying)
     {
-        Dispatcher.Dispatch(() =>
+        Dispatcher?.Dispatch(() =>
         {
             if (MediaControl.Source?.ToString() != url)
             {
@@ -76,7 +76,7 @@ public partial class SharedWatchingPage : ContentPage
             MediaControl.SeekTo(TimeSpan.FromSeconds(timing));
         });
 
-        Dispatcher.Dispatch(() =>
+        Dispatcher?.Dispatch(() =>
         {
             if (!isPlaying)
                 MediaControl.Pause();
@@ -87,30 +87,27 @@ public partial class SharedWatchingPage : ContentPage
 
     private void OnPaused(string roomName, double timing)
     {
-        Dispatcher.Dispatch(() =>
+        Dispatcher?.Dispatch(() =>
         {
-            
             var newTiming = TimeSpan.FromSeconds(timing);
-            if (!MediaControl.Position.Equals(newTiming))
-            {
-                _eventSkipCount += 4;
-                MediaControl.SeekTo(newTiming);
-            }
+
+            _eventSkipCount += 4;
+            MediaControl.SeekTo(newTiming);
+
             MediaControl.Pause();
         });
     }
 
     private void OnResumed(string roomName, double timing)
     {
-        Dispatcher.Dispatch(() =>
+        Dispatcher?.Dispatch(() =>
         {
             var newTiming = TimeSpan.FromSeconds(timing);
-            if (!MediaControl.Position.Equals(newTiming))
-            {
-                _eventSkipCount += 4;
-                MediaControl.SeekTo(newTiming);
-            }
-            MediaControl.Play();
+
+            _eventSkipCount += 4;
+            MediaControl.SeekTo(newTiming);
+
+            MediaControl.Play(); 
         });
     }
 
@@ -118,6 +115,7 @@ public partial class SharedWatchingPage : ContentPage
     {
         Dispatcher?.Dispatch(async () =>
         {
+            _eventSkipCount += 4;
             await MediaControl.SeekTo(TimeSpan.FromSeconds(newTime));
         });
     }
@@ -144,7 +142,7 @@ public partial class SharedWatchingPage : ContentPage
 
     private void OnVideoUrlUpdated(string newUrl)
     {
-        Dispatcher.Dispatch(() => { MediaControl.Source = newUrl; });
+        Dispatcher?.Dispatch(() => { MediaControl.Source = newUrl; });
     }
 
     protected override async void OnDisappearing()
@@ -195,7 +193,7 @@ public partial class SharedWatchingPage : ContentPage
 
     private void ShareRoomLinkButtonClicked(object sender, EventArgs e)
     {
-        _viewModel.ShareRoomLink();
+        _viewModel.ShareRoomCode();
     }
 
     private void OnError(string message)

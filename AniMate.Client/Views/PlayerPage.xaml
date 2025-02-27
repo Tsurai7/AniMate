@@ -14,7 +14,10 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <toolkit:MediaElement x:Name="MediaControl"
-                              ShouldAutoPlay="False"
+                              MetadataArtist="Animate"
+                              MetadataTitle="{Binding Title.Names.Ru}"
+                              MetadataArtworkUrl="{Binding Title.Posters.Small.Url}"
+                              ShouldAutoPlay="True"
                               Source="{Binding MediaUrl}"
                               Aspect="Center" ShouldShowPlaybackControls="True"
                               HorizontalOptions="Center"

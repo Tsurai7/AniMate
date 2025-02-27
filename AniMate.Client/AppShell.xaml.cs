@@ -7,27 +7,27 @@ public partial class AppShell : Shell
     public AppShell()
     {
         InitializeComponent();
-        Routing.RegisterRoute("MainPage", typeof(MainPage));
-        Routing.RegisterRoute("SearchPage", typeof(SearchPage));
-        Routing.RegisterRoute("SignUpPage", typeof(SignUpPage));
-        Routing.RegisterRoute("PlayerPage", typeof(PlayerPage));
-        Routing.RegisterRoute("TitlePage", typeof(TitlePage));
-        Routing.RegisterRoute("GenrePage", typeof(GenrePage));
-        Routing.RegisterRoute("ProfilePage", typeof(ProfilePage));
-        Routing.RegisterRoute("EditProfilePage", typeof(EditProfilePage));
-        Routing.RegisterRoute("SignInPage", typeof(SignInPage));
-        Routing.RegisterRoute("UpdatesPage", typeof(UpdatesPage));
-        Routing.RegisterRoute("SharedWatchingPage", typeof(SharedWatchingPage));
+        Routing.RegisterRoute(typeof(MainPage).Name, typeof(MainPage));
+        Routing.RegisterRoute(nameof(SearchPage), typeof(SearchPage));
+        Routing.RegisterRoute(nameof(SignUpPage), typeof(SignUpPage));
+        Routing.RegisterRoute(nameof(PlayerPage), typeof(PlayerPage));
+        Routing.RegisterRoute(nameof(TitlePage), typeof(TitlePage));
+        Routing.RegisterRoute(nameof(GenrePage), typeof(GenrePage));
+        Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
+        Routing.RegisterRoute(nameof(EditProfilePage), typeof(EditProfilePage));
+        Routing.RegisterRoute(nameof(SignInPage), typeof(SignInPage));
+        Routing.RegisterRoute(nameof(UpdatesPage), typeof(UpdatesPage));
+        Routing.RegisterRoute(nameof(SharedWatchingPage), typeof(SharedWatchingPage));
     }
 
     private async void JoinRoomButtonClicked(object sender, EventArgs e)
     {
-        var result = await DisplayPromptAsync("Enter Code", "Share watch room code");
+        var roomId = await DisplayPromptAsync("Enter Code", "Share watch room code");
 
-        if (string.IsNullOrEmpty(result) || string.IsNullOrWhiteSpace(result))
+        if (string.IsNullOrEmpty(roomId) || string.IsNullOrWhiteSpace(roomId))
             return;
         
-        var roomId = result?.Substring(result.LastIndexOf('/') + 1);
+        //var roomId = result?.Substring(result.LastIndexOf('/') + 1);
         
         if (!string.IsNullOrEmpty(roomId))
         {

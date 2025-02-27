@@ -34,11 +34,9 @@ public partial class SharedWatchingViewModel : ObservableObject
         _client = client;
     }
 
-    public async void ShareRoomLink()
+    public async void ShareRoomCode()
     {
-        var link = _linkService.CreateRoomLink(RoomId);
-
-        await _linkService.ShareText(link);
+        await _linkService.ShareText(RoomId);
     }
 
     public async Task Connect()

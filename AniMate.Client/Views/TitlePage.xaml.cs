@@ -20,7 +20,7 @@ public partial class TitlePage : ContentPage
         {
             var navigationParameter = new Dictionary<string, object>
             {
-                {"mediaurl", _viewModel.Title.Player.Episodes.FirstOrDefault().Value.HlsUrls.Sd }
+                {"Title", _viewModel.Title }
             };
 
             await Shell.Current.GoToAsync(nameof(PlayerPage), navigationParameter);
