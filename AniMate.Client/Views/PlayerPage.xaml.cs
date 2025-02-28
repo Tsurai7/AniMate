@@ -37,4 +37,9 @@ public partial class PlayerPage : ContentPage
         MediaControl.Stop();
         MediaControl.Handler?.DisconnectHandler();
     }
+
+    protected override bool OnBackButtonPressed()
+    {
+        return true;
+    }
 }

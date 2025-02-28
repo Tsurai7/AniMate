@@ -39,6 +39,11 @@ public partial class TitlePage : ContentPage
 
     private async void WatchTogetherButtonClicked(object sender, EventArgs e)
     {
+        if (!_viewModel.SharedWatchAwailable)
+        {
+            await DisplayAlert("Ошибка", "Совместный просмотр недоступен: нет серий", "Ок");
+            return;
+        }
         var navigationParameter = new Dictionary<string, object>
         {
             {"Title", _viewModel.Title},
@@ -48,7 +53,7 @@ public partial class TitlePage : ContentPage
         await Shell.Current.GoToAsync("SharedWatchingPage", navigationParameter);
     }
 
-    private async void ShareLinkButtonClicked(object sender, EventArgs e)
+    private void ShareLinkButtonClicked(object sender, EventArgs e)
     {
         _viewModel.ShareTitleUrl();
     }

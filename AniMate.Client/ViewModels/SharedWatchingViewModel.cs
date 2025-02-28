@@ -24,12 +24,13 @@ public partial class SharedWatchingViewModel : ObservableObject
 
     private readonly IApplicationLinkService _linkService;
 
+    private readonly IAnimeClient _animeClient;
+
     public bool HasConnection => _client.HasConnection;
 
-    public SharedWatchingViewModel(
-        IApplicationLinkService linkService,
-        SharedWatchingClient client)
+    public SharedWatchingViewModel(IAnimeClient animeClient, IApplicationLinkService linkService, SharedWatchingClient client)
     {
+        _animeClient = animeClient;
         _linkService = linkService;
         _client = client;
     }
@@ -94,5 +95,10 @@ public partial class SharedWatchingViewModel : ObservableObject
             return;
 
         await _client.Pause(roomId, totalSeconds);
+    }
+
+    public async void LoadTitle(string titleCode)
+    {
+        Title = await _animeClient.GetTitleByCode(titleCode);
     }
 }

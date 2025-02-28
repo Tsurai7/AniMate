@@ -44,7 +44,7 @@ public class SharedWatchingHub : Hub
         if (_cache.TryGetValue(roomId, out Room roomToJoin))
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, roomId);
-            await Clients.OthersInGroup(roomId).SendAsync("SyncState", roomToJoin.MediaUrl, roomToJoin.CurrentTiming.TotalSeconds, roomToJoin.IsPlaying);
+            //await Clients.OthersInGroup(roomId).SendAsync("SyncState", roomToJoin.MediaUrl, roomToJoin.CurrentTiming.TotalSeconds, roomToJoin.IsPlaying);
 
             await SendMessage(roomId, "New user joined");
             return;
@@ -118,6 +118,7 @@ public class SharedWatchingHub : Hub
     {
         if (_cache.TryGetValue(roomId, out Room room))
         {
+            await Clients.Caller.SendAsync("SyncTitle", room.TitleCode);
             await Clients.Caller.SendAsync("SyncState", room.MediaUrl, room.CurrentTiming.TotalSeconds, room.IsPlaying);
         }
     }

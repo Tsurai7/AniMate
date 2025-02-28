@@ -1,6 +1,5 @@
 using AniMate_app.ViewModels;
 using CommunityToolkit.Maui.Core.Primitives;
-using System.Diagnostics;
 
 namespace AniMate_app.Views;
 
@@ -16,6 +15,7 @@ public partial class SharedWatchingPage : ContentPage
         BindingContext = _viewModel = viewModel;
 
         _viewModel._client.SyncState += OnSyncState;
+        _viewModel._client.SyncTitle += OnSyncTitle;
         _viewModel._client.Paused += OnPaused;
         _viewModel._client.Resumed += OnResumed;
         _viewModel._client.Seeked += OnSeeked;
@@ -60,6 +60,11 @@ public partial class SharedWatchingPage : ContentPage
     private void OnRoomCreated(string roomId)
     {
         _viewModel.RoomId = roomId;
+    }
+
+    private void OnSyncTitle(string titleCode)
+    {
+        _viewModel.LoadTitle(titleCode);
     }
 
     private void OnSyncState(string url, double timing, bool isPlaying)
@@ -199,5 +204,10 @@ public partial class SharedWatchingPage : ContentPage
     private void OnError(string message)
     {
         //Shell.Current.GoToAsync(nameof(MainPage));
+    }
+
+    protected override bool OnBackButtonPressed()
+    {
+        return true;
     }
 }

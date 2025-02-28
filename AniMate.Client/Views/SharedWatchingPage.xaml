@@ -35,6 +35,9 @@
         </Grid.ColumnDefinitions>
         
         <toolkit:MediaElement x:Name="MediaControl" StateChanged="OnMediaElementStateChanged" Margin="0,0,0,20"
+                              MetadataTitle="{Binding Title.Names.Ru}"
+                              MetadataArtworkUrl="{Binding Title.Posters.Small.Url}"
+                              MetadataArtist="Animate"
                               ShouldAutoPlay="False"
                               Source="{Binding MediaUrl}"
                               Aspect="AspectFit"

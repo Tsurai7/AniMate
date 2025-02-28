@@ -16,6 +16,7 @@ public class SharedWatchingClient
 
     public event Action<string> RoomCreated;
     public event Action<string, double, bool> SyncState;
+    public event Action<string> SyncTitle;
     public event Action<string, double> Paused;
     public event Action<string, double> Resumed;
     public event Action<string, double> Seeked;
@@ -38,6 +39,11 @@ public class SharedWatchingClient
         _hubConnection.On<string, double, bool>("SyncState", (url, timing, isPlaying) =>
         {
             SyncState?.Invoke(url, timing, isPlaying);
+        });
+
+        _hubConnection.On<string>("SyncTitle", (titleCode) =>
+        {
+            SyncTitle?.Invoke(titleCode);
         });
 
         _hubConnection.On<double>("Pause", (timing) =>

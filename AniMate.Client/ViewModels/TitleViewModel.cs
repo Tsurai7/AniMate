@@ -21,6 +21,9 @@ public partial class TitleViewModel : ObservableObject
 
     private bool _isShortDescriptionOpen = true;
 
+    [ObservableProperty]
+    private bool _sharedWatchAwailable;
+
     public TitleViewModel(
         AccountClient accountClient,
         IApplicationLinkService linkService)
@@ -43,6 +46,7 @@ public partial class TitleViewModel : ObservableObject
         set
         {
             _title = value;
+            SharedWatchAwailable = _title.Player.Episodes.Count != 0;
             Genres = string.Join(", ", _title.Genres);
             ShortDescription = string.Join(" ", _title.RuDescription?.Split(' ').Take(7)) ?? NO_DESCRIPTION_TEXT;
             OnPropertyChanged(nameof(Title));

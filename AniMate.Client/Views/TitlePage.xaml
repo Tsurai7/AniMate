@@ -10,8 +10,8 @@
         <ResourceDictionary>
             <FileImageSource x:Key="FavouriteImage" File="favourite_for_title_page_white.svg"/>
             <FileImageSource x:Key="FavouriteImageSelected" File="favourite_for_title_page_selected.svg"/>
-            <FileImageSource x:Key="ShareWatch" File="sharewatch.svg"/>
-            <FileImageSource x:Key="ShareWatchWhite" File="sharewatchwhite.svg"/>
+            <FileImageSource x:Key="SharedWatch" File="sharewatch.svg"/>
+            <FileImageSource x:Key="SharedWatchWhite" File="sharewatchwhite.svg"/>
             <FileImageSource x:Key="Share" File="share.svg"/>
             <FileImageSource x:Key="ShareWhite" File="sharewhite.svg"/>
             <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
@@ -78,7 +78,7 @@
                 <Button Grid.Row="0" Grid.Column="2"
                     Clicked="WatchTogetherButtonClicked">
                     <Button.ImageSource>
-                        <FileImageSource File="{AppThemeBinding Light= {StaticResource ShareWatch}, Dark={StaticResource ShareWatchWhite}}" />
+                        <FileImageSource File="{AppThemeBinding Light= {StaticResource SharedWatch}, Dark={StaticResource SharedWatchWhite}}" />
                     </Button.ImageSource>
                 </Button>
                 <Label Grid.Row="1" Grid.Column="2" Text="Смотреть вместе"
