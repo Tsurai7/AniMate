@@ -51,6 +51,8 @@ public static class ServiceCollectionExtensions
         
         services.AddSingleton<SharedWatchingClient>();
 
+        services.AddSingleton<ApplicationNotificationService>();
+
         services.AddSingleton<IApplicationLinkService, ApplicationLinkService>();
 
         // Pages configuration

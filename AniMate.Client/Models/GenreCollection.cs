@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using AniMate_app.DTOs.Anime;
+using AniMate_app.Utils;
 
 namespace AniMate_app.Models;
 
@@ -30,17 +31,13 @@ public class GenreCollection(string name) : ObservableObject
 
     public void AddTitle(TitleDto titleDto)
     {
-        Titles.Add(titleDto);
+        if(titleDto != null)
+            Titles.Add(titleDto);
     }
 
     public void AddTitleList(IEnumerable<TitleDto> titles)
     {
-        foreach (var title in titles)
-        {
-            if (title is not null)
-                  AddTitle(title);
-        }
-        
+        titles.Map(title => AddTitle(title));
     }
 
     public void Clear()

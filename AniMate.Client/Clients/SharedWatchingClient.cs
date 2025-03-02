@@ -23,6 +23,7 @@ public class SharedWatchingClient
     public event Action<string> VideoUrlUpdated;
     public event Action<string> MessageReceived;
     public event Action<string> Error;
+    public event Action DisconnectRequested;
 
     public SharedWatchingClient()
     {
@@ -98,6 +99,11 @@ public class SharedWatchingClient
             return;
 
         await _hubConnection.StopAsync();
+    }
+
+    public void RequestDisconnect()
+    {
+        DisconnectRequested?.Invoke();
     }
 
     public async Task CreateRoom(string titleCode, string episodeUrl)

@@ -1,3 +1,4 @@
+using AniMate_app.Utils;
 using AniMate_app.ViewModels;
 using CommunityToolkit.Maui.Core.Primitives;
 
@@ -12,6 +13,7 @@ public partial class SharedWatchingPage : ContentPage
     public SharedWatchingPage(SharedWatchingViewModel viewModel)
     {
         InitializeComponent();
+        Shell.SetTabBarIsVisible(this, false);
         BindingContext = _viewModel = viewModel;
 
         _viewModel._client.SyncState += OnSyncState;
@@ -23,6 +25,7 @@ public partial class SharedWatchingPage : ContentPage
         _viewModel._client.MessageReceived += OnMessageReceived;
         _viewModel._client.RoomCreated += OnRoomCreated;
         _viewModel._client.Error += OnError;
+        _viewModel._client.DisconnectRequested += OnDisconnectRequested;
 
         MediaControl.StateChanged += OnMediaElementStateChanged;
 
@@ -65,6 +68,11 @@ public partial class SharedWatchingPage : ContentPage
     private void OnSyncTitle(string titleCode)
     {
         _viewModel.LoadTitle(titleCode);
+    }
+
+    private async void OnDisconnectRequested()
+    {
+        await Shell.Current.GoToAsync("..");
     }
 
     private void OnSyncState(string url, double timing, bool isPlaying)
@@ -166,10 +174,7 @@ public partial class SharedWatchingPage : ContentPage
         if (_viewModel.Title == null)
             return;
 
-        foreach (var episode in _viewModel.Title.Player.Episodes.Values)
-        {
-            EpisodePicker.Items.Add($"Серия {episode.Ordinal}: {episode.Name}");
-        }
+        _viewModel.Title.Player.Episodes?.Values.Map((episode) => EpisodePicker.Items.Add($"Серия {episode.Ordinal}: {episode.Name}"));
 
         if (EpisodePicker.Items.Count > 0)
         {
