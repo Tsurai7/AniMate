@@ -5,29 +5,38 @@ namespace Backend.Infrastructure.Repositories;
 
 public class TitleRepository
 {
-    private readonly IMongoCollection<TitleDto> _collection;
-    public TitleRepository(IMongoClient client, string databaseName, string collectionName)
+    private readonly IMongoCollection<TitleDto> _titles;
+    private const string CollectionName = "titles";
+    public TitleRepository(IMongoClient client, string databaseName)
     {
         var database = client.GetDatabase(databaseName);
-        _collection = database.GetCollection<TitleDto>(collectionName);
+        var collections = database.ListCollections().ToList();
+        var collectionExists = collections.Any(c => c["name"] == CollectionName);
+
+        if (!collectionExists)
+        {
+            database.CreateCollection(CollectionName);
+        }
+        
+        _titles = database.GetCollection<TitleDto>(CollectionName);
     }
     
-    public async Task<TitleDto> GetRandomTitle(CancellationToken ctx = default)
+    public async Task<TitleDto> GetRandomTitle(CancellationToken cancellationToken = default)
     {
-        var randomTitle = await _collection.Aggregate()
+        var randomTitle = await _titles.Aggregate()
             .Sample(1)
-            .FirstOrDefaultAsync(ctx);
+            .FirstOrDefaultAsync(cancellationToken);
 
         return randomTitle;
     }
     
-    public async Task<List<TitleDto>> GetTitles(int limit, int offset, CancellationToken ctx = default)
+    public async Task<List<TitleDto>> GetTitles(int limit, int offset, CancellationToken cancellationToken = default)
     {
-        return await _collection
+        return await _titles
             .Find(Builders<TitleDto>.Filter.Empty)
             .Skip(offset)
             .Limit(limit)
-            .ToListAsync(ctx);
+            .ToListAsync(cancellationToken);
     }
     
     public async Task<List<TitleDto>> SearchTitles(
@@ -50,7 +59,7 @@ public class TitleRepository
 
         var sort = SortDirection ? sortBuilder.Ascending(sortField) : sortBuilder.Descending(sortField);
 
-        return await _collection
+        return await _titles
             .Find(filter)
             .Sort(sort)
             .Skip(Skip)
@@ -58,25 +67,43 @@ public class TitleRepository
             .ToListAsync();
     }
     
-    public async Task<TitleDto> GetTitleByCode(string code, CancellationToken ctx = default)
+    public async Task<TitleDto> GetTitleByCode(string code, CancellationToken cancellationToken = default)
     {
-        return await _collection
+        return await _titles
             .Find(Builders<TitleDto>.Filter.Eq(account => account.Code, code))
-            .SingleOrDefaultAsync(ctx);
+            .SingleOrDefaultAsync(cancellationToken);
     }
 
-    public async Task AddMany(List<TitleDto> titles)
+    public async Task<List<TitleDto>> GetLatestUpdates(int limit, int skip, CancellationToken cancellationToken = default)
     {
-        if (titles == null)
+        return await _titles
+            .Find(FilterDefinition<TitleDto>.Empty)
+            .SortByDescending(t => t.Updated)
+            .Skip(skip)
+            .Limit(limit)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task BulkUpdate(List<TitleDto> titles, CancellationToken cancellationToken = default)
+    {
+        if (titles == null || titles.Count == 0)
         {
-            throw new ArgumentNullException(nameof(titles), "Titles cannot be null.");
+            throw new ArgumentNullException(nameof(titles), "Titles cannot be null or empty.");
         }
+
+        var bulkOps = new List<WriteModel<TitleDto>>();
 
         foreach (var title in titles)
         {
             var filter = Builders<TitleDto>.Filter.Eq(t => t.Id, title.Id);
-            
-            await _collection.ReplaceOneAsync(filter, title, new ReplaceOptions { IsUpsert = true });
+            var replaceModel = new ReplaceOneModel<TitleDto>(filter, title) { IsUpsert = true };
+
+            bulkOps.Add(replaceModel);
+        }
+
+        if (bulkOps.Count > 0)
+        {
+            await _titles.BulkWriteAsync(bulkOps);
         }
     }
 }

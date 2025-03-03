@@ -15,8 +15,8 @@ public class GetTitlesUpdatesHandler : IRequestHandler<GetTitlesUpdatesQueryPara
         _titleRepository = titleRepository;
     }
     
-    public async Task<List<TitleDto>> Handle(GetTitlesUpdatesQueryParams request, CancellationToken ctx)
+    public async Task<List<TitleDto>> Handle(GetTitlesUpdatesQueryParams request, CancellationToken cancellationToken)
     {
-        return await _titleRepository.GetTitles(request.Limit, request.Skip, ctx);
+        return await _titleRepository.GetLatestUpdates(request.Limit, request.Skip, cancellationToken);
     }
 }

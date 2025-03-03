@@ -17,7 +17,7 @@ public static class Startup
         services.AddControllers().AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-        } );
+        });
         return services;
     }
 

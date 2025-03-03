@@ -12,14 +12,6 @@ public static class InfrastructureCollectionExtensions
     { 
         var connectionString
             = "mongodb+srv://tsurai:yCWmLgoVdcwWRodU@cluster0.hielo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
-        services
-            .AddHealthChecks().AddMongoDb(
-                clientFactory: x => x.GetRequiredService<IMongoClient>(),
-                databaseNameFactory: _ => "animate",
-                name: "mongo",
-                failureStatus: HealthStatus.Degraded,
-                timeout: TimeSpan.FromSeconds(30));
         
         if (string.IsNullOrEmpty(connectionString))
         {
@@ -28,6 +20,14 @@ public static class InfrastructureCollectionExtensions
         
         services.AddSingleton<IMongoClient, MongoClient>(_ =>
             new MongoClient(connectionString));
+
+        services
+            .AddHealthChecks().AddMongoDb(
+                clientFactory: x => x.GetRequiredService<IMongoClient>(),
+                databaseNameFactory: _ => "animate",
+                name: "mongo",
+                failureStatus: HealthStatus.Degraded,
+                timeout: TimeSpan.FromSeconds(30));
 
         services.AddSingleton<AccountRepository>(sp =>
             new AccountRepository(
@@ -39,17 +39,16 @@ public static class InfrastructureCollectionExtensions
         services.AddSingleton<TitleRepository>(sp =>
             new TitleRepository(
                 sp.GetRequiredService<IMongoClient>(),
-                "animate", 
-                "titles"
+                "animate"
             ));
         
-        // services.AddHostedService<AnimeWorker>();
+        services.AddHostedService<AnimeWorker>();
         services.AddSingleton<AnilibriaClient>();
         services.AddHttpClient(nameof(AnilibriaClient), client =>
         {
             client.BaseAddress = new Uri("https://api.anilibria.tv/v3/");
         });
-        
+
         return services;
     }
 }

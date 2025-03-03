@@ -1,3 +1,4 @@
+using System.Reflection;
 using Backend.Application.Handlers.Account;
 using Backend.Application.Handlers.Title;
 using Backend.Application.Services;
@@ -14,21 +15,13 @@ public static class ApplicationCollectionExtensions
     {
         services.AddInfrastructure();
         
-        services.AddMediatR(cfg =>
-        {
-            cfg.RegisterServicesFromAssembly(typeof(SignUpAccountHandler).Assembly);
-            cfg.RegisterServicesFromAssembly(typeof(SignInAccountHandler).Assembly);
-            cfg.RegisterServicesFromAssembly(typeof(GetAccountHandler).Assembly);
-            cfg.RegisterServicesFromAssembly(typeof(UpdateAccountHandler).Assembly);
-            
-            cfg.RegisterServicesFromAssembly(typeof(GetRandomTitleHandler).Assembly);
-            cfg.RegisterServicesFromAssembly(typeof(GetTitlesUpdatesHandler).Assembly);
-            cfg.RegisterServicesFromAssembly(typeof(SearchTitlesHandler).Assembly);
-        });
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetCallingAssembly()));
 
         services.AddSingleton<TokenService>();
 
         services.AddHttpContextAccessor();
+        
+        //services.AddHostedService<UpdateTitlesJob>();
         
         services.AddAuthorization();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
