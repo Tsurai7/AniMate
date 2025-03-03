@@ -161,6 +161,7 @@ public partial class SharedWatchingPage : ContentPage
     protected override async void OnDisappearing()
     {
         base.OnDisappearing();
+        _viewModel.RestrictFullScreen();
         Dispatcher?.Dispatch(() => { MediaControl.Stop(); MediaControl.Handler.DisconnectHandler(); });
         await _viewModel.Disconnect();
     }
@@ -168,6 +169,8 @@ public partial class SharedWatchingPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+
+        _viewModel.AllowFullScreen();
 
         await _viewModel.Connect();
 

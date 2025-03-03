@@ -20,7 +20,7 @@ public partial class PlayerPage : ContentPage
     {
         base.OnAppearing();
 
-        _viewModel.ToFullScreen();
+        _viewModel.AllowFullScreen();
     }
 
     protected override void OnDisappearing()
@@ -29,7 +29,7 @@ public partial class PlayerPage : ContentPage
 
         PauseVideo();
 
-        _viewModel.RestoreOrientation();
+        _viewModel.RestrictFullScreen();
     }
 
     private void PauseVideo()

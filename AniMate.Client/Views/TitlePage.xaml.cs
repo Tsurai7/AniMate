@@ -49,8 +49,8 @@ public partial class TitlePage : ContentPage
             {"Title", _viewModel.Title},
             {"Url", _viewModel.Title.Player.Episodes.FirstOrDefault().Value.HlsUrls.Sd }
         };
-        
-        await Shell.Current.GoToAsync("SharedWatchingPage", navigationParameter);
+
+        await Shell.Current.GoToAsync(nameof(SharedWatchingPage), navigationParameter);
     }
 
     private void ShareLinkButtonClicked(object sender, EventArgs e)

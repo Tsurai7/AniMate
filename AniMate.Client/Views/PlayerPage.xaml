@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AniMate_app.Views.PlayerPage"
-             xmlns:local="clr-namespace:AniMate_app.ViewModels"
+             xmlns:viewmodels="clr-namespace:AniMate_app.ViewModels"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:DataType="local:PlayerViewModel"
+             x:DataType="viewmodels:PlayerViewModel"
              BackgroundColor="Black">
     <Grid>
         <Grid.RowDefinitions>

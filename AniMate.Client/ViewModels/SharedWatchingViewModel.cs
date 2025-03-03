@@ -25,6 +25,8 @@ public partial class SharedWatchingViewModel : ObservableObject
 
     private readonly IApplicationLinkService _linkService;
 
+    private readonly IScreenOrientationService _screenOrientationService;
+
     private readonly ApplicationNotificationService _notificationService;
 
     private readonly IAnimeClient _animeClient;
@@ -33,12 +35,23 @@ public partial class SharedWatchingViewModel : ObservableObject
 
     public bool HasConnection => _client.HasConnection;
 
-    public SharedWatchingViewModel(IAnimeClient animeClient, IApplicationLinkService linkService, ApplicationNotificationService notificationService, SharedWatchingClient client)
+    public SharedWatchingViewModel(IAnimeClient animeClient, IApplicationLinkService linkService, IScreenOrientationService screenOrientationService, ApplicationNotificationService notificationService, SharedWatchingClient client)
     {
         _animeClient = animeClient;
         _linkService = linkService;
+        _screenOrientationService = screenOrientationService;
         _notificationService = notificationService;
         _client = client;
+    }
+
+    public void AllowFullScreen()
+    {
+        _screenOrientationService.AllowFullScreen();
+    }
+
+    public void RestrictFullScreen()
+    {
+        _screenOrientationService.RestrictFullScreen();
     }
 
     public async void ShareRoomCode()

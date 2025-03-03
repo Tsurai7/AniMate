@@ -32,12 +32,12 @@ public partial class PlayerViewModel : ObservableObject
         _fullscreenService = fullScreenService;
     }
 
-    public void ToFullScreen()
+    public void AllowFullScreen()
     {
         _fullscreenService.AllowFullScreen();
     }
 
-    public void RestoreOrientation()
+    public void RestrictFullScreen()
     {
         _fullscreenService.RestrictFullScreen();
     }
