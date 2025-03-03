@@ -2,7 +2,6 @@ using System.Text.Json;
 using Backend.API;
 using Backend.API.Hubs;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using OpenTelemetry.Metrics;
 using Prometheus;
@@ -15,10 +14,10 @@ if (builder.Environment.IsDevelopment())
 }
 
 builder.Services.AddResponseCompression(options =>
-    {
-        options.Providers.Add<BrotliCompressionProvider>();
-        options.EnableForHttps = true;
-    });
+{
+    options.EnableForHttps = true;
+});
+
 
 builder.Services.ConfigureServices();
 builder.Services.AddHealthChecks().AddCheck("Memory Usage", () =>

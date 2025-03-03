@@ -39,7 +39,7 @@ public class AnimeWorker : BackgroundService
 
                     _logger.LogInformation($"{response.Count} titles fetched for genre: {genre}");
 
-                    await _titleRepository.AddMany(response);
+                    await _titleRepository.BulkUpdate(response, stoppingToken);
 
                     _logger.LogInformation("Successfully saved to mongo");
                 } while (moreDataAvailable);
