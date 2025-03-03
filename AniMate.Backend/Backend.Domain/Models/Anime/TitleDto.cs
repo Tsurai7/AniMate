@@ -39,6 +39,8 @@ public class TitleDto
 
     [JsonPropertyName("description")]
     public string RuDescription { get; set; }
+    [JsonPropertyName("in_favorites")]
+    public long? InFavorites { get; set; }
 
     [JsonPropertyName("player")]
     public PlayerDto Player { get; set; }

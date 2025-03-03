@@ -7,7 +7,7 @@ namespace Backend.Application.Handlers.Title;
 public record SearchTitleListQueryParams(
     int Skip,
     List<string>? genres,
-    string OrderBy,
+    string? OrderBy,
     int SortDirection,
     int Limit) : IRequest<List<TitleDto>>;
 

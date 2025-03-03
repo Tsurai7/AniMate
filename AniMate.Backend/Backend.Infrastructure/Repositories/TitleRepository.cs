@@ -1,5 +1,6 @@
 using Backend.Domain.Models.Anime;
 using MongoDB.Driver;
+using Prometheus;
 
 namespace Backend.Infrastructure.Repositories;
 
@@ -7,6 +8,7 @@ public class TitleRepository
 {
     private readonly IMongoCollection<TitleDto> _titles;
     private const string CollectionName = "titles";
+
     public TitleRepository(IMongoClient client, string databaseName)
     {
         var database = client.GetDatabase(databaseName);
@@ -20,51 +22,62 @@ public class TitleRepository
         
         _titles = database.GetCollection<TitleDto>(CollectionName);
     }
-    
+
     public async Task<TitleDto> GetRandomTitle(CancellationToken cancellationToken = default)
     {
-        var randomTitle = await _titles.Aggregate()
-            .Sample(1)
-            .FirstOrDefaultAsync(cancellationToken);
+        var timer = MongoDbMetrics.Query.NewTimer();
 
-        return randomTitle;
-    }
-    
-    public async Task<List<TitleDto>> GetTitles(int limit, int offset, CancellationToken cancellationToken = default)
-    {
-        return await _titles
-            .Find(Builders<TitleDto>.Filter.Empty)
-            .Skip(offset)
-            .Limit(limit)
-            .ToListAsync(cancellationToken);
-    }
-    
-    public async Task<List<TitleDto>> SearchTitles(
-        int Skip,
-        List<string>? genres,
-        string OrderBy,
-        bool SortDirection,
-        int Limit)
-    {
-        var filterBuilder = Builders<TitleDto>.Filter;
-        var filter = filterBuilder.Empty;
-        
-        if (genres != null)
+        try
         {
-            filter &= filterBuilder.ElemMatch(t => t.Genres, genre => genres.Contains(genre));
+            MongoDbMetrics.QueryCount.Inc();
+            
+            return await _titles.Aggregate()
+                .Sample(1)
+                .FirstOrDefaultAsync(cancellationToken);
         }
+        finally
+        {
+            timer.ObserveDuration();
+        }
+    }
+
+    public async Task<List<TitleDto>> SearchTitles(
+        int skip,
+        List<string>? genres,
+        string? orderBy,
+        bool sortDirection,
+        int limit, CancellationToken cancellationToken = default)
+    {
+        var timer = MongoDbMetrics.Query.NewTimer();
+
+        try
+        {
+            MongoDbMetrics.QueryCount.Inc();
+
+            var filterBuilder = Builders<TitleDto>.Filter;
+            var filter = filterBuilder.Empty;
         
-        var sortBuilder = Builders<TitleDto>.Sort;
-        var sortField = OrderBy ?? "Title";
+            if (genres != null)
+            {
+                filter &= filterBuilder.ElemMatch(t => t.Genres, genre => genres.Contains(genre));
+            }
+        
+            var sortBuilder = Builders<TitleDto>.Sort;
+            var sortField = orderBy ?? "_id";
 
-        var sort = SortDirection ? sortBuilder.Ascending(sortField) : sortBuilder.Descending(sortField);
+            var sort = sortDirection ? sortBuilder.Ascending(sortField) : sortBuilder.Descending(sortField);
 
-        return await _titles
-            .Find(filter)
-            .Sort(sort)
-            .Skip(Skip)
-            .Limit(Limit)
-            .ToListAsync();
+            return await _titles
+                .Find(filter)
+                .Sort(sort)
+                .Skip(skip)
+                .Limit(limit)
+                .ToListAsync(cancellationToken);
+        }
+        finally
+        {
+            timer.ObserveDuration();
+        }
     }
     
     public async Task<TitleDto> GetTitleByCode(string code, CancellationToken cancellationToken = default)
@@ -76,12 +89,23 @@ public class TitleRepository
 
     public async Task<List<TitleDto>> GetLatestUpdates(int limit, int skip, CancellationToken cancellationToken = default)
     {
-        return await _titles
-            .Find(FilterDefinition<TitleDto>.Empty)
-            .SortByDescending(t => t.Updated)
-            .Skip(skip)
-            .Limit(limit)
-            .ToListAsync(cancellationToken);
+        var timer = MongoDbMetrics.Query.NewTimer();
+
+        try
+        {
+            MongoDbMetrics.QueryCount.Inc();
+            
+            return await _titles
+                .Find(FilterDefinition<TitleDto>.Empty)
+                .SortByDescending(t => t.Updated)
+                .Skip(skip)
+                .Limit(limit)
+                .ToListAsync(cancellationToken);
+        }
+        finally
+        {
+            timer.ObserveDuration();
+        }
     }
 
     public async Task BulkUpdate(List<TitleDto> titles, CancellationToken cancellationToken = default)

@@ -42,29 +42,33 @@ public class TitleController : ControllerBase
     {
         var titles = await _mediator.Send(new GetTitlesUpdatesQueryParams(skip, limit), cancellationToken);
 
-        var titlesResponse = titles.Adapt<Title>();
+        var titlesResponse = titles.Adapt<List<Title>>();
 
         return Ok(titlesResponse);
     }
-    
+
     [HttpGet("search")]
     [Produces("application/json")]
     [ProducesResponseType(typeof(List<TitleDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<List<TitleDto>>> SearchTitles(
         [FromQuery] int skip,
         [FromQuery] List<string>? genres,
-        [FromQuery] string orderBy,
+        [FromQuery] string? orderBy,
         [FromQuery] int sortDirection,
         [FromQuery] int limit,
         CancellationToken cancellationToken)
     {
-        var titles = await _mediator.Send(new SearchTitleListQueryParams(
+        var searchParams = new SearchTitleListQueryParams(
             skip,
             genres,
             orderBy,
             sortDirection,
-            limit), cancellationToken);
+            limit);
         
-        return Ok(titles);
+        var titles = await _mediator.Send(searchParams, cancellationToken);
+        
+        var titlesResponse = titles.Adapt<List<Title>>();
+
+        return Ok(titlesResponse);
     }
 }
