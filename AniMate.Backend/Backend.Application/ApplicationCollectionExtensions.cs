@@ -15,8 +15,8 @@ public static class ApplicationCollectionExtensions
     {
         services.AddInfrastructure();
         
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetCallingAssembly()));
-
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationCollectionExtensions).Assembly));
+        
         services.AddSingleton<TokenService>();
 
         services.AddHttpContextAccessor();

@@ -25,12 +25,6 @@ public class TitleDto
     [JsonPropertyName("type")]
     public TypeDto? Type { get; set; }
     
-    [JsonPropertyName("updated")]
-    public int Updated { get; set; }  // Last new release in the title
-    
-    [JsonPropertyName("last_change")]
-    public int LastChange { get; set; } // Last title changes (description, announce, etc.)
-    
     [JsonPropertyName("genres")]
     public List<string> Genres { get; set; }
 
