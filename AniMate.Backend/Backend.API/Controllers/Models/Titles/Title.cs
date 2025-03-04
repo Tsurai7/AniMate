@@ -14,6 +14,7 @@ public class Title
     public TypeDto? Type { get; init; }
     public List<string> Genres { get; init; }
     public SeasonDto Season { get; init; }
+    [JsonPropertyName("description")]
     public string RuDescription { get; init; }
     public Player Player { get; init; }
 }
